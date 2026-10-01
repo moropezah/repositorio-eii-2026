@@ -1,0 +1,1265 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="author" content="Dr. Moisés Oropeza">
+<meta name="description" content="Repositorio de estudio de enfermedad inflamatoria intestinal 2026: guía, clase de actualización, atlas de láminas y consulta rápida, con la disponibilidad real en Chile.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Repositorio EII 2026">
+<meta property="og:description" content="Guía, clase de actualización, atlas de láminas y hojas de consulta rápida en enfermedad inflamatoria intestinal.">
+<meta property="og:type" content="website">
+<style>
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#fafaf8}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<title>Repositorio EII 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root{
+  --bg:#f7f5f1; --panel:#fffefb; --panel-2:#f1ede6; --fg:#1c2530; --fg-2:#4a5664;
+  --fg-3:#78838f; --line:#ddd6cb; --line-2:#c9c0b2;
+  --marino:#173a5e; --marino-2:#255a8a; --acento:#b0561c; --acento-2:#d4772f;
+  --verde:#2f6b4f; --rojo:#9e2b25; --ambar:#8a6414;
+  --cu:#1f5f7a; --ec:#7a3e1f;
+  --sh:0 1px 2px rgba(28,37,48,.06),0 4px 14px rgba(28,37,48,.05);
+  --sh-2:0 2px 6px rgba(28,37,48,.09),0 12px 32px rgba(28,37,48,.09);
+  --r:12px; --maxw:1120px;
+  --ff-s:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --ff-b:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --ff-m:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12161c; --panel:#1a2029; --panel-2:#222b36; --fg:#e6e9ed; --fg-2:#b3bcc6;
+  --fg-3:#8b95a1; --line:#2c3642; --line-2:#3d4956;
+  --marino:#8fbde6; --marino-2:#a8cdf0; --acento:#e89a5c; --acento-2:#f0b27f;
+  --verde:#6fc296; --rojo:#e88a84; --ambar:#d9b25c;
+  --cu:#79bdd8; --ec:#dda07a;
+  --sh:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
+  --sh-2:0 2px 6px rgba(0,0,0,.35),0 12px 32px rgba(0,0,0,.4);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#12161c; --panel:#1a2029; --panel-2:#222b36; --fg:#e6e9ed; --fg-2:#b3bcc6;
+  --fg-3:#8b95a1; --line:#2c3642; --line-2:#3d4956;
+  --marino:#8fbde6; --marino-2:#a8cdf0; --acento:#e89a5c; --acento-2:#f0b27f;
+  --verde:#6fc296; --rojo:#e88a84; --ambar:#d9b25c;
+  --cu:#79bdd8; --ec:#dda07a;
+  --sh:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
+  --sh-2:0 2px 6px rgba(0,0,0,.35),0 12px 32px rgba(0,0,0,.4);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--ff-b);font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;margin:0}
+h1,h2,h3,h4{font-family:var(--ff-s);text-wrap:balance;line-height:1.22;margin:0}
+a{color:var(--marino-2)}
+table{font-variant-numeric:tabular-nums}
+
+/* ---------- barra superior ---------- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:60;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line)}
+.top-in{max-width:var(--maxw);margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:9px;font-family:var(--ff-s);font-weight:700;font-size:1.02rem;
+  letter-spacing:-.01em;color:var(--fg);text-decoration:none;white-space:nowrap}
+.brand .dot{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,var(--marino),var(--acento));
+  display:grid;place-items:center;color:#fff;font-size:.62rem;font-weight:700;font-family:var(--ff-b);flex:none}
+:root[data-theme="dark"] .brand .dot,
+:root:not([data-theme="light"]) .brand .dot{color:#0f1419}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .brand .dot{color:#fff}}
+nav.tabs{display:flex;gap:2px;flex-wrap:wrap;margin-left:auto}
+nav.tabs a{font-size:.8rem;font-weight:600;color:var(--fg-2);text-decoration:none;padding:6px 10px;border-radius:7px;
+  letter-spacing:.01em;white-space:nowrap}
+nav.tabs a:hover{background:var(--panel-2);color:var(--fg)}
+nav.tabs a[aria-current="true"]{background:var(--marino);color:var(--bg)}
+.tema{background:none;border:1px solid var(--line-2);color:var(--fg-2);border-radius:7px;width:30px;height:30px;
+  cursor:pointer;font-size:.85rem;flex:none;display:grid;place-items:center}
+.tema:hover{border-color:var(--marino);color:var(--marino)}
+
+/* ---------- estructura ---------- */
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:20px;padding-block:0 72px}
+section.vista{display:none}
+section.vista.on{display:block}
+.eyebrow{font-size:.7rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--acento);
+  margin:0 0 10px}
+h2.sec{font-size:clamp(1.5rem,3.6vw,2.05rem);font-weight:700;letter-spacing:-.02em;margin:0 0 6px}
+h3.sub{font-size:clamp(1.12rem,2.4vw,1.32rem);font-weight:700;margin:38px 0 12px;
+  padding-bottom:7px;border-bottom:2px solid var(--line)}
+h4.min{font-size:.99rem;font-weight:700;font-family:var(--ff-b);margin:24px 0 8px;color:var(--marino)}
+p{margin:0 0 13px;color:var(--fg-2);max-width:74ch}
+p.lead{font-size:1.05rem;color:var(--fg-2);max-width:68ch}
+ul,ol{margin:0 0 14px;padding-left:22px;color:var(--fg-2)}
+li{margin-bottom:6px}
+li>strong,p>strong{color:var(--fg)}
+hr.d{border:0;border-top:1px solid var(--line);margin:34px 0}
+
+/* ---------- portada ---------- */
+.hero{padding-block:44px 30px;border-bottom:1px solid var(--line);margin-bottom:34px}
+.hero h1{font-size:clamp(1.9rem,6vw,3.1rem);font-weight:700;letter-spacing:-.03em;margin:0 0 14px}
+.hero h1 em{font-style:italic;color:var(--acento)}
+.hero .sub{font-size:clamp(1rem,2.3vw,1.12rem);color:var(--fg-2);max-width:62ch;margin:0 0 20px}
+.meta{display:flex;gap:8px;flex-wrap:wrap;font-size:.74rem}
+.meta span{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:4px 11px;
+  color:var(--fg-2);font-weight:600}
+.cifras{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:26px 0 0}
+.cifras div{background:var(--panel);padding:15px 16px}
+.cifras b{display:block;font-family:var(--ff-s);font-size:1.7rem;font-weight:700;letter-spacing:-.02em;
+  color:var(--marino);line-height:1.1}
+.cifras small{display:block;font-size:.73rem;color:var(--fg-3);margin-top:3px;line-height:1.35}
+
+/* ---------- autor ---------- */
+.autor{display:flex;align-items:center;gap:13px;margin:24px 0 0;padding:14px 16px;
+  background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--acento);
+  border-radius:0 var(--r) var(--r) 0;max-width:620px;min-width:0}
+.autor .ini{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--marino),var(--acento));color:var(--bg);
+  font-family:var(--ff-s);font-weight:700;font-size:1rem;letter-spacing:.02em}
+.autor .d{min-width:0}
+.autor .n{font-family:var(--ff-s);font-weight:700;font-size:1.02rem;color:var(--fg);line-height:1.25}
+.autor .r{font-size:.79rem;color:var(--fg-3);line-height:1.4}
+.autor .r em{font-style:normal;color:var(--fg-2)}
+
+/* ---------- tarjetas de módulo ---------- */
+.mods{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:16px 0 0}
+.mod{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px;
+  display:flex;flex-direction:column;gap:9px;box-shadow:var(--sh);text-decoration:none;color:inherit;
+  transition:box-shadow .16s,transform .16s,border-color .16s;min-width:0}
+.mod:hover{box-shadow:var(--sh-2);transform:translateY(-2px);border-color:var(--line-2)}
+.mod .n{font-family:var(--ff-m);font-size:.7rem;font-weight:500;color:var(--acento);letter-spacing:.06em}
+.mod h3{font-size:1.1rem;font-weight:700}
+.mod p{font-size:.86rem;margin:0;color:var(--fg-2)}
+.mod .tag{margin-top:auto;font-size:.71rem;font-weight:600;color:var(--fg-3);display:flex;gap:6px;flex-wrap:wrap}
+.mod .tag i{font-style:normal;background:var(--panel-2);border-radius:5px;padding:2px 7px}
+.mod .go{font-size:.8rem;font-weight:700;color:var(--marino-2)}
+
+/* ---------- avisos ---------- */
+.box{border:1px solid var(--line);border-left:3px solid var(--marino);background:var(--panel);
+  border-radius:0 var(--r) var(--r) 0;padding:15px 17px;margin:20px 0}
+.box .t{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--marino);
+  margin-bottom:6px}
+.box p:last-child{margin-bottom:0}
+.box.ojo{border-left-color:var(--acento)}.box.ojo .t{color:var(--acento)}
+.box.mal{border-left-color:var(--rojo)}.box.mal .t{color:var(--rojo)}
+.box.bien{border-left-color:var(--verde)}.box.bien .t{color:var(--verde)}
+.box.clave{border-left-color:var(--ambar);background:color-mix(in srgb,var(--ambar) 7%,var(--panel))}
+.box.clave .t{color:var(--ambar)}
+
+/* ---------- tablas ---------- */
+.tw{overflow-x:auto;margin:16px 0;border:1px solid var(--line);border-radius:var(--r);background:var(--panel);
+  min-width:0;-webkit-overflow-scrolling:touch}
+table.t{border-collapse:collapse;width:100%;font-size:.855rem;min-width:520px}
+table.t caption{caption-side:top;text-align:left;font-size:.76rem;color:var(--fg-3);padding:11px 14px 0;font-weight:600}
+table.t th,table.t td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+table.t thead th{background:var(--panel-2);font-size:.72rem;font-weight:700;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--fg-2);white-space:nowrap;position:sticky;top:0}
+table.t tbody tr:last-child td{border-bottom:0}
+table.t tbody tr:hover{background:var(--panel-2)}
+table.t td strong{color:var(--fg)}
+.si{color:var(--verde);font-weight:700}.no{color:var(--rojo);font-weight:700}
+.nota{font-size:.75rem;color:var(--fg-3);margin:-8px 0 16px;max-width:none}
+
+/* ---------- píldoras CU / EC ---------- */
+.cu-ec{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin:16px 0}
+.col{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);padding:16px 18px;min-width:0}
+.col.cu{border-top:3px solid var(--cu)}.col.ec{border-top:3px solid var(--ec)}
+.col h4{font-family:var(--ff-b);font-size:.78rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  margin:0 0 10px}
+.col.cu h4{color:var(--cu)}.col.ec h4{color:var(--ec)}
+.col ul{margin:0;padding-left:19px;font-size:.87rem}
+
+/* ---------- láminas ---------- */
+.lam-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin:14px 0 4px}
+figure.lam{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;
+  display:flex;flex-direction:column;min-width:0;box-shadow:var(--sh)}
+figure.lam img{display:block;width:100%;height:auto;max-width:100%;background:#fff;cursor:zoom-in}
+figure.lam figcaption{font-size:.755rem;line-height:1.4;color:var(--fg-2);padding:9px 11px 10px;
+  border-top:1px solid var(--line);display:flex;flex-direction:column;gap:4px}
+figure.lam .cred{font-size:.66rem;color:var(--fg-3);font-family:var(--ff-m)}
+.laminas{margin:26px 0;padding:16px 18px;border:1px dashed var(--line-2);border-radius:var(--r);
+  background:color-mix(in srgb,var(--panel) 60%,transparent)}
+.lam-h{font-size:.7rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--acento)}
+
+/* ---------- atlas ---------- */
+.atlas-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:18px 0 6px;
+  position:sticky;top:calc(env(safe-area-inset-top,0px) + 52px);z-index:20;
+  background:color-mix(in srgb,var(--bg) 92%,transparent);padding:8px 0;border-bottom:1px solid var(--line)}
+.atlas-bar input{flex:1 1 180px;min-width:0;background:var(--panel);border:1px solid var(--line-2);color:var(--fg);
+  border-radius:8px;padding:7px 11px;font:inherit;font-size:.85rem}
+.chip{background:var(--panel);border:1px solid var(--line-2);color:var(--fg-2);border-radius:999px;
+  padding:5px 12px;font-size:.76rem;font-weight:600;cursor:pointer;font-family:inherit}
+.chip:hover{border-color:var(--marino);color:var(--marino)}
+.chip[aria-pressed="true"]{background:var(--marino);border-color:var(--marino);color:var(--bg)}
+.grupo{margin:30px 0 0}
+.grupo>h4{font-family:var(--ff-b);font-size:.75rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--acento);margin:0 0 2px}
+.grupo>.gd{font-size:.82rem;color:var(--fg-3);margin:0 0 6px}
+.vacio{color:var(--fg-3);font-size:.88rem;padding:20px 0}
+
+/* ---------- lightbox ---------- */
+.lb{position:fixed;inset:0;z-index:200;background:rgba(10,13,18,.93);display:flex;align-items:center;
+  justify-content:center;flex-direction:column;gap:12px;padding:20px}
+.lb img{max-width:100%;max-height:78vh;object-fit:contain;background:#fff;border-radius:6px}
+.lb .cap{color:#e8eaee;font-size:.85rem;text-align:center;max-width:70ch;line-height:1.5}
+.lb .cap b{display:block;font-size:.7rem;color:#9aa3ae;font-family:var(--ff-m);font-weight:500;margin-top:5px}
+.lb .x{position:absolute;top:calc(env(safe-area-inset-top,0px) + 12px);right:14px;background:rgba(255,255,255,.12);
+  border:0;color:#fff;width:36px;height:36px;border-radius:50%;font-size:1.1rem;cursor:pointer}
+
+/* ---------- acordeón ---------- */
+details.ac{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);margin:10px 0;overflow:hidden}
+details.ac>summary{cursor:pointer;padding:13px 16px;font-weight:600;font-size:.94rem;list-style:none;
+  display:flex;gap:10px;align-items:center}
+details.ac>summary::-webkit-details-marker{display:none}
+details.ac>summary::before{content:"+";font-family:var(--ff-m);color:var(--acento);font-weight:700;flex:none}
+details.ac[open]>summary::before{content:"–"}
+details.ac[open]>summary{border-bottom:1px solid var(--line);background:var(--panel-2)}
+details.ac .in{padding:14px 16px 4px}
+
+/* ---------- misc ---------- */
+.ref{font-size:.78rem;color:var(--fg-3);font-style:italic}
+.pill{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  border-radius:5px;padding:2px 7px;vertical-align:middle}
+.pill.f3{background:color-mix(in srgb,var(--marino) 16%,transparent);color:var(--marino)}
+.pill.no-cl{background:color-mix(in srgb,var(--rojo) 16%,transparent);color:var(--rojo)}
+.pill.lrs{background:color-mix(in srgb,var(--verde) 16%,transparent);color:var(--verde)}
+.qs{display:grid;gap:10px;counter-reset:q;margin:16px 0}
+.qs>div{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:13px 16px 13px 46px;
+  position:relative;font-size:.92rem;color:var(--fg-2)}
+.qs>div::before{counter-increment:q;content:counter(q);position:absolute;left:14px;top:12px;
+  font-family:var(--ff-s);font-weight:700;font-size:1.15rem;color:var(--acento)}
+.qs>div b{display:block;color:var(--fg);font-weight:700;margin-bottom:3px}
+.foot{border-top:1px solid var(--line);margin-top:44px;padding-top:20px;font-size:.8rem;color:var(--fg-3)}
+.foot a{color:var(--marino-2)}
+@media (max-width:700px){
+  .wrap{padding-inline:16px}.top-in{padding:9px 16px;flex-wrap:nowrap;gap:10px}
+  .brand span:not(.dot){display:none}
+  nav.tabs{margin-left:0;flex:1 1 auto;min-width:0;flex-wrap:nowrap;overflow-x:auto;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  nav.tabs::-webkit-scrollbar{display:none}
+  .tema{margin-left:0}
+  .atlas-bar{position:static;padding:8px 0 10px}
+  .lam-g{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .laminas{padding:12px 13px}
+  table.t{min-width:440px}
+}
+
+/* ---------- variante pública: láminas sin imagen ---------- */
+figure.lam.sinimg{background:var(--panel-2,rgba(128,128,128,.08))}
+figure.lam.sinimg figcaption{border-top:0;border-left:3px solid var(--acento,#b0561c);
+  padding:11px 13px;min-height:0}
+.lam-g:has(.sinimg){grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.aviso-pub{border:1px solid var(--line,#ddd);border-left:3px solid var(--acento,#b0561c);
+  background:var(--panel,#fff);border-radius:0 12px 12px 0;padding:15px 17px;margin:20px 0}
+.aviso-pub .t{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--acento,#b0561c);margin-bottom:6px}
+.aviso-pub p{margin:0}
+</style>
+
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="#inicio"><span class="dot">EII</span>Repositorio EII 2026</a>
+    <nav class="tabs" id="tabs">
+      <a href="#inicio">Inicio</a>
+      <a href="#clase">Clase 2026</a>
+      <a href="#atlas">Atlas</a>
+      <a href="#rapida">Consulta rápida</a>
+      <a href="#fuentes">Fuentes</a>
+    </nav>
+    <button class="tema" id="tema" title="Cambiar tema" aria-label="Cambiar tema">◐</button>
+  </div>
+</header>
+<div class="wrap">
+
+<section class="vista on" id="v-inicio">
+  <div class="hero">
+    <p class="eyebrow">Postgrado Gastroenterología · Universidad de los Andes</p>
+    <h1>Enfermedad inflamatoria intestinal:<br><em>repositorio de estudio 2026</em></h1>
+    <p class="sub">Guía completa, clase de actualización, índice de láminas de mecanismo y dosis, y hojas de consulta rápida — con la disponibilidad real en Chile declarada en cada decisión.</p>
+    <div class="meta">
+      <span>Actualizado septiembre 2026</span>
+      <span>ECCO · AGA · ACG · ACTECCU</span>
+      <span>STRIDE-II</span>
+      <span>Ley Ricarte Soto a mayo 2026</span>
+    </div>
+    <div class="autor">
+      <span class="ini">MO</span>
+      <div class="d">
+        <div class="n">Dr. Moisés Oropeza</div>
+        <div class="r"><em>Residente de Gastroenterología, Universidad de los Andes</em> · Clínica Dávila / Clínica Universidad de los Andes — compilación y edición del repositorio</div>
+      </div>
+    </div>
+
+    <div class="cifras">
+      <div><b>15</b><small>moléculas y biosimilares aprobados en el mundo</small></div>
+      <div><b>9</b><small>con registro sanitario en Chile</small></div>
+      <div><b>5</b><small>financiadas por la Ley Ricarte Soto — solo anti-TNF y biosimilares</small></div>
+      <div><b>5.246</b><small>pacientes con EII en biológico LRS a mayo 2026</small></div>
+      <div><b>3.973</b><small>pacientes en el registro ChilEii</small></div>
+      <div><b>36</b><small>láminas indexadas por tema</small></div>
+    </div>
+  </div>
+
+  <p class="eyebrow">Módulos</p>
+  <h2 class="sec">Cómo está organizado</h2>
+  <p class="lead">Cinco piezas independientes. La guía y el quiz se abren en pestaña propia; la clase, el atlas y las hojas de consulta rápida viven dentro de este repositorio.</p>
+
+  <div class="mods">
+    <a class="mod" href="guia-2026.html" target="_blank" rel="noopener">
+      <span class="n">MÓDULO 01</span>
+      <h3>Guía de estudio EII 2026</h3>
+      <p>27 secciones desde concepto básico hasta manejo avanzado: arquitectura diagnóstica, scores, terapias por mecanismo, complicaciones, cirugía, poblaciones especiales. Con 38 láminas de mecanismo y dosis insertadas donde corresponden.</p>
+      <span class="tag"><i>Documento base</i><i>Navegación lateral</i><i>Quiz 18 preguntas</i><i>Flashcards</i></span>
+      <span class="go">Abrir en pestaña nueva →</span>
+    </a>
+
+    <a class="mod" href="#clase">
+      <span class="n">MÓDULO 02</span>
+      <h3>Clase de actualización 2026</h3>
+      <p>El paciente difícil de tratar en tres ejes (Parigi 2023): falla real al tratamiento, fenotipo y factores del paciente. Epidemiología chilena (ChilEii), brecha de acceso, VARSITY, secuenciación, recurrencia posquirúrgica, reservorio, embarazo y adulto mayor.</p>
+      <span class="tag"><i>6 secciones</i><i>ChilEii · LRS</i><i>Tabla de decisión</i><i>5 preguntas</i></span>
+      <span class="go">Leer aquí →</span>
+    </a>
+
+    <a class="mod" href="#atlas">
+      <span class="n">MÓDULO 03</span>
+      <h3>Índice de láminas · 36 figuras</h3>
+      <p>Mecanismos de acción por clase, metabolismo de tiopurinas y TPMT, dosis de inducción y mantención en adulto y pediatría, tamizaje prebiológico, definiciones endoscópicas por ensayo, ensayos cara a cara, manifestaciones extraintestinales, embarazo y lactancia.</p>
+      <span class="tag"><i>Buscador</i><i>9 grupos temáticos</i><i>36 títulos</i></span>
+      <span class="go">Abrir el atlas →</span>
+    </a>
+
+    <a class="mod" href="#rapida">
+      <span class="n">MÓDULO 04</span>
+      <h3>Consulta rápida</h3>
+      <p>Lo que se necesita con el paciente delante: qué hay y qué no hay en Chile, criterios de falla y conducta según TDM, umbrales de colitis aguda grave, objetivos STRIDE-II, checklist prebiológico y conducta en embarazo, adulto mayor y paciente oncológico.</p>
+      <span class="tag"><i>Checklists</i><i>Cortes numéricos</i><i>Dosis</i></span>
+      <span class="go">Abrir →</span>
+    </a>
+
+    <a class="mod" href="https://claude.ai/artifact/8LFCa8kPmJUd1J1uNCEBu6" target="_blank" rel="noopener">
+      <span class="n">MÓDULO 05</span>
+      <h3>Quiz EII · 220 casos</h3>
+      <p>Banco de preguntas de caso clínico con retroalimentación razonada, versión 6.1. Se mantiene como pieza propia para poder actualizarla sin tocar el resto del repositorio.</p>
+      <span class="tag"><i>220 casos</i><i>Artifact separado</i></span>
+      <span class="go">Abrir en pestaña nueva →</span>
+    </a>
+  </div>
+
+  <div class="box clave">
+    <div class="t">Cómo usar este repositorio</div>
+    <p><strong>Para estudiar un tema completo:</strong> Módulo 01, con la lámina de mecanismo ya al lado del fármaco. <strong>Para actualizarse:</strong> Módulo 02. <strong>Para buscar una figura concreta:</strong> Módulo 03, con el buscador. <strong>Para resolver algo con el paciente delante:</strong> Módulo 04. <strong>Para autoevaluarse:</strong> Módulo 05.</p>
+  </div>
+</section>
+
+<section class="vista" id="v-clase">
+  <div class="hero" style="padding-block:34px 24px">
+    <p class="eyebrow">Módulo 02</p>
+    <h1 style="font-size:clamp(1.6rem,4.6vw,2.4rem)">El paciente difícil de tratar en EII:<br><em>tres ejes, no uno</em></h1>
+    <p class="sub">Clase de actualización 2026. Estructurada sobre el consenso de Parigi (Lancet Gastroenterol Hepatol 2023) y anclada en lo que hoy es posible indicar en Chile.</p>
+    <div class="autor">
+      <span class="ini">MO</span>
+      <div class="d">
+        <div class="n">Dr. Moisés Oropeza</div>
+        <div class="r"><em>Residente de Gastroenterología, Universidad de los Andes</em> · Clínica Dávila / Clínica Universidad de los Andes — autoría y edición de la clase</div>
+      </div>
+    </div>
+    <div class="meta"><span>6 secciones</span><span>Registro ChilEii</span><span>Ley Ricarte Soto mayo 2026</span><span>ACTECCU Rev Med Chile 2026</span></div>
+  </div>
+
+  <div class="atlas-bar" style="position:static;border-bottom:0;padding-top:0">
+    <a class="chip" href="#c1" style="text-decoration:none">01 · Epidemiología Chile</a>
+    <a class="chip" href="#c2" style="text-decoration:none">02 · Arsenal y acceso</a>
+    <a class="chip" href="#c3" style="text-decoration:none">03 · Eje 1 · Falla</a>
+    <a class="chip" href="#c4" style="text-decoration:none">04 · Eje 2 · Fenotipo</a>
+    <a class="chip" href="#c5" style="text-decoration:none">05 · Eje 3 · Paciente</a>
+    <a class="chip" href="#c6" style="text-decoration:none">06 · Integración</a>
+  </div>
+
+  <h3 class="sub" id="c1">Sección 01 · Epidemiología de la EII en Chile</h3>
+
+  <h4 class="min">La transición epidemiológica global</h4>
+  <p>El marco que mejor ordena la epidemiología actual es el de fases secuenciales de Kaplan y Windsor, actualizado por Hracs y colaboradores en <em>Nature</em> 2025 sobre 522 estudios poblacionales de 82 países. Ninguna región salta a una prevalencia alta: todas atraviesan la secuencia. En <strong>emergencia</strong> la incidencia es baja pero detectable. En <strong>aceleración</strong> la incidencia sube de forma sostenida con la urbanización, la dieta ultraprocesada y el mejor acceso diagnóstico. En <strong>compresión</strong> —donde están hoy la mayoría de los países de altos ingresos— la incidencia se estabiliza o baja levemente, pero la prevalencia sigue subiendo, porque la EII no acorta significativamente la expectativa de vida y los casos se acumulan.</p>
+  <div class="box">
+    <div class="t">Lo que esto implica para la práctica</div>
+    <p>La proyección de cerca del 1 % de la población en fase 3 hacia 2030 no contradice una incidencia que ya no crece exponencialmente: la prevalencia es acumulativa. La carga asistencial seguirá creciendo aunque la incidencia se estabilice. Chile y Latinoamérica están probablemente todavía en <strong>fase de aceleración</strong>, lo que anticipa una curva de nuevos diagnósticos empinada en la próxima década.</p>
+  </div>
+
+  <h4 class="min">El registro ChilEii: el primer denominador propio</h4>
+  <p>Hasta hace poco, la única respuesta a «cuántos pacientes con EII hay en Chile» era extrapolar cohortes europeas o norteamericanas, con un patrón fenotípico distinto al nuestro. ChilEii —datos en vías de publicación— es un registro multicéntrico con predominio de centros de referencia, que reclutó entre el 1 de agosto de 2023 y el 19 de enero de 2026: 4.046 tamizados, 3.973 con diagnóstico confirmado.</p>
+  <div class="tw"><table class="t"><caption>Hallazgos principales de ChilEii (N = 3.973)</caption>
+    <thead><tr><th>Variable</th><th>Hallazgo</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Distribución por tipo</strong></td><td>Colitis ulcerosa 70 % (n = 2.780) · Enfermedad de Crohn 28 % (n = 1.102) · EII no clasificable 2 % (n = 91)</td></tr>
+      <tr><td><strong>Razón CU : EC</strong></td><td>≈ 2,5–2,6 : 1 — predominio de CU característico del patrón latinoamericano, distinto del ~1:1 de muchas cohortes europeas y norteamericanas</td></tr>
+      <tr><td><strong>Edad al diagnóstico</strong></td><td>Mediana 42,2 años, rango intercuartílico amplio</td></tr>
+      <tr><td><strong>Distribución geográfica</strong></td><td>Región Metropolitana 62,6 % · Valparaíso 15,3 % · macrozona central 77,9 % · Norte Grande y zona austral &lt; 1 % cada una</td></tr>
+      <tr><td><strong>Tabaquismo</strong></td><td>11 % adicional son exfumadores — dato relevante al discutir recurrencia posquirúrgica en EC</td></tr>
+      <tr><td><strong>Extensión / localización</strong></td><td>Montreal: casi la mitad de las colitis ulcerosas chilenas son <strong>extensas (E3)</strong> al diagnóstico</td></tr>
+    </tbody></table></div>
+  <p class="nota">Fuente: Registro ChilEii, datos en vías de publicación.</p>
+  <div class="box ojo">
+    <div class="t">Cómo interpretar la distribución geográfica</div>
+    <p>El 77,9 % concentrado en la macrozona central no describe dónde está la enfermedad, sino dónde están los centros de referencia que reclutan. Es un sesgo de selección esperable en un registro terciario y debe declararse antes de extrapolar a prevalencia real por región.</p>
+  </div>
+  <div class="box clave">
+    <div class="t">Idea clave</div>
+    <p>Que casi la mitad de las CU chilenas sean E3 al diagnóstico describe una población de mayor riesgo basal de colectomía y de displasia asociada a colitis. La consecuencia práctica es directa: <strong>el umbral para escalar a terapia avanzada en nuestra población debiera ser más bajo</strong> que el sugerido por cohortes con predominio de proctitis, donde la historia natural es sustancialmente más benigna.</p>
+  </div>
+
+  <h4 class="min">Ley Ricarte Soto: la fotografía del acceso real</h4>
+  <p>Los datos abiertos de FONASA sobre beneficiarios de la Ley Ricarte Soto (LRS) muestran que, a mayo de 2026, <strong>5.246 pacientes con EII</strong> recibían terapia biológica financiada por esa vía: 2.908 con colitis ulcerosa y 2.338 con enfermedad de Crohn. La moda de edad en ambas distribuciones se concentra entre los 25 y los 44 años, coherente con el pico de incidencia esperado.</p>
+  <div class="box ojo">
+    <div class="t">Por qué esta cifra importa más de lo que parece</div>
+    <p>Los 3.973 de ChilEii y los 5.246 de la LRS no son comparables directamente (registro clínico multicéntrico frente a base administrativa nacional), pero convergen en el mismo mensaje: la EII en Chile ya tiene escala poblacional que exige políticas de acceso deliberadas, no ad hoc. Y como la LRS financia hoy casi exclusivamente anti-TNF, prácticamente todos esos pacientes reciben ese único mecanismo, sea o no la mejor opción individual.</p>
+  </div>
+
+  <h3 class="sub" id="c2">Sección 02 · Arsenal terapéutico y brecha de acceso</h3>
+
+  <h4 class="min">1997: el origen de la era biológica</h4>
+  <p>En 1997, Targan y colaboradores publicaron en el <em>New England Journal of Medicine</em> el primer ensayo controlado con cA2, un anticuerpo monoclonal quimérico contra el factor de necrosis tumoral alfa (TNF-α), en enfermedad de Crohn activa refractaria: respuesta clínica a 4 semanas del orden del 65 % frente a 17 % con placebo. Ese fármaco es el infliximab de hoy.</p>
+  <div class="box mal">
+    <div class="t">Corrección de una fecha del material original</div>
+    <p>La presentación original databa este ensayo pivotal en 2017. La referencia correcta es <strong>Targan SR, Hanauer SB, van Deventer SJ, et al. N Engl J Med. 1997;337:1029-35</strong> (verificado en PubMed, DOI 10.1056/NEJM199710093371502). El error es tipográfico pero cambia treinta años en la línea de tiempo de la especialidad: vale la pena señalarlo explícitamente al enseñar este material.</p>
+  </div>
+  <div class="tw"><table class="t"><caption>Veinte años de terapia avanzada, en cuatro eras</caption>
+    <thead><tr><th>Era</th><th>Nombre</th><th>Qué se incorporó</th></tr></thead>
+    <tbody>
+      <tr><td><strong>2003–2007</strong></td><td>Era anti-TNF</td><td>Infliximab endovenoso en EC y CU · adalimumab subcutáneo, inducción y mantención</td></tr>
+      <tr><td><strong>2012–2014</strong></td><td>Selectividad intestinal</td><td>Vedolizumab endovenoso (anti-integrina α4β7) en ambas enfermedades · primeros biosimilares de infliximab</td></tr>
+      <tr><td><strong>2016–2020</strong></td><td>Interleuquinas y primeras orales</td><td>Ustekinumab (anti-IL-12/23): EC 2016, CU 2019 · tofacitinib oral en CU · vedolizumab e infliximab subcutáneos</td></tr>
+      <tr><td><strong>2021–2023</strong></td><td>IL-23 selectiva y moléculas pequeñas</td><td>Risankizumab, mirikizumab y guselkumab (anti-IL-23p19) · upadacitinib y filgotinib · ozanimod y etrasimod (moduladores S1P)</td></tr>
+    </tbody></table></div>
+  <div class="box clave">
+    <div class="t">La lectura correcta de esta cronología</div>
+    <p>Ninguna era reemplazó a la anterior: la sumó. El anti-TNF sigue siendo primera línea en escenarios concretos —sobre todo en enfermedad de Crohn perianal—. El problema clínico actual no es la falta de opciones, sino <strong>el orden en que se usan</strong>: hoy hay que elegir, y elegir en una secuencia que condiciona lo que se podrá ofrecer después.</p>
+  </div>
+  <div class="laminas"><div class="lam-h">Láminas de apoyo (ver en ibd-eii.com) · Historia y cronología del arsenal</div><p class="nota" style="margin:6px 0 0">Cómo se construyó el arsenal actual y con qué diseño se probó cada molécula.</p><div class="lam-g"><figure class="lam sinimg" data-g="inline" data-q="historia de la enfermedad inflamatoria intestinal ibdhistory-1"><figcaption>Historia de la enfermedad inflamatoria intestinal<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="inline" data-q="línea de tiempo de los ensayos pivotales, por fármaco names-trials-timelinev2-1"><figcaption>Línea de tiempo de los ensayos pivotales, por fármaco<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="inline" data-q="diseño de los ensayos en eii frente a placebo trial-design-ibd-1"><figcaption>Diseño de los ensayos en EII frente a placebo<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure></div></div>
+  <h4 class="min">Lo que existe, lo que llegó a Chile y lo que está financiado</h4>
+  <div class="tw"><table class="t"><caption>Aprobación mundial, registro sanitario en Chile y cobertura Ley Ricarte Soto</caption>
+    <thead><tr><th>Mecanismo</th><th>Molécula</th><th>Vía</th><th>EC</th><th>CU</th><th>Mundo</th><th>Chile</th><th>LRS</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="5"><strong>Anti-TNF</strong></td><td>Infliximab</td><td>EV · EV-SC</td><td>✓</td><td>✓</td><td>2003</td><td class="si">Sí</td><td class="si">Sí</td></tr>
+      <tr><td>Adalimumab</td><td>SC</td><td>✓</td><td>✓</td><td>2007</td><td class="si">Sí</td><td class="si">Sí</td></tr>
+      <tr><td>Certolizumab</td><td>SC</td><td>✓</td><td>—</td><td>2008</td><td class="no">No</td><td class="no">No</td></tr>
+      <tr><td>Golimumab</td><td>SC</td><td>—</td><td>✓</td><td>2013</td><td class="no">No</td><td class="no">No</td></tr>
+      <tr><td>Biosimilares IFX / ADA</td><td>EV · SC</td><td>✓</td><td>✓</td><td>2013–2018</td><td class="si">Sí</td><td class="si">Sí</td></tr>
+      <tr><td><strong>Anti-integrina α4β7</strong></td><td>Vedolizumab</td><td>EV · EV-SC</td><td>✓</td><td>✓</td><td>2014</td><td class="si">Sí</td><td class="no">No</td></tr>
+      <tr><td><strong>Anti-IL-12/23</strong></td><td>Ustekinumab</td><td>EV-SC</td><td>✓</td><td>✓</td><td>2016–2019</td><td class="si">Sí</td><td class="no">No</td></tr>
+      <tr><td rowspan="3"><strong>Anti-IL-23p19</strong></td><td>Risankizumab</td><td>EV-SC</td><td>✓</td><td>✓</td><td>2022</td><td class="no">No</td><td class="no">No</td></tr>
+      <tr><td>Mirikizumab</td><td>EV-SC</td><td>—</td><td>✓</td><td>2023</td><td class="no">No</td><td class="no">No</td></tr>
+      <tr><td>Guselkumab</td><td>EV · SC</td><td>✓</td><td>✓</td><td>2023</td><td class="si">Sí</td><td class="no">No</td></tr>
+      <tr><td rowspan="3"><strong>Inhibidores JAK</strong></td><td>Tofacitinib</td><td>VO</td><td>—</td><td>✓</td><td>2018</td><td class="si">Sí</td><td class="no">No</td></tr>
+      <tr><td>Upadacitinib</td><td>VO</td><td>✓</td><td>✓</td><td>2022–2023</td><td class="si">Sí</td><td class="no">No</td></tr>
+      <tr><td>Filgotinib</td><td>VO</td><td>—</td><td>✓</td><td>2022</td><td class="no">No</td><td class="no">No</td></tr>
+      <tr><td rowspan="2"><strong>Moduladores S1P</strong></td><td>Ozanimod</td><td>VO</td><td>—</td><td>✓</td><td>2021</td><td class="no">No</td><td class="no">No</td></tr>
+      <tr><td>Etrasimod</td><td>VO</td><td>—</td><td>✓</td><td>2023</td><td class="no">No</td><td class="no">No</td></tr>
+    </tbody></table></div>
+  <p class="nota">EC: enfermedad de Crohn; CU: colitis ulcerosa; EV: endovenosa; SC: subcutánea; VO: vía oral. Adaptado de Chang S et al. Am J Gastroenterol 2024 y de datos FONASA / Ley Ricarte Soto, 2026.</p>
+  <p>La última columna concentra el problema: <strong>la LRS financia anti-TNF y sus biosimilares, y nada más.</strong> La columna «Chile» muestra que el problema no siempre es de registro sanitario —vedolizumab, ustekinumab, guselkumab, tofacitinib y upadacitinib sí están registrados—: en esos casos el problema es de financiamiento. La columna «Mundo» muestra lo que falta por completo en Chile: risankizumab, mirikizumab, filgotinib y ambos moduladores S1P.</p>
+
+  <div class="tw"><table class="t"><caption>La brecha no es de conocimiento: es de acceso</caption>
+    <thead><tr><th>Indicador</th><th>Total</th></tr></thead>
+    <tbody>
+      <tr><td>Moléculas y biosimilares aprobados en el mundo</td><td><strong>15</strong></td></tr>
+      <tr><td>Disponibles en Chile (con registro sanitario)</td><td><strong>9</strong></td></tr>
+      <tr><td>Financiadas por la Ley Ricarte Soto</td><td><strong>5</strong> — anti-TNF y biosimilares</td></tr>
+    </tbody></table></div>
+
+  <div class="cu-ec">
+    <div class="col ec"><h4>Qué implica en la práctica diaria</h4><ul>
+      <li>Un paciente sin previsión complementaria que falla a anti-TNF queda, en la práctica, <strong>sin alternativa financiada de otro mecanismo</strong>.</li>
+      <li>Se prolonga el uso de corticoides —el fármaco con peor perfil de seguridad a mediano plazo del arsenal— mientras se tramitan vías de excepción.</li>
+      <li>Se recurre a un segundo anti-TNF por disponibilidad, no por indicación clínica, contradiciendo la evidencia de secuenciación.</li>
+      <li>La cirugía puede adelantarse por razones administrativas y no estrictamente clínicas.</li>
+    </ul></div>
+    <div class="col cu"><h4>Qué se puede hacer mientras tanto</h4><ul>
+      <li>Documentar rigurosamente la falla: dosis optimizada, tiempo de evaluación suficiente y objetivo medible explícito.</li>
+      <li><strong>Medir niveles del fármaco y anticuerpos antifármaco antes de declarar fracaso a un anti-TNF</strong> — es la base para justificar el cambio de mecanismo ante isapres, COMPIN o instancias de excepción.</li>
+      <li>Registrar sistemáticamente los casos en ChilEii, para sostener con datos chilenos la discusión de política de acceso.</li>
+      <li>Priorizar el acceso en los fenotipos donde el anti-TNF rinde comparativamente peor.</li>
+    </ul></div>
+  </div>
+  <div class="box mal">
+    <div class="t">Lo que no se puede olvidar</div>
+    <p>Chile acumula más de quince años de retraso en la incorporación de nuevas moléculas respecto de países vecinos, en un escenario donde estas terapias ya son estándar de manejo. La decisión terapéutica local se toma sobre un menú incompleto: <strong>separar «lo que la evidencia recomienda» de «lo que hoy es posible indicar en Chile» debe hacerse de forma explícita, no implícita, en cada discusión de caso.</strong></p>
+  </div>
+
+  <h4 class="min">El paciente difícil de tratar: tres ejes, no uno</h4>
+  <p>El consenso internacional de Parigi y colaboradores (<em>Lancet Gastroenterol Hepatol</em> 2023) propone abandonar la idea de que el paciente difícil de tratar se define por el número de fármacos ya probados. El problema se descompone en tres ejes conceptualmente distintos, que pueden coexistir pero exigen análisis independiente: la <strong>falla real al tratamiento</strong> (Eje 1), el <strong>fenotipo</strong> de la enfermedad (Eje 2) y los <strong>factores del propio paciente</strong> (Eje 3). Esos tres ejes estructuran las secciones siguientes.</p>
+  <div class="box clave">
+    <div class="t">El punto central del consenso de Parigi</div>
+    <p>El criterio para cambiar de terapia debe ser <strong>el mecanismo de acción que se necesita</strong>, no el número de agentes ya usados. Un paciente puede haber «fallado a tres fármacos» y en realidad haber fallado tres veces al mismo mecanismo —tres anti-TNF distintos, por ejemplo—, lo que no constituye evidencia de refractariedad multimecanismo.</p>
+  </div>
+  <h3 class="sub" id="c3">Sección 03 · Eje 1 — Falla al tratamiento</h3>
+
+  <div class="box">
+    <div class="t">Definición operativa (Parigi et al., 2023)</div>
+    <p>Fracaso a biológicos o moléculas pequeñas con <strong>al menos dos mecanismos de acción distintos</strong>. Fallar dos veces al mismo mecanismo —por ejemplo, dos anti-TNF— no cumple esta definición de refractariedad multimecanismo.</p>
+  </div>
+
+  <div class="cu-ec">
+    <div class="col cu"><h4>Antes de declarar un fracaso</h4><ul>
+      <li>Verificar que la dosis fue optimizada según niveles y respuesta — no asumir que la dosis de ficha técnica es la dosis correcta para ese paciente.</li>
+      <li>Respetar un tiempo prudente: <strong>8 a 12 semanas de inducción</strong> según el fármaco.</li>
+      <li>Confirmar adherencia real y descartar una complicación no inflamatoria que simule actividad.</li>
+    </ul></div>
+    <div class="col ec"><h4>Qué NO es fracaso terapéutico</h4><ul>
+      <li>Síntomas persistentes sin actividad inflamatoria objetiva: descartar sobrecrecimiento bacteriano, síndrome de intestino irritable superpuesto y malabsorción de sales biliares.</li>
+      <li><strong>Estenosis fibrótica establecida</strong>: problema mecánico, no inflamatorio.</li>
+      <li>Infección intercurrente por <em>Clostridioides difficile</em> o citomegalovirus.</li>
+      <li>Dosis subterapéutica no corregida o intervalo prolongado por razones logísticas.</li>
+      <li>Abandono del tratamiento no consultado con el equipo.</li>
+    </ul></div>
+  </div>
+
+  <h4 class="min">Causas de baja eficacia dependientes de la clase</h4>
+  <ul>
+    <li><strong>Inmunogenicidad</strong> — particularmente relevante en el grupo anti-TNF, con anticuerpos antifármaco que aceleran la depuración y neutralizan el efecto.</li>
+    <li><strong>Falla farmacodinámica</strong> — sobreexpresión de vías distintas a la bloqueada: el fármaco alcanza nivel terapéutico, pero la vía inflamatoria dominante en ese paciente no depende de ese blanco.</li>
+    <li><strong>Depuración acelerada</strong> en carga inflamatoria alta: pérdida entérica de proteínas, mayor volumen de distribución.</li>
+  </ul>
+
+  <h4 class="min">Pérdida de respuesta a anti-TNF: medir antes de cambiar</h4>
+  <p>Confirmada la pérdida de respuesta con actividad objetiva —no solo síntomas—, el algoritmo parte por medir niveles valle y anticuerpos antifármaco (ADAb, <em>anti-drug antibodies</em>). Esta monitorización terapéutica de fármacos (TDM, <em>therapeutic drug monitoring</em>) distingue tres escenarios con conductas distintas:</p>
+  <div class="tw"><table class="t">
+    <thead><tr><th>Hallazgo en el TDM</th><th>Interpretación</th><th>Conducta recomendada</th></tr></thead>
+    <tbody>
+      <tr><td>Nivel subterapéutico, <strong>sin</strong> ADAb</td><td>Falla farmacocinética por depuración acelerada</td><td><strong>Optimizar dosis</strong>: intensificar o acortar el intervalo</td></tr>
+      <tr><td>Nivel subterapéutico, <strong>con</strong> ADAb en título alto</td><td>Inmunogenicidad</td><td><strong>Cambio intra-clase</strong> (otro anti-TNF) o asociar un inmunomodulador</td></tr>
+      <tr><td>Nivel terapéutico, sin ADAb, enfermedad activa</td><td>Falla farmacodinámica (mecanismo agotado)</td><td><strong>Cambiar de mecanismo</strong> — no repetir la misma vía</td></tr>
+    </tbody></table></div>
+  <div class="box mal">
+    <div class="t">Lo que no se debe hacer</div>
+    <p>Repetir un anti-TNF sin haber medido niveles ni anticuerpos antifármaco. Hacerlo a ciegas expone al paciente a semanas de un fármaco cuyo fracaso, en un porcentaje relevante de casos, obedece a un mecanismo —inmunogenicidad o falla farmacodinámica— que un segundo anti-TNF no resuelve.</p>
+  </div>
+  <p>Taxonera y colaboradores (2022), sobre concentraciones valle de golimumab en mantención, mostraron que a mayor exigencia del objetivo, mayor concentración requerida: la mediana sube de <strong>2,01 µg/mL</strong> para remisión clínica a <strong>2,52 µg/mL</strong> para cicatrización endoscópica e histológica combinadas (todas las comparaciones con p &lt; 0,05).</p>
+  <div class="box clave">
+    <div class="t">Aplicación práctica del TDM proactivo</div>
+    <p>El nivel objetivo depende del <strong>objetivo terapéutico</strong>, no solo del fármaco. Si el objetivo es cicatrización mucosa, el umbral de nivel valle es más alto que si el objetivo es controlar síntomas. Un nivel «aceptable» en presencia de enfermedad activa obliga a revisar el mecanismo, no a resignarse a ese nivel.</p>
+  </div>
+
+  <h4 class="min">VARSITY: el primer ensayo cara a cara en colitis ulcerosa</h4>
+  <p>VARSITY (Sands BE et al., <em>N Engl J Med</em> 2019) es el único ensayo aleatorizado, doble ciego, doble simulación, fase 3b, multicéntrico y con control activo que compara directamente dos biológicos en colitis ulcerosa moderada a grave: vedolizumab 300 mg EV cada 8 semanas frente a adalimumab 40 mg SC cada 2 semanas.</p>
+  <div class="tw"><table class="t"><caption>VARSITY · desenlaces principales</caption>
+    <thead><tr><th>Desenlace</th><th>Vedolizumab</th><th>Adalimumab</th><th>Diferencia</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Remisión clínica, semana 52</strong> (primario)</td><td>31,3 % (n=383)</td><td>22,5 % (n=386)</td><td>Δ 8,8 pp (IC 95 % 2,5–15,0); <strong>p = 0,006</strong></td></tr>
+      <tr><td>Cicatrización mucosa, semana 52</td><td>39,7 %</td><td>27,7 %</td><td>Δ 11,9 pp (IC 95 % 5,3–18,5)</td></tr>
+      <tr><td>Remisión histológica (Robarts &lt; 5), semana 14</td><td>37,3 %</td><td>24,4 %</td><td>—</td></tr>
+      <tr><td>Remisión histológica (Robarts &lt; 5), semana 52</td><td>42,3 %</td><td>25,6 %</td><td>—</td></tr>
+      <tr><td><strong>Remisión libre de corticoides</strong> (subgrupo con corticoides al ingreso; n = 111 / 119)</td><td>12,6 %</td><td><strong>21,8 %</strong></td><td>Δ −9,3 pp (IC 95 % −18,9 a 0,4)</td></tr>
+      <tr><td>Eventos adversos totales / serios</td><td>62,7 % / 13,7 %</td><td>69,2 % / 11,0 %</td><td>—</td></tr>
+    </tbody></table></div>
+  <p>El número necesario a tratar aproximado para el desenlace primario es de 12 pacientes, aplicable sobre todo a pacientes bio-naïve o con exposición limitada a anti-TNF, que fue la población predominante.</p>
+  <div class="box ojo">
+    <div class="t">Cómo leer una diferencia de 8,8 puntos porcentuales</div>
+    <p>Un intervalo de confianza que no cruza el cero hace la diferencia clínicamente relevante y estadísticamente robusta. Pero conviene decirlo con la misma claridad: <strong>dos de cada tres pacientes no estaban en remisión al año con ninguna de las dos estrategias.</strong> VARSITY establece superioridad relativa; no resuelve el problema de fondo de la respuesta incompleta en colitis ulcerosa.</p>
+  </div>
+  <div class="box mal">
+    <div class="t">Por qué el dato de corticoides no debe omitirse</div>
+    <p>En remisión libre de corticoides el resultado favoreció a <strong>adalimumab</strong>, y el intervalo de confianza cruza el cero: es un desenlace secundario, no ajustado por comparaciones múltiples. Presentar VARSITY únicamente por su desenlace primario sesga la discusión hacia una superioridad de vedolizumab más categórica de lo que el conjunto de los datos permite afirmar — sobre todo en el paciente corticodependiente.</p>
+  </div>
+
+  <h4 class="min">Secuenciación en vida real: 13.222 pacientes del UK IBD BioResource</h4>
+  <p>Kapizioni y colaboradores (<em>J Crohns Colitis</em> 2024) analizaron 13.222 pacientes del registro británico, evaluando supervivencia libre de discontinuación o falla del primer biológico por Kaplan-Meier.</p>
+  <ul>
+    <li><strong>Colitis ulcerosa:</strong> vedolizumab en primera línea con mayor supervivencia libre de discontinuación o falla que los anti-TNF (log-rank p = 0,006).</li>
+    <li><strong>Tras falla a un anti-TNF:</strong> ante pérdida secundaria de respuesta o intolerancia, cambiar a un mecanismo distinto rindió mejor que indicar «otro anti-TNF».</li>
+    <li><strong>Crohn perianal:</strong> infliximab mantuvo ventaja clínica frente a las demás opciones — el escenario donde el anti-TNF sigue siendo primera elección indiscutida.</li>
+  </ul>
+  <div class="box clave">
+    <div class="t">Por qué este dato de vida real importa tanto como un ensayo</div>
+    <p>VARSITY demuestra causalidad en una población seleccionada y controlada; Kapizioni aporta representatividad. Cuando un ensayo aleatorizado y una cohorte de vida real de gran tamaño convergen en la misma conclusión —cambiar de mecanismo tras la falla a anti-TNF rinde mejor que repetir la vía—, la certeza clínica aumenta sustancialmente.</p>
+  </div>
+
+  <h4 class="min">No existe un fármaco seguro en abstracto</h4>
+  <div class="box mal">
+    <div class="t">Los corticoides: el comparador olvidado</div>
+    <p>Son el fármaco con <strong>peor perfil de seguridad a mediano plazo</strong> de todo el arsenal. Su uso prolongado suele ser consecuencia de no escalar terapia a tiempo, y retirar corticoides debe considerarse en sí mismo un objetivo terapéutico explícito — no un efecto secundario deseable de otra intervención.</p>
+  </div>
+  <div class="box">
+    <div class="t">Un principio de comunicación de riesgo</div>
+    <p>Un mal tratamiento —o la falta de tratamiento adecuado— también es un evento adverso: el riesgo de no tratar casi nunca aparece en la tabla de seguridad de un ensayo, pero es real y acumulativo. Al conversar con el paciente: explicitar el riesgo basal de la enfermedad activa, traducir riesgos a <strong>frecuencias absolutas</strong> en vez de riesgos relativos, y dejar por escrito el plan de vigilancia acordado.</p>
+  </div>
+  <p>El análisis integrado de seguridad de <strong>ustekinumab</strong> (Sandborn WJ et al., <em>Inflamm Bowel Dis</em> 2021: 6 estudios fase 2/3 — UNITI-1, UNITI-2, IM-UNITI, UNIFI y dos fase 2 en EC; 2.574 pacientes, 1.733 pacientes-año) mostró tasas por 100 pacientes-año comparables a placebo en todas las categorías. El de <strong>vedolizumab</strong> (Colombel JF et al., <em>Gut</em> 2017: 6 estudios — GEMINI 1, 2, 3, LTS y dos fase 2; exposición mediana cercana a 1 año, seguimiento hasta 5 años) mostró un perfil equivalente.</p>
+  <div class="box ojo">
+    <div class="t">Una limitación metodológica que hay que declarar siempre</div>
+    <p>Ambos son análisis agrupados de ensayos, <strong>no comparaciones directas entre sí</strong>: las poblaciones y los períodos de exposición difieren, y las tasas no son intercambiables. En la práctica, anti-IL-12/23 y anti-integrina α4β7 son los que se ofrecen primero cuando el eje dominante es la seguridad: edad avanzada, antecedente oncológico o riesgo infeccioso elevado.</p>
+  </div>
+
+  <div class="laminas"><div class="lam-h">Láminas de apoyo (ver en ibd-eii.com) · Mecanismos de acción por clase</div><p class="nota" style="margin:6px 0 0">Una lámina por familia: qué vía bloquea cada mecanismo y qué función queda afectada.</p><div class="lam-g"><figure class="lam sinimg" data-g="inline" data-q="red de señalización del factor de necrosis tumoral (tnf) y de tl1a tnf-tl1a-1"><figcaption>Red de señalización del factor de necrosis tumoral (TNF) y de TL1A<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="inline" data-q="tráfico linfocitario y terapias anti-integrina antiintegrin-1"><figcaption>Tráfico linfocitario y terapias anti-integrina<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="inline" data-q="función de los anti-il-12 y/o il-23: p40 frente a p19 il-12-il-23-1"><figcaption>Función de los anti-IL-12 y/o IL-23: p40 frente a p19<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="inline" data-q="vía jak-stat: qué citoquina usa cada par jak y qué función bloquea cada inhibidor jak-stat-pathway-1"><figcaption>Vía JAK-STAT: qué citoquina usa cada par JAK y qué función bloquea cada inhibidor<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="inline" data-q="receptores s1p1 a s1p5 y funciones moduladas por ozanimod y etrasimod s1p-modulator-1"><figcaption>Receptores S1P1 a S1P5 y funciones moduladas por ozanimod y etrasimod<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure></div></div>
+  <h4 class="min">De IL-12/23 a IL-23 selectiva: por qué importa la subunidad</h4>
+  <div class="tw"><table class="t">
+    <thead><tr><th></th><th>Bloqueo de p40 (IL-12 e IL-23)</th><th>Bloqueo selectivo de p19 (IL-23)</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Fármaco</strong></td><td>Ustekinumab</td><td>Guselkumab, risankizumab, mirikizumab</td></tr>
+      <tr><td><strong>Implicancia mecanística</strong></td><td>Bloquea también la vía Th1 dependiente de IL-12</td><td>Preserva la vía IL-12/Th1, relevante para la defensa antimicrobiana</td></tr>
+      <tr><td><strong>Indicación</strong></td><td>Aprobado en EC y CU</td><td>QUASAR: guselkumab 200 mg EV cada 4 semanas por 3 dosis logró <strong>23 %</strong> de remisión clínica en semana 12 frente a <strong>8 %</strong> con placebo</td></tr>
+    </tbody></table></div>
+  <p><strong>Anti-IL-23, qué vigilar en la práctica</strong> (Fudman DI et al., 2025): baja tasa de infecciones serias y de eventos cardiovasculares mayores, sin señal de aumento de neoplasias; sin efecto dosis ni acumulativo demostrado, lo que permite mantención prolongada sin escalar la vigilancia; antes de iniciar, tamizaje de tuberculosis latente y hepatitis B y actualización de vacunas — no requiere monitorización de laboratorio específica del fármaco durante el seguimiento.</p>
+
+  <h4 class="min">Moléculas pequeñas: otra farmacología, otras precauciones</h4>
+  <p>Administración oral, vida media corta, bajo riesgo de inmunogenicidad, inicio rápido y reversibilidad al suspender. Esa vida media corta es <strong>ventaja</strong> ante un evento adverso o una cirugía programada —el efecto se pierde en días— y <strong>desventaja</strong> con adherencia irregular, porque el efecto terapéutico también se pierde en días, no en semanas.</p>
+  <div class="cu-ec">
+    <div class="col cu"><h4>Inhibidores de la Janus quinasa (JAK)</h4><ul>
+      <li><strong>Tofacitinib</strong> — no selectivo — aprobado en colitis ulcerosa.</li>
+      <li><strong>Upadacitinib</strong> — selectivo JAK-1 — aprobado en colitis ulcerosa y enfermedad de Crohn.</li>
+      <li><strong>Filgotinib</strong> — selectivo JAK-1 — aprobado en colitis ulcerosa. <span class="pill no-cl">No disponible en Chile</span></li>
+      <li>Efecto rápido, particularmente útil en colitis aguda grave y corticodependencia. Exige evaluación cardiovascular y oncológica previa más estricta que los biológicos.</li>
+    </ul></div>
+    <div class="col ec"><h4>Moduladores del receptor S1P</h4><ul>
+      <li><strong>Ozanimod</strong> y <strong>etrasimod</strong> — ambos aprobados solo en colitis ulcerosa. <span class="pill no-cl">Ninguno disponible en Chile</span></li>
+      <li>Mecanismo: retienen linfocitos T en el ganglio linfático, reduciendo su llegada al intestino inflamado.</li>
+      <li>Requieren electrocardiograma basal y control oftalmológico antes de iniciar.</li>
+      <li>Metaanálisis de 7 ensayos y 2.471 pacientes (Akram A et al., 2024) con beneficio en remisión clínica frente a placebo.</li>
+    </ul></div>
+  </div>
+
+  <div class="tw"><table class="t"><caption>Monitorización de inhibidores JAK (Núñez P, Quera R, Yarur AJ, 2023)</caption>
+    <thead><tr><th>Momento</th><th>Qué hacer</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Antes de iniciar</strong></td><td>Tamizaje de tuberculosis latente, hepatitis B y C · vacuna recombinante contra herpes zóster, idealmente antes de comenzar · perfil lipídico, hemograma, creatinina y pruebas hepáticas basales</td></tr>
+      <tr><td><strong>Durante el tratamiento</strong></td><td>Lípidos a las 4–8 semanas y luego cada 6 meses · hemograma a las 4–8 semanas y luego cada 3 meses · creatinina y pruebas hepáticas cada 3–12 meses · evitar vacunas vivas, o administrarlas al menos 4 semanas antes de iniciar</td></tr>
+    </tbody></table></div>
+
+  <div class="tw"><table class="t"><caption>Incidencia de herpes zóster por rama · programa de tofacitinib en CU</caption>
+    <thead><tr><th>Rama</th><th>Incidencia (por 100 pacientes-año)</th><th>n</th></tr></thead>
+    <tbody>
+      <tr><td>Placebo</td><td>0,97</td><td>198</td></tr>
+      <tr><td>Tofacitinib 5 mg dos veces al día</td><td>2,05</td><td>198</td></tr>
+      <tr><td>Tofacitinib 10 mg dos veces al día</td><td><strong>6,64</strong></td><td>196</td></tr>
+      <tr><td>Todas las dosis combinadas</td><td>4,07</td><td>1.157</td></tr>
+    </tbody></table></div>
+  <div class="box ojo">
+    <div class="t">Quiénes concentran el riesgo — y cómo leer la advertencia de la FDA</div>
+    <p>La FDA emitió en 2021 una advertencia de seguridad para tofacitinib tras ORAL Surveillance (artritis reumatoide), extrapolada a EII: infecciones serias y oportunistas —con herpes zóster a la cabeza—, alteraciones lipídicas, elevación asintomática de creatinquinasa, cáncer cutáneo no melanoma, trombosis venosa profunda y tromboembolismo pulmonar. El riesgo se concentra en <strong>uso previo de anti-TNF, edad &gt; 60 años, índice de masa corporal bajo y comorbilidad cardiovascular</strong>. Estratifica por dosis, por enfermedad y por factores de riesgo: no es una contraindicación universal, sino un llamado a seleccionar paciente y dosis con criterio.</p>
+  </div>
+  <p><strong>Moduladores S1P, seis cosas que vigilar:</strong> electrocardiograma basal y revisión de fármacos bradicardizantes antes de la primera dosis; serología de varicela zóster con vacunación si es negativa; evaluación oftalmológica en diabéticos o con antecedente de uveítis (riesgo de edema macular); y vigilancia continua de hipertensión arterial, bradicardia o arritmia, linfopenia, alteración de pruebas hepáticas e infecciones —en particular varicela—.</p>
+
+  <div class="laminas"><div class="lam-h">Láminas de apoyo (ver en ibd-eii.com) · Tamizaje previo y ensayos cara a cara</div><p class="nota" style="margin:6px 0 0">Qué pedir antes de iniciar, y el mapa completo de las comparaciones directas disponibles.</p><div class="lam-g"><figure class="lam sinimg" data-g="inline" data-q="tamizaje previo a biológico, molécula pequeña o inmunosupresor (1 de 2) prebiologic-1"><figcaption>Tamizaje previo a biológico, molécula pequeña o inmunosupresor (1 de 2)<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="inline" data-q="tamizaje previo a biológico, molécula pequeña o inmunosupresor (2 de 2) prebiologic-2"><figcaption>Tamizaje previo a biológico, molécula pequeña o inmunosupresor (2 de 2)<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="inline" data-q="ensayos cara a cara en eii (lámina 1 de 2) h2head-trial-1"><figcaption>Ensayos cara a cara en EII (lámina 1 de 2)<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="inline" data-q="ensayos cara a cara en eii (lámina 2 de 2) h2head-trial-2"><figcaption>Ensayos cara a cara en EII (lámina 2 de 2)<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure></div></div>
+  <h4 class="min">Anti-TL1A: pipeline, no estándar</h4>
+  <div class="box ojo">
+    <div class="t">Tulisokibart · ARTEMIS-UC <span class="pill f3">Fase 2 · no aprobado FDA/EMA</span></div>
+    <p>En colitis ulcerosa, remisión clínica del <strong>26 % frente a 1 %</strong> con placebo, y <strong>32 % frente a 11 %</strong> en el subgrupo positivo al biomarcador de selección. El desenlace endoscópico no alcanzó significación (p = 0,06), lo que detuvo la secuencia jerárquica de testeo. Es un resultado prometedor de fase 2: <strong>no es estándar de manejo</strong> y no está disponible en Chile ni aprobado por FDA o EMA para esta indicación.</p>
+  </div>
+  <h3 class="sub" id="c4">Sección 04 · Eje 2 — Fenotipo de la enfermedad</h3>
+  <p class="lead">La misma molécula rinde de forma muy distinta según el territorio anatómico comprometido. Dos escenarios donde esa diferencia es más marcada: la recurrencia posquirúrgica de la enfermedad de Crohn y los trastornos del reservorio ileoanal.</p>
+
+  <h4 class="min">Recurrencia posquirúrgica de la enfermedad de Crohn</h4>
+  <div class="box clave">
+    <div class="t">El reloj parte el día de la cirugía</div>
+    <p>La conducta de vigilancia y de eventual profilaxis se define <strong>el día de la resección</strong> según el perfil de riesgo, y se verifica con endoscopia a los <strong>6–12 meses</strong>, no con la aparición de síntomas. La recurrencia endoscópica precede a la clínica, con frecuencia por años.</p>
+  </div>
+  <p>El consenso define recurrencia posquirúrgica como la que ocurre tras dos resecciones en adultos, o tras una sola resección en población pediátrica. La clasificación endoscópica de <strong>Rutgeerts</strong>, aplicada en la anastomosis ileocolónica, sigue siendo la herramienta central: <strong>i0</strong> sin lesiones · <strong>i1</strong> hasta cinco úlceras aftosas · <strong>i2a</strong> lesiones limitadas a la anastomosis · <strong>i2b</strong> más de cinco aftas en el íleon neoterminal · <strong>i3</strong> ileítis difusa · <strong>i4</strong> úlceras grandes, nódulos o estenosis.</p>
+  <div class="cu-ec">
+    <div class="col ec"><h4>Factores de alto riesgo de recurrencia</h4><ul>
+      <li>Edad menor de 30 años al momento de la cirugía.</li>
+      <li>Tabaquismo activo.</li>
+      <li>Fenotipo penetrante (Montreal B3).</li>
+      <li>Una o más resecciones previas.</li>
+      <li>Enfermedad perianal asociada.</li>
+    </ul></div>
+    <div class="col cu"><h4>Calprotectina fecal: filtro, no confirmación</h4><ul>
+      <li>Con corte &lt; 100 µg/g a los 3–6 meses, POCER mostró <strong>sensibilidad 89 %</strong> y <strong>especificidad 58 %</strong> para descartar recurrencia.</li>
+      <li>Su utilidad es <strong>negativa</strong>: un valor bajo permite diferir razonablemente la colonoscopia. Un valor elevado no confirma recurrencia por sí solo.</li>
+    </ul></div>
+  </div>
+  <p><strong>POCER</strong> (De Cruz P et al., <em>Lancet</em> 2015): todos recibieron metronidazol por 3 meses; los de alto riesgo además azatioprina o adalimumab; colonoscopia de reevaluación a los 6 meses con escalada guiada por el hallazgo. Recurrencia endoscópica a los 18 meses: <strong>49 % con estrategia guiada por endoscopia frente a 67 % con manejo estándar no guiado</strong>.</p>
+
+  <div class="tw"><table class="t"><caption>Sabemos qué hacer; el problema es que no lo hacemos — cumplimiento de la reevaluación</caption>
+    <thead><tr><th>Cohorte</th><th>Definición de cumplimiento</th><th>Cumplimiento</th></tr></thead>
+    <tbody>
+      <tr><td>2007–2016</td><td>Algún control objetivo a 24 meses</td><td>56 %</td></tr>
+      <tr><td>2013–2019</td><td>Colonoscopia entre 3 y 15 meses</td><td>40 %</td></tr>
+      <tr><td>SPARC IBD, 2017–2022 (centros de referencia)</td><td>Cumplimiento de la reevaluación recomendada</td><td>49 %</td></tr>
+    </tbody></table></div>
+  <div class="box mal">
+    <div class="t">Por qué esto es un problema de proceso, no de conocimiento</div>
+    <p>El cumplimiento apenas mejora en centros de referencia (49 %) respecto de cohortes generales (40 %): eso descarta que el problema sea desconocimiento de la guía. Las causas son estructurales — el paciente asintomático no percibe la necesidad del examen, la coordinación entre cirugía y gastroenterología se rompe al alta, y hay listas de espera para colonoscopia electiva. <strong>La solución concreta y de bajo costo es agendar la reevaluación endoscópica antes del alta quirúrgica</strong>, no dejarla pendiente de coordinación posterior.</p>
+  </div>
+  <p><strong>PREVENT</strong> (Regueiro M et al., <em>Gastroenterology</em> 2016): 297 pacientes aleatorizados 1:1 a infliximab frente a placebo cada 8 semanas desde el día 45 posoperatorio. Sin diferencias en el desenlace primario de recurrencia clínica a las 76 semanas (12,9 % frente a 20,0 %; p = 0,097), pero con reducción marcada de la recurrencia endoscópica: <strong>30,6 % frente a 60,0 %</strong>, reducción absoluta de 29,4 pp (IC 95 % 18,6–40,2; p &lt; 0,001).</p>
+  <div class="box ojo">
+    <div class="t">Cómo interpretar un resultado primario «negativo» que en realidad no lo es</div>
+    <p>El estudio se diseñó para un desenlace clínico que ocurre tarde y con poca frecuencia en el horizonte del ensayo, por lo que quedó con poder insuficiente. La recurrencia endoscópica precede a la clínica y es el desenlace accionable: es el que debe guiar la decisión de mantener o escalar profilaxis.</p>
+  </div>
+  <p>Un metaanálisis en red posterior (Bakouny Z et al., <em>J Clin Gastroenterol</em> 2019; 9 estudios prospectivos, 571 pacientes) situó a infliximab como referencia. Odds ratio de recurrencia endoscópica frente a infliximab: adalimumab 0,92 (IC 95 % 0,18–4,75) · tiopurinas 4,11 (0,68–24,78) · placebo 4,39 (0,70–27,68) · mesalazina <strong>37,84 (3,77–379,42)</strong>.</p>
+  <div class="tw"><table class="t"><caption>REPREVIO (D’Haens G et al., Lancet Gastroenterol Hepatol 2025) · vedolizumab EV posoperatorio inmediato, 84 aleatorizados (43 / 37)</caption>
+    <thead><tr><th>Desenlace a semana 26 (Rutgeerts modificado)</th><th>Vedolizumab</th><th>Placebo</th><th>p</th></tr></thead>
+    <tbody>
+      <tr><td>Puntaje de Rutgeerts modificado menor</td><td>77,8 %</td><td>referencia</td><td>&lt; 0,0001</td></tr>
+      <tr><td>Bajo riesgo (i0–i2a)</td><td>77 %</td><td>38 %</td><td>0,0004</td></tr>
+      <tr><td><strong>Remisión endoscópica completa (i0)</strong></td><td><strong>42 %</strong></td><td>3 %</td><td>&lt; 0,001</td></tr>
+    </tbody></table></div>
+  <p class="nota">Distribución completa en semana 26, vedolizumab frente a placebo: i0 41,9 % vs 2,7 % · i1 7,0 % vs 13,5 % · i2a 27,9 % vs 21,6 % · i2b 16,3 % vs 16,2 % · i3 0 % vs 16,2 % · i4 7,0 % vs 29,7 %.</p>
+  <div class="box bien">
+    <div class="t">Por qué REPREVIO cambia la conversación clínica</div>
+    <p>Antes de REPREVIO, la profilaxis posquirúrgica no anti-TNF carecía de respaldo de un ensayo aleatorizado. Aporta, por primera vez, una alternativa formal para el paciente que ya había fallado a anti-TNF antes de la cirugía indicada por esa misma falla — un escenario frecuente y hasta ahora sin evidencia de primer nivel.</p>
+  </div>
+
+  <h4 class="min">Trastornos del reservorio ileoanal: no todo es pouchitis</h4>
+  <div class="box mal">
+    <div class="t">El error diagnóstico más frecuente en este escenario</div>
+    <p>Tratar como pouchitis inflamatoria un cuadro que en realidad es mecánico, funcional o infeccioso. Sin reservorioscopia con biopsias, la tasa de acierto clínico basado solo en síntomas es baja: frecuencia aumentada, urgencia defecatoria, incontinencia, distensión abdominal, hematoquecia, evacuación incompleta y dolor pélvico son comunes a las tres categorías.</p>
+  </div>
+  <p>Tres grandes categorías: <strong>complicaciones quirúrgicas</strong> (habitualmente en el primer año posoperatorio), <strong>alteraciones funcionales</strong> y <strong>alteraciones inflamatorias</strong>. El estudio debe incluir reservorioscopia con biopsias, estudio de deposiciones incluyendo <em>Clostridioides difficile</em>, resonancia de pelvis si se sospecha fístula o sepsis, y manometría anorrectal si predomina el componente defecatorio funcional. Dentro del espectro inflamatorio hay un continuo: pouchitis aguda (&lt; 4 semanas de síntomas), pouchitis crónica —dependiente o refractaria a antibióticos— y enfermedad de Crohn del reservorio en el extremo más severo. <strong>Las cuatro semanas son el umbral que separa la forma aguda de la crónica.</strong></p>
+  <div class="tw"><table class="t"><caption>EARNEST (Travis S et al., N Engl J Med 2023;388:1191-200) · fase 4, 102 adultos con pouchitis crónica activa; vedolizumab 300 mg EV día 1 y semanas 2, 6, 14, 22 y 30; n = 51 por rama</caption>
+    <thead><tr><th>Desenlace (mPDAI)</th><th>Vedolizumab</th><th>Placebo</th><th>Diferencia</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Remisión, semana 14</strong></td><td>31 %</td><td>10 %</td><td>Δ ajustada 22 pp (IC 95 % 6,5–37); p = 0,007</td></tr>
+      <tr><td>Remisión, semana 34</td><td>35 %</td><td>18 %</td><td>Δ 17 pp (IC 95 % 0–35)</td></tr>
+      <tr><td>Eventos adversos serios</td><td>6 %</td><td>8 %</td><td>—</td></tr>
+    </tbody></table></div>
+  <p><strong>RESERVO</strong> (Mesonero F, Zabana Y et al., red GETECCU, 2026): estudio de vida real sobre 338 pacientes con trastorno inflamatorio del reservorio en 46 centros españoles; 145 recibieron al menos un biológico, con 212 líneas evaluadas. Distribución: pouchitis 66 % (96/145), enfermedad de Crohn del reservorio 29 % (42/145), cuffitis 5 % (7/145). Mediana hasta el inicio del biológico: <strong>31 meses</strong> desde el diagnóstico del trastorno — casi tres años de manejo antibiótico rotado antes de escalar.</p>
+  <div class="tw"><table class="t">
+    <thead><tr><th>Biológico</th><th>n</th><th>1.ª línea</th><th>Necesidad de intensificación</th></tr></thead>
+    <tbody>
+      <tr><td>Infliximab</td><td>95</td><td>93 %</td><td>39 %</td></tr>
+      <tr><td>Adalimumab</td><td>69</td><td>59 %</td><td>42 %</td></tr>
+      <tr><td>Vedolizumab</td><td>35</td><td>31 %</td><td>49 %</td></tr>
+      <tr><td>Ustekinumab</td><td>26</td><td>8 %</td><td>46 %</td></tr>
+    </tbody></table></div>
+  <div class="box ojo">
+    <div class="t">Cómo leer estas proporciones de primera línea</div>
+    <p>Que el 93 % de los infliximab se usara en primera línea, frente a solo el 8 % de los ustekinumab, refleja <strong>disponibilidad y costumbre clínica, no jerarquía de evidencia</strong>. RESERVO no es un estudio cara a cara: su valor está en posicionar opciones en la práctica real y describir subgrupos que ningún ensayo aleatorizado ha estudiado.</p>
+  </div>
+  <div class="tw"><table class="t"><caption>Tras fallar un anti-TNF en el reservorio · desenlace a 12 meses en segunda línea</caption>
+    <thead><tr><th>Desenlace</th><th>Segundo anti-TNF</th><th>Otro mecanismo</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Remisión o respuesta</strong></td><td>21 %</td><td><strong>64 %</strong></td></tr>
+      <tr><td>Sin respuesta</td><td>79 %</td><td>36 %</td></tr>
+      <tr><td>Discontinuación</td><td>82 %</td><td>45 %</td></tr>
+    </tbody></table></div>
+  <p>Un segundo anti-TNF se asoció con mayor riesgo de falla (OR 4,8) y de discontinuación (OR 5,52) que cambiar de mecanismo. Alcanzar remisión con el segundo biológico se asoció con menor necesidad de cirugía posterior. Señales adicionales de vedolizumab: mejor en primera línea que en líneas posteriores (50 % frente a 33 %; p = 0,05) · mejor en pouchitis que en enfermedad de Crohn del reservorio (OR ajustado 1,28; p = 0,043) · especialmente bien en <strong>pouchitis dependiente de antibióticos</strong> (OR ajustado 2,56; p = 0,015).</p>
+  <div class="box clave">
+    <div class="t">Aplicación práctica de estas señales</div>
+    <p>Si la pouchitis crónica es <strong>dependiente de antibióticos</strong>, vedolizumab es la primera elección razonable. Si existe <strong>enfermedad de Crohn del reservorio con fístula</strong>, el anti-TNF conserva su lugar preferente — la misma lógica de la enfermedad de Crohn perianal luminal.</p>
+  </div>
+  <div class="tw"><table class="t"><caption>POUCHIVED (Gimeno-Pitarch L et al., Front Immunol 2025) · cohorte prospectiva, 10 hospitales, 47 pacientes con IPAA y pouchitis crónica refractaria a antibióticos — respuesta clínica (mPDAI &lt; 5)</caption>
+    <thead><tr><th>Formulación</th><th>Semana 12</th><th>Semana 24</th><th>Semana 52</th></tr></thead>
+    <tbody>
+      <tr><td>Vedolizumab endovenoso</td><td>58,5 %</td><td>73,1 %</td><td>66,7 %</td></tr>
+      <tr><td>Vedolizumab subcutáneo</td><td>81,8 %</td><td>91,7 %</td><td>100 %*</td></tr>
+    </tbody></table></div>
+  <p class="nota">* Subgrupo pequeño con datos disponibles; interpretar con cautela. 25 de 47 pacientes cambiaron a vedolizumab subcutáneo 108 mg cada 2 semanas tras una mediana de 15 semanas con endovenoso, sin pérdida de respuesta. Persistencia a 52 semanas similar entre formulaciones (EV 68 % frente a SC 62 %; p = 0,977).</p>
+  <div class="box mal">
+    <div class="t">Por qué esta comparación no permite concluir superioridad del subcutáneo</div>
+    <p>La comparación entre formulaciones no es aleatorizada: los pacientes que cambian a subcutáneo suelen ser precisamente los que ya respondían bien al endovenoso. Es un sesgo de selección clásico, no evidencia de mayor eficacia de la vía subcutánea. Lo que sí aporta el subcutáneo es <strong>menos visitas de infusión, menor costo de administración y mejor autonomía</strong> — una decisión de acceso y calidad de vida, no de eficacia comparada, particularmente relevante en regiones sin centro de infusión cercano.</p>
+  </div>
+  <div class="box clave">
+    <div class="t">Síntesis del eje 2</div>
+    <p>El fenotipo cambia las reglas: la misma molécula rinde distinto según la anatomía. Tras una resección, la conducta se define el día de la cirugía y se verifica con endoscopia a los 6–12 meses. En el reservorio, la primera pregunta no es qué biológico usar, sino <strong>si el problema es realmente inflamatorio</strong>.</p>
+  </div>
+  <h3 class="sub" id="c5">Sección 05 · Eje 3 — Dependiente del paciente</h3>
+
+  <h4 class="min">Embarazo: el mayor riesgo es la enfermedad activa</h4>
+  <div class="box clave">
+    <div class="t">La pregunta correcta</div>
+    <p>No es si el fármaco es seguro en el embarazo, sino <strong>qué es más riesgoso: mantener el fármaco eficaz, o dejar que la enfermedad se active</strong>. La actividad inflamatoria durante la gestación —y no el tratamiento— es el principal determinante del resultado obstétrico.</p>
+  </div>
+  <p>La enfermedad activa durante la gestación se asocia a parto prematuro, rotura prematura de membranas, bajo peso al nacer y feto pequeño para la edad gestacional. De eso se desprende la conversación central con la paciente en edad fértil: el objetivo es <strong>concebir en remisión y mantenerla durante todo el embarazo</strong>; suspender un tratamiento eficaz por temor es, en sí misma, la decisión de mayor riesgo; y la planificación preconcepcional debe integrarse al control habitual de toda mujer en edad fértil con EII, no reservarse para cuando el embarazo ya es un hecho.</p>
+  <div class="tw"><table class="t"><caption>Predictores de actividad durante el embarazo (Vestergaard T et al., 2023)</caption>
+    <thead><tr><th>Predictor</th><th>Comparador</th><th>OR (IC 95 %)</th></tr></thead>
+    <tbody>
+      <tr><td>Actividad en embarazo previo</td><td>vs. embarazo previo sin actividad</td><td>3,2 (1,5–6,6)</td></tr>
+      <tr><td><strong>Actividad previa a la concepción</strong></td><td>vs. remisión al concebir</td><td><strong>5,3 (3,5–8,2)</strong></td></tr>
+      <tr><td>Colitis ulcerosa</td><td>vs. enfermedad de Crohn</td><td>2,6 (1,8–3,9)</td></tr>
+      <tr><td>Remisión en embarazo previo (protector)</td><td>vs. actividad previa</td><td>0,4 (0,1–0,9)</td></tr>
+    </tbody></table></div>
+  <p>Las terapias convencionales —5-ASA y tiopurinas— se consideran seguras, con la excepción histórica de la mesalazina con recubrimiento de ftalato de dibutilo: se documentó exposición urinaria elevada a metabolitos de ftalatos en usuarias (hasta 200 veces mayor que en controles), sin daño clínico demostrado en desenlaces, aunque es razonable preferir otras formulaciones si están disponibles. Entre las terapias avanzadas, <strong>anti-TNF, vedolizumab y ustekinumab se mantienen habitualmente</strong> durante el embarazo cuando son eficaces. Las moléculas pequeñas (inhibidores JAK y moduladores S1P) se suspenden, según el consenso global de embarazo en EII de 2025, <strong>solo si existe una alternativa eficaz disponible</strong> para mantener la salud materna: dejar a la paciente sin ningún tratamiento no es en ningún caso una opción aceptable.</p>
+  <div class="tw"><table class="t"><caption>Corticoides en el embarazo: no todos son equivalentes</caption>
+    <thead><tr><th>Corticoide</th><th>Riesgo</th><th>Riesgos descritos</th><th>Dosis</th></tr></thead>
+    <tbody>
+      <tr><td>Budesonida, budesonida MMX y prednisolona rectal</td><td>Bajo</td><td>Bajo</td><td>Dosis estándar</td></tr>
+      <tr><td>Prednisolona oral o endovenosa</td><td>Moderado (diabetes gestacional, rotura prematura de membranas)</td><td>Parto pretérmino; pequeño para la edad gestacional; mayor riesgo de infección hasta los 12 meses</td><td>Dosis estándar el menor tiempo posible, con monitorización materna y fetal</td></tr>
+    </tbody></table></div>
+  <p class="nota">Todos los corticoides cruzan la placenta salvo la prednisona, que se inactiva en gran medida en ese paso. Regla general: usarlos solo durante la crisis y por el menor tiempo posible.</p>
+  <div class="box ojo">
+    <div class="t">El riesgo orofacial, en su justa medida</div>
+    <p>En modelos animales se describió un riesgo muy bajo de malformaciones orofaciales asociado a corticoides. En humanos ese riesgo <strong>no se ha confirmado</strong>: los estudios de cohorte no muestran aumento significativo. Es un dato que conviene tener presente para responder con precisión si la paciente lo pregunta, sin sobredimensionarlo.</p>
+  </div>
+
+  <h4 class="min">Registro PIANO: la evidencia más robusta en embarazo</h4>
+  <p>El registro PIANO (Mahadevan U et al., <em>Gastroenterology</em> 2021) es la fuente más sólida sobre exposición a tiopurinas y anti-TNF durante la gestación. No mostró incremento de malformaciones congénitas, abortos espontáneos, infecciones en el primer año de vida ni retraso del desarrollo. La única señal fue un aumento de nacimientos pretérmino (antes de las 36 semanas), que los propios autores atribuyen principalmente a la <strong>actividad de la enfermedad materna</strong> y no a la exposición al fármaco.</p>
+  <p>Sobre vedolizumab y ustekinumab, los datos más recientes (Chugh R et al., 2024): 1.669 embarazos evaluados en PIANO — 1.430 sin exposición a biológico como comparación, <strong>66 expuestos a vedolizumab</strong> y <strong>47 a ustekinumab</strong> — sin incremento en desenlaces maternos (parto prematuro, aborto espontáneo, pequeño para la edad gestacional, complicaciones placentarias) ni neonatales (bajo peso al nacer, ingreso a UCI neonatal, malformaciones congénitas, infecciones hasta el año).</p>
+  <div class="box ojo">
+    <div class="t">La honestidad estadística que exige este dato</div>
+    <p>Con solo 66 y 47 embarazos expuestos respectivamente, el poder para detectar eventos raros es limitado. La ausencia de señal es tranquilizadora, pero <strong>no equivale todavía a la certeza que sí tenemos con los anti-TNF</strong>, respaldada por un volumen de datos muchísimo mayor.</p>
+  </div>
+  <div class="cu-ec">
+    <div class="col cu"><h4>Niveles en el recién nacido</h4><ul>
+      <li><strong>Infliximab, adalimumab y ustekinumab:</strong> niveles neonatales <em>superiores</em> a los maternos al parto.</li>
+      <li><strong>Vedolizumab:</strong> niveles cerca de un 50 % <em>menores</em> que los maternos.</li>
+      <li>No existe correlación entre el nivel al nacer y el riesgo de infección del lactante.</li>
+    </ul></div>
+    <div class="col ec"><h4>Conducta recomendada</h4><ul>
+      <li>Mantener la dosis previa al embarazo durante toda la gestación.</li>
+      <li>Planificar la última dosis según la vida media del fármaco, para reducir la transferencia placentaria hacia el final.</li>
+      <li><strong>Diferir las vacunas vivas del lactante hasta los 6 meses</strong> cuando hubo exposición biológica in utero.</li>
+    </ul></div>
+  </div>
+
+  <h4 class="min">Lactancia: la mayoría de los fármacos son compatibles</h4>
+  <div class="box mal">
+    <div class="t">El error más costoso en esta conversación</div>
+    <p>La lactancia se suspende con frecuencia por temor infundado al fármaco materno. <strong>Suspender el tratamiento eficaz de la madre para poder amamantar es, de los dos escenarios posibles, el de mayor riesgo real.</strong></p>
+  </div>
+  <p>La regla de referencia es la <strong>dosis relativa en el lactante</strong> —el porcentaje de la dosis materna, ajustado por peso, que efectivamente recibe el lactante—: <strong>≤ 10 %</strong> se considera relativamente seguro para la mayoría de los fármacos. En lactantes expuestos in utero a infliximab, adalimumab, vedolizumab o ustekinumab, la lactancia no afectó el aclaramiento neonatal del fármaco (Julsgaard M et al., 2025).</p>
+  <div class="box clave">
+    <div class="t">Por qué los anticuerpos monoclonales son seguros en leche materna</div>
+    <p>La barrera relevante <strong>no es la glándula mamaria: es el tubo digestivo del lactante</strong>, que degrada los anticuerpos monoclonales antes de que puedan absorberse de forma significativa hacia la circulación sistémica del bebé.</p>
+  </div>
+  <p><strong>Inhibidores JAK y lactancia — aquí sí hay que ser prudente.</strong> Tofacitinib es detectable en leche materna con dosis de 5 y 10 mg dos veces al día; su concentración en leche supera a la plasmática alrededor de 4 horas después de la toma y cae de forma marcada después de las 8 horas (Mitrova K et al., 2025). Para upadacitinib y filgotinib no hay datos humanos, y tanto EMA como FDA recomiendan evitar la lactancia mientras se usan.</p>
+
+  <div class="laminas"><div class="lam-h">Láminas de apoyo (ver en ibd-eii.com) · Embarazo y lactancia</div><p class="nota" style="margin:6px 0 0">Lámina de consulta rápida por fármaco: conducta en gestación y en lactancia.</p><div class="lam-g"><figure class="lam sinimg" data-g="inline" data-q="terapias de eii en embarazo y lactancia ibd-pregnlact-1"><figcaption>Terapias de EII en embarazo y lactancia<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure></div></div>
+  <h4 class="min">El adulto mayor con EII no es un adulto joven con más años</h4>
+  <p>Comorbilidades y polifarmacia atraviesan transversalmente todos los dominios de decisión: el riesgo de complicaciones relacionadas con fármacos aumenta de forma sustancial —con un incremento de hasta 15 veces en el riesgo de linfoma no Hodgkin bajo ciertas exposiciones acumuladas— y el cáncer cutáneo no melanoma es la neoplasia más frecuente en este grupo etario.</p>
+  <div class="box">
+    <div class="t">Fragilidad · definición (posicionamiento GETECCU, Mañosa M et al., 2025)</div>
+    <p>Condición de disminución de la reserva fisiológica y de la resistencia a factores estresantes, que confiere mayor vulnerabilidad y riesgo de resultados adversos. Involucra aspectos físicos, psicológicos y sociales. <strong>La edad cronológica, por sí sola, no distingue entre el adulto mayor independiente y el frágil o dependiente.</strong></p>
+  </div>
+  <div class="cu-ec">
+    <div class="col cu"><h4>Fenotipo de fragilidad de Fried (Clegg A et al., Lancet 2013)</h4><ul>
+      <li>Pérdida de peso involuntaria.</li>
+      <li>Agotamiento referido por el propio paciente.</li>
+      <li>Fuerza de prensión (<em>grip strength</em>) disminuida.</li>
+      <li>Velocidad de marcha lenta.</li>
+      <li>Nivel de actividad física bajo.</li>
+    </ul>
+    <p style="font-size:.86rem;margin:8px 0 0"><strong>0</strong> robusto · <strong>1–2</strong> prefrágil · <strong>≥3</strong> frágil</p></div>
+    <div class="col ec"><h4>Polifarmacia (Kochar B et al., 2024) · 100 pacientes con EII ≥ 60 años</h4><ul>
+      <li><strong>86 %</strong> usaba 5 o más medicamentos; <strong>45 %</strong> usaba 10 o más.</li>
+      <li><strong>48 %</strong> tenía al menos un fármaco de la lista de Beers.</li>
+      <li><strong>24 %</strong> presentaba carga anticolinérgica ≥ 3.</li>
+      <li>Vigilar interacciones específicamente con corticoides, sulfasalazina, mesalazina, metotrexato, inhibidores JAK y ozanimod.</li>
+    </ul></div>
+  </div>
+  <p>La fragilidad se asocia a mayor riesgo de caídas, hospitalización, institucionalización y mortalidad, y a un aumento exponencial de los costos. Frente a un evento estresante menor —una infección urinaria— la persona no frágil recupera su nivel funcional previo, mientras la frágil cae a un estado de dependencia y recupera de forma incompleta. Singh S et al. (<em>Lancet Gastroenterol Hepatol</em> 2023) describen tres escenarios de adulto mayor con EII, cada uno con un peso relativo distinto de complicaciones por la enfermedad, por el tratamiento y por la comorbilidad crónica y la fragilidad — y por lo tanto una estrategia distinta: <strong>no existe una única receta para «el adulto mayor con EII»</strong>.</p>
+  <div class="box mal">
+    <div class="t">El riesgo real en el adulto mayor es el subtratamiento</div>
+    <p>Beaugerie L et al. (2020) muestran que los pacientes con enfermedad de Crohn de inicio tardío reciben biológicos significativamente más tarde que los de inicio en la adultez (<strong>p = 0,00013</strong>). La preocupación clínica intuitiva va hacia el sobretratamiento; los datos muestran que el riesgo real y medible es el opuesto: <strong>el subtratamiento</strong>, con cronificación de la actividad inflamatoria y exposición prolongada a corticoides.</p>
+  </div>
+
+  <h4 class="min">Recomendaciones chilenas en situaciones especiales</h4>
+  <div class="tw"><table class="t"><caption>Grupo ACTECCU · Rev Med Chile 2026</caption>
+    <thead><tr><th>Escenario</th><th>Permitido</th><th>Evitar</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Embarazo</strong></td><td>5-ASA · corticoides · anti-TNF · vedolizumab · ustekinumab</td><td>—</td></tr>
+      <tr><td><strong>Adulto mayor</strong></td><td>5-ASA · anti-TNF · vedolizumab · ustekinumab</td><td>Inhibidores JAK · metotrexato · moduladores S1P</td></tr>
+      <tr><td><strong>Pacientes oncológicos</strong></td><td>Continuar lo ya indicado, según evaluación multidisciplinaria</td><td>Tiopurinas · metotrexato</td></tr>
+    </tbody></table></div>
+
+  <h3 class="sub" id="c6">Sección 06 · Integración y decisión</h3>
+  <p class="lead">Marco de elaboración propia, construido sobre la evidencia de las secciones anteriores — no proviene de una guía puntual, y se declara explícitamente como tal.</p>
+  <div class="qs">
+    <div><b>¿Cuál es el fenotipo dominante?</b>Colitis ulcerosa, enfermedad de Crohn luminal, Crohn perianal o trastorno del reservorio: cada uno tiene un fármaco que rinde comparativamente mejor.</div>
+    <div><b>¿Qué tan rápido necesito respuesta?</b>Una crisis grave, una hospitalización o un riesgo real de colectomía cambian la prioridad y favorecen los agentes de acción rápida (corticoides, inhibidores JAK) sobre los de inicio más lento.</div>
+    <div><b>¿Qué objetivo medible voy a acordar?</b>Síntomas, biomarcadores, endoscopia, histología o imagen: el objetivo define el nivel de exposición terapéutica necesario y el momento de reevaluar.</div>
+    <div><b>¿Cuál es el riesgo de este paciente?</b>Edad, riesgo infeccioso, antecedente oncológico, embarazo, comorbilidad cardiovascular y exposición previa a corticoides.</div>
+    <div><b>¿Qué secuencia estoy construyendo?</b>Primera línea, post anti-TNF o post múltiples mecanismos: lo que se elige hoy condiciona lo que se podrá ofrecer mañana, sobre todo en el contexto de acceso chileno.</div>
+  </div>
+  <div class="box clave">
+    <div class="t">Decisión final</div>
+    <p>Se elige bien cuando el <strong>mecanismo</strong>, la <strong>evidencia</strong> y el <strong>perfil del paciente</strong> están alineados con el objetivo acordado. Si alguno de los tres no calza, la elección es por defecto — no por indicación clínica.</p>
+  </div>
+
+  <div class="tw"><table class="t"><caption>Hoja de decisión · traducción de las guías a la disponibilidad local</caption>
+    <thead><tr><th>Escenario clínico</th><th>Mecanismo a considerar</th><th>Comentario clínico</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Colitis ulcerosa bio-naïve</strong></td><td>Vedolizumab, anti-TNF, anti-IL-23 o inhibidor JAK según perfil</td><td>Vedolizumab tiene el argumento más fuerte por VARSITY, los datos de vida real y su perfil de seguridad.</td></tr>
+      <tr><td><strong>Colitis ulcerosa tras falla a anti-TNF</strong></td><td>Cambiar de mecanismo</td><td>Vedolizumab, anti-IL-23, inhibidor JAK o modulador S1P según urgencia, comorbilidad y preferencia.</td></tr>
+      <tr><td><strong>Crohn luminal sin compromiso perianal</strong></td><td>Vedolizumab, anti-IL-12/23 o anti-IL-23</td><td>Priorizar seguridad, extensión, actividad objetiva y la rapidez que el caso exija.</td></tr>
+      <tr><td><strong>Crohn perianal activo</strong></td><td>Anti-TNF</td><td>Infliximab suele ser la referencia; considerar terapia combinada y manejo quirúrgico simultáneo.</td></tr>
+      <tr><td><strong>Riesgo infeccioso elevado o comorbilidad significativa</strong></td><td>Vedolizumab</td><td>La selectividad intestinal es la ventaja conceptual y se sostiene en los datos de seguridad agrupados.</td></tr>
+      <tr><td><strong>Recurrencia posquirúrgica de Crohn</strong></td><td>Anti-TNF o vedolizumab</td><td>La conducta se define el día de la cirugía y se verifica con endoscopia a los 6–12 meses.</td></tr>
+      <tr><td><strong>Pouchitis crónica dependiente de antibióticos</strong></td><td>Vedolizumab</td><td>Respaldado por EARNEST, RESERVO y POUCHIVED en esta indicación específica.</td></tr>
+    </tbody></table></div>
+  <div class="box ojo">
+    <div class="t">Advertencia de acceso sobre esta tabla</div>
+    <p>La tabla describe lo que la evidencia respalda, no lo que está financiado. En Chile, de todos los mecanismos mencionados <strong>solo el anti-TNF y sus biosimilares están cubiertos por la Ley Ricarte Soto</strong>. Cada fila que no sea anti-TNF requiere previsión complementaria, vía de excepción o gestión administrativa — y esa gestión debe iniciarse al momento de decidir, no después.</p>
+  </div>
+
+  <div class="laminas"><div class="lam-h">Láminas de apoyo (ver en ibd-eii.com) · Indicación y dosis en la decisión final</div><p class="nota" style="margin:6px 0 0">Qué está indicado en cada enfermedad, y con qué dosis de inducción y mantención.</p><div class="lam-g"><figure class="lam sinimg" data-g="inline" data-q="qué terapia tiene indicación en colitis ulcerosa y cuál en enfermedad de crohn ibd-therapies-incolors-1"><figcaption>Qué terapia tiene indicación en colitis ulcerosa y cuál en enfermedad de Crohn<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="inline" data-q="dosis de las terapias de eii en adultos: inducción y mantención photo-2026-09-29-22-23-16"><figcaption>Dosis de las terapias de EII en adultos: inducción y mantención<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure></div></div>
+  <h4 class="min">Cinco mensajes para llevar</h4>
+  <ol>
+    <li>En colitis ulcerosa, vedolizumab cuenta con evidencia cara a cara superior a adalimumab en remisión clínica y cicatrización mucosa a 52 semanas (VARSITY) — <strong>con la salvedad del desenlace de remisión libre de corticoides</strong>.</li>
+    <li>La evidencia de vida real respalda su persistencia y efectividad, sobre todo cuando se usa temprano en la secuencia (Kapizioni, UK IBD BioResource).</li>
+    <li><strong>La secuenciación importa:</strong> tras la falla a un anti-TNF, cambiar de mecanismo rinde mejor que repetir la misma vía — con datos convergentes del registro británico y de RESERVO en el reservorio.</li>
+    <li>En el paciente difícil de tratar, siempre evaluar las posibilidades reales de acceso antes de diseñar la secuencia — en Chile esto no es un detalle administrativo: es parte de la decisión clínica.</li>
+    <li>En adulto mayor, comorbilidad oncológica y embarazo, la seguridad puede ser legítimamente el argumento central de la elección terapéutica.</li>
+  </ol>
+
+  <details class="ac"><summary>Perlas clínicas</summary><div class="in"><ul>
+    <li>El criterio para cambiar de terapia avanzada es <strong>el mecanismo de acción necesario</strong>, no el número de fármacos ya usados (Parigi 2023).</li>
+    <li>El nivel de fármaco objetivo depende del objetivo terapéutico, no solo del fármaco: la cicatrización mucosa exige un nivel valle más alto que el control sintomático (Taxonera 2022).</li>
+    <li>Tras la falla a un anti-TNF, cambiar de mecanismo rinde mejor que repetir la vía — dato convergente entre un ensayo aleatorizado, una cohorte de 13.222 pacientes y una cohorte de reservorio de 338.</li>
+    <li>La recurrencia endoscópica posquirúrgica precede a la clínica por meses o años: la vigilancia se basa en colonoscopia a los 6–12 meses, no en la aparición de síntomas.</li>
+    <li>En trastornos del reservorio, la primera pregunta no es qué biológico usar, sino <strong>si el cuadro es realmente inflamatorio</strong>.</li>
+    <li>En el embarazo, la enfermedad activa —no el fármaco— es el principal determinante de riesgo obstétrico.</li>
+    <li>La barrera a la transferencia de anticuerpos monoclonales por leche materna es el tubo digestivo del lactante, que los degrada — no la glándula mamaria.</li>
+    <li>La vida media corta de las moléculas pequeñas es ventaja ante un evento adverso o una cirugía, y desventaja con adherencia irregular: el efecto se pierde en días, no en semanas.</li>
+  </ul></div></details>
+
+  <details class="ac"><summary>Errores frecuentes</summary><div class="in"><ul>
+    <li><strong>Declarar fracaso terapéutico sin medir niveles ni anticuerpos antifármaco.</strong> Repetir un anti-TNF a ciegas expone a semanas de exposición a un fármaco cuyo fracaso puede deberse a inmunogenicidad o a falla farmacodinámica — ninguna de las dos se resuelve con otro anti-TNF.</li>
+    <li><strong>Confundir síntomas persistentes con actividad inflamatoria objetiva.</strong> Sobrecrecimiento bacteriano, síndrome de intestino irritable superpuesto, malabsorción de sales biliares, estenosis fibrótica establecida e infección intercurrente (<em>C. difficile</em>, CMV) pueden simular un brote sin serlo.</li>
+    <li><strong>Tratar como pouchitis inflamatoria un trastorno del reservorio mecánico, funcional o infeccioso.</strong> Sin endoscopia, la tasa de acierto clínico basado solo en síntomas es baja.</li>
+    <li><strong>Presentar VARSITY solo por su desenlace primario.</strong> Omitir que la remisión libre de corticoides favoreció a adalimumab sesga la discusión, en particular en el paciente corticodependiente.</li>
+    <li><strong>Suspender el tratamiento materno para poder amamantar.</strong> Es, de los dos escenarios posibles, el de mayor riesgo real.</li>
+  </ul></div></details>
+
+  <div class="box clave">
+    <div class="t">Síntesis</div>
+    <p>Las opciones terapéuticas en EII han ido en aumento, mejorando tolerancia y perfil de seguridad para lograr los objetivos actuales; el desafío pendiente en Latinoamérica es que esas opciones <strong>estén efectivamente disponibles</strong>.</p>
+  </div>
+</section>
+
+<section class="vista" id="v-atlas">
+<div class="hero" style="padding-block:34px 20px">
+<p class="eyebrow">Módulo 03</p>
+<h1 style="font-size:clamp(1.6rem,4.6vw,2.4rem)">Índice de láminas · <em>36 figuras</em></h1>
+<p class="sub">Catálogo de las 36 láminas de apoyo que acompañan este material, ordenadas por tema. En esta versión pública se listan por título: las figuras son material de terceros y no se redistribuyen aquí.</p><div class="aviso-pub"><div class="t">Por qué no están las imágenes</div><p>Las láminas son material docente de <strong>Beatriz Gros</strong>, disponible en <a href="https://www.ibd-eii.com" target="_blank" rel="noopener">www.ibd-eii.com</a>. Este índice permite identificar qué figura cubre cada tema y consultarla en la fuente original.</p></div>
+</div>
+<div class="atlas-bar"><input id="q" type="search" placeholder="Buscar por tema: tiopurinas, JAK, dosis, embarazo…" aria-label="Buscar lámina">
+<button class="chip" data-f="all" aria-pressed="true">Todas</button>
+<button class="chip" data-f="mecanismos" aria-pressed="false">Mecanismos</button>
+<button class="chip" data-f="convencional" aria-pressed="false">Convencional</button>
+<button class="chip" data-f="dosis" aria-pressed="false">Dosis</button>
+<button class="chip" data-f="tamizaje" aria-pressed="false">Tamizaje</button>
+<button class="chip" data-f="objetivos" aria-pressed="false">Objetivos</button>
+<button class="chip" data-f="ensayos" aria-pressed="false">Ensayos</button>
+<button class="chip" data-f="mei" aria-pressed="false">MEI</button>
+<button class="chip" data-f="complicaciones" aria-pressed="false">Complicaciones</button>
+<button class="chip" data-f="especiales" aria-pressed="false">Poblaciones</button>
+</div><div id="atlas-body">
+<div class="grupo" data-grupo="mecanismos"><h4>Mecanismos de acción por clase</h4><p class="gd">Cómo actúa cada familia de terapia avanzada y qué vía bloquea.</p>
+<div class="lam-g"><figure class="lam sinimg" data-g="mecanismos" data-q="red de señalización del factor de necrosis tumoral (tnf) y de tl1a tnf-tl1a-1"><figcaption>Red de señalización del factor de necrosis tumoral (TNF) y de TL1A<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="mecanismos" data-q="tráfico linfocitario y terapias anti-integrina antiintegrin-1"><figcaption>Tráfico linfocitario y terapias anti-integrina<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="mecanismos" data-q="función de los anti-il-12 y/o il-23: p40 frente a p19 il-12-il-23-1"><figcaption>Función de los anti-IL-12 y/o IL-23: p40 frente a p19<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="mecanismos" data-q="vía jak-stat: qué citoquina usa cada par jak y qué función bloquea cada inhibidor jak-stat-pathway-1"><figcaption>Vía JAK-STAT: qué citoquina usa cada par JAK y qué función bloquea cada inhibidor<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="mecanismos" data-q="receptores s1p1 a s1p5 y funciones moduladas por ozanimod y etrasimod s1p-modulator-1"><figcaption>Receptores S1P1 a S1P5 y funciones moduladas por ozanimod y etrasimod<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure></div></div>
+<div class="grupo" data-grupo="convencional"><h4>Terapia convencional e inmunomoduladores</h4><p class="gd">Tiopurinas, metotrexato y corticoides: mecanismo, metabolismo y equivalencias.</p>
+<div class="lam-g"><figure class="lam sinimg" data-g="convencional" data-q="mecanismo propuesto de las tiopurinas thiopurines-1"><figcaption>Mecanismo propuesto de las tiopurinas<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="convencional" data-q="metabolismo de las tiopurinas y conducta según el patrón de metabolitos thiopurine-metabolites-1"><figcaption>Metabolismo de las tiopurinas y conducta según el patrón de metabolitos<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="convencional" data-q="tiopurina metiltransferasa (tpmt): actividad y ajuste de dosis thiopurine-1-1"><figcaption>Tiopurina metiltransferasa (TPMT): actividad y ajuste de dosis<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="convencional" data-q="mecanismo propuesto del metotrexato methotrexate-1"><figcaption>Mecanismo propuesto del metotrexato<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="convencional" data-q="corticoides: dosis equivalentes, potencia y vida media steroids-ibd2-1"><figcaption>Corticoides: dosis equivalentes, potencia y vida media<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure></div></div>
+<div class="grupo" data-grupo="dosis"><h4>Dosis, indicación y manejo del fármaco</h4><p class="gd">Inducción y mantención en adulto y pediatría, indicación por enfermedad y cadena de frío.</p>
+<div class="lam-g"><figure class="lam sinimg" data-g="dosis" data-q="dosis de las terapias de eii en adultos: inducción y mantención photo-2026-09-29-22-23-16"><figcaption>Dosis de las terapias de EII en adultos: inducción y mantención<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="dosis" data-q="dosis de las terapias de eii en pediatría ibd-therapies-doses-pediatrics-1"><figcaption>Dosis de las terapias de EII en pediatría<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="dosis" data-q="qué terapia tiene indicación en colitis ulcerosa y cuál en enfermedad de crohn ibd-therapies-incolors-1"><figcaption>Qué terapia tiene indicación en colitis ulcerosa y cuál en enfermedad de Crohn<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="dosis" data-q="cadena de frío y estabilidad fuera de refrigeración de los biológicos subcutáneos 2biological-subcut-cold-chain-1"><figcaption>Cadena de frío y estabilidad fuera de refrigeración de los biológicos subcutáneos<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure></div></div>
+<div class="grupo" data-grupo="tamizaje"><h4>Tamizaje antes de iniciar</h4><p class="gd">Qué pedir antes de un biológico, una molécula pequeña o un inmunosupresor.</p>
+<div class="lam-g"><figure class="lam sinimg" data-g="tamizaje" data-q="tamizaje previo a biológico, molécula pequeña o inmunosupresor (1 de 2) prebiologic-1"><figcaption>Tamizaje previo a biológico, molécula pequeña o inmunosupresor (1 de 2)<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="tamizaje" data-q="tamizaje previo a biológico, molécula pequeña o inmunosupresor (2 de 2) prebiologic-2"><figcaption>Tamizaje previo a biológico, molécula pequeña o inmunosupresor (2 de 2)<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure></div></div>
+<div class="grupo" data-grupo="objetivos"><h4>Definiciones endoscópicas y objetivos por ensayo</h4><p class="gd">Qué definió como remisión endoscópica cada ensayo pivotal, separado por enfermedad.</p>
+<div class="lam-g"><figure class="lam sinimg" data-g="objetivos" data-q="definiciones de remisión endoscópica usadas en los ensayos de colitis ulcerosa endoscopic-ucv2-1"><figcaption>Definiciones de remisión endoscópica usadas en los ensayos de colitis ulcerosa<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="objetivos" data-q="definiciones de remisión endoscópica usadas en los ensayos de enfermedad de crohn endoscopic-crohns-1"><figcaption>Definiciones de remisión endoscópica usadas en los ensayos de enfermedad de Crohn<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="objetivos" data-q="remisión clínica precoz y de mantención en colitis ulcerosa, por ensayo early-clinical-remission-and-maintenance-in-uc-4-1"><figcaption>Remisión clínica precoz y de mantención en colitis ulcerosa, por ensayo<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="objetivos" data-q="remisión clínica precoz y de mantención en enfermedad de crohn, por ensayo early-clinical-remission-and-maintenance-cd-1"><figcaption>Remisión clínica precoz y de mantención en enfermedad de Crohn, por ensayo<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure></div></div>
+<div class="grupo" data-grupo="ensayos"><h4>Ensayos, diseño e historia</h4><p class="gd">Cara a cara, línea de tiempo de los pivotales, diseño frente a placebo e historia de la especialidad.</p>
+<div class="lam-g"><figure class="lam sinimg" data-g="ensayos" data-q="ensayos cara a cara en eii (lámina 1 de 2) h2head-trial-1"><figcaption>Ensayos cara a cara en EII (lámina 1 de 2)<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="ensayos" data-q="ensayos cara a cara en eii (lámina 2 de 2) h2head-trial-2"><figcaption>Ensayos cara a cara en EII (lámina 2 de 2)<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="ensayos" data-q="línea de tiempo de los ensayos pivotales, por fármaco names-trials-timelinev2-1"><figcaption>Línea de tiempo de los ensayos pivotales, por fármaco<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="ensayos" data-q="diseño de los ensayos en eii frente a placebo trial-design-ibd-1"><figcaption>Diseño de los ensayos en EII frente a placebo<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="ensayos" data-q="historia de la enfermedad inflamatoria intestinal ibdhistory-1"><figcaption>Historia de la enfermedad inflamatoria intestinal<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure></div></div>
+<div class="grupo" data-grupo="mei"><h4>Manifestaciones extraintestinales</h4><p class="gd">Qué terapia cubre cada manifestación, y el detalle por territorio.</p>
+<div class="lam-g"><figure class="lam sinimg" data-g="mei" data-q="terapias de eii y manifestaciones extraintestinales clásicas ibd-and-eims-1"><figcaption>Terapias de EII y manifestaciones extraintestinales clásicas<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="mei" data-q="terapias de eii y enfermedades inmunomediadas asociadas ibd-and-imids-1"><figcaption>Terapias de EII y enfermedades inmunomediadas asociadas<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="mei" data-q="manifestaciones articulares: artritis periférica tipo 1 y 2, artritis axial join-1"><figcaption>Manifestaciones articulares: artritis periférica tipo 1 y 2, artritis axial<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="mei" data-q="manifestaciones oculares: uveítis, epiescleritis y escleritis ocular-1"><figcaption>Manifestaciones oculares: uveítis, epiescleritis y escleritis<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="mei" data-q="manifestaciones orales: estomatitis aftosa, granulomatosis orofacial, piostomatitis vegetans oraleims-1"><figcaption>Manifestaciones orales: estomatitis aftosa, granulomatosis orofacial, piostomatitis vegetans<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="mei" data-q="manifestaciones cutáneas: eritema nodoso, pioderma gangrenoso, síndrome de sweet skin-1"><figcaption>Manifestaciones cutáneas: eritema nodoso, pioderma gangrenoso, síndrome de Sweet<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure></div></div>
+<div class="grupo" data-grupo="complicaciones"><h4>Complicaciones, cirugía y vigilancia</h4><p class="gd">Estenosis, estenoplastia, enfermedad perianal y colonoscopía de vigilancia comparada.</p>
+<div class="lam-g"><figure class="lam sinimg" data-g="complicaciones" data-q="abordaje de la estenosis en la enfermedad de crohn strictures-diagram-1"><figcaption>Abordaje de la estenosis en la enfermedad de Crohn<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="complicaciones" data-q="tipos de estenoplastia: heineke-mikulicz, finney y michelassi strictureplasty-figures-1"><figcaption>Tipos de estenoplastia: Heineke-Mikulicz, Finney y Michelassi<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="complicaciones" data-q="terapia médica de la enfermedad de crohn perianal medical-therapy-perianalcrohns-disease-2-1"><figcaption>Terapia médica de la enfermedad de Crohn perianal<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg" data-g="complicaciones" data-q="colonoscopía de vigilancia en eii: bsg, ecco y aga comparadas surveillance-1"><figcaption>Colonoscopía de vigilancia en EII: BSG, ECCO y AGA comparadas<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure></div></div>
+<div class="grupo" data-grupo="especiales"><h4>Poblaciones especiales</h4><p class="gd">Embarazo y lactancia en una sola lámina de consulta.</p>
+<div class="lam-g"><figure class="lam sinimg" data-g="especiales" data-q="terapias de eii en embarazo y lactancia ibd-pregnlact-1"><figcaption>Terapias de EII en embarazo y lactancia<span class="cred">Gros B · ibd-eii.com</span></figcaption></figure></div></div>
+</div><p class="vacio" id="vacio" hidden>Ningún título coincide con esa búsqueda.</p>
+<div class="box ojo"><div class="t">Autoría de las láminas</div>
+<p>Las 36 láminas de este atlas son material docente de <strong>Beatriz Gros</strong>, publicado en <strong>www.ibd-eii.com</strong>. Se reproducen aquí con su marca de agua íntegra y crédito en cada figura, para uso de estudio personal. No son material propio ni de dominio público, y la autoría del repositorio no se extiende a ellas: antes de usarlas en una clase, una publicación o cualquier difusión, corresponde pedir autorización a la autora.</p></div>
+</section>
+
+<section class="vista" id="v-rapida">
+  <div class="hero" style="padding-block:34px 20px">
+    <p class="eyebrow">Módulo 04</p>
+    <h1 style="font-size:clamp(1.6rem,4.6vw,2.4rem)">Consulta rápida</h1>
+    <p class="sub">Lo que se necesita con el paciente delante. Cortes numéricos, criterios de decisión y checklists — sin desarrollo teórico. Cada bloque se abre y se cierra.</p>
+  </div>
+
+  <details class="ac" open><summary>Qué hay y qué no hay en Chile · hoy</summary><div class="in">
+    <div class="tw"><table class="t">
+      <thead><tr><th>Situación del fármaco</th><th>Moléculas</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Financiado por Ley Ricarte Soto</strong> <span class="pill lrs">LRS</span></td><td>Infliximab · adalimumab · biosimilares de ambos</td></tr>
+        <tr><td><strong>Registro sanitario en Chile, sin cobertura LRS</strong></td><td>Vedolizumab · ustekinumab · guselkumab · tofacitinib · upadacitinib</td></tr>
+        <tr><td><strong>Sin registro sanitario en Chile</strong> <span class="pill no-cl">No disponible</span></td><td>Certolizumab · golimumab · risankizumab · mirikizumab · filgotinib · ozanimod · etrasimod</td></tr>
+        <tr><td><strong>Pipeline, no estándar de manejo</strong> <span class="pill f3">Fase 2–3</span></td><td>Tulisokibart y otros anti-TL1A · obefazimod · combinaciones de terapias avanzadas</td></tr>
+      </tbody></table></div>
+    <p class="nota">Fuente: datos abiertos FONASA / Ley Ricarte Soto, mayo 2026, y registro ISP. Verificar antes de indicar: las coberturas cambian.</p>
+    <div class="box mal"><div class="t">Regla operativa</div>
+      <p>Si la conducta indicada no es anti-TNF, la gestión de acceso —previsión complementaria, vía de excepción, COMPIN— empieza el mismo día de la decisión, con la falla documentada por niveles y anticuerpos antifármaco. No después.</p></div>
+  </div></details>
+
+  <details class="ac"><summary>Falla terapéutica: qué es y qué no es</summary><div class="in">
+    <div class="cu-ec">
+      <div class="col cu"><h4>Definiciones</h4><ul>
+        <li><strong>Falla primaria:</strong> ausencia de respuesta al completar la inducción con dosis adecuada — 8 a 12 semanas según el fármaco.</li>
+        <li><strong>Pérdida de respuesta secundaria:</strong> respuesta inicial documentada seguida de reaparición de actividad objetiva, con dosis y adherencia verificadas.</li>
+        <li><strong>Intolerancia:</strong> evento adverso que obliga a suspender, con independencia de la eficacia alcanzada.</li>
+        <li><strong>Refractariedad multimecanismo</strong> (Parigi 2023): falla a <strong>≥ 2 mecanismos de acción distintos</strong>. Dos anti-TNF no cuentan como dos mecanismos.</li>
+      </ul></div>
+      <div class="col ec"><h4>Descartar antes de escalar</h4><ul>
+        <li><em>Clostridioides difficile</em> y citomegalovirus.</li>
+        <li>Estenosis fibrótica establecida (problema mecánico).</li>
+        <li>Síndrome de intestino irritable superpuesto.</li>
+        <li>Sobrecrecimiento bacteriano del intestino delgado.</li>
+        <li>Malabsorción de sales biliares.</li>
+        <li>Dosis subterapéutica o intervalo prolongado por logística.</li>
+        <li>Abandono no consultado del tratamiento.</li>
+      </ul></div>
+    </div>
+    <div class="tw"><table class="t"><caption>Conducta según TDM en pérdida de respuesta a anti-TNF</caption>
+      <thead><tr><th>Nivel valle</th><th>ADAb</th><th>Interpretación</th><th>Conducta</th></tr></thead>
+      <tbody>
+        <tr><td>Bajo</td><td>Negativo</td><td>Falla farmacocinética</td><td><strong>Optimizar dosis</strong> o acortar intervalo</td></tr>
+        <tr><td>Bajo</td><td>Título alto</td><td>Inmunogenicidad</td><td><strong>Cambio intra-clase</strong> ± inmunomodulador</td></tr>
+        <tr><td>Adecuado</td><td>Negativo</td><td>Falla farmacodinámica</td><td><strong>Cambiar de mecanismo</strong></td></tr>
+      </tbody></table></div>
+    <p class="nota">El nivel objetivo depende del objetivo terapéutico: para cicatrización mucosa e histológica se requiere un valle más alto que para control sintomático (Taxonera 2022: 2,01 → 2,52 µg/mL en golimumab).</p>
+  </div></details>
+
+  <details class="ac"><summary>Colitis aguda grave · umbrales y reloj</summary><div class="in">
+    <div class="tw"><table class="t">
+      <thead><tr><th>Criterio</th><th>Corte</th><th>Qué decide</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Truelove-Witts</strong> (colitis grave)</td><td>≥ 6 deposiciones con sangre/día <em>más</em> al menos uno de: frecuencia cardíaca &gt; 90 lpm, temperatura &gt; 37,8 °C, hemoglobina &lt; 10,5 g/dL, VHS &gt; 30 mm/h</td><td>Hospitalización, corticoide endovenoso, profilaxis tromboembólica</td></tr>
+        <tr><td><strong>Montreal S3</strong></td><td>≥ 6 deposiciones con sangre/día con frecuencia cardíaca ≥ 90 lpm, temperatura ≥ 37,5 °C, hemoglobina &lt; 10,5 g/dL o VHS ≥ 30 mm/h</td><td>Clasificación de gravedad</td></tr>
+        <tr><td><strong>Índice de Oxford (Travis), día 3</strong></td><td>&gt; 8 deposiciones/día, <em>o</em> 3–8 deposiciones con PCR &gt; 45 mg/L</td><td>Predice ~85 % de colectomía: <strong>decidir terapia de rescate ese mismo día</strong></td></tr>
+        <tr><td><strong>UCEIS</strong></td><td>0–8 (patrón vascular, sangrado, erosiones/úlceras)</td><td>Gravedad endoscópica; ≥ 7 asocia peor respuesta a corticoides</td></tr>
+        <tr><td><strong>Mayo endoscópico</strong></td><td>0–3; remisión endoscópica = 0–1 (ideal 0)</td><td>Objetivo STRIDE-II en CU</td></tr>
+      </tbody></table></div>
+    <div class="box mal"><div class="t">Obligatorio al ingreso</div>
+      <p>Toxina y PCR para <em>Clostridioides difficile</em> · sigmoidoscopia flexible sin preparación con biopsias para citomegalovirus · profilaxis de tromboembolismo venoso con heparina de bajo peso molecular (el sangrado rectal no la contraindica) · suspender antidiarreicos, opioides y anticolinérgicos · radiografía o tomografía si se sospecha dilatación colónica.</p></div>
+    <p>Rescate: <strong>infliximab</strong> 5 mg/kg (considerar intensificación por depuración acelerada en hipoalbuminemia) <strong>o ciclosporina</strong> 2 mg/kg/día endovenosa. <strong>Tofacitinib 10 mg dos veces al día</strong> tiene evidencia creciente en este escenario por su inicio rápido, pero no está financiado por la LRS. Cirugía si no hay respuesta al rescate en 5–7 días, o antes si hay perforación, hemorragia masiva o megacolon tóxico.</p>
+  </div></details>
+
+  <details class="ac"><summary>Objetivos terapéuticos · STRIDE-II</summary><div class="in">
+    <div class="tw"><table class="t">
+      <thead><tr><th>Horizonte</th><th>Objetivo</th><th>Cómo se mide</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Inmediato</strong></td><td>Respuesta clínica</td><td>Reducción ≥ 50 % de los síntomas (Mayo parcial en CU, HBI o CDAI en EC)</td></tr>
+        <tr><td><strong>Intermedio</strong></td><td>Remisión clínica <em>y</em> normalización de biomarcadores</td><td>PCR normal · calprotectina fecal &lt; 150–250 µg/g</td></tr>
+        <tr><td><strong>A largo plazo</strong></td><td>Cicatrización endoscópica · calidad de vida normalizada · ausencia de discapacidad</td><td>Mayo endoscópico 0–1 (CU) · SES-CD &lt; 3 o ausencia de úlceras (EC)</td></tr>
+        <tr><td><strong>Adicionales, no formalmente exigidos</strong></td><td>Remisión histológica · respuesta transmural · crecimiento normal en pediatría</td><td>Nancy · Robarts · Geboes · ecografía intestinal (IUS) con grosor de pared &lt; 3 mm, IBUS-SAS, Milan</td></tr>
+      </tbody></table></div>
+    <p class="nota">STRIDE-II (Turner D et al., Gastroenterology 2021) no exige remisión histológica como objetivo formal, pero la reconoce como objetivo adicional deseable. Una actualización (STRIDE-III) ha sido anunciada; hasta que se publique, STRIDE-II es el marco vigente.</p>
+    <div class="box clave"><div class="t">Recurrencia posquirúrgica de Crohn</div>
+      <p>Colonoscopia de reevaluación a los <strong>6–12 meses</strong> de la resección, con Rutgeerts modificado. Calprotectina fecal seriada como tamizaje intermedio (&lt; 100 µg/g a los 3–6 meses: sensibilidad 89 %, especificidad 58 % para descartar). <strong>Agendar la reevaluación antes del alta quirúrgica</strong> — el cumplimiento real es de 40–56 %, incluso en centros de referencia.</p></div>
+  </div></details>
+
+  <details class="ac"><summary>Checklist prebiológico</summary><div class="in">
+    <div class="cu-ec">
+      <div class="col cu"><h4>Todos los mecanismos</h4><ul>
+        <li>Tuberculosis latente: PPD o IGRA <em>más</em> radiografía de tórax. Tratar antes de iniciar si es positiva.</li>
+        <li>Serología hepatitis B (HBsAg, anti-HBc, anti-HBs) y hepatitis C.</li>
+        <li>VIH.</li>
+        <li>Varicela zóster: serología; vacunar si es negativa.</li>
+        <li>Calendario de vacunas al día. <strong>Vacunas vivas al menos 4 semanas antes</strong> de iniciar, nunca durante.</li>
+        <li>Neumococo, influenza anual, COVID-19 según programa.</li>
+        <li>Descartar infección activa y absceso no drenado.</li>
+      </ul></div>
+      <div class="col ec"><h4>Según mecanismo</h4><ul>
+        <li><strong>Tiopurinas:</strong> TPMT (actividad o genotipo) y, si está disponible, NUDT15 · hemograma y pruebas hepáticas basales y luego seriadas · serología de virus de Epstein-Barr en el paciente joven.</li>
+        <li><strong>Inhibidores JAK:</strong> perfil lipídico, hemograma, creatinina y pruebas hepáticas basales · evaluación cardiovascular y oncológica · <strong>vacuna recombinante contra herpes zóster antes de iniciar</strong>, idealmente.</li>
+        <li><strong>Moduladores S1P:</strong> electrocardiograma basal · revisar fármacos bradicardizantes · evaluación oftalmológica en diabéticos o con antecedente de uveítis.</li>
+        <li><strong>Anti-IL-23:</strong> tuberculosis y hepatitis B; sin monitorización de laboratorio específica del fármaco en seguimiento.</li>
+      </ul></div>
+    </div>
+  </div></details>
+
+  <details class="ac"><summary>Poblaciones especiales · conducta en una línea</summary><div class="in">
+    <div class="tw"><table class="t"><caption>Recomendaciones ACTECCU · Rev Med Chile 2026</caption>
+      <thead><tr><th>Escenario</th><th>Permitido</th><th>Evitar</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Embarazo</strong></td><td>5-ASA · corticoides · anti-TNF · vedolizumab · ustekinumab</td><td>—</td></tr>
+        <tr><td><strong>Adulto mayor</strong></td><td>5-ASA · anti-TNF · vedolizumab · ustekinumab</td><td>Inhibidores JAK · metotrexato · moduladores S1P</td></tr>
+        <tr><td><strong>Paciente oncológico</strong></td><td>Continuar lo ya indicado, según evaluación multidisciplinaria</td><td>Tiopurinas · metotrexato</td></tr>
+      </tbody></table></div>
+    <div class="cu-ec">
+      <div class="col cu"><h4>Embarazo y lactancia</h4><ul>
+        <li>Concebir <strong>en remisión</strong> y mantenerla: la actividad, no el fármaco, determina el riesgo obstétrico.</li>
+        <li>Mantener la dosis previa al embarazo; planificar la última dosis según vida media.</li>
+        <li>Moléculas pequeñas: suspender <strong>solo si hay alternativa eficaz disponible</strong>.</li>
+        <li>Metotrexato: contraindicado — suspender 3–6 meses antes de concebir, en ambos miembros de la pareja.</li>
+        <li>Vacunas vivas del lactante diferidas a los 6 meses si hubo exposición biológica in utero.</li>
+        <li>Lactancia compatible con anti-TNF, vedolizumab y ustekinumab (dosis relativa ≤ 10 %). Evitar con upadacitinib y filgotinib; con tofacitinib, si se usa, espaciar &gt; 8 h de la toma.</li>
+      </ul></div>
+      <div class="col ec"><h4>Adulto mayor</h4><ul>
+        <li>Medir <strong>fragilidad</strong> (Fried: ≥ 3 criterios), no solo edad.</li>
+        <li>Revisar polifarmacia: lista de Beers, carga anticolinérgica ≥ 3.</li>
+        <li><strong>El riesgo real es el subtratamiento</strong>, no el sobretratamiento (Beaugerie 2020, p = 0,00013).</li>
+        <li>Vigilancia dermatológica: el cáncer cutáneo no melanoma es la neoplasia más frecuente en este grupo.</li>
+        <li>Preferir mecanismos con perfil de seguridad agrupado favorable: vedolizumab, ustekinumab.</li>
+        <li>Evaluación nutricional (GLIM) antes de cualquier cirugía electiva.</li>
+      </ul></div>
+    </div>
+  </div></details>
+
+  <details class="ac"><summary>Scores y clasificaciones · referencia</summary><div class="in">
+    <div class="tw"><table class="t">
+      <thead><tr><th>Dominio</th><th>Colitis ulcerosa</th><th>Enfermedad de Crohn</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Fenotipo</strong></td><td>Montreal E1–E3, S0–S3 · París en pediatría</td><td>Montreal A / L / B (± p) · París en pediatría</td></tr>
+        <tr><td><strong>Actividad clínica</strong></td><td>Mayo total y parcial · Truelove-Witts · Oxford día 3</td><td>CDAI · Harvey-Bradshaw (HBI)</td></tr>
+        <tr><td><strong>Endoscopia</strong></td><td>Mayo endoscópico · UCEIS · PICaSSO</td><td>SES-CD · CDEIS · MM-SES-CD · Rutgeerts modificado (posquirúrgico)</td></tr>
+        <tr><td><strong>Histología</strong></td><td>Nancy · Robarts · Geboes</td><td>Sin índice validado de uso corriente</td></tr>
+        <tr><td><strong>Imagen</strong></td><td>Ecografía intestinal (IUS): grosor de pared, Milan</td><td>MaRIA · sMARIA · IBUS-SAS · Lémann</td></tr>
+        <tr><td><strong>Perianal / reservorio</strong></td><td>PDAI y mPDAI (reservorio)</td><td>Parks · Van Assche · MAGNIFI-CD · PDAI</td></tr>
+      </tbody></table></div>
+    <p class="nota">El desarrollo completo de cada score, con su cálculo y sus puntos de corte, está en el Módulo 01 · Guía de estudio EII 2026.</p>
+  </div></details>
+</section>
+
+<section class="vista" id="v-fuentes">
+  <div class="hero" style="padding-block:34px 20px">
+    <p class="eyebrow">Módulo 05</p>
+    <h1 style="font-size:clamp(1.6rem,4.6vw,2.4rem)">Fuentes, autoría y alcance</h1>
+    <p class="sub">De dónde viene cada pieza, qué está verificado, qué está pendiente de publicación y qué no es material propio.</p>
+  </div>
+
+  <h3 class="sub">Autoría</h3>
+  <div class="box bien">
+    <div class="t">Autor del repositorio</div>
+    <p><strong>Dr. Moisés Oropeza</strong>, Médico Internista, Residente de Gastroenterología de la Universidad de los Andes (Clínica Dávila / Clínica Universidad de los Andes). Suya es la selección de contenidos, la redacción y edición de la Guía de estudio (Módulo 01), de la Clase de actualización 2026 (Módulo 02), de las hojas de consulta rápida (Módulo 04) y del banco de casos del Quiz (Módulo 05), así como la curaduría y organización del atlas. Santiago de Chile, septiembre 2026.</p>
+  </div>
+
+  <h3 class="sub">Autoría de las láminas del atlas</h3>
+  <div class="box ojo">
+    <div class="t">Material de terceros</div>
+    <p>Las 36 láminas que acompañan este material son obra de <strong>Beatriz Gros</strong>, publicadas en <strong>www.ibd-eii.com</strong>. <strong>Esta versión pública no las incluye</strong>: solo lista sus títulos, para que el lector identifique qué figura cubre cada tema y la consulte en la fuente original. <strong>No son material propio ni de dominio público.</strong> La autoría de este repositorio no se extiende a ellas. Quien quiera usarlas en una clase o publicación debe solicitar autorización directamente a la autora.</p>
+  </div>
+
+  <h3 class="sub">Jerarquía de evidencia usada</h3>
+  <div class="tw"><table class="t">
+    <thead><tr><th>Fuente</th><th>Peso asignado</th><th>Uso en este repositorio</th></tr></thead>
+    <tbody>
+      <tr><td><strong>ECCO</strong> (European Crohn's and Colitis Organisation)</td><td>Igual a AGA y ACG</td><td>Referencia principal en definiciones, manejo de colitis aguda grave y enfermedad perianal</td></tr>
+      <tr><td><strong>AGA</strong> (American Gastroenterological Association)</td><td>Igual a ECCO y ACG</td><td>Guías de posicionamiento de terapia avanzada y vigilancia</td></tr>
+      <tr><td><strong>ACG</strong> (American College of Gastroenterology)</td><td>Igual a ECCO y AGA</td><td>Manejo global de CU y EC en el adulto</td></tr>
+      <tr><td><strong>ACTECCU</strong> (Chile)</td><td>Referencia local</td><td>Situaciones especiales y disponibilidad nacional (Rev Med Chile 2026)</td></tr>
+      <tr><td><strong>STRIDE-II</strong> (Turner D et al., Gastroenterology 2021)</td><td>Marco base de objetivos</td><td>Todo el Módulo 04. STRIDE-III ha sido anunciado y aún no está publicado</td></tr>
+      <tr><td><strong>GETECCU</strong></td><td>Complementaria</td><td>Fragilidad (Mañosa 2025) y reservorio (RESERVO 2026)</td></tr>
+    </tbody></table></div>
+  <p class="nota">Ante discrepancia entre ECCO, AGA y ACG, el Módulo 01 presenta las tres posturas antes de concluir.</p>
+
+  <h3 class="sub">Datos locales y su grado de publicación</h3>
+  <div class="tw"><table class="t">
+    <thead><tr><th>Fuente</th><th>Estado</th><th>Qué aporta</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Registro ChilEii</strong> (N = 3.973)</td><td><span class="pill f3">Datos en vías de publicación</span></td><td>Primer denominador chileno: razón CU:EC, edad al diagnóstico, extensión al diagnóstico, distribución regional</td></tr>
+      <tr><td><strong>FONASA · Ley Ricarte Soto</strong></td><td>Datos abiertos públicos, corte mayo 2026</td><td>5.246 pacientes con EII en biológico financiado (2.908 CU, 2.338 EC)</td></tr>
+      <tr><td><strong>ACTECCU</strong>, Rev Med Chile 2026</td><td>Publicado</td><td>Recomendaciones chilenas en situaciones especiales</td></tr>
+      <tr><td><strong>RESERVO</strong> (red GETECCU, 2026)</td><td>Publicado</td><td>338 pacientes con trastorno inflamatorio del reservorio, 46 centros</td></tr>
+    </tbody></table></div>
+
+  <h3 class="sub">Correcciones hechas al material de origen</h3>
+  <ul>
+    <li><strong>Targan 1997, no 2017.</strong> El primer ensayo controlado con cA2 (infliximab) en enfermedad de Crohn refractaria es <em>N Engl J Med</em> 1997;337:1029-35, DOI 10.1056/NEJM199710093371502. La presentación original lo databa en 2017.</li>
+    <li><strong>Montreal S3</strong> — signos ajustados a ≥ 90 lpm, ≥ 37,5 °C y VHS ≥ 30 mm/h, que es la formulación de la clasificación (distinta de los cortes de Truelove-Witts).</li>
+    <li><strong>Golimumab en mantención</strong> — FDA 100 mg cada 4 semanas; EMA 50 mg (&lt; 80 kg) o 100 mg (≥ 80 kg). Las dos posologías se declaran por separado.</li>
+    <li><strong>Guselkumab en colitis ulcerosa</strong> — ya aprobado, con inducción completamente subcutánea de 400 mg en semanas 0, 4 y 8. ACTECCU 2026 no contiene recomendación en CU porque QUASAR es posterior a su fecha de cierre de búsqueda.</li>
+    <li><strong>VARSITY</strong> — se reporta siempre junto con el desenlace de remisión libre de corticoides, que favoreció a adalimumab.</li>
+    <li><strong>Material descartado.</strong> Un PDF de «consenso global y ACG» aportado como fuente contenía afirmaciones no verificables (un supuesto ensayo «ACCURE 2025» de apendicectomía y la calificación del anti-IL-23 p19 como «estándar de oro») y no se incorporó a este repositorio.</li>
+  </ul>
+
+  <h3 class="sub">Alcance y límites</h3>
+  <div class="box">
+    <div class="t">Qué es y qué no es este repositorio</div>
+    <p>Es material de estudio de postgrado, escrito para un lector con competencia clínica propia. No es una guía de práctica clínica, no reemplaza el juicio del equipo tratante y no sustituye la lectura de las guías originales que cita. Las secciones de pipeline están marcadas como fase 2 o fase 3 y no deben leerse como estándar de manejo.</p>
+  </div>
+  <div class="box clave">
+    <div class="t">Cómo mantenerlo vigente</div>
+    <p>Los puntos con fecha de caducidad corta son tres: la cobertura de la Ley Ricarte Soto, el registro sanitario de las moléculas en Chile, y el estado del pipeline. Conviene revisarlos antes de cada uso docente. Los datos de ChilEii se actualizarán cuando el registro se publique formalmente, y el marco de objetivos cuando aparezca STRIDE-III.</p>
+  </div>
+
+  <div class="foot">
+    <p><strong>Repositorio EII 2026</strong> · Autoría, compilación y edición: <strong>Dr. Moisés Oropeza</strong>, Residente de Gastroenterología, Universidad de los Andes — Clínica Dávila / Clínica Universidad de los Andes. Septiembre 2026.</p>
+    <p>Láminas del atlas: Beatriz Gros · <a href="https://www.ibd-eii.com" target="_blank" rel="noopener">www.ibd-eii.com</a> — reproducidas con crédito para estudio personal.</p>
+    <p>Datos de acceso: FONASA, datos abiertos Ley Ricarte Soto, <a href="https://www.fonasa.cl/sites/fonasa/datos-abiertos/lrs" target="_blank" rel="noopener">fonasa.cl</a>, corte mayo 2026.</p>
+  </div>
+</section>
+
+</div>
+
+<script>
+(function(){
+  /* ---------- tema ---------- */
+  var root=document.documentElement, btn=document.getElementById('tema');
+  try{var g=localStorage.getItem('eii-tema'); if(g)root.setAttribute('data-theme',g);}catch(e){}
+  btn.addEventListener('click',function(){
+    var oscuro = root.getAttribute('data-theme')==='dark' ||
+      (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    var n = oscuro ? 'light' : 'dark';
+    root.setAttribute('data-theme', n);
+    try{localStorage.setItem('eii-tema', n);}catch(e){}
+  });
+
+  /* ---------- rutas ---------- */
+  var VISTAS=['inicio','clase','atlas','rapida','fuentes'];
+  var tabs=document.getElementById('tabs');
+  function ir(nombre, scroll){
+    if(VISTAS.indexOf(nombre)<0) nombre='inicio';
+    VISTAS.forEach(function(v){
+      var el=document.getElementById('v-'+v);
+      if(el) el.classList.toggle('on', v===nombre);
+    });
+    Array.prototype.forEach.call(tabs.querySelectorAll('a'),function(a){
+      a.setAttribute('aria-current', a.getAttribute('href')==='#'+nombre ? 'true':'false');
+    });
+    if(scroll!==false) window.scrollTo(0,0);
+  }
+  function desdeHash(scroll){
+    var h=(location.hash||'#inicio').slice(1);
+    if(h.indexOf('c')===0 && /^c[1-6]$/.test(h)){
+      ir('clase', false);
+      var t=document.getElementById(h);
+      if(t) t.scrollIntoView({block:'start'});
+      return;
+    }
+    ir(h, scroll);
+  }
+  window.addEventListener('hashchange',function(){desdeHash(true);});
+  desdeHash(false);
+
+  /* ---------- atlas: buscador y filtros ---------- */
+  var q=document.getElementById('q'), vacio=document.getElementById('vacio');
+  var chips=Array.prototype.slice.call(document.querySelectorAll('.chip'));
+  var filtro='all';
+  function aplicar(){
+    var t=(q&&q.value||'').trim().toLowerCase();
+    var visibles=0;
+    Array.prototype.forEach.call(document.querySelectorAll('.grupo'),function(g){
+      var gid=g.getAttribute('data-grupo'), n=0;
+      Array.prototype.forEach.call(g.querySelectorAll('figure.lam'),function(f){
+        var ok=(filtro==='all'||filtro===gid) && (!t || f.getAttribute('data-q').indexOf(t)>=0);
+        f.hidden=!ok; if(ok)n++;
+      });
+      g.hidden = n===0; visibles+=n;
+    });
+    if(vacio) vacio.hidden = visibles>0;
+  }
+  if(q) q.addEventListener('input',aplicar);
+  chips.forEach(function(c){
+    c.addEventListener('click',function(){
+      filtro=c.getAttribute('data-f');
+      chips.forEach(function(o){o.setAttribute('aria-pressed', String(o===c));});
+      aplicar();
+    });
+  });
+
+  /* ---------- lightbox ---------- */
+  var lb=null;
+  function cerrar(){ if(lb){lb.remove(); lb=null; document.body.style.overflow='';} }
+  document.addEventListener('click',function(e){
+    var img=e.target.closest && e.target.closest('figure.lam img');
+    if(img){
+      e.preventDefault(); cerrar();
+      lb=document.createElement('div'); lb.className='lb';
+      lb.innerHTML='<button class="x" aria-label="Cerrar">✕</button>'+
+        '<img src="'+img.getAttribute('src')+'" alt="">'+
+        '<div class="cap">'+(img.getAttribute('data-cap')||img.alt)+
+        '<b>Beatriz Gros · www.ibd-eii.com</b></div>';
+      document.body.appendChild(lb);
+      document.body.style.overflow='hidden';
+      lb.addEventListener('click',function(ev){ if(ev.target===lb||ev.target.className==='x') cerrar(); });
+      return;
+    }
+  });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') cerrar(); });
+})();
+</script>
+
+
+</body>
+</html>

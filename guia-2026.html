@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Módulo 1 · Guía de estudio EII 2026</title>
+<style>
+:root{
+  --marino:#0f2c4c; --marino2:#17416e; --acento:#b8474d; --acento2:#8f3338;
+  --verde:#1f6f5c; --ambar:#9a6b12; --tinta:#1b2129; --gris:#5c6672;
+  --linea:#e2e6ea; --fondo:#ffffff; --papel:#f7f8fa; --tarjeta:#ffffff;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--papel);color:var(--tinta);
+  font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+  font-size:15.5px;line-height:1.62;-webkit-font-smoothing:antialiased}
+
+/* ---------- Layout ---------- */
+#wrap{display:flex;min-height:100vh}
+#nav{width:280px;flex:0 0 280px;background:var(--marino);color:#cfdae6;position:sticky;top:0;height:100vh;overflow-y:auto;padding:0 0 40px}
+#nav .brand{padding:20px 18px 14px;border-bottom:1px solid rgba(255,255,255,.13)}
+#nav .brand b{display:block;color:#fff;font-size:15px;letter-spacing:.3px}
+#nav .brand span{font-size:11.5px;color:#8fa8c2;text-transform:uppercase;letter-spacing:1.2px}
+#nav input{width:calc(100% - 28px);margin:14px;padding:7px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.07);color:#fff;font-size:13px}
+#nav input::placeholder{color:#8fa8c2}
+#nav a{display:block;padding:6px 18px 6px 20px;color:#cfdae6;text-decoration:none;font-size:13.2px;border-left:3px solid transparent}
+#nav a:hover{background:rgba(255,255,255,.07);color:#fff}
+#nav a.sub{padding-left:34px;font-size:12.4px;color:#9db4cc}
+#nav a.active{border-left-color:var(--acento);background:rgba(255,255,255,.09);color:#fff}
+#nav .grp{padding:14px 18px 4px;font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;color:#7e97b3}
+main{flex:1;min-width:0;padding:0 0 80px}
+.inner{max-width:1000px;margin:0 auto;padding:0 34px}
+
+/* ---------- Portada ---------- */
+header.hero{background:linear-gradient(135deg,var(--marino) 0%,var(--marino2) 100%);color:#fff;padding:52px 0 44px;margin-bottom:34px}
+header.hero .inner{max-width:1000px}
+header.hero .kicker{font-size:11.5px;letter-spacing:2.4px;text-transform:uppercase;color:#8fb4d8}
+header.hero h1{font-size:34px;line-height:1.2;margin:10px 0 12px;font-weight:650}
+header.hero p{color:#c6d6e6;max-width:760px;margin:0 0 18px}
+.meta{display:flex;gap:26px;flex-wrap:wrap;font-size:12.5px;color:#9fb9d4;border-top:1px solid rgba(255,255,255,.15);padding-top:16px}
+.meta b{color:#fff;font-weight:600}
+
+/* ---------- Tipografía ---------- */
+h2{font-size:24px;color:var(--marino);margin:52px 0 4px;font-weight:650;letter-spacing:-.2px}
+h2 .num{display:inline-block;background:var(--marino);color:#fff;font-size:13px;width:30px;height:30px;line-height:30px;
+  text-align:center;border-radius:6px;margin-right:11px;vertical-align:3px;font-weight:600}
+h2+.lead{color:var(--gris);margin:0 0 22px;font-size:14.5px;border-bottom:2px solid var(--linea);padding-bottom:14px}
+h3{font-size:18.5px;color:var(--marino2);margin:34px 0 10px;font-weight:640}
+h4{font-size:15px;color:var(--tinta);margin:22px 0 7px;font-weight:660}
+p{margin:0 0 12px}
+ul,ol{margin:0 0 14px;padding-left:22px}
+li{margin-bottom:5px}
+code{background:#eef1f4;padding:1px 5px;border-radius:4px;font-size:13px;font-family:"Cascadia Mono",Consolas,monospace}
+a{color:var(--marino2)}
+.small{font-size:13px;color:var(--gris)}
+
+/* ---------- Tablas ---------- */
+.tw{overflow-x:auto;margin:16px 0 22px;border:1px solid var(--linea);border-radius:8px;background:#fff}
+table{border-collapse:collapse;width:100%;font-size:13.4px;min-width:560px}
+th{background:var(--marino);color:#fff;text-align:left;padding:9px 11px;font-weight:600;font-size:12.6px;
+  letter-spacing:.2px;vertical-align:bottom;position:sticky;top:0}
+td{padding:8px 11px;border-top:1px solid var(--linea);vertical-align:top}
+tbody tr:nth-child(even){background:#fafbfc}
+td b{color:var(--marino2)}
+table.sm{font-size:12.8px}
+th.g,td.g{background:#f0f3f6}
+
+/* ---------- Marcadores ---------- */
+.box{border:1px solid var(--linea);border-left:4px solid var(--marino2);background:#fff;border-radius:0 8px 8px 0;padding:13px 16px;margin:16px 0}
+.box .t{font-weight:660;font-size:13px;letter-spacing:.4px;text-transform:uppercase;margin-bottom:5px;color:var(--marino2)}
+.box p:last-child,.box ul:last-child{margin-bottom:0}
+.tip{border-left-color:var(--verde)} .tip .t{color:var(--verde)}
+.err{border-left-color:var(--acento)} .err .t{color:var(--acento2)}
+.nue{border-left-color:var(--ambar)} .nue .t{color:var(--ambar)}
+.key{background:var(--marino);color:#fff;border:none;border-radius:8px;padding:18px 20px;margin:22px 0}
+.key .t{color:#8fb4d8}
+.key b{color:#fff}
+.key a{color:#9fc7ee}
+
+/* ---------- Tarjetas ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin:18px 0 24px}
+.card{background:var(--tarjeta);border:1px solid var(--linea);border-radius:9px;padding:15px 16px}
+.card h5{margin:0 0 7px;font-size:14px;color:var(--marino);font-weight:650}
+.card p,.card ul{font-size:13.3px;margin-bottom:0;color:#3b4552}
+.card ul{padding-left:18px}
+
+/* ---------- Chips ---------- */
+.chip{display:inline-block;font-size:11px;padding:2px 8px;border-radius:11px;font-weight:640;letter-spacing:.3px;white-space:nowrap}
+.c-si{background:#e3f1ec;color:var(--verde)} .c-no{background:#fbe9ea;color:var(--acento2)}
+.c-lrs{background:#e6edf6;color:var(--marino2)} .c-par{background:#fdf2dd;color:var(--ambar)}
+
+/* ---------- Algoritmo ---------- */
+.algo{background:#fff;border:1px solid var(--linea);border-radius:9px;padding:6px 0;margin:18px 0}
+.step{display:flex;gap:14px;padding:11px 18px;border-bottom:1px solid var(--linea)}
+.step:last-child{border-bottom:none}
+.step .n{flex:0 0 26px;height:26px;line-height:26px;text-align:center;border-radius:50%;background:var(--marino2);color:#fff;font-size:12.5px;font-weight:640}
+.step .b{flex:1;font-size:13.8px}
+.step .b b{color:var(--marino)}
+.step.stop .n{background:var(--acento)}
+.step.go .n{background:var(--verde)}
+
+/* ---------- Casos ---------- */
+.caso{border:1px solid var(--linea);border-radius:9px;background:#fff;margin:20px 0;overflow:hidden}
+.caso .hd{background:#f0f3f6;padding:11px 17px;font-weight:650;color:var(--marino);font-size:14.5px;border-bottom:1px solid var(--linea)}
+.caso .bd{padding:15px 17px}
+.caso .lvl{float:right;font-size:11px;background:var(--marino2);color:#fff;padding:2px 9px;border-radius:10px;font-weight:600}
+details{margin:10px 0 0}
+details summary{cursor:pointer;font-weight:640;color:var(--acento2);font-size:13.6px;padding:7px 0;user-select:none}
+details[open] summary{margin-bottom:8px}
+details .ans{border-left:3px solid var(--verde);padding:2px 0 2px 14px;font-size:13.8px}
+
+/* ---------- Checklist ---------- */
+.chk{background:#fff;border:1px solid var(--linea);border-radius:9px;padding:14px 18px;margin:16px 0}
+.chk h5{margin:0 0 10px;font-size:14.5px;color:var(--marino)}
+.chk label{display:flex;gap:10px;align-items:flex-start;font-size:13.6px;padding:4px 0;cursor:pointer}
+.chk input{margin-top:4px;accent-color:var(--marino2);flex:0 0 auto}
+.chk label.done{color:#93a0ad;text-decoration:line-through}
+
+/* ---------- Flashcards ---------- */
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:13px;margin:18px 0}
+.fc{background:#fff;border:1px solid var(--linea);border-left:4px solid var(--marino2);border-radius:0 8px 8px 0;
+  padding:13px 15px;cursor:pointer;transition:.15s}
+.fc:hover{box-shadow:0 3px 10px rgba(15,44,76,.09)}
+.fc .q{font-size:13.6px;font-weight:640;color:var(--marino)}
+.fc .a{font-size:13.3px;margin-top:9px;padding-top:9px;border-top:1px dashed var(--linea);color:#39424e;display:none}
+.fc.open .a{display:block}
+.fc .hint{font-size:11px;color:#9aa4b0;margin-top:6px}
+.fc.open .hint{display:none}
+
+/* ---------- Quiz ---------- */
+#quiz .q{background:#fff;border:1px solid var(--linea);border-radius:9px;padding:15px 17px;margin:14px 0}
+#quiz .qh{font-weight:640;font-size:14.2px;color:var(--marino);margin-bottom:10px}
+#quiz .opt{display:block;padding:8px 11px;border:1px solid var(--linea);border-radius:6px;margin:6px 0;
+  cursor:pointer;font-size:13.6px;transition:.12s}
+#quiz .opt:hover{background:#f4f6f8}
+#quiz .opt.sel{border-color:var(--marino2);background:#eef2f7}
+#quiz .opt.ok{border-color:var(--verde);background:#e8f4f0}
+#quiz .opt.bad{border-color:var(--acento);background:#fbebec}
+#quiz .exp{display:none;margin-top:10px;padding:10px 12px;background:#f6f8fa;border-radius:6px;font-size:13.2px;border-left:3px solid var(--marino2)}
+#quiz .exp.show{display:block}
+.qbtn{background:var(--marino);color:#fff;border:none;padding:10px 22px;border-radius:7px;font-size:14px;
+  font-weight:600;cursor:pointer;margin:6px 8px 6px 0}
+.qbtn:hover{background:var(--marino2)}
+.qbtn.alt{background:#fff;color:var(--marino);border:1px solid var(--marino)}
+#score{font-size:16px;font-weight:650;color:var(--marino);margin:16px 0;padding:14px 18px;background:#fff;
+  border:1px solid var(--linea);border-radius:9px;display:none}
+
+/* ---------- Misc ---------- */
+.refs{font-size:13px;counter-reset:r}
+.refs li{margin-bottom:7px}
+hr.sep{border:none;border-top:2px solid var(--linea);margin:44px 0 0}
+.mapa{background:#fff;border:1px solid var(--linea);border-radius:9px;padding:16px 20px;font-family:"Cascadia Mono",Consolas,monospace;
+  font-size:12.6px;line-height:1.75;white-space:pre;overflow-x:auto;color:#2c3641}
+@media print{#nav{display:none}body{background:#fff}.inner{max-width:100%}details{display:block}details .ans{display:block}}
+@media (max-width:900px){#wrap{flex-direction:column}#nav{width:100%;height:auto;position:static;flex:none}.inner{padding:0 18px}}
+
+/* ===== Láminas insertadas (repositorio EII) ===== */
+.laminas{border:1px solid var(--linea);border-radius:10px;background:#fff;padding:16px 18px;margin:26px 0}
+.lam-h{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--acento2);font-weight:700;margin-bottom:8px}
+.lam-n{font-size:13.2px;color:var(--gris);margin:0 0 12px}
+.lam-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+figure.lam{margin:0;border:1px solid var(--linea);border-radius:8px;overflow:hidden;background:#fbfcfd}
+figure.lam img{display:block;width:100%;height:auto;background:#fff}
+figure.lam a{display:block;line-height:0}
+figure.lam figcaption{font-size:12.2px;color:#3b4552;padding:9px 11px;border-top:1px solid var(--linea);line-height:1.45}
+figure.lam .cred{display:block;margin-top:4px;font-size:10.5px;color:#9aa4b0;letter-spacing:.3px}
+.volver{position:fixed;right:18px;bottom:18px;z-index:20;background:var(--marino);color:#fff;text-decoration:none;
+  font-size:13px;font-weight:600;padding:10px 16px;border-radius:24px;box-shadow:0 4px 14px rgba(15,44,76,.28)}
+.volver:hover{background:var(--marino2)}
+@media print{.laminas{page-break-inside:avoid}.volver{display:none}}
+
+
+header.hero .autor-g{display:flex;align-items:center;gap:12px;margin-top:18px;padding:12px 15px;
+  border:1px solid rgba(255,255,255,.2);border-left:3px solid #e0a35e;
+  border-radius:0 10px 10px 0;max-width:600px;background:rgba(255,255,255,.07)}
+header.hero .autor-g .ini-g{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
+  background:#e0a35e;color:#123048;font-weight:700;font-size:.9rem;letter-spacing:.02em}
+header.hero .autor-g .n-g{font-weight:650;font-size:15.5px;line-height:1.25;color:#fff}
+header.hero .autor-g .r-g{font-size:12px;line-height:1.4;color:#a9c3dc}
+
+figure.lam.sinimg{background:rgba(128,128,128,.07)}
+figure.lam.sinimg figcaption{border-top:0;border-left:3px solid var(--acento);padding:10px 12px}
+</style>
+</head>
+<body>
+<div id="wrap">
+<aside id="nav">
+  <div class="brand"><span>Guía de estudio</span><b>Enfermedad Inflamatoria Intestinal</b></div>
+  <input id="navsearch" type="search" placeholder="Filtrar secciones…" autocomplete="off">
+  <div id="navlinks">
+  <div class="grp">Fundamentos</div>
+  <a href="#s1">1 · Introducción y epidemiología</a>
+  <a href="#s2" class="sub">2 · Fisiopatología y dianas</a>
+  <a href="#s3" class="sub">3 · Clínica y diferenciales</a>
+  <a href="#s4" class="sub">4 · Diagnóstico y biomarcadores</a>
+  <a href="#s5" class="sub">5 · Clasificación y pronóstico</a>
+  <div class="grp">Herramientas objetivas</div>
+  <a href="#s6">6 · Scores (clínicos, endoscópicos, imagen)</a>
+  <a href="#s7" class="sub">7 · Treat-to-target y monitorización</a>
+  <div class="grp">Terapéutica</div>
+  <a href="#s8">8 · Arsenal terapéutico y acceso en Chile</a>
+  <a href="#s9" class="sub">9 · Algoritmos CU</a>
+  <a href="#s10" class="sub">10 · Algoritmos EC</a>
+  <a href="#s11" class="sub">11 · Falla terapéutica y TDM</a>
+  <div class="grp">Escenarios complejos</div>
+  <a href="#s12">12 · Colitis ulcerosa aguda grave</a>
+  <a href="#s13" class="sub">13 · Complicaciones e infecciones</a>
+  <a href="#s14" class="sub">14 · Cirugía y postoperatorio</a>
+  <a href="#s15" class="sub">15 · Displasia y cáncer</a>
+  <a href="#s16" class="sub">16 · Poblaciones especiales</a>
+  <a href="#s17" class="sub">17 · Cuidado preventivo</a>
+  <a href="#s18" class="sub">18 · Cuándo derivar</a>
+  <div class="grp">Estudio activo</div>
+  <a href="#s19">19 · Perlas y errores comunes</a>
+  <a href="#s20" class="sub">20 · Novedades 2025–2026</a>
+  <a href="#s21" class="sub">21 · Casos clínicos</a>
+  <a href="#s22" class="sub">22 · Checklists</a>
+  <a href="#s23" class="sub">23 · Mnemotecnias y mapa mental</a>
+  <a href="#s24" class="sub">24 · Flashcards</a>
+  <a href="#s25" class="sub">25 · Quiz interactivo</a>
+  <a href="#s26" class="sub">26 · Síntesis de evidencia</a>
+  <a href="#s27" class="sub">27 · Referencias</a>
+  </div>
+</aside>
+
+<main>
+<header class="hero"><div class="inner">
+  <div class="kicker">Postgrado de Gastroenterología · Repaso integrado</div>
+  <h1>Enfermedad Inflamatoria Intestinal</h1>
+  <p>De los fundamentos al manejo avanzado: diagnóstico, estratificación de riesgo, scores, posicionamiento terapéutico,
+  complicaciones, poblaciones especiales y criterios de derivación. Integra la Guía chilena ACTECCU 2026 (GRADE),
+  las guías ACG 2025 de colitis ulcerosa y enfermedad de Crohn, las AGA Clinical Practice Updates 2024–2026 y evidencia comparativa reciente.</p>
+  <div class="meta">
+    <div><b>Actualizado</b> · agosto 2026</div>
+    <div><b>Nivel</b> · residente de gastroenterología</div>
+    <div><b>Marco local</b> · ACTECCU 2026 · Ley Ricarte Soto</div>
+    <div><b>27 secciones</b> · 15 flashcards · 18 preguntas</div>
+  </div>
+  <div class="autor-g">
+    <span class="ini-g">MO</span>
+    <div>
+      <div class="n-g">Dr. Moisés Oropeza</div>
+      <div class="r-g">Residente de Gastroenterología, Universidad de los Andes · Clínica Dávila / Clínica Universidad de los Andes — autoría y edición</div>
+    </div>
+  </div>
+</div></header>
+
+<div class="inner">
+
+<!-- ================= 1 ================= -->
+<h2 id="s1"><span class="num">1</span>Introducción y epidemiología</h2>
+<p class="lead">Por qué la EII dejó de ser una enfermedad de países industrializados y qué implica para el diagnóstico oportuno en Chile.</p>
+
+<p>La enfermedad inflamatoria intestinal (EII) agrupa dos fenotipos inmunomediados crónicos y recidivantes —la colitis ulcerosa (CU)
+y la enfermedad de Crohn (EC)—, más un grupo minoritario de <b>EII no clasificable</b> (colitis inclasificable cuando el patólogo no
+puede definirla en la pieza quirúrgica; EII no clasificada, <i>IBD-U</i>, cuando la incertidumbre es clínico-endoscópica). La distinción
+no es semántica: determina el pronóstico quirúrgico, la elegibilidad para reservorio ileoanal y el posicionamiento farmacológico.</p>
+
+<h3>Carga de enfermedad</h3>
+<ul>
+  <li><b>Global:</b> prevalencias más altas y estabilizadas en el norte de Europa y Norteamérica; el crecimiento de incidencia hoy ocurre
+  en Asia, África y Latinoamérica — la llamada fase de <i>aceleración de incidencia</i> de la transición epidemiológica.</li>
+  <li><b>Latinoamérica:</b> incidencia de CU 0,74–6,76 y de EC 0,24–3,5 por 100.000 personas-año; prevalencias reportadas de 0,99–44,3
+  (CU) y 0,24–16,7 (EC) por 100.000. La CU predomina sobre la EC, a la inversa de Norteamérica.</li>
+  <li><b>Chile:</b> aumento sostenido de la incidencia y de las hospitalizaciones por EII. La escasez de registros poblacionales
+  es en sí misma una limitación reconocida por la guía ACTECCU 2026.</li>
+  <li><b>Hospitalización (EE.UU., referencia comparativa):</b> 8,2–12,4/100.000/año para CU y 9,3–17,1/100.000/año para EC. La proporción
+  de ingresos por brote fulminante <i>de novo</i> está bajando; hoy se hospitaliza sobre todo al paciente <b>refractario a múltiples terapias avanzadas</b>.</li>
+</ul>
+
+<div class="box tip"><div class="t">💡 Tip de memorización</div>
+<p>El giro epidemiológico se resume en tres verbos: <b>emergencia</b> (países en desarrollo suben incidencia) → <b>aceleración</b>
+(Latinoamérica hoy) → <b>prevalencia compuesta</b> (países desarrollados: incidencia estable pero prevalencia creciente por longevidad
+de la cohorte). Cada fase exige un modelo de atención distinto: la nuestra necesita <i>diagnóstico precoz y acceso</i>, no más camas.</p></div>
+
+<div class="box err"><div class="t">⚠️ Error común</div>
+<p>Asumir que "no hay EII en Chile" y demorar la ileocolonoscopía en un adulto joven con diarrea crónica con sangre. El retraso
+diagnóstico se traduce directamente en daño intestinal acumulado e irreversible (estenosis, fístulas, resecciones) en EC, y en mayor riesgo
+de colectomía en CU extensa. La CU acumula ~10–15% de colectomía a 10 años.</p></div>
+
+<!-- ================= 2 ================= -->
+<h2 id="s2"><span class="num">2</span>Fisiopatología y dianas terapéuticas</h2>
+<p class="lead">La biología importa porque cada fármaco moderno interrumpe un punto concreto de la cascada. Si no ubicas el punto, no puedes explicar la falla.</p>
+
+<h3>La secuencia patogénica en cuatro tiempos</h3>
+<ol>
+  <li><b>Pérdida de la barrera.</b> Alteración del moco, de las uniones estrechas y disbiosis → translocación de antígenos de la microbiota
+  comensal en un huésped genéticamente susceptible (<i>NOD2/CARD15</i> en EC ileal; genes de autofagia <i>ATG16L1</i>, <i>IRGM</i>; vía IL-23R).</li>
+  <li><b>Reconocimiento aberrante.</b> Células presentadoras de antígeno vía receptores tipo Toll (TLR) activan el inflamasoma y liberan
+  interleucina (IL) 12 e IL-23.</li>
+  <li><b>Polarización T.</b> IL-12 → Th1 (interferón γ, factor de necrosis tumoral [TNF] α; perfil clásico de EC). IL-23 → mantenimiento
+  de Th17 (IL-17, IL-22). La CU se describió clásicamente como Th2-atípica (IL-13, células NKT), pero la superposición es amplia.</li>
+  <li><b>Tráfico linfocitario.</b> La integrina α4β7 del linfocito se une a MAdCAM-1 del endotelio intestinal: es el paso que confiere
+  <i>selectividad intestinal</i>. Los receptores de esfingosina-1-fosfato (S1P) permiten la salida del linfocito desde el ganglio; su modulación
+  los secuestra en el ganglio y reduce el reclutamiento.</li>
+</ol>
+
+<div class="tw"><table>
+<thead><tr><th style="width:22%">Diana</th><th style="width:26%">Fármacos</th><th>Consecuencia clínica de bloquearla</th></tr></thead>
+<tbody>
+<tr><td><b>TNF-α</b></td><td>Infliximab, adalimumab, golimumab (solo CU), certolizumab pegol</td><td>Único mecanismo con evidencia robusta en <b>enfermedad perianal fistulizante</b>. Inicio rápido. Riesgo de inmunogenicidad; requiere tamizaje de tuberculosis (TB) y virus hepatitis B (VHB).</td></tr>
+<tr><td><b>Integrina α4β7</b></td><td>Vedolizumab</td><td>Selectividad intestinal → mejor perfil de seguridad sistémica. Inicio más lento; poco útil en manifestaciones extraintestinales (MEI) y débil en perianal.</td></tr>
+<tr><td><b>IL-12/23 (p40)</b></td><td>Ustekinumab</td><td>Eficaz en CU y EC, buen perfil de seguridad, útil en psoriasis concomitante.</td></tr>
+<tr><td><b>IL-23 (p19)</b></td><td>Risankizumab, mirikizumab, guselkumab</td><td>Bloqueo selectivo que preserva IL-12/Th1 protectora; señal de mayor eficacia que ustekinumab en comparaciones directas (SEQUENCE en EC).</td></tr>
+<tr><td><b>JAK 1/3 y JAK1</b></td><td>Tofacitinib (pan-JAK), upadacitinib (JAK1 selectivo)</td><td>Vía oral, <b>inicio en días</b>, no inmunogénicos. Advertencia de seguridad (herpes zóster, eventos cardiovasculares mayores [MACE] y tromboembolismo venoso [TEV] en poblaciones de riesgo).</td></tr>
+<tr><td><b>Receptor S1P</b></td><td>Ozanimod, etrasimod</td><td>Orales, solo CU. Requieren electrocardiograma y evaluación oftalmológica/hepática basal; bradicardia en la titulación.</td></tr>
+<tr><td><b>TL1A</b> 🆕</td><td>Tulisokibart, duvakitug (investigacionales)</td><td>Diana fibro-inflamatoria: promesa de actuar sobre inflamación <i>y</i> fibrosis. Fase 3 en curso.</td></tr>
+<tr><td><b>miR-124</b> 🆕</td><td>Obefazimod (investigacional, oral)</td><td>Potenciador de un micro-ARN antiinflamatorio; mecanismo nuevo, sin inmunosupresión clásica.</td></tr>
+</tbody></table></div>
+
+<div class="box tip"><div class="t">💡 Tip de memorización</div>
+<p>Ordena las dianas por <b>“dónde intervienes en el viaje del linfocito”</b>: se activa (IL-12/23, JAK) → sale del ganglio (S1P) →
+se ancla al intestino (α4β7) → ejecuta daño (TNF). Esa secuencia también predice el perfil de seguridad: cuanto más proximal y sistémico
+el bloqueo, más efectos adversos sistémicos; cuanto más distal e intestinal, más seguridad y más lentitud.</p></div>
+
+<div class="box err"><div class="t">⚠️ Error común</div>
+<p>Explicar la EC como “Th1” y la CU como “Th2” de forma rígida. Es un modelo docente, no una regla de decisión: la superposición
+de vías es sustancial y por eso los mismos fármacos (anti-TNF, anti-IL-23, JAK) funcionan en ambas. Lo que sí separa a las dos entidades
+en la práctica es la <b>profundidad del compromiso</b> (mucoso continuo en CU vs transmural discontinuo en EC), y de ahí derivan las
+complicaciones mecánicas exclusivas de la EC.</p></div>
+
+<!-- ================= 3 ================= -->
+<div class="laminas"><div class="lam-h">Láminas de apoyo (ver en ibd-eii.com) · mecanismos de acción</div><p class="lam-n">Cada lámina corresponde a una de las dianas de la tabla anterior. Ábrelas a pantalla completa para leer los pasos intermedios de cada vía.</p><div class="lam-g"><figure class="lam sinimg"><figcaption>Red de señalización del factor de necrosis tumoral (TNF) y de TL1A <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Tráfico linfocitario y terapias anti-integrina <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Función de los anti-IL-12 y/o IL-23: p40 frente a p19 <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Vía JAK-STAT: qué citoquina usa cada par JAK y qué función bloquea cada inhibidor <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Receptores S1P1 a S1P5 y funciones moduladas por ozanimod y etrasimod <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure></div></div>
+
+<h2 id="s3"><span class="num">3</span>Presentación clínica y diagnóstico diferencial</h2>
+<p class="lead">Ningún hallazgo aislado hace el diagnóstico: es la integración clínica, endoscópica, histológica, radiológica y de laboratorio.</p>
+
+<div class="tw"><table>
+<thead><tr><th style="width:20%">Rasgo</th><th style="width:40%">Colitis ulcerosa</th><th>Enfermedad de Crohn</th></tr></thead>
+<tbody>
+<tr><td><b>Distribución</b></td><td>Continua, desde el recto en sentido proximal</td><td>Parcheada, salteada, de boca a ano; ileocecal en ~50%</td></tr>
+<tr><td><b>Profundidad</b></td><td>Mucosa y submucosa</td><td>Transmural</td></tr>
+<tr><td><b>Síntoma cardinal</b></td><td>Diarrea con sangre, urgencia, tenesmo, pujo</td><td>Dolor abdominal, diarrea, baja de peso, fiebre; sangre menos frecuente</td></tr>
+<tr><td><b>Histología</b></td><td>Distorsión críptica, plasmocitosis basal, depleción de mucina, abscesos crípticos</td><td>Inflamación focal, granulomas no caseificantes (30–40%), inflamación transmural</td></tr>
+<tr><td><b>Complicación típica</b></td><td>Megacolon tóxico, colitis grave refractaria, displasia/cáncer</td><td>Estenosis, fístulas, abscesos, enfermedad perianal</td></tr>
+<tr><td><b>Tabaco</b></td><td>Protector (y su cese puede desencadenar brote)</td><td>Factor de riesgo y de mala evolución</td></tr>
+<tr><td><b>Cirugía</b></td><td>Potencialmente curativa del componente colónico (proctocolectomía)</td><td>Nunca curativa; recurrencia postoperatoria es la regla</td></tr>
+</tbody></table></div>
+
+<h3>Manifestaciones extraintestinales (MEI)</h3>
+<div class="cards">
+<div class="card"><h5>Dependientes de la actividad luminal</h5>
+<ul><li>Artritis periférica tipo 1 (pauciarticular, grandes articulaciones)</li><li>Eritema nodoso</li><li>Epiescleritis</li><li>Estomatitis aftosa</li></ul>
+<p class="small" style="margin-top:8px">Mejoran al controlar el intestino → prioriza terapia dirigida a la luz.</p></div>
+<div class="card"><h5>Independientes de la actividad</h5>
+<ul><li>Espondilitis anquilosante / sacroileítis</li><li>Uveítis anterior</li><li>Pioderma gangrenoso (parcialmente)</li><li>Colangitis esclerosante primaria (CEP)</li></ul>
+<p class="small" style="margin-top:8px">Requieren tratamiento propio; condicionan la elección del biológico.</p></div>
+<div class="card"><h5>Impacto en la elección terapéutica</h5>
+<ul><li>Artropatía axial o uveítis → prioriza <b>anti-TNF</b> (o JAK); vedolizumab es mala elección.</li><li>Psoriasis o hidradenitis → ustekinumab / anti-IL-23.</li><li>CEP → no responde a la terapia de la EII; vigilancia oncológica <b>anual</b>.</li></ul></div>
+</div>
+
+<h3>Diagnósticos diferenciales que hay que excluir siempre</h3>
+<ul>
+  <li><b>Infecciosos:</b> <i>Clostridioides difficile</i> (obligatorio en todo brote), <i>Campylobacter</i>, <i>Salmonella</i>, <i>Shigella</i>,
+  <i>Yersinia</i> (simula ileítis terminal), <i>Entamoeba histolytica</i>, tuberculosis intestinal, citomegalovirus (CMV) en el inmunosuprimido.</li>
+  <li><b>Colitis microscópica:</b> diarrea acuosa <b>sin sangre</b>, colonoscopía macroscópicamente normal, diagnóstico exclusivamente
+  histológico (linfocítica: linfocitosis intraepitelial; colágena: banda de colágeno subepitelial engrosada). Explica 15–30% de las diarreas
+  no sanguinolentas y predomina en adultos mayores. Primera línea: <b>budesonida 9 mg/día por 6–8 semanas</b>; alta tasa de recaída, por lo que
+  se usa budesonida en dosis baja de mantenimiento, secuestradores de sales biliares o terapia avanzada en refractarios.</li>
+  <li><b>Isquémica:</b> mayor, comienzo súbito, distribución en zonas divisorias, dolor desproporcionado.</li>
+  <li><b>Inducida por fármacos:</b> antiinflamatorios no esteroidales (AINE), micofenolato, inhibidores de puntos de control inmunitario
+  (colitis por anti-CTLA-4/anti-PD-1), ipilimumab.</li>
+  <li><b>Enteropatía por radiación, enfermedad de Behçet, linfoma intestinal, síndrome de intestino irritable</b> (superposición frecuente
+  en EII en remisión: hasta un tercio persiste con síntomas sin inflamación objetiva).</li>
+</ul>
+
+<div class="box err"><div class="t">⚠️ Error común</div>
+<p>Atribuir todo síntoma persistente a “EII activa” sin objetivar inflamación. En un paciente en remisión endoscópica con calprotectina
+normal y síntomas persistentes, los diagnósticos correctos suelen ser <b>síndrome de intestino irritable superpuesto, malabsorción de sales
+biliares tras resección ileal, sobrecrecimiento bacteriano o intolerancia a lactosa</b>. Escalar el biológico ahí es sobre-tratamiento con
+riesgo y costo.</p></div>
+
+<!-- ================= 4 ================= -->
+<div class="laminas"><div class="lam-h">Láminas de apoyo (ver en ibd-eii.com) · manifestaciones extraintestinales</div><div class="lam-g"><figure class="lam sinimg"><figcaption>Terapias de EII y manifestaciones extraintestinales clásicas <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Terapias de EII y enfermedades inmunomediadas asociadas <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Manifestaciones articulares: artritis periférica tipo 1 y 2, artritis axial <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Manifestaciones oculares: uveítis, epiescleritis y escleritis <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Manifestaciones orales: estomatitis aftosa, granulomatosis orofacial, piostomatitis vegetans <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Manifestaciones cutáneas: eritema nodoso, pioderma gangrenoso, síndrome de Sweet <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure></div></div>
+
+<h2 id="s4"><span class="num">4</span>Arquitectura diagnóstica: laboratorio, endoscopia, histología e imagen</h2>
+<p class="lead">Qué pedir, en qué orden, y qué cambia la conducta según el resultado.</p>
+
+<h3>4.1 Estudio inicial ante sospecha</h3>
+<div class="algo">
+<div class="step"><div class="n">1</div><div class="b"><b>Laboratorio general:</b> hemograma, proteína C reactiva (PCR), velocidad de sedimentación (VHS), albúmina, perfil hepático (buscando CEP), ferritina + saturación de transferrina, vitamina B12 y vitamina D (especialmente si hay compromiso ileal o resección).</div></div>
+<div class="step"><div class="n">2</div><div class="b"><b>Estudio de deposiciones:</b> coprocultivo, toxina de <i>C. difficile</i> (algoritmo de dos pasos: glutamato deshidrogenasa → enzimoinmunoanálisis de toxina o amplificación de ácidos nucleicos), parasitológico. <b>Calprotectina fecal</b> como discriminador funcional/orgánico.</div></div>
+<div class="step"><div class="n">3</div><div class="b"><b>Ileocolonoscopía con biopsias escalonadas</b> (mínimo 2 biopsias de al menos 5 segmentos, incluidos íleon y recto, aun si se ven normales) — es el examen de referencia y define extensión y actividad.</div></div>
+<div class="step"><div class="n">4</div><div class="b"><b>Evaluación del intestino delgado en toda EC:</b> entero-resonancia magnética (entero-RM) de preferencia; entero-TC si urgencia o RM no disponible; ecografía intestinal (IUS) como alternativa point-of-care.</div></div>
+<div class="step"><div class="n">5</div><div class="b"><b>Endoscopía digestiva alta:</b> solo si hay síntomas altos, anemia inexplicada o sospecha de compromiso proximal (no de rutina en el adulto). 🆕 Definición consensuada 2026 de EC gastrointestinal alta: compromiso de esófago, estómago y/o duodeno proximal al ligamento de Treitz.</div></div>
+<div class="step"><div class="n">6</div><div class="b"><b>Cápsula endoscópica:</b> solo cuando persiste la sospecha con ileocolonoscopía e imagen seccional negativas. <b>Contraindicada si hay estenosis</b> — descartarla previamente con imagen o cápsula de patencia.</div></div>
+</div>
+
+<h3>4.2 Biomarcadores: rendimiento real</h3>
+<div class="tw"><table>
+<thead><tr><th style="width:20%">Marcador</th><th style="width:24%">Punto de corte útil</th><th>Interpretación y limitaciones</th></tr></thead>
+<tbody>
+<tr><td><b>Calprotectina fecal</b></td><td>&lt;100–150 µg/g sugiere remisión endoscópica; &gt;250 µg/g sugiere actividad</td><td>El mejor marcador no invasivo; su ascenso <b>precede a la recaída clínica en meses</b>. Falsos positivos con AINE, infección, neoplasia. Procesamiento puede demorar días → poco útil en la toma de decisiones intrahospitalaria aguda, pero un valor basal al ingreso sirve como referencia.</td></tr>
+<tr><td><b>PCR</b></td><td>≥12 mg/L (1,2 mg/dL) en colitis grave</td><td>Vida media ~19 h → ideal para respuesta día a día. En colitis aguda grave, PCR ≥1,2 mg/dL tiene valor predictivo positivo de 85% y sensibilidad de 95% para identificar a los pacientes con VHS &gt;30 mm/h de Truelove-Witts. Hasta 20% de las EC ileales aisladas <b>no elevan PCR</b>.</td></tr>
+<tr><td><b>Albúmina</b></td><td>&lt;30 g/L</td><td>Reactante de fase aguda negativo. Marca colopatía perdedora de proteínas → predice depuración acelerada de infliximab y mayor riesgo de colectomía.</td></tr>
+<tr><td><b>Razón PCR/albúmina</b></td><td>Elevada</td><td>Predictor independiente de actividad; útil cuando ambos valores por separado son ambiguos.</td></tr>
+<tr><td><b>Lactoferrina fecal</b></td><td>—</td><td>Alternativa a calprotectina; menor disponibilidad.</td></tr>
+<tr><td><b>Serologías (ASCA/pANCA)</b></td><td>—</td><td><b>No se recomiendan para el diagnóstico.</b> Bajo rendimiento; a lo sumo apoyan la clasificación en casos indeterminados.</td></tr>
+</tbody></table></div>
+
+<h3>4.3 Imagen: cuándo cada una</h3>
+<div class="cards">
+<div class="card"><h5>Entero-RM</h5><p>Estándar para curación transmural, longitud y actividad de estenosis, y mapeo de fístulas. Sin radiación → primera elección en menores de 35 años y en seguimiento seriado. RM de pelvis es obligatoria en enfermedad perianal compleja.</p></div>
+<div class="card"><h5>Entero-TC</h5><p>Urgencia, sospecha de perforación, absceso o megacolon. En obstrucción por EC: TC de abdomen y pelvis con contraste intravenoso (sin contraste oral) suele bastar para diferenciar estenosis fibrótica de inflamatoria y descartar perforación.</p></div>
+<div class="card"><h5>Ecografía intestinal (IUS)</h5><p>Point-of-care, sin radiación, repetible en box. Grosor de pared &gt;3 mm indica inflamación; se suman hiperemia Doppler, pérdida de la estratificación y proliferación grasa mesentérica. Detecta cambios ya a las <b>48 h</b> de iniciado el corticoide en respondedores.</p></div>
+<div class="card"><h5>PET/TC con ¹⁸F-FDG</h5><p>No es estándar. Uso en investigación como biomarcador metabólico ultratemprano y en escenarios seleccionados de inflamación oculta o diferencial con neoplasia.</p></div>
+</div>
+
+<div class="box tip"><div class="t">💡 Tip de memorización</div>
+<p><b>“La endoscopía ve la mucosa; la EC vive en la pared.”</b> En Crohn, un SES-CD bajo con IUS o RM mostrando pared engrosada
+significa enfermedad activa, no remisión. Ese es el argumento entero de la curación transmural.</p></div>
+
+<!-- ================= 5 ================= -->
+<h2 id="s5"><span class="num">5</span>Clasificación de Montreal y estratificación de riesgo</h2>
+<p class="lead">La clasificación no es burocracia: define el lenguaje común y, sobre todo, predice el curso.</p>
+
+<h3>5.1 Montreal — colitis ulcerosa</h3>
+<div class="tw"><table class="sm">
+<thead><tr><th>Eje</th><th>Categoría</th><th>Definición</th></tr></thead>
+<tbody>
+<tr><td rowspan="3"><b>Extensión (E)</b></td><td>E1 · Proctitis</td><td>Limitada al recto (distal a la unión rectosigmoidea)</td></tr>
+<tr><td>E2 · Colitis izquierda</td><td>Hasta el ángulo esplénico</td></tr>
+<tr><td>E3 · Colitis extensa / pancolitis</td><td>Proximal al ángulo esplénico</td></tr>
+<tr><td rowspan="4"><b>Gravedad (S)</b></td><td>S0 · Remisión</td><td>Asintomático</td></tr>
+<tr><td>S1 · Leve</td><td>≤4 deposiciones/día, con o sin sangre, sin compromiso sistémico, VHS normal</td></tr>
+<tr><td>S2 · Moderada</td><td>&gt;4 deposiciones/día con mínimo compromiso sistémico</td></tr>
+<tr><td>S3 · Grave</td><td>≥6 deposiciones con sangre/día <b>más</b> ≥1 signo sistémico: pulso ≥90 lpm, T° ≥37,5 °C, hemoglobina &lt;10,5 g/dL o VHS ≥30 mm/h</td></tr>
+</tbody></table></div>
+
+<h3>5.2 Montreal — enfermedad de Crohn</h3>
+<div class="tw"><table class="sm">
+<thead><tr><th>Eje</th><th colspan="2">Categorías</th></tr></thead>
+<tbody>
+<tr><td><b>Edad al diagnóstico (A)</b></td><td colspan="2">A1 ≤16 años · A2 17–40 años · A3 &gt;40 años</td></tr>
+<tr><td><b>Localización (L)</b></td><td colspan="2">L1 íleon terminal · L2 colon · L3 ileocolónica · L4 tracto digestivo alto (modificador, se suma: L3+L4)</td></tr>
+<tr><td><b>Comportamiento (B)</b></td><td colspan="2">B1 no estenosante no penetrante (inflamatorio) · B2 estenosante · B3 penetrante · <b>“p”</b> modificador de enfermedad perianal (B1p, B2p, B3p)</td></tr>
+</tbody></table></div>
+
+<div class="box tip"><div class="t">💡 Tip de memorización</div>
+<p>Montreal en EC = <b>“A-L-B-p”</b>: <b>A</b>ño de debut, <b>L</b>ugar, <b>B</b>ehavior (comportamiento) y la <b>p</b> de perianal.
+El comportamiento <b>progresa con el tiempo</b>: ~50% de los B1 migran a B2 o B3 a 10–20 años si la inflamación no se controla. Esa progresión es
+justamente lo que la terapia avanzada precoz intenta evitar.</p></div>
+
+<h3>5.3 Factores de mal pronóstico (definen el enfoque top-down)</h3>
+<div class="cards">
+<div class="card"><h5>Enfermedad de Crohn</h5>
+<ul><li>Diagnóstico &lt;40 años (especialmente &lt;30)</li><li>Enfermedad perianal al debut</li><li>Necesidad de corticoides en el primer brote</li><li>Úlceras profundas o extensas en la ileocolonoscopía</li><li>Compromiso extenso de intestino delgado (&gt;100 cm) o del tracto digestivo alto (L4)</li><li>Comportamiento estenosante o penetrante al diagnóstico</li><li>Tabaquismo activo</li><li>Antecedente de resección intestinal previa</li></ul></div>
+<div class="card"><h5>Colitis ulcerosa</h5>
+<ul><li>Extensión E3 (pancolitis)</li><li>Debut &lt;40 años</li><li>Actividad endoscópica grave (Mayo 3 / UCEIS ≥7) y úlceras profundas</li><li>Hospitalización por brote grave</li><li>PCR alta y albúmina baja al debut</li><li>Corticodependencia o corticorrefractariedad</li><li>Ausencia de curación mucosa tras la inducción</li><li>MEI presentes; CEP asociada</li></ul></div>
+<div class="card"><h5>Qué haces con esa información</h5>
+<p>Un paciente con ≥1 factor de riesgo relevante no debería recorrer el escalonamiento clásico
+(5-ASA → corticoide → tiopurina → biológico). Las guías ACG 2025 son explícitas en <b>no exigir la falla de la terapia convencional</b>
+antes de iniciar terapia avanzada. En ACTECCU 2026 el correlato es que las terapias avanzadas tienen recomendación fuerte a favor desde el
+brote <b>moderado</b>, no solo el grave.</p></div>
+</div>
+
+<div class="box err"><div class="t">⚠️ Error común</div>
+<p>Diagnosticar “colitis izquierda” solo por lo que se ve en la sigmoidoscopía y no completar la colonoscopía en remisión. La extensión
+determina el <b>intervalo de vigilancia oncológica</b> y la elección entre terapia tópica y sistémica. Una proctitis aislada, además,
+no requiere vigilancia de displasia por EII.</p></div>
+
+<!-- ================= 6 ================= -->
+<h2 id="s6"><span class="num">6</span>Scores: clínicos, endoscópicos, histológicos y de imagen</h2>
+<p class="lead">El repertorio que hay que saber de memoria, qué mide cada uno y cuál es el punto de corte que cambia la conducta.</p>
+
+<h3>6.1 Índices clínicos</h3>
+<div class="tw"><table>
+<thead><tr><th style="width:16%">Índice</th><th style="width:10%">Enfermedad</th><th style="width:32%">Componentes</th><th>Puntos de corte y uso</th></tr></thead>
+<tbody>
+<tr><td><b>Truelove-Witts</b></td><td>CU</td><td>≥6 deposiciones con sangre/día <b>más</b> ≥1 signo sistémico: frecuencia cardíaca &gt;90 lpm, T° &gt;37,8 °C, hemoglobina &lt;10,5 g/dL, VHS &gt;30 mm/h</td><td>Define <b>colitis ulcerosa aguda grave</b>. El riesgo de colectomía sube de 8,5% a 48% según el número de criterios cumplidos. Es el gatillo de hospitalización.</td></tr>
+<tr><td><b>Mayo total</b></td><td>CU</td><td>Frecuencia deposicional, rectorragia, hallazgo endoscópico, evaluación global del médico (0–3 cada uno)</td><td>0–12. Remisión ≤2 sin subscore &gt;1. Es el desenlace clásico de los ensayos clínicos.</td></tr>
+<tr><td><b>Mayo parcial</b></td><td>CU</td><td>Los tres primeros ítems, sin endoscopía</td><td>0–9. Herramienta de seguimiento ambulatorio y telefónico.</td></tr>
+<tr><td><b>SCCAI</b></td><td>CU</td><td>Deposiciones diurnas y nocturnas, urgencia, sangre, bienestar general, MEI</td><td>Remisión ≤2,5. Autorreportable por el paciente.</td></tr>
+<tr><td><b>CDAI</b></td><td>EC</td><td>8 variables ponderadas de 7 días (deposiciones líquidas, dolor, bienestar, MEI, antidiarreicos, masa abdominal, hematocrito, peso)</td><td>&lt;150 remisión · 150–219 leve · 220–450 moderada · &gt;450 grave. Respuesta = caída ≥70–100 puntos. Engorroso; su correlación con la inflamación objetiva es <b>pobre</b>.</td></tr>
+<tr><td><b>Harvey-Bradshaw (HBI)</b></td><td>EC</td><td>5 ítems de un solo día: bienestar, dolor, deposiciones líquidas, masa abdominal, complicaciones</td><td>&lt;5 remisión · 5–7 leve · 8–16 moderada · &gt;16 grave. Es la versión práctica del CDAI para la consulta.</td></tr>
+<tr><td><b>PDAI</b> (Perianal Disease Activity Index)</td><td>EC perianal</td><td>Descarga, dolor, restricción sexual, tipo de enfermedad perianal, grado de induración</td><td>0–20. Complementa —no reemplaza— a la RM de pelvis.</td></tr>
+<tr><td><b>Fistula Drainage Assessment</b></td><td>EC perianal</td><td>Drenaje a la compresión suave</td><td>Respuesta = cierre de ≥50% de los trayectos; remisión = cierre de todos, mantenido ≥4 semanas. Es el desenlace de los ensayos de fístula.</td></tr>
+</tbody></table></div>
+
+<h3>6.2 Índices endoscópicos</h3>
+<div class="tw"><table>
+<thead><tr><th style="width:16%">Índice</th><th style="width:10%">Rango</th><th style="width:34%">Qué puntúa</th><th>Umbrales</th></tr></thead>
+<tbody>
+<tr><td><b>Mayo endoscópico (MES)</b></td><td>0–3</td><td>0 normal/inactivo · 1 leve (eritema, patrón vascular disminuido, friabilidad leve) · 2 moderado (eritema marcado, ausencia de patrón vascular, friabilidad, erosiones) · 3 grave (sangrado espontáneo, úlceras)</td><td>Se puntúa el <b>segmento más inflamado</b>. Remisión endoscópica = MES 0; mejoría endoscópica = MES 0–1. Fácil de usar pero <b>no validado formalmente</b> y con variabilidad interobservador en la friabilidad.</td></tr>
+<tr><td><b>UCEIS</b></td><td>0–8</td><td>Tres subscores: patrón vascular (0 normal / 1 obliteración parcheada / 2 obliterado); sangrado (0 ninguno / 1 mucoso / 2 luminal leve / 3 luminal moderado-grave); erosiones y úlceras (0 ninguna / 1 erosiones / 2 úlcera superficial / 3 úlcera profunda)</td><td><b>Validado</b>, excelente concordancia intra e interobservador. Remisión ≤1. Respuesta endoscópica = caída de ≥2 puntos (MES: caída de ≥1).</td></tr>
+<tr><td><b>PICaSSO</b></td><td>0–15</td><td>Cambios mucosos (criptas elongadas, cicatrices, microerosiones, úlceras) y vasculares con cromoendoscopía virtual</td><td>Remisión endoscópica ≤3. No inferior a endoscopía + histología combinadas para predecir desenlaces clínicos.</td></tr>
+<tr><td><b>SES-CD</b></td><td>0–56</td><td>Cuatro variables en 5 segmentos ileocolónicos: tamaño de úlceras, superficie ulcerada, superficie afectada, estenosis</td><td>Curación endoscópica: SES-CD &lt;3 o ausencia de úlceras. Respuesta: caída ≥50%. SES-CD ≥4 se asocia a progresión de la enfermedad.</td></tr>
+<tr><td><b>CDEIS</b></td><td>0–44</td><td>Úlceras profundas (12 pts), superficiales (6 pts), longitud de mucosa ulcerada y enferma (0–10 cada una), estenosis ulcerada y no ulcerada (3 pts c/u), promediado por segmentos</td><td>Remisión parcial &lt;6; remisión endoscópica completa &lt;4 (o &lt;3). Muy laborioso → poco usado fuera de ensayos clínicos.</td></tr>
+<tr><td><b>MM-SES-CD</b></td><td>—</td><td>SES-CD ponderado por la localización y el tipo de lesión, priorizando las que menos cicatrizan</td><td>MM-SES-CD &lt;22,5 fue el mejor predictor de ausencia de progresión de enfermedad.</td></tr>
+<tr><td><b>Rutgeerts modificado</b></td><td>i0–i4</td><td>i0 sin úlceras aftosas · i1 ≤5 aftas en íleon distal · i2 &gt;5 aftas con mucosa normal entre ellas o lesiones grandes salteadas (i2a confinadas a la anastomosis, i2b en el neoíleon terminal) · i3 ileítis aftosa difusa con mucosa difusamente inflamada · i4 inflamación difusa con úlceras grandes, nódulos o estenosis</td><td>Se aplica a los <b>6–12 meses</b> post-resección ileocólica, evaluando ≥5 cm de neoíleon. i0–i1 → recurrencia clínica de 8,6% a 8 años; <b>i4 → 100% de recurrencia sintomática a 4 años</b>. Es la herramienta que decide si se inicia o intensifica profilaxis.</td></tr>
+</tbody></table></div>
+
+<div class="box tip"><div class="t">💡 Tip de memorización</div>
+<p>UCEIS se arma con <b>“V-S-U”</b>: <b>V</b>ascular (0–2), <b>S</b>angrado (0–3), <b>Ú</b>lceras (0–3) = 8. Y el gran contraste con el MES:
+el MES incluye friabilidad (subjetiva) y no está validado; el UCEIS la excluye y sí lo está. En el oral, decir “uso UCEIS porque está
+validado y el MES no” es una respuesta que suma.</p></div>
+
+<h3>6.3 Índices histológicos y de imagen</h3>
+<div class="tw"><table class="sm">
+<thead><tr><th style="width:20%">Índice</th><th style="width:14%">Modalidad</th><th>Uso</th></tr></thead>
+<tbody>
+<tr><td><b>Nancy</b> (0–4)</td><td>Histología CU</td><td>Basado en infiltrado inflamatorio agudo y crónico. Simple y validado. Remisión histológica = 0–1.</td></tr>
+<tr><td><b>Robarts</b> (0–33)</td><td>Histología CU</td><td>Más granular (infiltrado crónico, neutrófilos en lámina propia y epitelio, erosión/ulceración). Usado en ensayos.</td></tr>
+<tr><td><b>GHAS</b></td><td>Histología EC</td><td>Global Histologic Disease Activity Score; sin validación robusta ni umbral establecido.</td></tr>
+<tr><td><b>MaRIA / sMARIA</b></td><td>Entero-RM EC</td><td>Grosor de pared, realce, edema y úlceras por segmento. Curación transmural: MaRIA &lt;7 por segmento; sMARIA es la versión simplificada sin necesidad de cuantificar el realce.</td></tr>
+<tr><td><b>IBUS-SAS</b></td><td>Ecografía intestinal EC</td><td>Score compuesto (grosor, Doppler, estratificación, grasa mesentérica) desarrollado por el grupo IBUS. Permite seguimiento longitudinal no invasivo.</td></tr>
+<tr><td><b>Milan Ultrasound Criteria</b></td><td>Ecografía intestinal CU</td><td>Grosor de pared y señal Doppler; correlaciona con actividad endoscópica en colitis ulcerosa.</td></tr>
+<tr><td><b>Van Assche</b></td><td>RM perianal</td><td>Número y localización de trayectos, extensión, hiperintensidad en T2, colecciones, compromiso rectal. Define curación radiológica (frente al mero cierre del orificio externo).</td></tr>
+<tr><td><b>Lémann Index</b></td><td>Compuesto EC</td><td>Cuantifica el <b>daño intestinal acumulado</b> (estenosis, penetración, resecciones). Herramienta conceptual del paradigma de modificación de enfermedad; poco usada en la práctica diaria.</td></tr>
+</tbody></table></div>
+
+<h3>6.4 Índices pronósticos en el paciente hospitalizado</h3>
+<div class="tw"><table class="sm">
+<thead><tr><th style="width:18%">Índice</th><th style="width:16%">Momento</th><th>Definición y valor</th></tr></thead>
+<tbody>
+<tr><td><b>Criterios de Oxford (Travis)</b></td><td>Día 3 de corticoide intravenoso</td><td>&gt;8 deposiciones/día <b>o</b> 3–8 deposiciones/día con PCR &gt;45 mg/L (4,5 mg/dL) → ~85% requerirá colectomía. Es el gatillo del rescate.</td></tr>
+<tr><td><b>Índice ACE</b> (Albúmina, PCR, Endoscopía)</td><td>Al ingreso</td><td>1 punto por cada uno: albúmina ≤30 g/L, PCR ≥50 mg/L, y gravedad endoscópica aumentada. <b>ACE 3</b>: valor predictivo positivo de 78% de no respuesta a corticoides intravenosos. <b>ACE 0</b>: valor predictivo negativo de 87%. Permite anticipar el rescate desde el día 1.</td></tr>
+<tr><td><b>Índice de Ho</b></td><td>Día 3</td><td>Frecuencia deposicional, dilatación colónica en la radiografía y albúmina. Puntaje alto → alta probabilidad de colectomía.</td></tr>
+<tr><td><b>Índice de Lindgren</b></td><td>Día 3</td><td>Deposiciones/día + 0,14 × PCR (mg/L); &gt;8 predice falla de corticoides.</td></tr>
+<tr><td><b>UCEIS en colitis grave</b></td><td>Sigmoidoscopía de ingreso</td><td>UCEIS ≥7 se asocia a mayor necesidad de rescate y colectomía; discrimina mejor que el MES en este escenario.</td></tr>
+</tbody></table></div>
+
+<div class="box err"><div class="t">⚠️ Error común</div>
+<p>Usar el CDAI como marcador de actividad en la consulta y ajustar tratamiento con él. El CDAI está dominado por síntomas subjetivos
+y su correlación con la inflamación endoscópica es débil: en el estudio SONIC, <b>solo la mitad</b> de los pacientes en remisión clínica
+tenía curación endoscópica. El objetivo se decide con calprotectina, endoscopía o imagen transmural, no con el score sintomático.</p></div>
+
+<!-- ================= 7 ================= -->
+<div class="laminas"><div class="lam-h">Láminas de apoyo (ver en ibd-eii.com) · scores endoscópicos y definiciones de remisión en ensayos</div><p class="lam-n">Las dos primeras muestran qué definición de remisión endoscópica usó cada ensayo pivotal: son la razón por la que las tasas de remisión no son comparables entre estudios.</p><div class="lam-g"><figure class="lam sinimg"><figcaption>Definiciones de remisión endoscópica usadas en los ensayos de colitis ulcerosa <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Definiciones de remisión endoscópica usadas en los ensayos de enfermedad de Crohn <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Remisión clínica precoz y de mantención en colitis ulcerosa, por ensayo <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Remisión clínica precoz y de mantención en enfermedad de Crohn, por ensayo <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure></div></div>
+
+<h2 id="s7"><span class="num">7</span>Treat-to-target: objetivos STRIDE-II y monitorización</h2>
+<p class="lead">El consenso STRIDE-II (IOIBD) sigue siendo el marco vigente en 2026. Ordena los objetivos en tres horizontes temporales.</p>
+
+<div class="tw"><table>
+<thead><tr><th style="width:20%">Horizonte</th><th style="width:30%">Objetivo</th><th>Cómo se mide y qué implica</th></tr></thead>
+<tbody>
+<tr><td><b>Inmediato</b> (semanas)</td><td>Respuesta clínica</td><td>Caída ≥50% en los síntomas reportados por el paciente (PRO2: frecuencia deposicional y rectorragia en CU; dolor abdominal y deposiciones líquidas en EC). Si no se alcanza en el plazo del fármaco, se revisa la estrategia.</td></tr>
+<tr><td><b>Intermedio</b> (2–6 meses)</td><td>Remisión clínica + normalización de biomarcadores</td><td>PCR normal y calprotectina fecal &lt;100–250 µg/g. La normalización de calprotectina es el mejor sustituto no invasivo del control endoscópico.</td></tr>
+<tr><td><b>A largo plazo</b> (6–12+ meses)</td><td><b>Curación endoscópica</b> + calidad de vida normalizada + ausencia de discapacidad; en niños, crecimiento normal</td><td>CU: MES 0–1 (idealmente 0) o UCEIS ≤1. EC: SES-CD &lt;3 o ausencia de úlceras. La <b>remisión histológica</b> (Nancy ≤1) y la <b>curación transmural</b> (MaRIA, IUS) son objetivos <b>deseables pero aún no obligatorios</b> para ajustar terapia.</td></tr>
+</tbody></table></div>
+
+<h4>Cronograma práctico de monitorización</h4>
+<div class="algo">
+<div class="step go"><div class="n">✓</div><div class="b"><b>Semana 0:</b> laboratorio basal completo + tamizaje pre-biológico (ver sección 17) + calprotectina + endoscopía de referencia.</div></div>
+<div class="step"><div class="n">8</div><div class="b"><b>Semana 8–12:</b> evaluación clínica formal + PCR + calprotectina. Este es el punto de decisión de <b>falla primaria</b>. Las guías ACG 2025 fijan un estándar de <b>8 semanas</b> para juzgar la respuesta.</div></div>
+<div class="step"><div class="n">6</div><div class="b"><b>Mes 6–12:</b> <b>ileocolonoscopía o entero-RM/IUS de control</b>. Si no hay curación endoscópica, se optimiza o se cambia, aunque el paciente esté asintomático.</div></div>
+<div class="step"><div class="n">∞</div><div class="b"><b>Mantenimiento:</b> calprotectina cada 3–6 meses; endoscopía cada 1–3 años según curso; ecografía intestinal según disponibilidad. Vigilancia oncológica según estratificación (sección 15).</div></div>
+</div>
+
+<div class="box tip"><div class="t">💡 Tip de memorización</div>
+<p>STRIDE-II en una frase: <b>“Síntomas para hoy, biomarcadores para el semestre, endoscopía para el año”</b>. La histología
+y la curación transmural son la ambición, no todavía la obligación.</p></div>
+
+<div class="box err"><div class="t">⚠️ Error común</div>
+<p>Mantener un corticoide más allá de 12–16 semanas “porque el paciente está bien con él”. Si no hay <b>remisión libre de esteroides</b>
+en ese plazo, el tratamiento falló por definición y corresponde escalar, no repetir el ciclo. La corticodependencia es una indicación
+formal de inmunomodulador o terapia avanzada, no un estado estable aceptable.</p></div>
+
+<!-- ================= 8 ================= -->
+<h2 id="s8"><span class="num">8</span>Arsenal terapéutico: qué tenemos, qué no, y cómo se posiciona</h2>
+<p class="lead">Mecanismo, dosis, indicación por enfermedad y disponibilidad real en Chile.</p>
+
+<h3>8.1 Terapia convencional</h3>
+<div class="tw"><table>
+<thead><tr><th style="width:16%">Fármaco</th><th style="width:24%">Dosis</th><th style="width:30%">Dónde sí sirve</th><th>Dónde no sirve y por qué</th></tr></thead>
+<tbody>
+<tr><td><b>Mesalazina (5-ASA) oral</b></td><td>Inducción 2–4,8 g/día; mantenimiento <b>≥2 g/día</b> (existe gradiente dosis-respuesta)</td><td>CU leve-moderada, inducción y mantenimiento. <span class="chip c-si">Recomendación fuerte a favor · ACTECCU 2026</span></td><td><b>No en enfermedad de Crohn</b>: recomendación fuerte en contra tanto para inducción como para mantenimiento. No penetra la pared para tratar inflamación transmural. La sulfasalazina conserva un rol si hay artritis periférica asociada.</td></tr>
+<tr><td><b>5-ASA rectal</b></td><td>Supositorio, enema o espuma, <b>≥1 g/día</b></td><td>Proctitis y colitis distal: superior al placebo y superior al corticoide tópico. La <b>combinación oral + rectal supera a la oral sola</b> (62,2% vs 46,7%).</td><td>Poco útil más allá del ángulo esplénico (la espuma alcanza menos que el enema).</td></tr>
+<tr><td><b>Corticoides sistémicos</b></td><td>Prednisona <b>1 mg/kg/día</b> (mínimo 40, máximo 60 mg), con descenso programado en 8–12 semanas</td><td>Inducción rápida en brote leve-moderado y grave de CU; inducción en EC moderada-grave.</td><td><b>Jamás para mantenimiento</b> — recomendación fuerte en contra en EC (RR 0,82; IC95% 0,47–1,43) y sin utilidad demostrada en CU. No inducen curación mucosa.</td></tr>
+<tr><td><b>Budesonida MMX / ileal</b></td><td>9 mg/día por 8 semanas</td><td>MMX: CU leve-moderada. Ileal de liberación: EC ileocecal leve-moderada (RR 1,93; IC95% 1,37–2,73). Mejor tolerabilidad por alto metabolismo de primer paso.</td><td><b>No sirve para mantenimiento en EC</b> (RR 0,98; IC95% 0,91–1,07) — recomendación fuerte en contra.</td></tr>
+<tr><td><b>Tiopurinas</b> (azatioprina, 6-mercaptopurina)</td><td>Azatioprina 2–2,5 mg/kg/día; 6-MP 1–1,5 mg/kg/día. Requiere TPMT y/o NUDT15 previos.</td><td><b>Mantenimiento</b> de CU corticodependiente (RR 1,59; IC95% 1,19–2,11) y de EC (RR 1,19; IC95% 1,05–1,34). Reducción de inmunogenicidad en terapia combinada con anti-TNF.</td><td><b>No para inducción</b> en ninguna de las dos: inicio de acción de 8–12 semanas (recomendación en contra, ACTECCU 2026). En adultos mayores, riesgo aumentado de linfoma y cáncer cutáneo no melanoma.</td></tr>
+<tr><td><b>Metotrexato</b></td><td>25 mg/semana intramuscular o subcutáneo (inducción), 15 mg/semana (mantenimiento) + ácido fólico</td><td>Mantenimiento en EC por vía parenteral (RR 1,67; IC95% 1,05–2,67). Alternativa a tiopurinas en terapia combinada.</td><td><b>La vía oral no es eficaz</b> en mantenimiento de EC. Sin evidencia en CU. <b>Teratógeno absoluto</b> (ambos sexos: suspender antes de buscar embarazo).</td></tr>
+<tr><td><b>Antibióticos</b></td><td>Ciprofloxacino + metronidazol</td><td>Control de sepsis perianal, abscesos, sobrecrecimiento bacteriano y pouchitis.</td><td><b>Recomendación fuerte en contra</b> para inducción y mantenimiento de la EC luminal — el metaanálisis de 7 ECA no demostró eficacia.</td></tr>
+</tbody></table></div>
+
+<h3>8.2 Terapias avanzadas</h3>
+<div class="tw"><table>
+<thead><tr><th style="width:15%">Fármaco</th><th style="width:11%">Diana</th><th style="width:28%">Esquema habitual</th><th style="width:12%">CU</th><th style="width:12%">EC</th><th>Notas de posicionamiento</th></tr></thead>
+<tbody>
+<tr><td><b>Infliximab</b></td><td>Anti-TNF (IV)</td><td>5 mg/kg semanas 0-2-6, luego cada 8 semanas. Intensificable a 10 mg/kg y/o cada 4–6 semanas. Existe formulación subcutánea de mantenimiento.</td><td><span class="chip c-si">Fuerte</span></td><td><span class="chip c-si">Fuerte</span></td><td>De elección en colitis grave y en <b>enfermedad perianal fistulizante</b> (inducción RR 3,57; mantenimiento RR 1,79). Combinar con tiopurina reduce inmunogenicidad (SONIC).</td></tr>
+<tr><td><b>Adalimumab</b></td><td>Anti-TNF (SC)</td><td>160 mg → 80 mg a las 2 semanas → 40 mg cada 2 semanas (intensificable a semanal)</td><td><span class="chip c-par">Débil (inducción) / Fuerte (mantenimiento)</span></td><td><span class="chip c-si">Fuerte</span></td><td>Autoadministrable. Evidencia en fístulas del subgrupo de CHARM. Datos prospectivos (CREOLE, STRIDENT) en estenosis sintomática con esquema intensivo.</td></tr>
+<tr><td><b>Golimumab</b></td><td>Anti-TNF (SC)</td><td>200 mg semana 0 → 100 mg semana 2 → mantenimiento cada 4 semanas: 100 mg (ficha FDA) o 50 mg en pacientes &lt;80 kg y 100 mg en ≥80 kg (ficha EMA)</td><td><span class="chip c-si">Fuerte</span></td><td><span class="chip c-no">Sin indicación</span></td><td>Solo CU (PURSUIT). Cubierto por Ley Ricarte Soto en Chile.</td></tr>
+<tr><td><b>Certolizumab pegol</b></td><td>Anti-TNF (SC)</td><td>400 mg semanas 0-2-4, luego cada 4 semanas</td><td><span class="chip c-no">Sin indicación</span></td><td><span class="chip c-par">Débil a favor</span></td><td>Sin porción Fc → históricamente preferido en embarazo por transferencia placentaria mínima.</td></tr>
+<tr><td><b>Vedolizumab</b></td><td>Anti-α4β7</td><td>300 mg IV semanas 0-2-6, luego cada 8 semanas. Cambio a 108 mg SC cada 2 semanas tras inducción IV.</td><td><span class="chip c-si">Fuerte</span></td><td><span class="chip c-si">Fuerte</span></td><td>El mejor perfil de seguridad sistémica (selectividad intestinal). Inicio lento. Débil en enfermedad perianal (ACTECCU lo posiciona como 3.ª–4.ª línea allí) y sin efecto sobre MEI extraintestinales.</td></tr>
+<tr><td><b>Ustekinumab</b></td><td>Anti-IL-12/23 (p40)</td><td>Inducción IV por peso: ≤55 kg 260 mg · 55–85 kg 390 mg · &gt;85 kg 520 mg. Mantenimiento 90 mg SC cada 8 (o 12) semanas.</td><td><span class="chip c-si">Fuerte</span></td><td><span class="chip c-si">Fuerte</span></td><td>Excelente seguridad; opción razonable en adulto mayor y en psoriasis concomitante. Remisión sostenida a 4 años del 55,2% en UNIFI.</td></tr>
+<tr><td><b>Risankizumab</b></td><td>Anti-IL-23 (p19)</td><td>EC: 600 mg IV semanas 0-4-8 → 180 o 360 mg SC cada 8 semanas. CU: 1200 mg IV semanas 0-4-8 → 180/360 mg SC cada 8 semanas.</td><td><span class="chip c-par">Débil (inducción)</span></td><td><span class="chip c-si">Fuerte</span></td><td>ADVANCE / MOTIVATE / FORTIFY en EC; INSPIRE en CU (remisión 20,3% vs 6,2% a 12 semanas). Superior a ustekinumab en EC en el ensayo cabeza a cabeza SEQUENCE.</td></tr>
+<tr><td><b>Guselkumab</b></td><td>Anti-IL-23 (p19)</td><td>200 mg IV semanas 0-4-8 → 100 mg SC cada 8 semanas o 200 mg SC cada 4 semanas. 🆕 Existe además <b>inducción totalmente subcutánea</b> (400 mg SC semanas 0-4-8), la primera de su clase.</td><td><span class="chip c-si">Aprobado en CU</span></td><td><span class="chip c-si">Fuerte (inducción) / Débil (mantenimiento)</span></td><td>GALAXI-2 y -3 en EC: diferencias de 25,1% y 31,2% vs placebo a 12 semanas en pacientes con fallo o intolerancia biológica previa. QUASAR en CU, con remisión clínica y endoscópica sostenida a 92 semanas. La guía ACTECCU 2026 aún no emite recomendación en CU (evidencia posterior al cierre de su búsqueda).</td></tr>
+<tr><td><b>Mirikizumab</b></td><td>Anti-IL-23 (p19)</td><td>CU: 300 mg IV semanas 0-4-8 → 200 mg SC cada 4 semanas. Inducción extendida (3 dosis IV adicionales) si no hay respuesta a las 12 semanas.</td><td><span class="chip c-si">Recomendado (ACG 2025)</span></td><td><span class="chip c-par">Aprobado en EC</span></td><td>LUCENT-1/2 en CU. Único con mejoría demostrada de la urgencia defecatoria como desenlace formal.</td></tr>
+<tr><td><b>Tofacitinib</b></td><td>Pan-JAK (oral)</td><td>10 mg cada 12 h por 8 semanas (extensible a 16) → mantenimiento 5 mg cada 12 h (10 mg si se requiere)</td><td><span class="chip c-si">Fuerte</span></td><td><span class="chip c-no">Sin indicación</span></td><td>OCTAVE. Inicio rápido. Herpes zóster dosis-dependiente. Advertencia de MACE/TEV extrapolada de ORAL Surveillance en artritis reumatoide.</td></tr>
+<tr><td><b>Upadacitinib</b></td><td>JAK1 selectivo (oral)</td><td>CU: 45 mg/día por 8 semanas → 15 o 30 mg/día. EC: 45 mg/día por 12 semanas → 15 o 30 mg/día.</td><td><span class="chip c-si">Fuerte</span></td><td><span class="chip c-si">Fuerte</span></td><td>U-ACHIEVE/U-ACCOMPLISH (CU) y U-EXCEL/U-EXCEED/U-ENDURE (EC). El agente con <b>inicio de acción más rápido</b> (mejoría sintomática en días). Señal favorable en fístula perianal en análisis post hoc.</td></tr>
+<tr><td><b>Ozanimod</b></td><td>Modulador S1P (oral)</td><td>Titulación 0,23 mg días 1–4 → 0,46 mg días 5–7 → 0,92 mg/día</td><td><span class="chip c-si">Fuerte</span></td><td><span class="chip c-no">Sin indicación</span></td><td>TRUE NORTH. Requiere electrocardiograma basal, evaluación oftalmológica (edema macular) y perfil hepático. Bradicardia durante la titulación.</td></tr>
+<tr><td><b>Etrasimod</b></td><td>Modulador S1P (oral)</td><td>2 mg/día (sin titulación prolongada)</td><td><span class="chip c-si">Fuerte</span></td><td><span class="chip c-no">Sin indicación</span></td><td>Programa ELEVATE. Mismas precauciones cardiovasculares y oftalmológicas.</td></tr>
+<tr><td><b>Ciclosporina</b></td><td>Inhibidor de calcineurina</td><td>2 mg/kg/día IV en infusión continua; niveles objetivo 150–250 ng/mL</td><td><span class="chip c-si">Rescate en colitis grave</span></td><td><span class="chip c-no">Sin rol establecido</span></td><td>Solo puente: exige transición a tiopurina, vedolizumab o ustekinumab. Requiere colesterol y magnesio normales (riesgo de convulsiones).</td></tr>
+</tbody></table></div>
+
+<h3>8.3 Realidad chilena: qué financia el sistema</h3>
+<div class="cards">
+<div class="card"><h5><span class="chip c-lrs">Ley Ricarte Soto</span> Colitis ulcerosa</h5>
+<p>Financia <b>infliximab</b> (endovenoso), <b>adalimumab</b> y <b>golimumab</b> (subcutáneos). Beneficia a toda persona adscrita a un sistema
+previsional (FONASA, ISAPRE, CAPREDENA, DIPRECA).</p></div>
+<div class="card"><h5><span class="chip c-lrs">Ley Ricarte Soto</span> Enfermedad de Crohn</h5>
+<p>Financia <b>infliximab</b> y <b>adalimumab</b>. Misma cobertura previsional.</p></div>
+<div class="card"><h5>Documentación exigida para postular</h5>
+<ul><li>Resumen médico y consentimiento informado</li><li>Colonoscopía con biopsia</li><li>QuantiFERON o ELISPOT para tuberculosis</li><li>Serología VIH, VHB y VHC</li><li>Radiografía de tórax</li><li>Imagen seccional (RM o TC) — en Crohn se acepta además cápsula endoscópica</li></ul></div>
+<div class="card"><h5>Lo que la ley <b>no</b> cubre</h5>
+<p>Solo financia <b>el fármaco</b>. Los honorarios y costos de administración endovenosa corren por la previsión del paciente. Tampoco cubre
+las terapias avanzadas más nuevas: vedolizumab, ustekinumab, anti-IL-23, JAK y moduladores S1P quedan fuera del arancel y dependen de
+cobertura privada, seguros complementarios, programas de pacientes o uso institucional.</p></div>
+</div>
+
+<div class="box nue"><div class="t">🆕 Brecha de acceso — dato relevante para la discusión local</div>
+<p>La Sociedad Chilena de Gastroenterología ha solicitado públicamente <b>ampliar la canasta de la Ley Ricarte Soto</b> para incorporar las
+terapias biológicas más recientes en EII. Hoy existe una disociación explícita entre lo que ACTECCU 2026 recomienda con evidencia GRADE
+fuerte (vedolizumab, ustekinumab, risankizumab, JAK, S1P) y lo que el Estado financia (solo anti-TNF). La propia guía ACTECCU reconoce que
+la disponibilidad del fármaco, las barreras económicas y la ubicación geográfica condicionan el acceso, y que muchos pacientes reales no
+se ajustan al perfil de los ensayos clínicos.</p></div>
+
+<div class="box err"><div class="t">⚠️ Error común en el examen y en la práctica</div>
+<p>Responder “inicio vedolizumab” sin considerar el financiamiento. En Chile, la secuencia real en el sistema público suele ser
+<b>anti-TNF primero</b> por ser lo cubierto; la respuesta correcta en el oral es explicitar la jerarquía por evidencia <b>y luego</b> el ajuste
+por acceso, no confundirlas. Es exactamente lo que la guía chilena pide: mostrar la evidencia y construir con el paciente el plan factible.</p></div>
+
+<!-- ================= 9 ================= -->
+<div class="laminas"><div class="lam-h">Láminas de apoyo (ver en ibd-eii.com) · arsenal, dosis y farmacología</div><p class="lam-n">La primera lámina es la tabla de dosis de inducción y mantención en adultos: es la de consulta más frecuente en la práctica.</p><div class="lam-g"><figure class="lam sinimg"><figcaption>Dosis de las terapias de EII en adultos: inducción y mantención <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Qué terapia tiene indicación en colitis ulcerosa y cuál en enfermedad de Crohn <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Dosis de las terapias de EII en pediatría <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Mecanismo propuesto de las tiopurinas <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Metabolismo de las tiopurinas y conducta según el patrón de metabolitos <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Tiopurina metiltransferasa (TPMT): actividad y ajuste de dosis <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Mecanismo propuesto del metotrexato <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Corticoides: dosis equivalentes, potencia y vida media <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Cadena de frío y estabilidad fuera de refrigeración de los biológicos subcutáneos <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure></div></div>
+
+<h2 id="s9"><span class="num">9</span>Algoritmos de decisión — colitis ulcerosa</h2>
+<p class="lead">Lógica secuencial: qué inicio, cuándo declaro falla y qué sigue.</p>
+
+<h3>9.1 Brote leve a moderado</h3>
+<div class="algo">
+<div class="step"><div class="n">1</div><div class="b"><b>Proctitis (E1):</b> mesalazina rectal ≥1 g/día (supositorio). Si falla en 2–4 semanas → agregar mesalazina oral ≥2 g/día o corticoide tópico.</div></div>
+<div class="step"><div class="n">2</div><div class="b"><b>Colitis izquierda (E2) o extensa (E3):</b> mesalazina oral 2–4,8 g/día <b>+ mesalazina rectal</b> desde el inicio (la combinación es superior).</div></div>
+<div class="step"><div class="n">3</div><div class="b">Sin respuesta a las <b>2–4 semanas</b> → corticoide oral (prednisona 1 mg/kg, 40–60 mg) o budesonida MMX 9 mg/día si el brote es leve.</div></div>
+<div class="step"><div class="n">4</div><div class="b"><b>Remisión:</b> mantener con mesalazina oral ≥2 g/día ± rectal. <b>Nunca</b> mantener con corticoide.</div></div>
+<div class="step stop"><div class="n">!</div><div class="b"><b>Corticodependencia</b> (recaída al bajar de 10–15 mg de prednisona o dentro de 3 meses de suspenderlo) o <b>corticorrefractariedad</b> → pasar al algoritmo de brote moderado con terapia avanzada. Las tiopurinas son opción de mantenimiento en el corticodependiente, pero <b>no</b> de inducción.</div></div>
+</div>
+
+<h3>9.2 Brote moderado — elección de terapia avanzada</h3>
+<p>ACTECCU 2026 otorga recomendación <b>fuerte a favor</b> en inducción a: vedolizumab, infliximab, golimumab, ustekinumab, tofacitinib,
+upadacitinib, ozanimod y etrasimod; recomendación <b>débil a favor</b> a adalimumab y risankizumab. La elección se hace por perfil de paciente,
+no por jerarquía absoluta:</p>
+
+<div class="tw"><table class="sm">
+<thead><tr><th style="width:32%">Escenario clínico</th><th>Elección preferente</th></tr></thead>
+<tbody>
+<tr><td>Colitis grave o riesgo alto de colectomía</td><td><b>Infliximab</b> (idealmente con tiopurina), o JAK si hay colopatía perdedora de proteínas</td></tr>
+<tr><td>Necesidad de control muy rápido de síntomas</td><td><b>Upadacitinib</b> (mejoría en días) o tofacitinib</td></tr>
+<tr><td>Paciente &gt;65 años, comorbilidad cardiovascular o antecedente de TEV</td><td><b>Vedolizumab</b> o <b>ustekinumab</b>; evitar JAK</td></tr>
+<tr><td>Manifestaciones extraintestinales articulares o uveítis</td><td><b>Anti-TNF</b> o JAK; vedolizumab es mala elección</td></tr>
+<tr><td>Preferencia por vía oral y enfermedad no grave</td><td><b>Ozanimod</b>, <b>etrasimod</b> o JAK</td></tr>
+<tr><td>Fallo previo a anti-TNF</td><td><b>Ustekinumab</b>, <b>anti-IL-23</b>, <b>JAK</b> o vedolizumab (todos con evidencia en expuestos)</td></tr>
+<tr><td>Restricción de financiamiento (Chile, sistema público)</td><td><b>Infliximab / adalimumab / golimumab</b> vía Ley Ricarte Soto</td></tr>
+</tbody></table></div>
+
+<div class="box tip"><div class="t">💡 Tip de memorización</div>
+<p>Cuatro preguntas ordenan la elección en CU moderada: <b>¿qué tan rápido lo necesito?</b> (JAK &gt; anti-TNF &gt; ustekinumab &gt; vedolizumab),
+<b>¿qué tan seguro debe ser?</b> (vedolizumab &gt; ustekinumab &gt; anti-TNF &gt; JAK), <b>¿hay algo extraintestinal?</b> (anti-TNF/JAK) y
+<b>¿qué puedo financiar?</b></p></div>
+
+<!-- ================= 10 ================= -->
+<h2 id="s10"><span class="num">10</span>Algoritmos de decisión — enfermedad de Crohn</h2>
+
+<h3>10.1 EC leve a moderada</h3>
+<div class="algo">
+<div class="step"><div class="n">1</div><div class="b"><b>Ileocecal leve-moderada:</b> budesonida de liberación ileal 9 mg/día por 8 semanas (recomendación fuerte a favor).</div></div>
+<div class="step stop"><div class="n">✗</div><div class="b"><b>No usar:</b> salicilatos orales (fuerte en contra), antibióticos (fuerte en contra) ni tiopurinas para inducción (débil en contra, por su latencia de 8–12 semanas).</div></div>
+<div class="step"><div class="n">2</div><div class="b">Reevaluar a las 8–12 semanas con clínica + calprotectina. Si persiste actividad o si hay <b>cualquier factor de mal pronóstico</b> → saltar directamente a terapia avanzada.</div></div>
+</div>
+
+<h3>10.2 EC moderada a grave</h3>
+<div class="algo">
+<div class="step"><div class="n">1</div><div class="b"><b>Inducción:</b> corticoide oral como puente (recomendación débil a favor) <b>mientras</b> se inicia la terapia avanzada — no como estrategia única.</div></div>
+<div class="step go"><div class="n">2</div><div class="b"><b>Terapia avanzada con recomendación fuerte a favor:</b> infliximab, adalimumab, ustekinumab, vedolizumab, upadacitinib, risankizumab y guselkumab. Certolizumab pegol: débil a favor.</div></div>
+<div class="step"><div class="n">3</div><div class="b"><b>Terapia combinada:</b> infliximab + tiopurina tiene recomendación <b>fuerte a favor</b> en el paciente naïve (estudio SONIC: mayor remisión libre de corticoides que cualquiera de las monoterapias). En DIAMOND, adalimumab + azatioprina no mejoró la remisión clínica a 26 semanas pero sí la <b>mejoría endoscópica</b> (84,2% vs 63,8%; p = 0,019).</div></div>
+<div class="step"><div class="n">4</div><div class="b"><b>Mantenimiento:</b> continuar el agente que indujo la remisión. Recomendación fuerte para infliximab, adalimumab, ustekinumab, vedolizumab y upadacitinib; débil para certolizumab, risankizumab y guselkumab. Tiopurinas y metotrexato parenteral: débil a favor, útiles como acompañantes.</div></div>
+<div class="step stop"><div class="n">✗</div><div class="b"><b>No mantener con:</b> salicilatos, budesonida, corticoides sistémicos ni antibióticos (los cuatro con recomendación fuerte en contra).</div></div>
+</div>
+
+<h3>10.3 Enfermedad perianal compleja</h3>
+<p>Es un escenario <b>multidisciplinario obligatorio</b>: gastroenterología + coloproctología + radiología.</p>
+<div class="algo">
+<div class="step"><div class="n">1</div><div class="b"><b>Control de la sepsis primero:</b> examen bajo anestesia con drenaje de abscesos e <b>instalación de setón</b>. Ningún biológico funciona sobre un absceso no drenado.</div></div>
+<div class="step"><div class="n">2</div><div class="b"><b>Mapeo:</b> RM de pelvis (o ecografía endoanal) para clasificar los trayectos y establecer la referencia de curación radiológica (índice de Van Assche).</div></div>
+<div class="step"><div class="n">3</div><div class="b"><b>Antibióticos:</b> ciprofloxacino + metronidazol como adyuvantes para el control infeccioso.</div></div>
+<div class="step go"><div class="n">4</div><div class="b"><b>Infliximab</b> es la primera línea médica (única con recomendación fuerte a favor). Adalimumab: débil a favor. Infliximab + tiopurina: débil a favor, con mayor probabilidad de cierre de la primera fístula (HR 2,58; IC95% 1,16–5,6).</div></div>
+<div class="step"><div class="n">5</div><div class="b"><b>Segunda línea:</b> upadacitinib (débil a favor; el panel ACTECCU lo posiciona tras el fallo de anti-TNF). Ustekinumab: débil a favor. Vedolizumab: 3.ª–4.ª línea. Para risankizumab y guselkumab <b>no hay evidencia suficiente</b> para emitir recomendación.</div></div>
+<div class="step"><div class="n">6</div><div class="b"><b>Opciones quirúrgicas:</b> fistulotomía en fístulas superficiales; colgajo de avance si el recto no está inflamado; ligadura interesfintérica del trayecto fistuloso (LIFT). En enfermedad refractaria grave, ostomía derivativa como medida temporizadora — advirtiendo que no todos los pacientes logran el cierre posterior.</div></div>
+</div>
+
+<div class="box err"><div class="t">⚠️ Error común</div>
+<p>Iniciar o intensificar un biológico en una fístula perianal <b>antes</b> de descartar y drenar el absceso. Se transforma una sepsis
+localizada en una sepsis inmunosuprimida. La secuencia es siempre: control de la fuente → mapeo por imagen → terapia dirigida.</p></div>
+
+<!-- ================= 11 ================= -->
+<div class="laminas"><div class="lam-h">Láminas de apoyo (ver en ibd-eii.com) · enfermedad de Crohn perianal</div><div class="lam-g"><figure class="lam sinimg"><figcaption>Terapia médica de la enfermedad de Crohn perianal <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure></div></div>
+
+<h2 id="s11"><span class="num">11</span>Falla terapéutica, monitorización de fármacos y optimización</h2>
+<p class="lead">Antes de declarar que un fármaco “no sirve”, hay que demostrar que se usó bien.</p>
+
+<h3>11.1 Falla primaria vs secundaria</h3>
+<div class="tw"><table>
+<thead><tr><th style="width:22%">Tipo</th><th style="width:26%">Definición</th><th>Mecanismo y conducta</th></tr></thead>
+<tbody>
+<tr><td><b>Falla primaria</b></td><td>Ausencia de respuesta a la inducción (habitualmente evaluada a las 8–12 semanas; 12 en EC con anti-IL-23)</td><td>Sugiere que la <b>vía inflamatoria dominante es otra</b> → <b>cambiar de clase</b> (fuera de clase), no de molécula dentro de la misma clase. Antes de decidirlo, confirmar que había inflamación objetiva (no confundir con síntomas funcionales).</td></tr>
+<tr><td><b>Falla secundaria</b></td><td>Pérdida de respuesta tras una respuesta inicial documentada</td><td>Distinguir dos causas: <b>farmacocinética</b> (nivel bajo, con o sin anticuerpos antifármaco) → optimizar dosis o cambiar dentro de clase si hay anticuerpos; y <b>farmacodinámica</b> (nivel adecuado sin respuesta) → cambiar de clase.</td></tr>
+<tr><td><b>Falla aparente</b></td><td>Síntomas sin inflamación</td><td>Buscar infección (<i>C. difficile</i>, CMV), estenosis fibrótica, sobrecrecimiento bacteriano, malabsorción de sales biliares, intestino irritable superpuesto. <b>No escalar</b>.</td></tr>
+</tbody></table></div>
+
+<h4>Algoritmo de la pérdida de respuesta a anti-TNF</h4>
+<div class="algo">
+<div class="step"><div class="n">1</div><div class="b"><b>Confirmar inflamación objetiva:</b> PCR, calprotectina, endoscopía o imagen. Si es normal → buscar causa no inflamatoria y detenerse aquí.</div></div>
+<div class="step"><div class="n">2</div><div class="b"><b>Medir nivel valle del fármaco y anticuerpos antifármaco.</b></div></div>
+<div class="step"><div class="n">3</div><div class="b"><b>Nivel bajo, sin anticuerpos</b> → intensificar (acortar intervalo o subir dosis) y/o agregar inmunomodulador.</div></div>
+<div class="step"><div class="n">4</div><div class="b"><b>Nivel bajo, con anticuerpos en título alto</b> → cambiar a <b>otro anti-TNF</b> (idealmente con inmunomodulador asociado para prevenir recurrencia de la inmunogenicidad).</div></div>
+<div class="step stop"><div class="n">5</div><div class="b"><b>Nivel adecuado, sin respuesta</b> (falla farmacodinámica) → <b>cambiar de mecanismo</b>: vedolizumab, ustekinumab, anti-IL-23, JAK o S1P según el escenario.</div></div>
+</div>
+
+<h3>11.2 Tiopurinas: metabolitos y el fenómeno del <i>shunter</i></h3>
+<p>La azatioprina se convierte en 6-mercaptopurina y luego se bifurca metabólicamente:</p>
+<ul>
+  <li><b>6-tioguanina nucleótidos (6-TGN)</b> — metabolito <b>activo</b>. Rango terapéutico habitual 235–450 pmol/8×10⁸ eritrocitos.
+  Por encima, riesgo de <b>mielotoxicidad</b>.</li>
+  <li><b>6-metilmercaptopurina (6-MMP)</b> — metabolito de la vía de la tiopurina metiltransferasa (TPMT), asociado a <b>hepatotoxicidad</b>
+  cuando supera ~5.700 pmol/8×10⁸ eritrocitos.</li>
+</ul>
+<p>El <b><i>shunter</i></b> (hipermetabolizador preferencial) desvía el metabolismo hacia 6-MMP: presenta 6-TGN bajos pese a dosis plenas,
+razón 6-MMP/6-TGN &gt;11, ausencia de respuesta y transaminasas elevadas. La maniobra es <b>añadir alopurinol 100 mg/día y reducir la
+tiopurina al 25–33% de la dosis</b>: el alopurinol inhibe la xantina oxidasa, redirige el flujo hacia 6-TGN y hace caer la 6-MMP.
+Requiere hemograma estrecho (riesgo de mielotoxicidad si no se reduce la dosis).</p>
+
+<div class="box tip"><div class="t">💡 Tip de memorización</div>
+<p><b>“TGN trabaja, MMP molesta.”</b> Poco TGN + mucho MMP + transaminasas altas = <i>shunter</i> → alopurinol y bajar la tiopurina a un cuarto.
+Y siempre antes de iniciar: <b>TPMT y NUDT15</b> (esta última especialmente relevante en poblaciones con ascendencia asiática y amerindia,
+por su asociación con mielotoxicidad grave).</p></div>
+
+<div class="box err"><div class="t">⚠️ Error común</div>
+<p>Añadir alopurinol sin reducir la dosis de tiopurina. Es la receta para una <b>pancitopenia grave</b>. La reducción a un cuarto o un tercio
+de la dosis es parte inseparable de la maniobra.</p></div>
+
+<!-- ================= 12 ================= -->
+<div class="laminas"><div class="lam-h">Láminas de apoyo (ver en ibd-eii.com) · metabolitos de tiopurinas y TPMT</div><div class="lam-g"><figure class="lam sinimg"><figcaption>Metabolismo de las tiopurinas y conducta según el patrón de metabolitos <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Tiopurina metiltransferasa (TPMT): actividad y ajuste de dosis <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure></div></div>
+
+<h2 id="s12"><span class="num">12</span>Colitis ulcerosa aguda grave (CUAG / ASUC)</h2>
+<p class="lead">La emergencia médica de la EII. Todo se juega en los primeros 3 a 7 días.</p>
+
+<div class="box"><div class="t">Definición operativa</div>
+<p><b>Criterios de Truelove-Witts:</b> ≥6 deposiciones con sangre al día <b>más</b> al menos un signo sistémico —frecuencia cardíaca &gt;90 lpm,
+temperatura &gt;37,8 °C, hemoglobina &lt;10,5 g/dL o VHS &gt;30 mm/h. Como la PCR tiene vida media más corta y responde antes, ha reemplazado
+a la VHS en la práctica: PCR ≥12 mg/L cumple el rol del criterio inflamatorio.</p></div>
+
+<h3>12.1 Día 0 — ingreso</h3>
+<div class="algo">
+<div class="step"><div class="n">1</div><div class="b"><b>Hospitalizar.</b> Laboratorio: hemograma, PCR, albúmina, electrolitos, función renal y hepática, <b>perfil lipídico en ayunas</b> (obligatorio antes de ciclosporina o JAK), y tamizaje de tuberculosis latente y VHB.</div></div>
+<div class="step"><div class="n">2</div><div class="b"><b>Descartar infección:</b> toxina de <i>C. difficile</i> con ensayo multipaso basado en toxina, coprocultivo. <b>Sigmoidoscopía flexible precoz</b> (sin preparación o con enema de agua), en las primeras 48 h, con biopsias para <b>CMV</b> (hematoxilina-eosina más inmunohistoquímica).</div></div>
+<div class="step"><div class="n">3</div><div class="b"><b>Soporte:</b> hidratación y corrección de electrolitos, transfusión si corresponde, evaluación nutricional con herramienta validada (p. ej. MUST) y derivación a nutrición. Hierro endovenoso si hay anemia moderada-grave o inflamación activa (el hierro oral rinde poco).</div></div>
+<div class="step go"><div class="n">4</div><div class="b"><b>Tromboprofilaxis con heparina de bajo peso molecular o fondaparinux en TODOS</b> sin contraindicación absoluta. El riesgo de tromboembolismo venoso se duplica en el paciente hospitalizado con EII; la rectorragia <b>no</b> es contraindicación (número necesario a tratar 35 vs número necesario para dañar 114).</div></div>
+<div class="step stop"><div class="n">5</div><div class="b"><b>Suspender:</b> AINE, opioides, anticolinérgicos y antidiarreicos (precipitan megacolon tóxico).</div></div>
+<div class="step"><div class="n">6</div><div class="b"><b>Metilprednisolona 60 mg/día endovenosa</b> (o equivalente; rango aceptable 40–60 mg, en 2–3 dosis divididas). Dosis mayores <b>no</b> aportan beneficio y sí toxicidad. No retrasar el corticoide esperando los resultados microbiológicos, ni suspenderlo si aparece <i>C. difficile</i> o CMV: se tratan en paralelo.</div></div>
+<div class="step"><div class="n">7</div><div class="b"><b>Interconsulta a coloproctología desde el ingreso</b> y conversación explícita con el paciente sobre la posibilidad de colectomía. La consulta quirúrgica precoz reduce mortalidad.</div></div>
+</div>
+
+<h3>12.2 Día 3 — el punto de decisión</h3>
+<div class="tw"><table class="sm">
+<thead><tr><th style="width:26%">Herramienta</th><th>Criterio de falla</th></tr></thead>
+<tbody>
+<tr><td><b>Criterios de Oxford (Travis)</b></td><td>&gt;8 deposiciones/día, <b>o</b> 3–8 deposiciones/día con PCR &gt;45 mg/L → 85% de probabilidad de colectomía</td></tr>
+<tr><td><b>Índice ACE</b> (al ingreso)</td><td>ACE 3 (albúmina ≤30 g/L + PCR ≥50 mg/L + endoscopía grave) → 78% de valor predictivo positivo de fallo de corticoides; permite <b>anticipar</b> el rescate desde el día 1</td></tr>
+<tr><td><b>Índice de Lindgren</b></td><td>Deposiciones/día + 0,14 × PCR (mg/L) &gt; 8</td></tr>
+<tr><td><b>Ecografía intestinal</b></td><td>Cambios significativos del grosor parietal ya a las <b>48 h</b> en los respondedores</td></tr>
+</tbody></table></div>
+<p>La AGA 2026 lo formula de manera simple: <b>evaluar la respuesta dentro de las 72 h</b> del inicio del tratamiento y tener el rescate
+preparado desde el ingreso. Prolongar el corticoide endovenoso más de 7 días en el no respondedor <b>no aporta beneficio</b> y aumenta
+complicaciones y mortalidad.</p>
+
+<h3>12.3 Terapia de rescate</h3>
+<div class="tw"><table>
+<thead><tr><th style="width:18%">Opción</th><th style="width:26%">Esquema</th><th>Consideraciones</th></tr></thead>
+<tbody>
+<tr><td><b>Infliximab</b></td><td>5 mg/kg. Considerar <b>10 mg/kg</b> en el paciente con colopatía perdedora de proteínas (albúmina baja, PCR alta, úlceras colónicas profundas)</td><td>🆕 El ensayo PREDICT-UC no encontró diferencia entre inducción intensificada y estándar en respuesta al día 7 ni en colectomía a 3 meses; sin embargo, la AGA mantiene la intensificación en el subgrupo de alto riesgo de depuración acelerada.</td></tr>
+<tr><td><b>Ciclosporina</b></td><td>2 mg/kg/día endovenosa en infusión continua; niveles 150–250 ng/mL</td><td>Eficacia equivalente a infliximab (ensayos CySIF y CONSTRUCT). Exige colesterol y magnesio normales. Solo es un <b>puente</b>: obliga a una estrategia de mantenimiento (tiopurina, vedolizumab o ustekinumab).</td></tr>
+<tr><td><b>Inhibidores JAK</b></td><td>Tofacitinib 10 mg cada 12 h; upadacitinib 45 mg/día. Existen esquemas intensificados fuera de ficha técnica: tofacitinib 10 mg cada 8 h (9 dosis), upadacitinib 30 mg cada 12 h</td><td>ACTECCU 2026 les da <b>recomendación fuerte a favor</b> en el brote grave. 🆕 El estudio multicéntrico ATTRACT (111 pacientes, 23 centros) mostró que upadacitinib produce <b>mayor respuesta entre los días 3 y 7</b> (84% vs 54%; p = 0,02), pero la respuesta y remisión a los días 98 y 182 fueron comparables, con supervivencia libre de colectomía similar (~75–80%). Vacunar contra herpes zóster —pero <b>sin retrasar</b> el inicio; la vacuna recombinante puede darse después del alta.</td></tr>
+</tbody></table></div>
+
+<div class="box err"><div class="t">⚠️ Error común</div>
+<p>Encadenar rescates. <b>No existe evidencia</b> que respalde usar ciclosporina tras el fallo de infliximab ni viceversa; ACTECCU lo
+señala explícitamente y el panel solo lo admite en centros de alta experiencia, evaluando cuidadosamente el riesgo. Si el primer rescate
+falla en 5–7 días, la respuesta correcta es <b>colectomía</b>, no un tercer fármaco.</p></div>
+
+<h3>12.4 Cirugía</h3>
+<ul>
+  <li><b>Colectomía de urgencia inmediata:</b> perforación, megacolon tóxico que no responde, hemorragia masiva, sepsis no controlada.</li>
+  <li><b>Colectomía semi-electiva:</b> ausencia de respuesta tras 5–7 días de terapia de rescate.</li>
+  <li><b>Megacolon tóxico:</b> dilatación &gt;6 cm del colon transverso con pérdida del patrón haustral más toxicidad sistémica en ausencia de obstrucción.
+  Precipitantes: <i>C. difficile</i>, CMV, antimotílicos, hipopotasemia. Requiere cirugía de urgencia frecuente.</li>
+  <li>El procedimiento habitual en agudo es la <b>colectomía subtotal con ileostomía terminal</b>, dejando la reconstrucción (reservorio ileoanal) para un segundo o tercer tiempo.</li>
+  <li>Los corticoides en dosis de estrés perioperatorios <b>no</b> han demostrado beneficio en la revisión sistemática reciente; sí conviene bajar
+  a un equivalente de prednisona ≤20 mg/día antes de operar cuando es posible, para reducir complicaciones infecciosas.</li>
+</ul>
+
+<!-- ================= 13 ================= -->
+<h2 id="s13"><span class="num">13</span>Complicaciones e infecciones intercurrentes</h2>
+
+<h3>13.1 <i>Clostridioides difficile</i> — AGA 2026</h3>
+<div class="tw"><table class="sm">
+<thead><tr><th style="width:30%">Punto</th><th>Conducta</th></tr></thead>
+<tbody>
+<tr><td>¿A quién estudiar?</td><td>A todo paciente con EII y diarrea nueva o que empeora, especialmente con compromiso colónico. También con ileostomía terminal o reservorio ileoanal y diarrea que empeora.</td></tr>
+<tr><td>¿Con qué test?</td><td><b>Ensayo multipaso basado en toxina</b> (no la amplificación de ácidos nucleicos sola, por la alta tasa de colonización).</td></tr>
+<tr><td>Primer episodio</td><td><b>Fidaxomicina</b> de preferencia; vancomicina oral si no está disponible o el costo es prohibitivo. <b>Metronidazol no debe usarse.</b></td></tr>
+<tr><td>¿Suspender la inmunosupresión?</td><td><b>No.</b> Continuar inmunomoduladores, biológicos o moléculas pequeñas; los corticoides pueden usarse si son necesarios, mientras se trata la infección con antibióticos.</td></tr>
+<tr><td>¿Qué clase de biológico evitar?</td><td>Ninguna: <b>ningún mecanismo tiene riesgo diferencial</b> de infección por <i>C. difficile</i>. Se elige el mejor fármaco para la EII.</td></tr>
+<tr><td>Persistencia a las 48–72 h</td><td>Endoscopía para evaluar actividad de la EII y excluir CMV concomitante.</td></tr>
+<tr><td>Recurrencia</td><td>Ofrecer <b>terapias basadas en microbiota</b> (fecal microbiota live-jslm, esporas live-brpk o trasplante de microbiota fecal) tras al menos una recurrencia. <b>No usar probióticos</b> para prevención primaria ni secundaria.</td></tr>
+<tr><td>Prevención secundaria</td><td>Considerar <b>profilaxis con vancomicina oral</b> en el paciente con antecedente de infección que recibe antibióticos sistémicos por otra causa.</td></tr>
+</tbody></table></div>
+
+<h3>13.2 Citomegalovirus</h3>
+<p>Sospechar en colitis grave con toxicidad sistémica o falta de respuesta a corticoides. El diagnóstico es <b>histológico</b>
+(biopsias con hematoxilina-eosina más inmunohistoquímica); la reacción en cadena de la polimerasa sérica y los títulos apoyan pero no
+descartan. Tratar con ganciclovir solo cuando hay EII clínicamente activa, <b>carga histológica alta (≥5 inclusiones)</b> y falta de respuesta
+a corticoides — la detección aislada de CMV no siempre es patogénica.</p>
+
+<h3>13.3 Complicaciones estructurales de la enfermedad de Crohn</h3>
+<div class="tw"><table>
+<thead><tr><th style="width:20%">Complicación</th><th style="width:34%">Evaluación</th><th>Conducta</th></tr></thead>
+<tbody>
+<tr><td><b>Obstrucción intestinal</b></td><td>TC de abdomen y pelvis con contraste endovenoso (sin contraste oral): diferencia estenosis fibrótica de inflamatoria, distingue adherencias y descarta perforación</td><td>Reposo digestivo, sonda nasogástrica, hidratación. Si predomina la <b>inflamación</b> → corticoides endovenosos. Si es <b>predominantemente fibrótica</b>, o hay perforación o absceso → cirugía. Dilatación endoscópica con balón: solo para estenosis cortas (&lt;5 cm) no inflamatorias y <b>tras</b> resolver el cuadro agudo. Considerar nutrición si el reposo se prolonga &gt;7 días.</td></tr>
+<tr><td><b>Absceso intraabdominal</b></td><td>TC o RM con contraste endovenoso; discusión multidisciplinaria precoz</td><td>Antibióticos con cobertura de flora intestinal (ciprofloxacino + metronidazol). <b>Drenaje percutáneo si &gt;2–3 cm.</b> Peritonitis o sepsis no controlada → cirugía urgente. La terapia inmunosupresora es aceptable <b>una vez logrado el control de la fuente</b>. La nutrición enteral exclusiva mejora desenlaces en abscesos no drenables percutáneamente.</td></tr>
+<tr><td><b>Fístulas internas</b></td><td>Entero-RM; la neumaturia o la fecaluria orientan a fístula enterovesical</td><td>Manejo médico-quirúrgico combinado; anti-TNF es la base médica.</td></tr>
+<tr><td><b>Enfermedad de Crohn del tracto digestivo alto</b> 🆕</td><td>Endoscopía alta solo con sospecha (síntomas altos o anemia), no de rutina</td><td>Consenso RAND/UCLA 2026: definida como compromiso de esófago, estómago y/o duodeno proximal al ligamento de Treitz. Manejo caso a caso según localización y gravedad sintomática, endoscópica e imagenológica. Objetivos apropiados: respuesta y remisión clínica <b>y</b> endoscópica; el valor de los desenlaces histológicos es incierto.</td></tr>
+</tbody></table></div>
+
+<h3>13.4 Otras complicaciones</h3>
+<ul>
+  <li><b>Anemia:</b> multifactorial (ferropenia + trastorno crónico + déficit de B12 en compromiso o resección ileal). Preferir <b>hierro endovenoso</b>
+  ante inflamación activa, hemoglobina &lt;10 g/dL o intolerancia oral.</li>
+  <li><b>Enfermedad ósea:</b> osteopenia y osteoporosis por corticoides, inflamación crónica y malabsorción. Densitometría en usuarios crónicos de corticoides.</li>
+  <li><b>Tromboembolismo venoso:</b> riesgo elevado incluso ambulatorio; considerar profilaxis extendida al alta en pacientes de muy alto riesgo
+  (cirugía reciente, neoplasia activa, inmovilización, trombofilia), reconociendo que la evidencia es insuficiente.</li>
+  <li><b>Manifestaciones dermatológicas:</b> además de las MEI clásicas, hay eventos adversos cutáneos de la terapia — psoriasis paradójica por
+  anti-TNF, eccema, y el riesgo de cáncer cutáneo no melanoma asociado a tiopurinas y de melanoma asociado a anti-TNF.</li>
+  <li><b>Dolor crónico:</b> abordaje escalonado, tratando la causa (descompresión, drenaje, control de la inflamación) y usando neuromoduladores
+  (antidepresivos tricíclicos, duales, mirtazapina). <b>Evitar opioides</b> (síndrome de intestino narcótico, adicción) y usar AINE con cautela.</li>
+</ul>
+
+<!-- ================= 14 ================= -->
+<div class="laminas"><div class="lam-h">Láminas de apoyo (ver en ibd-eii.com) · estenosis en enfermedad de Crohn</div><div class="lam-g"><figure class="lam sinimg"><figcaption>Abordaje de la estenosis en la enfermedad de Crohn <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Tipos de estenoplastia: Heineke-Mikulicz, Finney y Michelassi <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure></div></div>
+
+<h2 id="s14"><span class="num">14</span>Cirugía y manejo postoperatorio</h2>
+<p class="lead">La cirugía no es el fracaso del gastroenterólogo: es una herramienta más del plan terapéutico.</p>
+
+<h3>14.1 Colitis ulcerosa</h3>
+<ul>
+  <li><b>Indicaciones electivas:</b> enfermedad refractaria o corticodependiente pese a terapia avanzada optimizada, displasia no resecable
+  endoscópicamente o cáncer, efectos adversos intolerables de la terapia.</li>
+  <li><b>Procedimiento reconstructivo:</b> proctocolectomía con <b>anastomosis ileoanal con reservorio</b> (IPAA), en dos o tres tiempos.
+  Preserva la continuidad y la calidad de vida.</li>
+  <li><b>Complicaciones del reservorio:</b> <i>pouchitis</i> aguda (tratamiento con ciprofloxacino o metronidazol; en la crónica dependiente
+  de antibióticos se usan probióticos de alta concentración o terapia avanzada), <i>cuffitis</i> (mesalazina o corticoide tópico),
+  reservorio con fenotipo de Crohn, e infertilidad femenina aumentada por adherencias pélvicas — argumento para diferir la reconstrucción
+  en mujeres que planifican embarazo.</li>
+  <li>~10% de los pacientes hospitalizados por CU terminará requiriendo cirugía en esa admisión.</li>
+</ul>
+
+<h3>14.2 Enfermedad de Crohn: recurrencia postoperatoria</h3>
+<p>La recurrencia es la regla, no la excepción: <b>endoscópica</b> en 65–90% al año, <b>clínica</b> en 20–30% al año, y <b>quirúrgica</b>
+en 25–35% a 10 años. La secuencia es siempre endoscópica → clínica → quirúrgica, por lo que la ventana de intervención es la primera.</p>
+
+<div class="algo">
+<div class="step"><div class="n">1</div><div class="b"><b>Estratificar el riesgo al momento de operar.</b> Alto riesgo: tabaquismo activo, ≥2 resecciones previas, enfermedad penetrante o fistulizante, enfermedad perianal, resección extensa, edad joven al debut, ausencia de profilaxis previa.</div></div>
+<div class="step go"><div class="n">2</div><div class="b"><b>Profilaxis en el alto riesgo:</b> iniciar <b>anti-TNF</b> dentro de las 4–8 semanas del postoperatorio (recomendación ACG 2025). En riesgo bajo puede optarse por vigilancia sin fármaco o tiopurina. Suspender el tabaco es la intervención no farmacológica de mayor impacto.</div></div>
+<div class="step"><div class="n">3</div><div class="b"><b>Ileocolonoscopía a los 6–12 meses</b> en todos, evaluando ≥5 cm de neoíleon terminal y puntuando con <b>Rutgeerts modificado</b>.</div></div>
+<div class="step"><div class="n">4</div><div class="b"><b>i0–i1</b> → continuar o mantener conducta. <b>i2b–i4</b> → iniciar o intensificar terapia. La distinción i2a (confinada a la anastomosis) vs i2b (neoíleon) importa: las lesiones anastomóticas pueden ser isquémicas y no requerir tratamiento.</div></div>
+<div class="step"><div class="n">5</div><div class="b">Seguimiento con <b>calprotectina fecal</b> y ecografía intestinal entre endoscopías.</div></div>
+</div>
+
+<div class="box err"><div class="t">⚠️ Error común</div>
+<p>Usar el score de Rutgeerts original sin considerar la técnica quirúrgica. Fue diseñado hace tres décadas para anastomosis
+término-terminal; en las anastomosis latero-laterales las úlceras del asa ciega pueden ser <b>isquémicas o consecuencia del procedimiento</b>
+y no recurrencia. De ahí la utilidad de la versión modificada y de los scores adaptados más recientes.</p></div>
+
+<!-- ================= 15 ================= -->
+<h2 id="s15"><span class="num">15</span>Displasia y cáncer colorrectal en EII</h2>
+<p class="lead">El riesgo depende de la duración, la extensión, la carga inflamatoria acumulada y la presencia de CEP.</p>
+
+<div class="tw"><table>
+<thead><tr><th style="width:26%">Intervalo</th><th>Perfil de riesgo</th></tr></thead>
+<tbody>
+<tr><td><b>No requiere vigilancia</b></td><td>Proctitis aislada o ausencia de inflamación colónica</td></tr>
+<tr><td><b>Cada 5 años</b></td><td>Colitis limitada (&lt;50% del colon) o colitis extensa con inflamación leve</td></tr>
+<tr><td><b>Cada 3 años</b></td><td>Pseudopólipos inflamatorios, antecedente familiar de cáncer colorrectal en familiar &gt;50 años, o colitis extensa con inflamación moderada-grave</td></tr>
+<tr><td><b>Anual</b></td><td>Estenosis en los últimos 5 años · displasia en los últimos 5 años en paciente que rechaza cirugía · <b>colangitis esclerosante primaria</b> (desde el diagnóstico de la CEP, no a los 8 años) · antecedente familiar de cáncer colorrectal en familiar &lt;50 años</td></tr>
+</tbody></table></div>
+
+<h4>Cómo se hace</h4>
+<ul>
+  <li><b>Inicio:</b> 6–8 años tras el comienzo de los síntomas (excepto CEP: desde el diagnóstico).</li>
+  <li><b>Momento:</b> idealmente en remisión — la inflamación activa dificulta distinguir displasia de cambios regenerativos.</li>
+  <li><b>Técnica:</b> cromoendoscopía pancolónica con índigo carmín 0,1% y biopsias dirigidas de las áreas anormales. Si no se dispone de
+  cromoendoscopía, endoscopía de alta definición con <b>2–4 biopsias aleatorias cada 10 cm</b>. La alta definición con biopsias dirigidas es hoy
+  una alternativa aceptable a la cromoendoscopía convencional.</li>
+  <li><b>Manejo de la displasia:</b> lesión visible y resecable endoscópicamente → resección completa y vigilancia estrecha. Displasia
+  invisible de alto grado, displasia multifocal o lesión no resecable → <b>proctocolectomía</b>. El uso de la nomenclatura SCENIC (visible/invisible,
+  polipoide/no polipoide) reemplazó a la terminología DALM.</li>
+</ul>
+
+<div class="box tip"><div class="t">💡 Tip de memorización</div>
+<p><b>“La CEP no espera”</b>: es la única situación en que la vigilancia comienza al diagnóstico y se hace anual, sin esperar los 8 años.
+Y recuerda el corolario terapéutico: el control de la inflamación es en sí mismo una estrategia de quimioprevención — la carga inflamatoria
+acumulada es el motor del riesgo.</p></div>
+
+<!-- ================= 16 ================= -->
+<div class="laminas"><div class="lam-h">Láminas de apoyo (ver en ibd-eii.com) · vigilancia de displasia</div><p class="lam-n">Esta lámina compara lado a lado los intervalos de BSG, ECCO y AGA: es la referencia para justificar por qué un intervalo determinado corresponde a un paciente concreto.</p><div class="lam-g"><figure class="lam sinimg"><figcaption>Colonoscopía de vigilancia en EII: BSG, ECCO y AGA comparadas <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure></div></div>
+
+<h2 id="s16"><span class="num">16</span>Poblaciones especiales</h2>
+<p class="lead">Embarazo y lactancia, adulto mayor y fragilidad, paciente oncológico. Las tres situaciones donde el "manejo estándar" necesita justificación explícita.</p>
+
+<h3>16.1 Embarazo y lactancia</h3>
+<div class="box key"><div class="t">Principio rector</div>
+<p>La prioridad número uno es <b>mantener la remisión materna</b>. La enfermedad activa —no el fármaco— es el principal predictor de
+resultados obstétricos adversos: prematuridad, bajo peso al nacer y pérdida gestacional. El error de más impacto es suspender un tratamiento
+eficaz "por precaución".</p></div>
+
+<div class="tw"><table>
+<thead><tr><th style="width:26%">Clase</th><th style="width:18%">Embarazo</th><th style="width:16%">Lactancia</th><th>Comentario</th></tr></thead>
+<tbody>
+<tr><td><b>5-ASA (mesalazina)</b></td><td><span class="chip c-si">Continuar</span></td><td><span class="chip c-si">Compatible</span></td><td>Seguro por vía oral y tópica. Evitar formulaciones con dibutilftalato.</td></tr>
+<tr><td><b>Corticoides</b></td><td><span class="chip c-si">Usar si se necesita</span></td><td><span class="chip c-si">Compatible</span></td><td>Considerados de menor riesgo por ACTECCU. Vigilar diabetes gestacional e hipertensión.</td></tr>
+<tr><td><b>Tiopurinas</b></td><td><span class="chip c-si">Continuar si ya se usan</span></td><td><span class="chip c-si">Compatible</span></td><td>No iniciar de novo durante el embarazo por su latencia.</td></tr>
+<tr><td><b>Anti-TNF</b></td><td><span class="chip c-si">Continuar</span></td><td><span class="chip c-si">Compatible</span></td><td>Transferencia placentaria activa desde el segundo trimestre (menor con certolizumab, que carece de porción Fc). Los anti-TNF durante la lactancia <b>no aumentan</b> las infecciones del lactante en los primeros 12 meses.</td></tr>
+<tr><td><b>Vedolizumab</b></td><td><span class="chip c-si">Continuar</span></td><td><span class="chip c-si">Compatible</span></td><td>Datos de registros con desenlaces de nacimiento tranquilizadores.</td></tr>
+<tr><td><b>Ustekinumab</b></td><td><span class="chip c-si">Continuar</span></td><td><span class="chip c-si">Compatible</span></td><td>Incluido explícitamente entre los agentes de menor riesgo por ACTECCU 2026.</td></tr>
+<tr><td><b>Anti-IL-23 (p19)</b></td><td><span class="chip c-par">Datos limitados</span></td><td><span class="chip c-par">Datos limitados</span></td><td>Extrapolación razonable desde ustekinumab, pero sin registros maduros aún.</td></tr>
+<tr><td><b>Metotrexato</b></td><td><span class="chip c-no">CONTRAINDICADO</span></td><td><span class="chip c-no">Contraindicado</span></td><td><b>Teratógeno y abortivo.</b> Suspender ≥3 meses antes de la concepción (ambos miembros de la pareja) con suplemento de folato.</td></tr>
+<tr><td><b>Inhibidores JAK</b></td><td><span class="chip c-no">Evitar</span></td><td><span class="chip c-no">Evitar</span></td><td>Moléculas pequeñas que atraviesan la placenta; teratogenicidad en animales.</td></tr>
+<tr><td><b>Moduladores S1P</b></td><td><span class="chip c-no">Evitar</span></td><td><span class="chip c-no">Evitar</span></td><td>Requieren anticoncepción eficaz y período de lavado antes de la concepción.</td></tr>
+</tbody></table></div>
+
+<h4>Puntos prácticos adicionales</h4>
+<ul>
+  <li><b>Concepción:</b> lo ideal es concebir con al menos 3–6 meses de remisión estable y objetivada.</li>
+  <li><b>Monitorización durante el embarazo:</b> calprotectina fecal y <b>ecografía intestinal</b> (sin radiación, ideal en gestación). RM sin gadolinio si se requiere.
+  La sigmoidoscopía flexible es segura cuando está indicada.</li>
+  <li><b>Vía del parto:</b> la <b>enfermedad perianal activa</b> y el antecedente de reservorio ileoanal son las indicaciones principales de cesárea; fuera de eso,
+  la EII no la impone.</li>
+  <li><b>Vacunación del lactante:</b> si la madre recibió biológicos con transferencia placentaria en el tercer trimestre, <b>diferir las vacunas vivas
+  del lactante</b> (rotavirus, BCG) hasta los 6 meses. Las vacunas inactivadas siguen el calendario habitual.</li>
+  <li><b>Amamantar se recomienda firmemente</b> con las clases compatibles.</li>
+</ul>
+
+<h3>16.2 Adulto mayor y fragilidad</h3>
+<p>Se estima que en la próxima década <b>más de un tercio</b> de los pacientes con EII superará los 60 años, tanto por envejecimiento de la
+cohorte como por debut tardío (EII de inicio en el adulto mayor, con fenotipo habitualmente colónico y menos agresivo, pero peor tolerancia terapéutica).</p>
+
+<div class="box"><div class="t">El concepto clave: fragilidad ≠ edad cronológica</div>
+<p>La fragilidad es un estado de vulnerabilidad por disminución de la reserva fisiológica que aumenta el riesgo de complicaciones,
+eventos adversos al tratamiento y deterioro funcional. Es la <b>edad biológica</b>, y es mejor predictor de desenlaces que la edad en el carné.
+El documento de posicionamiento GETECCU 2025 recomienda incorporar la <b>valoración geriátrica integral de forma sistemática</b> en el paciente
+mayor con EII: función, cognición, comorbilidad, polifarmacia, nutrición y soporte social.</p></div>
+
+<div class="tw"><table class="sm">
+<thead><tr><th style="width:28%">Decisión</th><th>Conducta en el adulto mayor / frágil</th></tr></thead>
+<tbody>
+<tr><td><b>Fármacos preferidos</b></td><td><b>5-ASA</b> y <b>biológicos</b> se consideran eficaces y seguros (ACTECCU 2026, recomendación débil a favor). En la práctica, <b>vedolizumab</b> y <b>ustekinumab</b> son las opciones de mejor perfil por su seguridad sistémica.</td></tr>
+<tr><td><b>Fármacos a evitar</b></td><td><b>Inhibidores JAK</b> (riesgo cardiovascular, tromboembólico y de herpes zóster en &gt;50 años con factores de riesgo) y <b>azatioprina</b> (mayor riesgo de linfoma, cáncer cutáneo no melanoma e infecciones graves).</td></tr>
+<tr><td><b>Corticoides</b></td><td>Especialmente deletéreos: sarcopenia, delirium, hiperglicemia, osteoporosis, infecciones. Minimizar exposición y duración.</td></tr>
+<tr><td><b>Polifarmacia</b></td><td>Revisar interacciones sistemáticamente; desprescribir lo que no aporte.</td></tr>
+<tr><td><b>Objetivos terapéuticos</b></td><td>Individualizar: en el paciente muy frágil, la prioridad puede ser el control sintomático y la funcionalidad, no la curación endoscópica.</td></tr>
+<tr><td><b>Cirugía</b></td><td>Mayor morbimortalidad, pero también mayor riesgo de la enfermedad no controlada. Decisión con evaluación geriátrica y del riesgo quirúrgico.</td></tr>
+</tbody></table></div>
+
+<div class="box err"><div class="t">⚠️ Error común</div>
+<p>Extrapolar la eficacia de los ensayos clínicos al adulto mayor. La mayoría de los ensayos <b>excluyó</b> a los mayores de 65–75 años;
+la evidencia en este grupo proviene de estudios observacionales, series y análisis post hoc. Reconocer esa limitación es parte de la respuesta correcta.</p></div>
+
+<h3>16.3 Paciente oncológico</h3>
+<div class="tw"><table class="sm">
+<thead><tr><th style="width:30%">Escenario</th><th>Conducta</th></tr></thead>
+<tbody>
+<tr><td><b>Cáncer diagnosticado hace &lt;2 años o activo</b></td><td><b>Evitar inmunomoduladores</b> (tiopurinas, metotrexato) — recomendación ACTECCU 2026. Decisión individualizada y compartida con el oncólogo tratante.</td></tr>
+<tr><td><b>Ya en terapia biológica</b></td><td>Se puede continuar anti-TNF, vedolizumab o ustekinumab bajo evaluación oncológica estricta multidisciplinaria. Los datos disponibles no muestran aumento consistente de recurrencia tumoral.</td></tr>
+<tr><td><b>Antecedente de melanoma</b></td><td>Evitar anti-TNF; preferir vedolizumab o ustekinumab.</td></tr>
+<tr><td><b>Antecedente de cáncer cutáneo no melanoma</b></td><td>Evitar tiopurinas; fotoprotección estricta y control dermatológico anual.</td></tr>
+<tr><td><b>Colitis por inhibidores de puntos de control</b></td><td>Es una entidad distinta de la EII, aunque el manejo se apoya en corticoides, infliximab o vedolizumab. Requiere manejo conjunto con oncología.</td></tr>
+<tr><td><b>Registros en curso</b></td><td>SAPPHIRE e I-CARE aportarán datos prospectivos; la evidencia actual es limitada y ACTECCU lo explicita.</td></tr>
+</tbody></table></div>
+
+<h3>16.4 Otras poblaciones a tener presentes</h3>
+<ul>
+  <li><b>Paciente con infección crónica:</b> VHB (profilaxis antiviral obligatoria si HBsAg positivo antes de inmunosupresión), VHC, VIH.</li>
+  <li><b>Transición pediátrica-adulto:</b> fenotipos más extensos y agresivos, mayor carga de crecimiento y adherencia; requiere programa formal de transición.</li>
+  <li><b>Paciente con enfermedad estenosante fibrótica dominante:</b> el fármaco no revierte la fibrosis establecida; la decisión es endoscópica o quirúrgica.</li>
+</ul>
+
+<!-- ================= 17 ================= -->
+<div class="laminas"><div class="lam-h">Láminas de apoyo (ver en ibd-eii.com) · embarazo y lactancia</div><div class="lam-g"><figure class="lam sinimg"><figcaption>Terapias de EII en embarazo y lactancia <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure></div></div>
+
+<h2 id="s17"><span class="num">17</span>Cuidado preventivo del paciente inmunosuprimido</h2>
+<p class="lead">La terapia salva el colon pero abre la puerta a infecciones y neoplasias evitables. Este es el bloque que más se olvida y más se pregunta.</p>
+
+<h3>17.1 Tamizaje antes de iniciar terapia avanzada</h3>
+<div class="chk">
+<h5>Checklist pre-biológico / pre-molécula pequeña</h5>
+<label><input type="checkbox"><span><b>Tuberculosis latente:</b> QuantiFERON o ELISPOT (preferidos si hay antecedente de BCG) <b>más</b> radiografía de tórax. Si es positivo, tratar la infección latente y esperar 3–4 semanas antes de iniciar el biológico. Repetir anualmente en zonas de alta prevalencia.</span></label>
+<label><input type="checkbox"><span><b>Hepatitis B:</b> HBsAg, anti-HBc total y anti-HBs. Si HBsAg positivo → profilaxis con análogo de nucleósido. Si anti-HBc aislado → vigilancia estrecha.</span></label>
+<label><input type="checkbox"><span><b>Hepatitis C</b> y <b>VIH</b>.</span></label>
+<label><input type="checkbox"><span><b>Virus de Epstein-Barr</b> antes de tiopurinas en varones jóvenes (riesgo de linfoma hemofagocítico en seronegativos).</span></label>
+<label><input type="checkbox"><span><b>Varicela zóster:</b> serología; vacuna recombinante <b>antes</b> de iniciar un inhibidor JAK cuando sea posible.</span></label>
+<label><input type="checkbox"><span><b>TPMT y NUDT15</b> antes de tiopurinas.</span></label>
+<label><input type="checkbox"><span><b>Perfil lipídico en ayunas</b> antes de ciclosporina o inhibidores JAK.</span></label>
+<label><input type="checkbox"><span><b>Electrocardiograma, evaluación oftalmológica y perfil hepático</b> antes de moduladores S1P.</span></label>
+<label><input type="checkbox"><span>Actualizar el <b>calendario de vacunación completo</b> antes de inmunosuprimir.</span></label>
+</div>
+
+<h3>17.2 Vacunación</h3>
+<div class="tw"><table class="sm">
+<thead><tr><th style="width:24%">Tipo</th><th style="width:34%">Vacunas</th><th>Regla</th></tr></thead>
+<tbody>
+<tr><td><b>Inactivadas</b> <span class="chip c-si">Seguras siempre</span></td><td>Influenza anual, neumocócica conjugada y polisacárida, VHB, VHA, tétanos-difteria-pertussis, virus papiloma humano, COVID-19, <b>herpes zóster recombinante</b></td><td>Se administran en cualquier momento, incluso bajo inmunosupresión. La respuesta serológica puede ser menor, por lo que idealmente se dan antes de iniciar.</td></tr>
+<tr><td><b>Vivas atenuadas</b> <span class="chip c-no">Contraindicadas</span></td><td>Sarampión-rubéola-parotiditis, varicela, fiebre amarilla, BCG, polio oral, herpes zóster vivo (formulación antigua)</td><td><b>Contraindicación absoluta</b> durante inmunosupresión biológica o con moléculas pequeñas. Si se requieren, administrar ≥4 semanas antes de iniciar, o esperar ≥3 meses tras suspender.</td></tr>
+</tbody></table></div>
+
+<h3>17.3 Cribado oncológico y otras medidas</h3>
+<ul>
+  <li><b>Cáncer colorrectal:</b> según la estratificación de la sección 15.</li>
+  <li><b>Piel:</b> examen dermatológico anual y fotoprotección estricta. Tiopurinas → cáncer cutáneo <b>no melanoma</b>. Anti-TNF → señal de <b>melanoma</b>.</li>
+  <li><b>Cuello uterino:</b> citología anual en mujeres bajo inmunosupresión (mayor persistencia del virus papiloma humano); vacunación indicada.</li>
+  <li><b>Salud ósea:</b> densitometría en usuarios crónicos de corticoides o con factores de riesgo; calcio y vitamina D.</li>
+  <li><b>Salud mental:</b> ansiedad y depresión son altamente prevalentes y empeoran los desenlaces; tamizar activamente.</li>
+  <li><b>Tabaco:</b> cesación en EC (impacto pronóstico mayor que muchos fármacos). En CU, no recomendar iniciar ni retomar el tabaco pese al efecto "protector" epidemiológico.</li>
+</ul>
+
+<div class="box tip"><div class="t">💡 Tip de memorización</div>
+<p>Antes de cualquier biológico: <b>"TB, B, C, V, V"</b> → <b>T</b>uberculosis, hepatitis <b>B</b>, hepatitis <b>C</b> (y VIH),
+<b>V</b>aricela-zóster, <b>V</b>acunas al día. Y la regla de oro operativa: <b>vivas atenuadas, nunca bajo inmunosupresión</b>.</p></div>
+
+<!-- ================= 18 ================= -->
+<div class="laminas"><div class="lam-h">Láminas de apoyo (ver en ibd-eii.com) · tamizaje previo a inmunosupresión</div><div class="lam-g"><figure class="lam sinimg"><figcaption>Tamizaje previo a biológico, molécula pequeña o inmunosupresor (1 de 2) <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Tamizaje previo a biológico, molécula pequeña o inmunosupresor (2 de 2) <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure></div></div>
+
+<h2 id="s18"><span class="num">18</span>Cuándo derivar</h2>
+<p class="lead">Tres niveles de derivación: al gastroenterólogo, al centro de referencia en EII, y al cirujano.</p>
+
+<div class="cards">
+<div class="card"><h5>Del médico general al gastroenterólogo</h5>
+<ul>
+<li>Diarrea &gt;4 semanas, especialmente con sangre</li>
+<li>Calprotectina fecal elevada con estudio infeccioso negativo</li>
+<li>Diarrea nocturna, baja de peso, fiebre o anemia ferropénica inexplicada</li>
+<li>Historia familiar de EII con síntomas compatibles</li>
+<li>Enfermedad perianal (fisura atípica, fístula, absceso recurrente)</li>
+<li>Manifestaciones extraintestinales sugerentes</li>
+</ul></div>
+
+<div class="card"><h5>A hospitalización</h5>
+<ul>
+<li><b>Criterios de Truelove-Witts</b> cumplidos</li>
+<li>Enfermedad grave refractaria al tratamiento ambulatorio</li>
+<li>Sospecha de complicación: obstrucción, absceso intraabdominal, perforación, megacolon tóxico</li>
+<li>Riesgo nutricional significativo o pérdida de peso progresiva</li>
+<li>Deshidratación, alteraciones electrolíticas, anemia que requiere transfusión</li>
+<li>Dolor no controlable ambulatoriamente</li>
+</ul></div>
+
+<div class="card"><h5>A centro terciario / unidad especializada de EII</h5>
+<ul>
+<li>Falta de respuesta al tratamiento médico inicial en un hospital comunitario</li>
+<li>Riesgo de desarrollar una complicación relacionada con EII</li>
+<li>Enfermedad perianal compleja</li>
+<li>Fallo de ≥2 clases de terapia avanzada</li>
+<li>Necesidad de terapias no disponibles localmente o de ensayo clínico</li>
+<li>Embarazo con enfermedad activa</li>
+<li>Displasia detectada en vigilancia</li>
+<li>Candidato a reservorio ileoanal</li>
+</ul></div>
+
+<div class="card"><h5>A coloproctología</h5>
+<ul>
+<li><b>Desde el ingreso</b> en toda colitis ulcerosa aguda grave (no al fracasar el rescate)</li>
+<li>Perforación, megacolon tóxico, hemorragia masiva → <b>urgencia</b></li>
+<li>Ausencia de respuesta tras 5–7 días de terapia de rescate</li>
+<li>Absceso intraabdominal, estenosis fibrótica sintomática, fístula compleja</li>
+<li>Enfermedad perianal que requiere examen bajo anestesia y setón</li>
+<li>Displasia no resecable endoscópicamente o cáncer</li>
+<li>Enfermedad refractaria con mala calidad de vida pese a terapia optimizada</li>
+</ul></div>
+</div>
+
+<div class="box key"><div class="t">Regla operativa</div>
+<p>En colitis aguda grave, la interconsulta quirúrgica <b>no se pide cuando el tratamiento fracasa; se pide al ingreso</b>. La consulta
+quirúrgica oportuna y el manejo multidisciplinario reducen mortalidad y mejoran la satisfacción del paciente. Retrasar la colectomía
+—no indicarla— es lo que empeora los desenlaces.</p></div>
+
+<!-- ================= 19 ================= -->
+<h2 id="s19"><span class="num">19</span>Perlas clínicas y errores comunes</h2>
+<p class="lead">Lo que separa una respuesta correcta de una respuesta que suena a especialista.</p>
+
+<h3>Perlas</h3>
+<div class="box tip"><div class="t">💡 1 · El síntoma no es el objetivo</div><p>Hasta la mitad de los pacientes en remisión clínica mantiene inflamación endoscópica activa; en SONIC, solo la mitad de los que estaban en remisión clínica tenía curación endoscópica. Toda decisión de continuar, optimizar o cambiar debe apoyarse en un dato objetivo: calprotectina, endoscopía o imagen transmural.</p></div>
+<div class="box tip"><div class="t">💡 2 · La albúmina baja predice fracaso farmacocinético</div><p>En colitis grave, la hipoalbuminemia señala colopatía perdedora de proteínas: el infliximab se depura aceleradamente por vía intestinal. Ese es el fundamento de intensificar la inducción (10 mg/kg) o de preferir una molécula pequeña (ciclosporina, JAK), que no se pierde por el intestino.</p></div>
+<div class="box tip"><div class="t">💡 3 · Ninguna clase de biológico aumenta específicamente el riesgo de <i>C. difficile</i></div><p>Ante una infección por <i>C. difficile</i>, no se suspende la inmunosupresión ni se cambia de mecanismo: se trata la infección con fidaxomicina (o vancomicina) y se continúa tratando la EII.</p></div>
+<div class="box tip"><div class="t">💡 4 · La rectorragia no contraindica la tromboprofilaxis</div><p>Es el error más frecuente en sala. El beneficio neto favorece anticoagular: número necesario a tratar 35 frente a número necesario para dañar 114.</p></div>
+<div class="box tip"><div class="t">💡 5 · El tabaco tiene efectos opuestos según la enfermedad</div><p>Protector en colitis ulcerosa (y su cese puede desencadenar un brote), deletéreo en Crohn. La cesación en EC es una de las intervenciones de mayor impacto pronóstico disponible, y es gratuita.</p></div>
+<div class="box tip"><div class="t">💡 6 · Vedolizumab es excelente en el intestino y pobre fuera de él</div><p>Su selectividad intestinal explica a la vez su seguridad sistémica y su debilidad en manifestaciones extraintestinales y en enfermedad perianal. Si el paciente tiene uveítis o espondiloartropatía, no es el fármaco.</p></div>
+<div class="box tip"><div class="t">💡 7 · La cirugía en colitis ulcerosa restaura calidad de vida</div><p>La proctocolectomía con reservorio ileoanal no es el fracaso del tratamiento médico sino una opción reconstructiva. Presentarla tarde y bajo presión de urgencia es lo que empeora los desenlaces, no la cirugía en sí.</p></div>
+<div class="box tip"><div class="t">💡 8 · La calprotectina se adelanta a la clínica</div><p>Su ascenso precede a la recaída clínica en meses. Un valor en ascenso en un paciente asintomático es una indicación de reevaluar objetivamente, no de tranquilizar.</p></div>
+
+<h3>Errores comunes</h3>
+<div class="box err"><div class="t">⚠️ 1 · Usar 5-ASA en enfermedad de Crohn</div><p>Recomendación fuerte <b>en contra</b> tanto para inducción como para mantenimiento (ACTECCU 2026). El 5-ASA actúa tópicamente sobre la mucosa; la EC es transmural. Consecuencia: meses de inflamación no tratada y daño acumulado.</p></div>
+<div class="box err"><div class="t">⚠️ 2 · Mantener con corticoides</div><p>No inducen curación mucosa y el metaanálisis en EC muestra RR 0,82 (IC95% 0,47–1,43) para prevenir recaída. La corticodependencia es una indicación de escalar, no un estado de equilibrio.</p></div>
+<div class="box err"><div class="t">⚠️ 3 · Usar tiopurinas para inducir remisión</div><p>Su latencia es de 8–12 semanas: recomendación en contra en CU y EC moderadas. Sirven para mantener y para reducir inmunogenicidad, no para apagar un brote.</p></div>
+<div class="box err"><div class="t">⚠️ 4 · Declarar falla del anti-TNF sin medir niveles</div><p>Cambiar de fármaco ante una pérdida de respuesta sin distinguir causa farmacocinética de farmacodinámica desperdicia una clase terapéutica. Primero: confirmar inflamación, luego medir nivel valle y anticuerpos.</p></div>
+<div class="box err"><div class="t">⚠️ 5 · Encadenar rescates en colitis aguda grave</div><p>No hay evidencia que respalde ciclosporina tras el fallo de infliximab ni la secuencia inversa. Tras 5–7 días sin respuesta al primer rescate, corresponde colectomía semi-electiva.</p></div>
+<div class="box err"><div class="t">⚠️ 6 · Añadir alopurinol sin reducir la tiopurina</div><p>Riesgo de mielosupresión grave. La maniobra completa es: alopurinol 100 mg/día <b>más</b> reducción de la tiopurina al 25–33%, con hemograma estrecho.</p></div>
+<div class="box err"><div class="t">⚠️ 7 · Prescribir un inhibidor JAK sin evaluar el riesgo cardiovascular y tromboembólico</div><p>La precaución es formal en &gt;50 años con factores de riesgo o antecedente tromboembólico. Vale la pena conocer el matiz: en pacientes con EII, un estudio de cohorte de 2026 con 856 usuarios de JAK frente a 9.422 de anti-TNF no encontró aumento de infecciones graves (HR 0,97), de tromboembolismo venoso (HR 0,66) ni de eventos cardiovasculares mayores (HR 0,50), aunque sí más infecciones globales (HR 1,60). La advertencia proviene en gran medida de ORAL Surveillance en artritis reumatoide.</p></div>
+<div class="box err"><div class="t">⚠️ 8 · Administrar una vacuna viva atenuada bajo terapia biológica</div><p>Contraindicación absoluta. Corolario obstétrico: diferir rotavirus y BCG en el lactante hasta los 6 meses si la madre recibió biológicos con transferencia placentaria en el tercer trimestre.</p></div>
+
+<!-- ================= 20 ================= -->
+<h2 id="s20"><span class="num">20</span>Novedades 2025–2026</h2>
+<p class="lead">Qué cambió respecto a lo que probablemente estudiaste antes.</p>
+
+<div class="box nue"><div class="t">🆕 Guías ACG 2025 actualizadas (colitis ulcerosa y enfermedad de Crohn)</div>
+<p>Sustituyen a las versiones de 2019 (CU) y 2018 (EC). Cambios centrales: (1) el objetivo terapéutico pasa a ser la <b>mejoría endoscópica</b>
+(MES 0–1), no la mejoría sintomática; (2) se recomienda <b>no exigir la falla de la terapia convencional</b> antes de iniciar terapia avanzada
+en pacientes con factores de riesgo; (3) se incorporan con recomendación fuerte los moduladores S1P (ozanimod, etrasimod), los anti-IL-23
+(guselkumab, mirikizumab, risankizumab) y los JAK (tofacitinib, upadacitinib); (4) se estandariza la evaluación de respuesta a las
+<b>8 semanas</b>; (5) en CU se posiciona vedolizumab por sobre adalimumab en inducción y mantenimiento, e infliximab como anti-TNF preferido;
+(6) en EC se refuerza la terapia combinada infliximab + tiopurina en el paciente naïve y la <b>profilaxis anti-TNF postoperatoria</b> en alto riesgo.</p></div>
+
+<div class="box nue"><div class="t">🆕 Guía chilena ACTECCU 2026 (Rev Med Chile)</div>
+<p>Primera guía nacional con metodología GRADE completa: <b>82 recomendaciones</b> (37 en CU, 42 en EC, 3 en situaciones especiales),
+validadas por panel nacional con umbral de ≥80% de acuerdo. Aporta el marco local para acceso, disponibilidad y aplicabilidad,
+e incorpora la voz de la asociación de pacientes.</p></div>
+
+<div class="box nue"><div class="t">🆕 AGA Clinical Practice Update sobre manejo intrahospitalario (2026)</div>
+<p>13 consejos de buena práctica. Reconoce explícitamente un cambio de era: hoy se hospitaliza más al paciente <b>refractario a múltiples
+terapias avanzadas</b> que al brote fulminante de debut. Refuerza la tromboprofilaxis universal, la sigmoidoscopía precoz (&lt;48 h reduce
+estadía y costos), la evaluación de respuesta en 72 h y la interconsulta quirúrgica desde el ingreso.</p></div>
+
+<div class="box nue"><div class="t">🆕 AGA Clinical Practice Update sobre <i>C. difficile</i> en EII (2026)</div>
+<p>Cambio de conducta relevante: <b>fidaxomicina de preferencia</b> sobre vancomicina, y <b>metronidazol proscrito</b>. Se mantiene la
+inmunosupresión durante el tratamiento antibiótico, y las terapias basadas en microbiota pasan a ser la estrategia recomendada desde la
+primera recurrencia.</p></div>
+
+<div class="box nue"><div class="t">🆕 Tofacitinib vs upadacitinib en colitis aguda grave (estudio ATTRACT, 2026)</div>
+<p>Primera comparación directa en este escenario: 111 pacientes, 23 centros internacionales. Upadacitinib logra respuesta más rápida
+(84% vs 54% entre los días 3 y 7; p = 0,02), pero la eficacia converge a los días 98 y 182, con supervivencia libre de colectomía
+equivalente (~75–80%) y perfil de eventos adversos comparable. Conclusión práctica: la elección puede guiarse por disponibilidad y
+experiencia, no por una superioridad demostrada.</p></div>
+
+<div class="box nue"><div class="t">🆕 Seguridad comparativa de JAK vs anti-TNF en EII (2026)</div>
+<p>Cohorte de base administrativa (856 vs 9.422 pacientes). Sin aumento de infecciones graves, tromboembolismo venoso ni eventos
+cardiovasculares mayores; sí mayor tasa de infecciones globales (62,4 vs 37,4 por 100 personas-año; HR 1,60). Matiza —sin derogar— la
+advertencia de caja negra en la población con EII.</p></div>
+
+<div class="box nue"><div class="t">🆕 Definición consensuada de la EC del tracto digestivo alto (Lancet Gastro Hepatol, 2026)</div>
+<p>Estudio de apropiabilidad RAND/UCLA (SUMM-CD): se define como compromiso de esófago, estómago y/o duodeno proximal al ligamento de Treitz,
+que puede aparecer en cualquier momento del curso. La endoscopía alta es apropiada <b>solo ante sospecha</b> (síntomas altos o anemia),
+no como tamizaje universal. Objetivos apropiados: respuesta y remisión clínica y endoscópica; incertidumbre sobre el valor de la histología.</p></div>
+
+<div class="box nue"><div class="t">🆕 Terapias en desarrollo</div>
+<p><b>Obefazimod</b> (potenciador oral de miR-124, mecanismo de primera clase): en el programa fase 3 ABTECT de mantenimiento (n = 580)
+alcanzó remisión clínica a la semana 44 de 50,8% con 25 mg y 51,3% con 50 mg, frente a 10,4% con placebo, cumpliendo todos los desenlaces
+secundarios clave y con eventos adversos graves de 2,6–5,6%. Solicitud regulatoria a la FDA proyectada para fines de 2026; resultados fase 2b
+en Crohn esperados a mediados de 2027. <b>Tulisokibart</b> (anti-TL1A) alcanzó sus desenlaces primario y secundarios clave en el estudio
+fase 3 ATLAS-UC de inducción — primer anti-TL1A en lograrlo. La diana TL1A es especialmente atractiva por su componente <b>antifibrótico</b>.</p></div>
+
+<!-- ================= 21 ================= -->
+<div class="laminas"><div class="lam-h">Láminas de apoyo (ver en ibd-eii.com) · ensayos: cronología, diseño y comparaciones directas</div><div class="lam-g"><figure class="lam sinimg"><figcaption>Línea de tiempo de los ensayos pivotales, por fármaco <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Ensayos cara a cara en EII (lámina 1 de 2) <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Ensayos cara a cara en EII (lámina 2 de 2) <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Diseño de los ensayos en EII frente a placebo <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure><figure class="lam sinimg"><figcaption>Historia de la enfermedad inflamatoria intestinal <span class="cred">Gros B · ibd-eii.com</span></figcaption></figure></div></div>
+
+<h2 id="s21"><span class="num">21</span>Casos clínicos aplicados</h2>
+
+<div class="caso">
+<div class="hd"><span class="lvl">Básico</span>Caso 1 · Diarrea con sangre en mujer joven</div>
+<div class="bd">
+<p>Mujer de 27 años, sin antecedentes, consulta por 8 semanas de diarrea con sangre y mucosidad, 5–6 deposiciones al día, urgencia y tenesmo.
+Sin fiebre ni baja de peso. Examen: frecuencia cardíaca 84 lpm, abdomen blando. Laboratorio: hemoglobina 11,8 g/dL, PCR 18 mg/L, albúmina 4,0 g/dL.
+Coprocultivo y toxina de <i>C. difficile</i> negativos. Colonoscopía: inflamación continua desde el recto hasta el ángulo esplénico, patrón
+vascular ausente, friabilidad y erosiones; íleon terminal normal. Biopsias: distorsión críptica, plasmocitosis basal, abscesos crípticos.</p>
+<p><b>Pregunta:</b> clasifique la enfermedad y proponga el tratamiento de inducción y mantenimiento.</p>
+<details><summary>Ver respuesta razonada</summary><div class="ans">
+<p><b>Clasificación:</b> colitis ulcerosa, Montreal <b>E2</b> (colitis izquierda), gravedad <b>S2</b> (moderada: &gt;4 deposiciones con mínimo
+compromiso sistémico). No cumple Truelove-Witts (requiere ≥6 deposiciones con sangre más un criterio sistémico). Subscore endoscópico de
+Mayo 2; UCEIS estimado ≈5.</p>
+<p><b>Inducción:</b> mesalazina oral 4 g/día <b>más</b> mesalazina rectal ≥1 g/día. La combinación es superior a la oral aislada (62,2% vs 46,7%;
+recomendación débil a favor en ACTECCU 2026, pero con un punto de buena práctica explícito). Reevaluar a las 2–4 semanas.</p>
+<p><b>Si no responde:</b> prednisona 1 mg/kg (40–60 mg) con descenso programado, o budesonida MMX si el brote se mantiene leve.</p>
+<p><b>Mantenimiento:</b> mesalazina oral <b>≥2 g/día</b> (existe gradiente dosis-respuesta) ± rectal. Nunca corticoide.</p>
+<p><b>Seguimiento:</b> calprotectina fecal a las 8–12 semanas; endoscopía de control a los 6–12 meses buscando MES 0–1. Vigilancia oncológica
+a partir de los 6–8 años del inicio de síntomas, con intervalo según extensión e inflamación acumulada.</p>
+<p><b>Punto clave:</b> el error de este caso sería iniciar corticoide de entrada o usar solo la vía oral. La combinación tópica + sistémica
+es la respuesta con mejor evidencia.</p>
+</div></details>
+</div></div>
+
+<div class="caso">
+<div class="hd"><span class="lvl">Intermedio</span>Caso 2 · Crohn perianal en paciente inmunonaïve</div>
+<div class="bd">
+<p>Hombre de 24 años, fumador de 10 cigarrillos/día, con diagnóstico reciente de enfermedad de Crohn ileocolónica. Consulta por dolor perianal
+y secreción purulenta de tres semanas. Examen: dos orificios fistulosos externos, induración perianal, sin fiebre. PCR 45 mg/L,
+calprotectina 1.200 µg/g. RM de pelvis: dos trayectos transesfinterianos complejos con una colección de 2,5 cm.</p>
+<p><b>Pregunta:</b> ordene la conducta terapéutica. ¿Adalimumab o infliximab? ¿Combinado o monoterapia?</p>
+<details><summary>Ver respuesta razonada</summary><div class="ans">
+<p><b>Paso 1 — control de la fuente, antes que cualquier fármaco.</b> Examen bajo anestesia con drenaje de la colección e instalación de
+<b>setón</b>. Iniciar biológico sobre un absceso no drenado es el error clásico y transforma una sepsis local en una sepsis inmunosuprimida.
+Agregar ciprofloxacino + metronidazol como adyuvantes.</p>
+<p><b>Paso 2 — clasificación.</b> Montreal <b>A2 L3 B1p</b>. Presenta múltiples factores de mal pronóstico: edad &lt;30 años, enfermedad perianal
+al debut, tabaquismo activo, calprotectina muy elevada. Esto <b>excluye</b> el escalonamiento clásico y obliga a terapia avanzada precoz.</p>
+<p><b>Paso 3 — elección del fármaco.</b> <b>Infliximab</b>. Es el único agente con recomendación fuerte a favor en enfermedad perianal compleja
+(inducción RR 3,57; IC95% 1,38–9,25; mantenimiento RR 1,79; IC95% 1,10–2,92). Adalimumab tiene recomendación débil. Además, en Chile ambos
+están cubiertos por la Ley Ricarte Soto, de modo que evidencia y acceso coinciden.</p>
+<p><b>Paso 4 — combinado.</b> Infliximab <b>más</b> tiopurina: en el paciente naïve, la terapia combinada reduce la inmunogenicidad y muestra
+mayor probabilidad de cierre de la primera fístula (HR 2,58; IC95% 1,16–5,6). Verificar TPMT y NUDT15 antes.</p>
+<p><b>Paso 5 — pre-biológico.</b> QuantiFERON o ELISPOT, radiografía de tórax, VHB, VHC, VIH, virus de Epstein-Barr, actualización de vacunas.</p>
+<p><b>Paso 6 — cesación tabáquica.</b> Intervención de alto impacto pronóstico, con frecuencia omitida.</p>
+<p><b>Seguimiento:</b> respuesta a las 8–12 semanas con clínica, PCR y calprotectina; <b>RM de pelvis de control</b> a los 6–12 meses,
+recordando que la curación radiológica va por detrás del cierre del orificio externo (índice de Van Assche).</p>
+</div></details>
+</div></div>
+
+<div class="caso">
+<div class="hd"><span class="lvl">Avanzado</span>Caso 3 · Colitis aguda grave en paciente de 62 años con antecedente de trombosis</div>
+<div class="bd">
+<p>Hombre de 62 años con colitis ulcerosa extensa (E3) de 4 años de evolución, en mantenimiento con mesalazina 3 g/día. Ingresa por 10 deposiciones
+con sangre al día, T° 38,1 °C, frecuencia cardíaca 104 lpm. Laboratorio: hemoglobina 9,4 g/dL, PCR 78 mg/L, albúmina 27 g/L.
+Antecedente de trombosis venosa profunda hace 3 años tras una cirugía ortopédica. Sigmoidoscopía: úlceras profundas, sangrado espontáneo,
+UCEIS 7. Biopsias pendientes. Toxina de <i>C. difficile</i> negativa.</p>
+<p><b>Pregunta:</b> ¿qué hace al ingreso, qué evalúa al día 3 y qué rescate elige considerando su antecedente trombótico?</p>
+<details><summary>Ver respuesta razonada</summary><div class="ans">
+<p><b>Al ingreso.</b> Cumple Truelove-Witts (≥6 deposiciones con sangre más fiebre, taquicardia y anemia): colitis ulcerosa aguda grave.</p>
+<ul>
+<li><b>Metilprednisolona 60 mg/día endovenosa</b> en 2–3 dosis divididas. Dosis mayores no aportan beneficio.</li>
+<li><b>Tromboprofilaxis con heparina de bajo peso molecular</b> — <b>obligatoria</b>, y más aún con su antecedente de trombosis. La rectorragia
+no la contraindica.</li>
+<li>Biopsias para CMV (hematoxilina-eosina más inmunohistoquímica), dado el riesgo de refractariedad.</li>
+<li>Perfil lipídico en ayunas, QuantiFERON y serología VHB — se necesitarán si se usa ciclosporina o un inhibidor JAK.</li>
+<li><b>Interconsulta a coloproctología desde el ingreso</b> y conversación explícita sobre la posibilidad de colectomía.</li>
+<li>Suspender AINE, antidiarreicos y opioides. Hierro endovenoso y soporte nutricional.</li>
+</ul>
+<p><b>Estratificación de riesgo al ingreso.</b> <b>Índice ACE = 3</b>: albúmina 27 g/L (≤30), PCR 78 mg/L (≥50) y endoscopía grave (UCEIS 7).
+Valor predictivo positivo de 78% de no respuesta a corticoides → prepare el rescate <b>desde el día 1</b>, no desde el día 3.</p>
+<p><b>Día 3.</b> Aplicar criterios de Oxford: &gt;8 deposiciones/día, o 3–8 con PCR &gt;45 mg/L → ~85% de probabilidad de colectomía. La AGA 2026
+formula la misma idea como evaluación de respuesta dentro de las 72 h. La ecografía intestinal a las 48 h puede anticipar la respuesta.</p>
+<p><b>Elección del rescate.</b> El dato que dirige la decisión es la <b>albúmina de 27 g/L</b>: colopatía perdedora de proteínas con depuración
+acelerada de infliximab. Dos caminos defendibles:</p>
+<ul>
+<li><b>Infliximab intensificado (10 mg/kg).</b> Es la conducta que la AGA sigue recomendando en este subgrupo específico, aunque PREDICT-UC no
+mostró superioridad de la inducción intensificada en la población general de colitis aguda grave.</li>
+<li><b>Molécula pequeña.</b> No se pierde por vía intestinal. Aquí es donde su antecedente de trombosis pesa: los inhibidores JAK exigen
+precaución formal en &gt;50 años con antecedente tromboembólico. Sin embargo, la cohorte comparativa de 2026 en EII no encontró aumento de
+tromboembolismo venoso con JAK frente a anti-TNF (HR 0,66), y el estudio ATTRACT muestra que upadacitinib logra la respuesta más rápida en
+este escenario. Es una decisión de riesgo compartido, documentada, con tromboprofilaxis mantenida.</li>
+</ul>
+<p><b>Lo que no debe hacer.</b> Encadenar rescates. Si el primero falla a los 5–7 días, corresponde <b>colectomía semi-electiva</b>. No hay
+evidencia para ciclosporina tras infliximab ni viceversa.</p>
+<p><b>Punto clave:</b> este caso se gana en las primeras 24 horas —tromboprofilaxis, corticoide correcto, cirugía avisada y rescate
+preparado— y no en la elección sofisticada del tercer fármaco.</p>
+</div></details>
+</div></div>
+
+<!-- ================= 22 ================= -->
+<h2 id="s22"><span class="num">22</span>Checklists de acción clínica</h2>
+<p class="lead">Listas operativas para usar en box y en sala. Se marcan al hacer clic.</p>
+
+<div class="chk"><h5>A · Primera consulta de EII de novo</h5>
+<label><input type="checkbox"><span>Clasificar por Montreal (extensión y gravedad en CU; edad, localización, comportamiento y "p" en EC)</span></label>
+<label><input type="checkbox"><span>Registrar factores de mal pronóstico y decidir explícitamente entre escalonamiento y terapia avanzada precoz</span></label>
+<label><input type="checkbox"><span>Excluir infección: coprocultivo, toxina de <i>C. difficile</i>, parásitos</span></label>
+<label><input type="checkbox"><span>Basales: hemograma, PCR, albúmina, perfil hepático, ferritina y saturación de transferrina, B12, vitamina D, calprotectina</span></label>
+<label><input type="checkbox"><span>Evaluar intestino delgado en toda EC (entero-RM de preferencia)</span></label>
+<label><input type="checkbox"><span>Documentar endoscopía con un score validado (UCEIS o SES-CD), no con adjetivos</span></label>
+<label><input type="checkbox"><span>Tamizaje pre-biológico completo aunque aún no se indique biológico (adelanta semanas)</span></label>
+<label><input type="checkbox"><span>Actualizar vacunas antes de inmunosuprimir</span></label>
+<label><input type="checkbox"><span>Cesación tabáquica en EC; consejería nutricional; tamizaje de ansiedad y depresión</span></label>
+<label><input type="checkbox"><span>Fijar los objetivos STRIDE-II con el paciente y agendar el punto de reevaluación</span></label>
+</div>
+
+<div class="chk"><h5>B · Antes de iniciar terapia avanzada</h5>
+<label><input type="checkbox"><span>QuantiFERON o ELISPOT + radiografía de tórax (tratar tuberculosis latente y esperar 3–4 semanas)</span></label>
+<label><input type="checkbox"><span>HBsAg, anti-HBc, anti-HBs; VHC; VIH</span></label>
+<label><input type="checkbox"><span>Serología de virus de Epstein-Barr si se planea tiopurina en varón joven</span></label>
+<label><input type="checkbox"><span>Serología de varicela zóster; vacuna recombinante antes de JAK cuando sea posible</span></label>
+<label><input type="checkbox"><span>TPMT y NUDT15 si se usará tiopurina</span></label>
+<label><input type="checkbox"><span>Perfil lipídico en ayunas antes de ciclosporina o JAK</span></label>
+<label><input type="checkbox"><span>Electrocardiograma, evaluación oftalmológica y perfil hepático antes de S1P</span></label>
+<label><input type="checkbox"><span>Descartar embarazo y acordar anticoncepción con JAK, S1P o metotrexato</span></label>
+<label><input type="checkbox"><span>Verificar cobertura (Ley Ricarte Soto u otra) y reunir la documentación exigida</span></label>
+<label><input type="checkbox"><span>Definir por escrito la fecha y el criterio de evaluación de respuesta (8–12 semanas)</span></label>
+</div>
+
+<div class="chk"><h5>C · Colitis ulcerosa aguda grave — primeras 24 horas</h5>
+<label><input type="checkbox"><span>Confirmar Truelove-Witts y calcular el índice ACE al ingreso</span></label>
+<label><input type="checkbox"><span>Toxina de <i>C. difficile</i> (ensayo multipaso basado en toxina) y coprocultivo</span></label>
+<label><input type="checkbox"><span>Sigmoidoscopía flexible en &lt;48 h, con biopsias para CMV</span></label>
+<label><input type="checkbox"><span>Metilprednisolona 60 mg/día endovenosa en 2–3 dosis</span></label>
+<label><input type="checkbox"><span><b>Tromboprofilaxis</b> con heparina de bajo peso molecular o fondaparinux</span></label>
+<label><input type="checkbox"><span>Suspender AINE, opioides, antidiarreicos y anticolinérgicos</span></label>
+<label><input type="checkbox"><span>Interconsulta a coloproctología y conversación sobre colectomía</span></label>
+<label><input type="checkbox"><span>Preparar el rescate desde el ingreso (perfil lipídico, tuberculosis, VHB, gestión del fármaco)</span></label>
+<label><input type="checkbox"><span>Tamizaje nutricional con herramienta validada y derivación a nutrición</span></label>
+<label><input type="checkbox"><span>Radiografía de abdomen si hay sospecha de megacolon tóxico</span></label>
+</div>
+
+<div class="chk"><h5>D · Pérdida de respuesta a terapia avanzada</h5>
+<label><input type="checkbox"><span>Confirmar inflamación objetiva (PCR, calprotectina, endoscopía o imagen) — no escalar por síntomas</span></label>
+<label><input type="checkbox"><span>Descartar infección (<i>C. difficile</i>, CMV), estenosis fibrótica, sobrecrecimiento, malabsorción de sales biliares, intestino irritable</span></label>
+<label><input type="checkbox"><span>Verificar adherencia y técnica de administración</span></label>
+<label><input type="checkbox"><span>Medir nivel valle y anticuerpos antifármaco (anti-TNF)</span></label>
+<label><input type="checkbox"><span>Nivel bajo sin anticuerpos → intensificar y/o agregar inmunomodulador</span></label>
+<label><input type="checkbox"><span>Anticuerpos en título alto → cambiar dentro de clase, con inmunomodulador</span></label>
+<label><input type="checkbox"><span>Nivel adecuado sin respuesta → cambiar de mecanismo</span></label>
+<label><input type="checkbox"><span>Reevaluar el objetivo con endoscopía o imagen tras el cambio</span></label>
+</div>
+
+<div class="chk"><h5>E · Control anual del paciente estable</h5>
+<label><input type="checkbox"><span>Calprotectina fecal (cada 3–6 meses)</span></label>
+<label><input type="checkbox"><span>Hemograma, PCR, albúmina, perfil hepático, ferritina, B12 y vitamina D</span></label>
+<label><input type="checkbox"><span>Vacuna antiinfluenza anual; esquema neumocócico y herpes zóster recombinante al día</span></label>
+<label><input type="checkbox"><span>Examen dermatológico anual y consejo de fotoprotección</span></label>
+<label><input type="checkbox"><span>Citología cervical anual en mujeres inmunosuprimidas</span></label>
+<label><input type="checkbox"><span>Vigilancia de displasia según estratificación (revisar si corresponde este año)</span></label>
+<label><input type="checkbox"><span>Densitometría si hay uso crónico de corticoides u otros factores de riesgo</span></label>
+<label><input type="checkbox"><span>Tamizaje de ansiedad, depresión y fatiga</span></label>
+<label><input type="checkbox"><span>Revisar planificación reproductiva y ajustar fármacos si corresponde</span></label>
+<label><input type="checkbox"><span>En el adulto mayor: valoración geriátrica integral y revisión de polifarmacia</span></label>
+</div>
+
+<!-- ================= 23 ================= -->
+<h2 id="s23"><span class="num">23</span>Mnemotecnias y mapa conceptual</h2>
+
+<h3>Mnemotecnias consolidadas</h3>
+<div class="tw"><table class="sm">
+<thead><tr><th style="width:22%">Regla</th><th>Contenido</th></tr></thead>
+<tbody>
+<tr><td><b>A-L-B-p</b></td><td>Montreal en Crohn: <b>A</b>ño (edad al diagnóstico) · <b>L</b>ugar (localización) · <b>B</b>ehavior (comportamiento) · <b>p</b> de perianal</td></tr>
+<tr><td><b>V-S-U = 8</b></td><td>UCEIS: <b>V</b>ascular (0–2) + <b>S</b>angrado (0–3) + <b>Ú</b>lceras (0–3)</td></tr>
+<tr><td><b>6 + 1</b></td><td>Truelove-Witts: ≥<b>6</b> deposiciones con sangre <b>+ 1</b> criterio sistémico (taquicardia, fiebre, anemia o VHS alta)</td></tr>
+<tr><td><b>TB, B, C, V, V</b></td><td>Pre-biológico: <b>T</b>uberculosis · hepatitis <b>B</b> · hepatitis <b>C</b>/VIH · <b>V</b>aricela-zóster · <b>V</b>acunas al día</td></tr>
+<tr><td><b>TGN trabaja, MMP molesta</b></td><td>6-TGN = eficacia y mielotoxicidad; 6-MMP = hepatotoxicidad. <i>Shunter</i> → alopurinol + reducir la tiopurina a un cuarto</td></tr>
+<tr><td><b>Síntomas hoy, biomarcadores al semestre, endoscopía al año</b></td><td>Los tres horizontes de STRIDE-II</td></tr>
+<tr><td><b>La CEP no espera</b></td><td>Vigilancia de displasia <b>anual desde el diagnóstico</b> de colangitis esclerosante primaria, sin esperar los 8 años</td></tr>
+<tr><td><b>Drena, mapea, trata</b></td><td>Secuencia inamovible en enfermedad perianal: control de la fuente → RM → biológico</td></tr>
+<tr><td><b>Vivas, nunca</b></td><td>Vacunas vivas atenuadas contraindicadas bajo inmunosupresión biológica o con moléculas pequeñas</td></tr>
+<tr><td><b>3 y 7</b></td><td>Colitis aguda grave: decisión de rescate al día <b>3</b>; decisión de colectomía al día <b>7</b> del rescate</td></tr>
+</tbody></table></div>
+
+<h3>Mapa mental</h3>
+<div class="mapa">                                   ENFERMEDAD INFLAMATORIA INTESTINAL
+                                                  │
+        ┌──────────────────────┬──────────────────┴───────────────────┬──────────────────────┐
+        │                      │                                      │                      │
+   FENOTIPO               DIAGNÓSTICO                          ESTRATEGIA             POBLACIONES
+        │                      │                                      │                      │
+  ┌─────┴─────┐          ┌─────┴─────┐                    ┌───────────┴──────────┐    ┌──────┴───────┐
+  CU          EC         Clínica     Objetivo             Objetivos            Fármacos   Embarazo
+  │           │          Diferencial │                    (STRIDE-II)             │      Adulto mayor
+  Mucosa      Transmural             ├── Endoscopía       │                       │      Oncológico
+  Continua    Salteada               │   (MES/UCEIS,      ├── Respuesta clínica   ├── Convencional
+  Recto→prox  Boca→ano               │    SES-CD)         ├── Biomarcadores       │   5-ASA, CE,
+  │           │                      ├── Histología       │   (PCR, calpro)       │   tiopurina, MTX
+  Montreal    Montreal               │   (Nancy/Robarts)  └── Curación            │
+  E1-E3       A-L-B-p                ├── Imagen               endoscópica         ├── Anti-TNF
+  S0-S3       │                      │   (RM, IUS, TC)        (+transmural,       ├── Anti-integrina
+  │           ├── Estenosis          └── Laboratorio            deseable)         ├── Anti-IL-12/23
+  ├── CUAG    ├── Fístula                (calprotectina,                          ├── Anti-IL-23
+  ├── Megacolon├── Absceso               PCR, albúmina)   ┌──────────────────┐    ├── JAK
+  ├── Displasia├── Perianal                               │ Falla primaria → │    └── S1P
+  └── Colectomía└── Recurrencia                           │ cambiar de clase │
+      (IPAA)      postoperatoria                          │ Falla secundaria→│    ┌──────────────┐
+                  (Rutgeerts i0-i4)                       │ medir niveles    │    │ CHILE: LRS   │
+                                                          └──────────────────┘    │ cubre solo   │
+                                                                                  │ anti-TNF     │
+                                                                                  └──────────────┘</div>
+
+<h3>Algoritmo maestro de decisión (formato "si → entonces")</h3>
+<ul>
+<li><b>Si</b> hay diarrea con sangre &gt;4 semanas <b>→ entonces</b> ileocolonoscopía con biopsias escalonadas más estudio infeccioso.</li>
+<li><b>Si</b> se confirma EII <b>→ entonces</b> clasificar por Montreal y buscar factores de mal pronóstico antes de elegir la estrategia.</li>
+<li><b>Si</b> hay ≥1 factor de mal pronóstico <b>→ entonces</b> terapia avanzada precoz, sin exigir la falla de la convencional.</li>
+<li><b>Si</b> no hay respuesta a las 8–12 semanas y hay inflamación objetiva <b>→ entonces</b> falla primaria: cambiar de mecanismo.</li>
+<li><b>Si</b> hubo respuesta y se perdió <b>→ entonces</b> medir nivel valle y anticuerpos antes de cambiar nada.</li>
+<li><b>Si</b> el paciente cumple Truelove-Witts <b>→ entonces</b> hospitalizar, corticoide endovenoso, tromboprofilaxis y avisar a cirugía el mismo día.</li>
+<li><b>Si</b> al día 3 cumple criterios de Oxford <b>→ entonces</b> rescate (infliximab, ciclosporina o JAK).</li>
+<li><b>Si</b> el rescate falla a los 5–7 días <b>→ entonces</b> colectomía, no un segundo rescate.</li>
+<li><b>Si</b> hay fístula perianal <b>→ entonces</b> drenar y colocar setón antes de cualquier biológico; luego infliximab.</li>
+<li><b>Si</b> hay colangitis esclerosante primaria <b>→ entonces</b> vigilancia oncológica anual desde el diagnóstico.</li>
+<li><b>Si</b> la paciente está embarazada y en remisión <b>→ entonces</b> mantener la terapia (excepto metotrexato, JAK y S1P).</li>
+<li><b>Si</b> el paciente es mayor y frágil <b>→ entonces</b> valoración geriátrica integral, evitar JAK y azatioprina, preferir vedolizumab o ustekinumab.</li>
+</ul>
+
+<!-- ================= 24 ================= -->
+<h2 id="s24"><span class="num">24</span>Flashcards</h2>
+<p class="lead">Haz clic en cada tarjeta para revelar la respuesta.</p>
+<div class="fc-grid">
+<div class="fc"><div class="q">¿Cuáles son los criterios de Truelove-Witts?</div><div class="a">≥6 deposiciones con sangre al día <b>más</b> al menos un signo sistémico: frecuencia cardíaca &gt;90 lpm, temperatura &gt;37,8 °C, hemoglobina &lt;10,5 g/dL o VHS &gt;30 mm/h. El riesgo de colectomía sube de 8,5% a 48% según el número de criterios.</div><div class="hint">Clic para ver</div></div>
+<div class="fc"><div class="q">¿Cómo se compone el UCEIS y cuál es su remisión?</div><div class="a">Patrón vascular (0–2) + sangrado (0–3) + erosiones/úlceras (0–3) = 0–8. Remisión ≤1; respuesta endoscópica = caída de ≥2 puntos. Está validado, a diferencia del subscore endoscópico de Mayo.</div><div class="hint">Clic para ver</div></div>
+<div class="fc"><div class="q">¿Cuáles son los criterios de Oxford (Travis) al día 3?</div><div class="a">&gt;8 deposiciones/día, o 3–8 deposiciones/día con PCR &gt;45 mg/L. Predicen ~85% de probabilidad de colectomía y gatillan la terapia de rescate.</div><div class="hint">Clic para ver</div></div>
+<div class="fc"><div class="q">¿Qué es el índice ACE y qué predice?</div><div class="a">Al ingreso, 1 punto por cada uno: albúmina ≤30 g/L, PCR ≥50 mg/L y gravedad endoscópica aumentada. ACE 3 → 78% de valor predictivo positivo de no respuesta a corticoides endovenosos; ACE 0 → 87% de valor predictivo negativo.</div><div class="hint">Clic para ver</div></div>
+<div class="fc"><div class="q">Dosis de corticoide endovenoso en colitis aguda grave</div><div class="a">Metilprednisolona 60 mg/día (rango 40–60) en 2–3 dosis divididas. Superar los 60 mg no aporta beneficio y aumenta la toxicidad. No prolongar más de 7 días en el no respondedor.</div><div class="hint">Clic para ver</div></div>
+<div class="fc"><div class="q">Inducción y mantenimiento de ustekinumab</div><div class="a">Inducción endovenosa por peso: ≤55 kg 260 mg · 55–85 kg 390 mg · &gt;85 kg 520 mg. Mantenimiento 90 mg subcutáneos cada 8 semanas (cada 12 en algunos pacientes).</div><div class="hint">Clic para ver</div></div>
+<div class="fc"><div class="q">Esquema de upadacitinib en CU y en EC</div><div class="a">CU: 45 mg/día por 8 semanas (extensible a 16) → mantenimiento 15 o 30 mg/día. EC: 45 mg/día por 12 semanas → 15 o 30 mg/día. Es el agente de inicio de acción más rápido.</div><div class="hint">Clic para ver</div></div>
+<div class="fc"><div class="q">¿Qué es un paciente <i>shunter</i> y cómo se maneja?</div><div class="a">Hipermetabolizador que desvía la tiopurina hacia 6-MMP: 6-TGN bajos pese a dosis plena, razón 6-MMP/6-TGN &gt;11, transaminasas elevadas y falta de respuesta. Manejo: alopurinol 100 mg/día <b>más</b> reducir la tiopurina al 25–33% de la dosis, con hemograma estrecho.</div><div class="hint">Clic para ver</div></div>
+<div class="fc"><div class="q">Score de Rutgeerts modificado: umbrales que cambian la conducta</div><div class="a">Se aplica a los 6–12 meses post-resección ileocólica sobre ≥5 cm de neoíleon. i0–i1 → recurrencia clínica de 8,6% a 8 años; i4 → 100% de recurrencia sintomática a 4 años. i2a = confinada a la anastomosis; i2b = neoíleon. i2b o más → iniciar o intensificar terapia.</div><div class="hint">Clic para ver</div></div>
+<div class="fc"><div class="q">Los tres horizontes de STRIDE-II</div><div class="a">Inmediato: respuesta clínica (caída ≥50% de los síntomas reportados). Intermedio (2–6 meses): remisión clínica más normalización de PCR y calprotectina. Largo plazo: curación endoscópica (MES 0–1 / SES-CD &lt;3) y calidad de vida normalizada. Histología y curación transmural: deseables, aún no obligatorias.</div><div class="hint">Clic para ver</div></div>
+<div class="fc"><div class="q">¿Qué fármacos están contraindicados en el embarazo?</div><div class="a">Metotrexato (teratógeno absoluto), inhibidores JAK y moduladores S1P. Se continúan 5-ASA, corticoides, tiopurinas ya iniciadas, anti-TNF, vedolizumab y ustekinumab. La prioridad es mantener la remisión materna.</div><div class="hint">Clic para ver</div></div>
+<div class="fc"><div class="q">Manejo de <i>C. difficile</i> en EII según la AGA 2026</div><div class="a">Ensayo multipaso basado en toxina. Fidaxomicina de preferencia (vancomicina si no está disponible); <b>metronidazol proscrito</b>. <b>No suspender</b> la inmunosupresión. Ninguna clase de biológico tiene riesgo diferencial. Terapias basadas en microbiota desde la primera recurrencia; no usar probióticos.</div><div class="hint">Clic para ver</div></div>
+<div class="fc"><div class="q">Intervalos de vigilancia de displasia en EII</div><div class="a">Inicio 6–8 años tras los síntomas. Sin vigilancia si es proctitis aislada. Cada 5 años: colitis limitada o extensa con inflamación leve. Cada 3 años: pseudopólipos, antecedente familiar en &gt;50 años, o colitis extensa con inflamación moderada-grave. <b>Anual</b>: estenosis o displasia en los últimos 5 años, colangitis esclerosante primaria (desde su diagnóstico) o familiar de primer grado &lt;50 años.</div><div class="hint">Clic para ver</div></div>
+<div class="fc"><div class="q">¿Qué financia la Ley Ricarte Soto en EII?</div><div class="a">Colitis ulcerosa: infliximab, adalimumab y golimumab. Enfermedad de Crohn: infliximab y adalimumab. Solo el fármaco, no los costos de administración. Las terapias más nuevas (vedolizumab, ustekinumab, anti-IL-23, JAK, S1P) quedan fuera del arancel.</div><div class="hint">Clic para ver</div></div>
+<div class="fc"><div class="q">Primera línea en colitis microscópica y su duración</div><div class="a">Budesonida 9 mg/día por 6–8 semanas. Alta tasa de recaída → mantenimiento con budesonida en dosis baja, secuestradores de sales biliares, antidiarreicos o terapia avanzada en refractarios. Diagnóstico exclusivamente histológico, con colonoscopía macroscópicamente normal.</div><div class="hint">Clic para ver</div></div>
+</div>
+
+<!-- ================= 25 ================= -->
+<h2 id="s25"><span class="num">25</span>Quiz interactivo</h2>
+<p class="lead">18 preguntas que integran varias secciones: hechos, aplicación clínica, razonamiento terapéutico e interpretación de evidencia.</p>
+<div id="quiz"></div>
+<div>
+  <button class="qbtn" onclick="corregir()">Corregir</button>
+  <button class="qbtn alt" onclick="reiniciar()">Reiniciar</button>
+</div>
+<div id="score"></div>
+
+<!-- ================= 26 ================= -->
+<h2 id="s26"><span class="num">26</span>Síntesis de evidencia</h2>
+
+<h3>Áreas de consenso sólido</h3>
+<ul>
+<li>La <b>mejoría endoscópica</b> (MES 0–1 en CU; SES-CD &lt;3 o ausencia de úlceras en EC) es el objetivo terapéutico a largo plazo, no la mejoría sintomática. Coinciden STRIDE-II, ACG 2025 y ACTECCU 2026.</li>
+<li>Los <b>corticoides no sirven para mantenimiento</b> en ninguna de las dos enfermedades. Recomendación fuerte en contra.</li>
+<li>Los <b>salicilatos no tienen rol en la enfermedad de Crohn</b>. Recomendación fuerte en contra para inducción y mantenimiento.</li>
+<li>La <b>tromboprofilaxis es universal</b> en el paciente hospitalizado con EII sin contraindicación absoluta.</li>
+<li><b>Infliximab</b> es la primera línea médica en enfermedad perianal fistulizante compleja; es la única con recomendación fuerte a favor.</li>
+<li>El <b>metotrexato está contraindicado</b> en el embarazo, y las <b>vacunas vivas atenuadas</b> lo están bajo inmunosupresión.</li>
+<li>La <b>enfermedad activa</b>, no el fármaco, es el principal predictor de resultados obstétricos adversos.</li>
+<li>La <b>evaluación quirúrgica precoz</b> en colitis aguda grave reduce mortalidad.</li>
+</ul>
+
+<h3>Áreas de controversia o evidencia insuficiente</h3>
+<div class="tw"><table class="sm">
+<thead><tr><th style="width:26%">Tema</th><th>Estado de la discusión</th></tr></thead>
+<tbody>
+<tr><td><b>Inducción intensificada de infliximab en colitis aguda grave</b></td><td>PREDICT-UC no mostró superioridad de 10 mg/kg sobre 5 mg/kg en respuesta al día 7 ni en colectomía a 3 meses. La AGA 2026 mantiene, sin embargo, la intensificación en el subgrupo con colopatía perdedora de proteínas. No hay consenso cerrado.</td></tr>
+<tr><td><b>Seguridad de los inhibidores JAK</b></td><td>La caja negra deriva de ORAL Surveillance (artritis reumatoide, &gt;50 años con factor de riesgo cardiovascular). La cohorte 2026 en población con EII no halló exceso de infecciones graves, tromboembolismo ni eventos cardiovasculares mayores frente a anti-TNF, pero sí más infecciones globales. ACTECCU 2026 conserva la precaución formal, mientras la literatura observacional la matiza.</td></tr>
+<tr><td><b>Curación transmural e histológica como objetivos obligatorios</b></td><td>Ambas se asocian a mejores desenlaces, pero STRIDE-II las mantiene como objetivos <b>deseables</b> y no como gatillo obligatorio de ajuste terapéutico. Faltan ensayos que aleatoricen la estrategia.</td></tr>
+<tr><td><b>Rescate secuencial en colitis aguda grave</b></td><td>ACTECCU 2026 señala explícitamente que <b>no existen estudios</b> que evalúen ciclosporina tras fallo de infliximab o viceversa. Punto de buena práctica: solo en centros de alta experiencia y con evaluación cuidadosa del riesgo.</td></tr>
+<tr><td><b>Vedolizumab en enfermedad perianal</b></td><td>Resultados prometedores pero evidencia limitada y heterogénea. El panel chileno lo posiciona como tercera o cuarta línea.</td></tr>
+<tr><td><b>Risankizumab y guselkumab en enfermedad perianal</b></td><td>Evidencia insuficiente para emitir recomendación alguna (ACTECCU 2026).</td></tr>
+<tr><td><b>Cromoendoscopía vs alta definición con biopsias dirigidas</b></td><td>ECCO sigue recomendando cromoendoscopía pancolónica con índigo carmín; la alta definición con biopsias dirigidas se ha consolidado como alternativa aceptable. La ventaja incremental de la cromoendoscopía en la era de la alta definición está en discusión.</td></tr>
+<tr><td><b>Anticoagulación profiláctica extendida al alta</b></td><td>Se plantea en pacientes de muy alto riesgo, pero la AGA reconoce que <b>los datos son insuficientes</b> para respaldarla como práctica.</td></tr>
+<tr><td><b>MES vs UCEIS</b></td><td>El UCEIS está validado y el MES no; sin embargo, la ventaja clínica del UCEIS sobre el MES <b>no ha sido confirmada</b> en desenlaces duros. Los puntos de corte del UCEIS para leve/moderado/grave aún no están definidos formalmente.</td></tr>
+<tr><td><b>Terapia avanzada en el adulto mayor</b></td><td>Los ensayos excluyeron sistemáticamente a este grupo. Toda la evidencia es observacional o de análisis post hoc; ACTECCU la califica como recomendación <b>débil</b> a favor.</td></tr>
+<tr><td><b>EII y cáncer</b></td><td>Evidencia limitada; los registros SAPPHIRE e I-CARE están en curso y deberían modificar las recomendaciones en los próximos años.</td></tr>
+</tbody></table></div>
+
+<h3>Limitaciones de la evidencia que conviene nombrar en un examen</h3>
+<ul>
+<li>La mayoría de las comparaciones entre terapias avanzadas son <b>indirectas</b> (metaanálisis en red), con pocos ensayos cabeza a cabeza (VARSITY, SEQUENCE).</li>
+<li>Las poblaciones de los ensayos <b>no representan</b> a los pacientes reales: se excluyen adultos mayores, pacientes con múltiples fallos previos, enfermedad perianal grave, embarazadas y pacientes oncológicos.</li>
+<li>Los desenlaces varían entre ensayos (remisión clínica definida por Mayo total, por PRO2, por CDAI), lo que dificulta la comparación.</li>
+<li>La evidencia en enfermedad perianal proviene mayormente de <b>análisis post hoc de subgrupos</b>, no de ensayos diseñados para ese desenlace.</li>
+<li>La guía ACTECCU 2026 declara financiamiento de la industria para la agencia metodológica, con independencia declarada del panel en el análisis y la formulación — un dato a mencionar en una lectura crítica.</li>
+</ul>
+
+<h3>Aplicabilidad en el contexto chileno</h3>
+<ul>
+<li>Existe una <b>disociación explícita</b> entre lo recomendado con evidencia GRADE fuerte y lo financiado: la Ley Ricarte Soto cubre solo anti-TNF (infliximab y adalimumab en ambas enfermedades; golimumab además en CU).</li>
+<li>La consecuencia práctica es que la secuencia real en el sistema público suele comenzar por anti-TNF, con las terapias más nuevas reservadas a cobertura privada, seguros complementarios o programas de acceso.</li>
+<li>La Sociedad Chilena de Gastroenterología ha solicitado públicamente ampliar la canasta. Es un argumento pertinente en una discusión de caso o en un comité.</li>
+<li>La <b>ecografía intestinal</b> es la herramienta con mejor relación costo-beneficio para el monitoreo longitudinal en un sistema con acceso limitado a resonancia; su desarrollo local es una oportunidad concreta.</li>
+<li>La escasez de datos epidemiológicos nacionales limita la planificación sanitaria; los registros de EII son una necesidad reconocida por la propia guía.</li>
+</ul>
+
+<!-- ================= 27 ================= -->
+<h2 id="s27"><span class="num">27</span>Referencias clave</h2>
+<p class="lead">Ordenadas por relevancia para la práctica, no por orden de aparición.</p>
+
+<h4>Guías de práctica clínica</h4>
+<ol class="refs">
+<li>Núñez P, Alfaro I, Pavez C, et al. Guía de recomendaciones para el tratamiento de la colitis ulcerosa y la enfermedad de Crohn en pacientes adultos (ACTECCU). <i>Rev Med Chile</i>. 2026;154(1):105-131. DOI: 10.4067/s0034-98872026000100105</li>
+<li>Rubin DT, Ananthakrishnan AN, Siegel CA, et al. ACG Clinical Guideline Update: Ulcerative Colitis in Adults. <i>Am J Gastroenterol</i>. 2025;120:1187-1224.</li>
+<li>Lichtenstein GR, Loftus EV, Afzali A, et al. ACG Clinical Guideline: Management of Crohn's Disease in Adults. <i>Am J Gastroenterol</i>. 2025;120:1225-1264.</li>
+<li>Turner D, Ricciuto A, Lewis A, et al. STRIDE-II: An Update on the Selecting Therapeutic Targets in Inflammatory Bowel Disease (STRIDE) Initiative of the IOIBD. <i>Gastroenterology</i>. 2021;160:1570-1583.</li>
+</ol>
+
+<h4>Clinical Practice Updates de la AGA</h4>
+<ol class="refs" start="5">
+<li>Cohen-Mekelburg S, et al. AGA Clinical Practice Update on Inpatient Management of Adults With Inflammatory Bowel Disease: Expert Review. <i>Gastroenterology</i>. 2026;170:408-417. DOI: 10.1053/j.gastro.2025.08.039</li>
+<li>Khanna S, Allegretti JR, Hashash JG, Feuerstadt P. AGA Clinical Practice Update on Management of <i>Clostridioides difficile</i> Infection in Inflammatory Bowel Disease: Expert Review. <i>Gastroenterology</i>. 2026;171:184-192.</li>
+<li>Buchner AM, Farraye FA, Iacucci M. AGA Clinical Practice Update on Endoscopic Scoring Systems in Inflammatory Bowel Disease: Commentary. <i>Clin Gastroenterol Hepatol</i>. 2024;22:2188-2196. DOI: 10.1016/j.cgh.2024.06.048</li>
+<li>Chavannes M, Dolinger MT, Cohen-Mekelburg S, et al. AGA Clinical Practice Update on the Role of Intestinal Ultrasound in Inflammatory Bowel Disease: Commentary. <i>Clin Gastroenterol Hepatol</i>. 2024;22:1790-1795.</li>
+<li>Caldera F, Kane S, Long M, et al. AGA Clinical Practice Update on Noncolorectal Cancer Screening and Vaccinations in Patients With Inflammatory Bowel Disease: Expert Review. <i>Clin Gastroenterol Hepatol</i>. 2025;23:695-706.</li>
+<li>Hashash JG, Elkins J, Lewis JD, et al. AGA Clinical Practice Update on Diet and Nutritional Therapies in Patients With Inflammatory Bowel Disease. <i>Gastroenterology</i>. 2024;166:521-532.</li>
+</ol>
+
+<h4>Ensayos pivotales citados</h4>
+<ol class="refs" start="11">
+<li><b>SONIC</b> — infliximab + azatioprina vs monoterapias en EC naïve.</li>
+<li><b>ACCENT I</b> — infliximab en inducción y mantenimiento de EC.</li>
+<li><b>ACT-1 / ACT-2</b> — infliximab en CU moderada-grave.</li>
+<li><b>ULTRA-1 / ULTRA-2 / ULTRA-3</b> — adalimumab en CU. <b>CHARM / CLASSIC / EXTEND</b> — adalimumab en EC.</li>
+<li><b>PURSUIT-SC / PURSUIT-Maintenance</b> — golimumab en CU.</li>
+<li><b>GEMINI-1 / GEMINI-2</b> — vedolizumab en CU y EC.</li>
+<li><b>UNIFI</b> (CU) y <b>UNITI-1/2, CERTIFI, IM-UNITI</b> (EC) — ustekinumab.</li>
+<li><b>ADVANCE / MOTIVATE / FORTIFY</b> (EC) e <b>INSPIRE</b> (CU) — risankizumab. <b>SEQUENCE</b> — risankizumab vs ustekinumab en EC.</li>
+<li><b>GALAXI-1/2/3</b> — guselkumab en EC. <b>LUCENT-1/2</b> — mirikizumab en CU.</li>
+<li><b>OCTAVE Induction 1/2, OCTAVE Sustain, OCTAVE Open</b> — tofacitinib en CU.</li>
+<li><b>U-ACHIEVE / U-ACCOMPLISH</b> (CU) y <b>U-EXCEL / U-EXCEED / U-ENDURE</b> (EC) — upadacitinib.</li>
+<li><b>TRUE NORTH</b> (ozanimod) y programa <b>ELEVATE</b> / <b>OASIS</b> (etrasimod) — moduladores S1P en CU.</li>
+<li><b>CySIF</b> y <b>CONSTRUCT</b> — ciclosporina vs infliximab en colitis aguda grave refractaria a corticoides.</li>
+<li><b>PREDICT-UC</b> — Choy MC, Li Wai Suen CFD, Con D, et al. Intensified versus standard dose infliximab induction therapy for steroid-refractory acute severe ulcerative colitis. <i>Lancet Gastroenterol Hepatol</i>. 2024;9:981-996.</li>
+<li><b>CREOLE</b> y <b>STRIDENT</b> — adalimumab en estenosis sintomática de intestino delgado.</li>
+<li><b>DIAMOND</b> — adalimumab con o sin azatioprina en EC.</li>
+</ol>
+
+<h4>Evidencia comparativa y estudios recientes</h4>
+<ol class="refs" start="27">
+<li>Honap S, St-Pierre J, Colwill M, et al, en representación del grupo ATTRACT. Comparative Effectiveness of Tofacitinib vs Upadacitinib for the Treatment of Acute Severe Ulcerative Colitis. <i>Clin Gastroenterol Hepatol</i>. 2026;24:784-793. DOI: 10.1016/j.cgh.2025.07.025</li>
+<li>Ahuja D, Yeh KH, Patel SB, et al. Comparative Safety of Janus Kinase Inhibitors vs Tumor Necrosis Factor Antagonists in Patients With Inflammatory Bowel Diseases. <i>Clin Gastroenterol Hepatol</i>. 2026;24:794-804. DOI: 10.1016/j.cgh.2025.06.041</li>
+<li>Cohen NA, Bettenworth D, Sror N, et al, en representación del grupo SUMM-CD. Definitions, diagnosis, management, and outcomes of upper gastrointestinal Crohn's disease: an international, expert RAND/UCLA appropriateness study. <i>Lancet Gastroenterol Hepatol</i>. 2026;11:243-255. DOI: 10.1016/S2468-1253(25)00347-4</li>
+<li>Mañosa M, Calafat M, Francia E, et al. Documento de posicionamiento de GETECCU sobre fragilidad, edad avanzada y enfermedad inflamatoria intestinal. <i>Gastroenterol Hepatol</i>. 2025;48:502529. DOI: 10.1016/j.gastrohep.2025.502529</li>
+<li>Ghoneim S, Drage MG, Burke KE. Microscopic Colitis: Evidence-Based Guide to Diagnosis and Management. <i>Annu Rev Med</i>. 2026;77:253-266. DOI: 10.1146/annurev-med-050124-092157</li>
+<li>Adams A, et al. The ACE (Albumin, CRP and Endoscopy) Index in Acute Colitis: A Simple Clinical Index on Admission that Predicts Outcome in Patients With Acute Ulcerative Colitis. <i>Inflamm Bowel Dis</i>. 2020. PMID: 32572468</li>
+<li>Travis SP, Farrant JM, Ricketts C, et al. Predicting outcome in severe ulcerative colitis. <i>Gut</i>. 1996;38:905-910. (Criterios de Oxford)</li>
+<li>Truelove SC, Witts LJ. Cortisone in ulcerative colitis: final report on a therapeutic trial. <i>Br Med J</i>. 1955;2:1041-1048.</li>
+<li>Ilvemark J, Wilkens R, Thielsen P, et al. Early intestinal ultrasound predicts intravenous corticosteroid response in hospitalised patients with severe ulcerative colitis. <i>J Crohns Colitis</i>. 2022;16:1725-1734.</li>
+</ol>
+
+<h4>Recursos locales</h4>
+<ol class="refs" start="36">
+<li>ACTECCU — Agrupación Chilena de Trabajo en Enfermedad de Crohn y Colitis Ulcerosa. Información sobre Ley Ricarte Soto para enfermedad de Crohn y para colitis ulcerosa. <a href="https://www.acteccu.com">acteccu.com</a></li>
+<li>Sociedad Chilena de Gastroenterología. Solicitud de ampliación del acceso a terapias biológicas en EII bajo la Ley Ricarte Soto. <a href="https://sociedadgastro.cl">sociedadgastro.cl</a></li>
+<li>Fonasa. Enfermedades de alto costo: Ley Ricarte Soto. <a href="https://nuevo.fonasa.gob.cl/derechos-y-proteccion-financiera/ley-ricarte-soto/">fonasa.gob.cl</a></li>
+</ol>
+
+<hr class="sep">
+<p class="small" style="margin-top:24px">Documento de estudio de elaboración propia, sintetizado en lenguaje propio a partir de las fuentes citadas.
+Las dosis y esquemas deben contrastarse con la ficha técnica vigente y con el protocolo institucional antes de su aplicación clínica.
+Última revisión: agosto de 2026.</p>
+
+</div><!-- /inner -->
+</main>
+<a class="volver" href="index.html">← Repositorio</a>
+</div><!-- /wrap -->
+
+<script>
+/* ---------- Navegación activa ---------- */
+var links=[].slice.call(document.querySelectorAll('#navlinks a'));
+var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+function onScroll(){
+  var y=window.scrollY+140,idx=0;
+  for(var i=0;i<secs.length;i++){ if(secs[i]&&secs[i].offsetTop<=y) idx=i; }
+  links.forEach(function(a,i){a.classList.toggle('active',i===idx);});
+}
+window.addEventListener('scroll',onScroll); onScroll();
+
+/* ---------- Filtro del índice ---------- */
+document.getElementById('navsearch').addEventListener('input',function(e){
+  var q=e.target.value.toLowerCase();
+  links.forEach(function(a){ a.style.display = a.textContent.toLowerCase().indexOf(q)>-1 ? '' : 'none'; });
+});
+
+/* ---------- Flashcards ---------- */
+[].forEach.call(document.querySelectorAll('.fc'),function(c){
+  c.addEventListener('click',function(){c.classList.toggle('open');});
+});
+
+/* ---------- Checklists ---------- */
+[].forEach.call(document.querySelectorAll('.chk label'),function(l){
+  var cb=l.querySelector('input');
+  cb.addEventListener('change',function(){l.classList.toggle('done',cb.checked);});
+});
+
+/* ---------- Quiz ---------- */
+var PREGUNTAS=[
+{p:"Paciente de 34 años con colitis ulcerosa, 7 deposiciones con sangre al día, frecuencia cardíaca 98 lpm, hemoglobina 9,8 g/dL. ¿Qué define su cuadro?",
+ o:["Brote moderado, manejo ambulatorio con prednisona oral","Colitis ulcerosa aguda grave por criterios de Truelove-Witts","Brote leve, optimizar mesalazina","Necesita CDAI para clasificarse"],c:1,
+ e:"Cumple ≥6 deposiciones con sangre más al menos un criterio sistémico (taquicardia >90 lpm y hemoglobina <10,5 g/dL): es colitis ulcerosa aguda grave y requiere hospitalización. El CDAI es un índice de enfermedad de Crohn."},
+{p:"¿Cuál es la dosis correcta de corticoide endovenoso en la colitis ulcerosa aguda grave?",
+ o:["Metilprednisolona 125 mg/día","Metilprednisolona 60 mg/día (40–60 mg equivalente)","Hidrocortisona 100 mg cada 6 h por 14 días","Prednisona oral 1 mg/kg"],c:1,
+ e:"Metilprednisolona 60 mg/día (rango 40–60), en 2–3 dosis divididas. Superar los 60 mg no aporta beneficio adicional y aumenta la toxicidad. Prolongarla más de 7 días en el no respondedor tampoco aporta beneficio."},
+{p:"Paciente con colitis aguda grave, rectorragia importante y hemoglobina 8,9 g/dL. ¿Qué hace con la tromboprofilaxis?",
+ o:["Suspenderla por el sangrado activo","Iniciarla con heparina de bajo peso molecular","Sustituirla por medias de compresión","Esperar a que la hemoglobina supere 10 g/dL"],c:1,
+ e:"La tromboprofilaxis es universal en el paciente hospitalizado con EII sin contraindicación absoluta; la rectorragia no la contraindica. El balance favorece anticoagular: número necesario a tratar 35 frente a número necesario para dañar 114."},
+{p:"Al día 3 de corticoide endovenoso, el paciente presenta 6 deposiciones/día y PCR de 60 mg/L. Según los criterios de Oxford, ¿qué corresponde?",
+ o:["Continuar corticoide otros 7 días","Iniciar terapia de rescate","Alta con prednisona oral","Agregar mesalazina rectal"],c:1,
+ e:"Los criterios de Oxford (Travis) definen falla al día 3 con >8 deposiciones/día, o 3–8 deposiciones/día con PCR >45 mg/L. Este paciente cumple el segundo escenario: ~85% de probabilidad de colectomía sin rescate."},
+{p:"En un paciente con colitis aguda grave y albúmina de 26 g/L, ¿qué implicación farmacológica tiene ese dato?",
+ o:["Contraindica el uso de biológicos","Sugiere colopatía perdedora de proteínas con depuración acelerada de infliximab","Obliga a usar ciclosporina","Indica desnutrición sin relevancia terapéutica"],c:1,
+ e:"La hipoalbuminemia marca pérdida intestinal de proteínas y depuración acelerada del infliximab. Es el fundamento para considerar inducción intensificada (10 mg/kg) o preferir una molécula pequeña que no se pierde por vía intestinal."},
+{p:"¿Cuál es la conducta correcta ante una infección por Clostridioides difficile en un paciente con EII bajo infliximab?",
+ o:["Suspender el infliximab y tratar con metronidazol","Continuar el infliximab y tratar con fidaxomicina (o vancomicina)","Suspender el infliximab y cambiar a vedolizumab","Tratar solo con probióticos"],c:1,
+ e:"La AGA 2026 indica continuar la inmunosupresión, usar fidaxomicina de preferencia (vancomicina si no está disponible) y proscribir el metronidazol. Ninguna clase de biológico tiene riesgo diferencial de infección por C. difficile."},
+{p:"Un paciente con enfermedad de Crohn perianal fistulizante y un absceso de 3 cm en la resonancia. ¿Cuál es el primer paso?",
+ o:["Iniciar infliximab de inmediato","Examen bajo anestesia con drenaje e instalación de setón","Iniciar azatioprina","Solicitar cápsula endoscópica"],c:1,
+ e:"El control de la fuente precede a cualquier terapia inmunosupresora. Iniciar un biológico sobre un absceso no drenado convierte una sepsis local en una sepsis en paciente inmunosuprimido. Secuencia: drenar → mapear con resonancia → tratar."},
+{p:"¿Cuál es el único fármaco con recomendación fuerte a favor en enfermedad perianal compleja según ACTECCU 2026?",
+ o:["Adalimumab","Infliximab","Ustekinumab","Vedolizumab"],c:1,
+ e:"Infliximab: inducción RR 3,57 (IC95% 1,38–9,25) y mantenimiento RR 1,79 (IC95% 1,10–2,92). Adalimumab y ustekinumab tienen recomendación débil; vedolizumab se posiciona como tercera o cuarta línea; para risankizumab y guselkumab no hay evidencia suficiente."},
+{p:"Paciente con enfermedad de Crohn en azatioprina 2,5 mg/kg: 6-TGN bajos, 6-MMP muy elevada y transaminasas altas. ¿Qué hace?",
+ o:["Aumentar la dosis de azatioprina","Añadir alopurinol 100 mg/día y reducir la azatioprina al 25–33%","Suspender definitivamente las tiopurinas","Añadir alopurinol manteniendo la misma dosis"],c:1,
+ e:"Es un shunter. El alopurinol inhibe la xantina oxidasa y redirige el metabolismo hacia 6-TGN, bajando la 6-MMP hepatotóxica. La reducción de la dosis de tiopurina es inseparable de la maniobra: sin ella, el riesgo es mielosupresión grave."},
+{p:"¿Cuál de estos NO es un componente del UCEIS?",
+ o:["Patrón vascular","Sangrado","Friabilidad","Erosiones y úlceras"],c:2,
+ e:"El UCEIS excluye deliberadamente la friabilidad —el parámetro más subjetivo del subscore endoscópico de Mayo— y por eso alcanza excelente concordancia inter e intraobservador. Se compone de patrón vascular (0–2), sangrado (0–3) y erosiones/úlceras (0–3)."},
+{p:"Paciente operado de resección ileocólica hace 8 meses. Ileocolonoscopía: más de 5 lesiones aftosas en el neoíleon terminal con mucosa normal entre ellas. ¿Qué score y qué conducta?",
+ o:["Rutgeerts i1, observar","Rutgeerts i2b, iniciar o intensificar terapia","Rutgeerts i4, cirugía","SES-CD 2, sin acción"],c:1,
+ e:"Es i2b (>5 lesiones aftosas con mucosa normal entre ellas, en el neoíleon terminal). i0–i1 tiene bajo riesgo de recurrencia clínica (8,6% a 8 años); desde i2b corresponde iniciar o intensificar la terapia. La distinción i2a/i2b importa porque las lesiones anastomóticas pueden ser isquémicas."},
+{p:"Mujer de 30 años con enfermedad de Crohn en remisión con upadacitinib que desea embarazarse. ¿Qué le indica?",
+ o:["Mantener upadacitinib durante todo el embarazo","Cambiar a una terapia compatible antes de la concepción (anti-TNF, vedolizumab o ustekinumab)","Suspender toda terapia y observar","Cambiar a metotrexato"],c:1,
+ e:"Los inhibidores JAK deben evitarse en el embarazo, igual que los moduladores S1P y el metotrexato (este último absolutamente contraindicado). La planificación consiste en cambiar a una clase compatible y lograr remisión estable antes de concebir: la enfermedad activa es el principal predictor de resultados obstétricos adversos."},
+{p:"¿Cuál es el objetivo terapéutico a largo plazo según STRIDE-II?",
+ o:["Remisión clínica sostenida","Normalización de la PCR","Curación endoscópica","Remisión histológica obligatoria"],c:2,
+ e:"El objetivo a largo plazo es la curación endoscópica (MES 0–1 o UCEIS ≤1 en CU; SES-CD <3 o ausencia de úlceras en EC), junto a calidad de vida normalizada. La remisión histológica y la curación transmural son objetivos deseables pero aún no obligatorios para ajustar terapia."},
+{p:"Hombre de 72 años con colitis ulcerosa moderada de novo, hipertenso, con antecedente de fibrilación auricular. ¿Qué terapia avanzada prefiere?",
+ o:["Tofacitinib por su rapidez de acción","Vedolizumab o ustekinumab","Azatioprina en monoterapia","Prednisona de mantenimiento en dosis baja"],c:1,
+ e:"En el adulto mayor con comorbilidad cardiovascular se prefieren vedolizumab o ustekinumab por su perfil de seguridad, y se evitan los inhibidores JAK y la azatioprina (mayor riesgo de linfoma, cáncer cutáneo no melanoma e infecciones graves). Los corticoides de mantenimiento están proscritos en cualquier edad."},
+{p:"Un paciente con enfermedad de Crohn no responde a las 12 semanas de ustekinumab, con calprotectina de 900 µg/g y úlceras en la ileocolonoscopía. ¿Cómo lo clasifica y qué hace?",
+ o:["Falla secundaria: medir niveles del fármaco","Falla primaria: cambiar de mecanismo de acción","Falla aparente: buscar causas funcionales","Intensificar ustekinumab indefinidamente"],c:1,
+ e:"No hubo respuesta inicial pese a inflamación objetivada: es falla primaria, que sugiere que la vía inflamatoria dominante es otra. Corresponde cambiar de clase (anti-TNF, anti-IL-23 selectivo, JAK o vedolizumab), no de molécula dentro de la misma clase."},
+{p:"Paciente con colitis ulcerosa extensa de 10 años y colangitis esclerosante primaria diagnosticada el año pasado. ¿Con qué frecuencia hace vigilancia de displasia?",
+ o:["Cada 5 años","Cada 3 años","Anual","Cada 2 años a partir de los 20 años de enfermedad"],c:2,
+ e:"La colangitis esclerosante primaria obliga a vigilancia anual desde el momento de su diagnóstico, sin esperar los 6–8 años habituales desde el inicio de los síntomas de la colitis."},
+{p:"Según el estudio ATTRACT (2026), al comparar tofacitinib y upadacitinib en colitis ulcerosa aguda grave:",
+ o:["Upadacitinib fue superior en supervivencia libre de colectomía a 6 meses","Upadacitinib logró mayor respuesta entre los días 3 y 7, con eficacia comparable a los días 98 y 182","Tofacitinib fue superior en todos los desenlaces","Ambos fueron inferiores a la ciclosporina"],c:1,
+ e:"En 111 pacientes de 23 centros, upadacitinib obtuvo mayor tasa de respuesta entre los días 3 y 7 (84% vs 54%; p = 0,02), pero la respuesta y la remisión convergieron a los días 98 y 182, con supervivencia libre de colectomía equivalente (~75–80%) y eventos adversos comparables."},
+{p:"¿Qué terapias avanzadas financia hoy la Ley Ricarte Soto en Chile para la enfermedad de Crohn?",
+ o:["Infliximab y adalimumab","Infliximab, adalimumab y vedolizumab","Todas las terapias biológicas aprobadas","Solo infliximab"],c:0,
+ e:"En enfermedad de Crohn la ley financia infliximab (endovenoso) y adalimumab (subcutáneo). En colitis ulcerosa suma golimumab. Cubre solo el fármaco, no los costos de administración, y deja fuera vedolizumab, ustekinumab, anti-IL-23, JAK y moduladores S1P."}
+];
+
+var estado=[];
+function pintarQuiz(){
+  var h='';
+  PREGUNTAS.forEach(function(q,i){
+    h+='<div class="q" id="q'+i+'"><div class="qh">'+(i+1)+'. '+q.p+'</div>';
+    q.o.forEach(function(op,j){ h+='<div class="opt" data-q="'+i+'" data-o="'+j+'">'+op+'</div>'; });
+    h+='<div class="exp" id="e'+i+'"><b>Explicación:</b> '+q.e+'</div></div>';
+  });
+  document.getElementById('quiz').innerHTML=h;
+  [].forEach.call(document.querySelectorAll('#quiz .opt'),function(el){
+    el.addEventListener('click',function(){
+      var qi=+el.dataset.q;
+      [].forEach.call(document.querySelectorAll('#quiz .opt[data-q="'+qi+'"]'),function(o){o.classList.remove('sel');});
+      el.classList.add('sel'); estado[qi]=+el.dataset.o;
+    });
+  });
+}
+function corregir(){
+  var ok=0;
+  PREGUNTAS.forEach(function(q,i){
+    document.getElementById('e'+i).classList.add('show');
+    [].forEach.call(document.querySelectorAll('#quiz .opt[data-q="'+i+'"]'),function(o){
+      var j=+o.dataset.o;
+      o.classList.remove('sel');
+      if(j===q.c) o.classList.add('ok');
+      else if(estado[i]===j) o.classList.add('bad');
+    });
+    if(estado[i]===q.c) ok++;
+  });
+  var pct=Math.round(ok/PREGUNTAS.length*100);
+  var msg = pct>=85?'Nivel de especialista. Listo para defenderlo en el oral.'
+          : pct>=70?'Buena base. Repasa las secciones de las preguntas erradas.'
+          : pct>=50?'Requiere una segunda pasada por scores y algoritmos terapéuticos.'
+          : 'Conviene releer la guía completa antes de volver a intentarlo.';
+  var s=document.getElementById('score');
+  s.style.display='block';
+  s.innerHTML=ok+' / '+PREGUNTAS.length+' correctas ('+pct+'%) — '+msg;
+  s.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function reiniciar(){
+  estado=[]; pintarQuiz();
+  document.getElementById('score').style.display='none';
+  document.getElementById('s25').scrollIntoView({behavior:'smooth'});
+}
+pintarQuiz();
+</script>
+</body>
+</html>
