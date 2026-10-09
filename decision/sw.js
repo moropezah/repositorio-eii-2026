@@ -1,6 +1,6 @@
-/* Service worker · Decisión Terapéutica EII · versión 2026-10-09d */
+/* Service worker · Decisión Terapéutica EII · versión 2026-10-09e */
 const PREFIX='eii-decision-';
-const CACHE=PREFIX+'2026-10-09d';
+const CACHE=PREFIX+'2026-10-09e';
 const FONTS='eii-fonts-v1';
 const ASSETS=["./", "index.html", "manifest.webmanifest", "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png"];
 const FONT_CSS=["https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap"];
@@ -32,10 +32,14 @@ self.addEventListener('fetch',e=>{
   if(url.origin!==location.origin)return;
   e.respondWith((async()=>{
     const c=await caches.open(CACHE);
+    // Con conexión: siempre la versión más reciente (red primero, máximo 4 s). Sin conexión: copia guardada.
+    const net=fetch(req,{cache:'no-cache'}).then(r=>{if(r.ok)c.put(req,r.clone());return r}).catch(()=>null);
+    const timeout=new Promise(res=>setTimeout(()=>res(null),4000));
+    const r=await Promise.race([net,timeout]);
+    if(r)return r;
     const hit=await c.match(req,{ignoreSearch:true});
-    const net=fetch(req).then(r=>{if(r.ok)c.put(req,r.clone());return r}).catch(()=>null);
     if(hit){e.waitUntil(net);return hit}
-    const r=await net;if(r)return r;
+    const late=await net;if(late)return late;
     if(req.mode==='navigate'){const fb=await c.match('./',{ignoreSearch:true});if(fb)return fb}
     return new Response('Sin conexión y sin copia guardada de este recurso.',{status:503,headers:{'Content-Type':'text/plain; charset=utf-8'}});
   })());
