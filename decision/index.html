@@ -24,7 +24,7 @@
   --bg:#f7f5f1; --panel:#fffefb; --panel-2:#f1ede6; --fg:#1c2530; --fg-2:#4a5664; --fg-3:#6f7a86;
   --line:#ddd6cb; --line-2:#c9c0b2;
   --marino:#173a5e; --marino-2:#255a8a; --acento:#b0561c;
-  --verde:#2f6b4f; --rojo:#9e2b25; --ambar:#8a6414; --gris:#6b7380; --inv:#5d4a8f;
+  --verde:#1d8a4e; --rojo:#c62a2a; --ambar:#b5670a; --gris:#6b7380; --inv:#5d4a8f;
   --cu:#1f5f7a; --ec:#7a3e1f;
   --sh:0 1px 2px rgba(28,37,48,.06),0 4px 14px rgba(28,37,48,.05);
   --sh-2:0 8px 40px rgba(28,37,48,.22);
@@ -37,7 +37,7 @@
   --bg:#12161c; --panel:#1a2029; --panel-2:#222b36; --fg:#e6e9ed; --fg-2:#b3bcc6; --fg-3:#8f99a5;
   --line:#2c3642; --line-2:#3d4956;
   --marino:#8fbde6; --marino-2:#a8cdf0; --acento:#e89a5c;
-  --verde:#6fc296; --rojo:#ee8f88; --ambar:#dcb760; --gris:#9aa3ae; --inv:#b3a2e6;
+  --verde:#4fd18c; --rojo:#ff7a70; --ambar:#f2b54a; --gris:#9aa3ae; --inv:#b3a2e6;
   --cu:#79bdd8; --ec:#dda07a;
   --sh:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25); --sh-2:0 8px 40px rgba(0,0,0,.55);
   color-scheme:dark;
@@ -46,7 +46,7 @@
   --bg:#12161c; --panel:#1a2029; --panel-2:#222b36; --fg:#e6e9ed; --fg-2:#b3bcc6; --fg-3:#8f99a5;
   --line:#2c3642; --line-2:#3d4956;
   --marino:#8fbde6; --marino-2:#a8cdf0; --acento:#e89a5c;
-  --verde:#6fc296; --rojo:#ee8f88; --ambar:#dcb760; --gris:#9aa3ae; --inv:#b3a2e6;
+  --verde:#4fd18c; --rojo:#ff7a70; --ambar:#f2b54a; --gris:#9aa3ae; --inv:#b3a2e6;
   --cu:#79bdd8; --ec:#dda07a;
   --sh:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25); --sh-2:0 8px 40px rgba(0,0,0,.55);
   color-scheme:dark;
@@ -346,6 +346,59 @@ table.t tr.clk:hover{background:var(--panel-2)}
   .kv{grid-template-columns:90px minmax(0,1fr)}
   .ae div{grid-template-columns:76px minmax(0,1fr)}
 }
+
+/* ===== capa visual v2: controles más vistosos y niveles con más contraste ===== */
+.seg label{border-width:1.5px;border-radius:10px;padding:7px 12px;background:var(--panel);box-shadow:0 1px 2px rgba(28,37,48,.06);transition:transform .12s,border-color .12s,box-shadow .12s}
+.seg label:hover{border-color:var(--marino-2);transform:translateY(-1px)}
+.seg input:checked+label{background:linear-gradient(135deg,var(--marino),var(--marino-2));border-color:transparent;color:#fff;box-shadow:0 4px 12px color-mix(in srgb,var(--marino) 35%,transparent)}
+.seg.cu input:checked+label{background:linear-gradient(135deg,var(--cu),color-mix(in srgb,var(--cu) 70%,#fff))}
+.seg.ec input:checked+label{background:linear-gradient(135deg,var(--ec),color-mix(in srgb,var(--ec) 70%,#fff))}
+.seg input:checked+label small{color:rgba(255,255,255,.85)}
+:root[data-theme="dark"] .seg input:checked+label,:root[data-theme="dark"] .seg input:checked+label small{color:#0f1419}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .seg input:checked+label,:root:not([data-theme="light"]) .seg input:checked+label small{color:#0f1419}}
+.seg.sm input[value="nd"]:checked+label{background:var(--panel-2);color:var(--fg-3);box-shadow:none}
+.chk label{border-width:1.5px;padding:5px 11px;transition:transform .12s}
+.chk label:hover{transform:translateY(-1px);border-color:var(--acento)}
+.chk input:checked+label{border-style:solid;background:color-mix(in srgb,var(--acento) 18%,var(--panel));font-weight:600}
+.chk input:checked+label::before{content:"✓ ";color:var(--acento);font-weight:700}
+fieldset.blk{box-shadow:var(--sh)}
+.btn{border-radius:10px;border-width:1.5px}
+.btn.pri{background:linear-gradient(135deg,var(--marino),var(--marino-2));border-color:transparent;box-shadow:0 4px 12px color-mix(in srgb,var(--marino) 30%,transparent)}
+.btn.go{border-radius:999px;border-color:color-mix(in srgb,var(--acento) 55%,var(--line-2));color:var(--acento);font-weight:700;padding:5px 14px}
+.btn.go:hover{background:var(--acento);color:#fff;border-color:var(--acento)}
+/* niveles */
+.tier{box-shadow:var(--sh)}
+.tier.pref{border:2px solid var(--verde);background:color-mix(in srgb,var(--verde) 5%,var(--panel))}
+.tier.pref>header{background:var(--verde);border-bottom:0}
+.tier.pref>header h4,.tier.pref>header .n{color:#fff}.tier.pref>header small{color:rgba(255,255,255,.85)}
+.tier.evit{border:2px solid var(--rojo);background:color-mix(in srgb,var(--rojo) 6%,var(--panel))}
+.tier.evit>header{background:var(--rojo);border-bottom:0}
+.tier.evit>header h4,.tier.evit>header .n{color:#fff}.tier.evit>header small{color:rgba(255,255,255,.88)}
+.tier.prec{border:2px solid var(--ambar);background:color-mix(in srgb,var(--ambar) 5%,var(--panel))}
+.tier.prec>header{background:color-mix(in srgb,var(--ambar) 22%,var(--panel));border-bottom:0}
+:root[data-theme="dark"] .tier.pref>header h4,:root[data-theme="dark"] .tier.pref>header .n,:root[data-theme="dark"] .tier.evit>header h4,:root[data-theme="dark"] .tier.evit>header .n{color:#0f1419}
+:root[data-theme="dark"] .tier.pref>header small,:root[data-theme="dark"] .tier.evit>header small{color:rgba(15,20,25,.8)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tier.pref>header h4,:root:not([data-theme="light"]) .tier.pref>header .n,:root:not([data-theme="light"]) .tier.evit>header h4,:root:not([data-theme="light"]) .tier.evit>header .n{color:#0f1419}:root:not([data-theme="light"]) .tier.pref>header small,:root:not([data-theme="light"]) .tier.evit>header small{color:rgba(15,20,25,.8)}}
+.tier.evit .drow .nm b{color:var(--rojo)}
+.why li.x{font-weight:700;color:var(--rojo)}
+.tier.evit .why li.n{font-weight:700;color:var(--fg)}
+.why li.w{font-weight:600;color:var(--fg)}
+.why li.p{color:var(--fg)}
+/* alertas */
+.al{border-width:1.5px}
+.al.r{background:color-mix(in srgb,var(--rojo) 9%,var(--panel));border-color:var(--rojo)}
+.al.a{background:color-mix(in srgb,var(--ambar) 9%,var(--panel));border-color:color-mix(in srgb,var(--ambar) 60%,var(--line))}
+.al.r b.ic{background:var(--rojo);color:#fff}
+.al span b{color:var(--fg)}
+/* recomendación principal */
+.reco{border-radius:var(--r);padding:16px 18px;background:linear-gradient(135deg,color-mix(in srgb,var(--verde) 14%,var(--panel)),var(--panel));border:2px solid var(--verde);box-shadow:var(--sh)}
+.reco .k{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--verde);display:flex;align-items:center;gap:8px}
+.reco .k i{font-style:normal;width:22px;height:22px;border-radius:50%;background:var(--verde);color:#fff;display:grid;place-items:center;font-size:.75rem}
+.reco ul{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.reco li{display:grid;grid-template-columns:minmax(0,1fr);gap:2px}
+.reco li b{font-family:var(--ff-s);font-size:1.08rem}
+.reco li span{font-size:.84rem;color:var(--fg-2)}
+.reco li em{font-style:normal;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--fg-3);margin-left:6px}
 </style>
 
 <header class="top">
@@ -808,6 +861,14 @@ mz_or:{n:"Mesalazina oral",cl:"asa",via:"Oral",chile:"gen",
  ae:[["e","Cefalea, náuseas, dolor abdominal leve"],["v","Creatinina: nefritis intersticial (rara) → control anual"],["s","Empeoramiento paradojal de la diarrea con sangre en las primeras semanas (intolerancia aguda ~3 %) → suspender"],["s","Pancreatitis, pericarditis o miocarditis"]],
  preg:"Compatible. Evitar formulaciones con dibutilftalato.",lact:"Compatible (diarrea ocasional en el lactante).",
  trials:"Metaanálisis Cochrane; ASCEND II–III (4,8 g/d en moderada); PODIUM (dosis única diaria).",chk:["crea_asa"]},
+mz_comb:{n:"Mesalazina oral + rectal",cl:"asa",via:"Oral + rectal",chile:"gen",
+ cu:{ind:"Oral 2,4–4,8 g/d + enema 1 g/noche (o supositorio 1 g si predomina lo rectal) × 8 semanas",mant:"Oral ≥2 g/d + rectal 1 g 2–3 veces por semana",int:"Si no responde: budesonida MMX o prednisona; no cambiar de formulación de 5-ASA"},ec:null,
+ pres:["Oral: comprimidos LP 500 mg y 1 g; sobres 1, 2 y 4 g; comprimidos 1,2 g MMX","Rectal: enema 1 g/100 mL; espuma 1 g; supositorios 500 mg y 1 g"],
+ calc:()=>"Ejemplo moderada: 2 sobres de 2 g + 1 comprimido de 800 mg al día (4,8 g) + 1 enema de 1 g al acostarse. Mantención: 2,4 g/d oral + enema o supositorio 1 g 3 noches por semana.",
+ kin:{cu:{on:[0.5,2],ev:8,ext:null}},kinTx:"La vía rectal mejora sangrado y urgencia en 1–2 semanas; remisión a las 8",
+ tdm:"No aplica.",
+ ae:[["e","Molestia anal o dificultad para retener el enema; cefalea"],["v","Creatinina basal y anual (nefritis intersticial)"],["s","Empeoramiento paradojal de la diarrea con sangre (intolerancia a 5-ASA): suspender"]],
+ preg:"Compatible.",lact:"Compatible.",trials:"ECCO 2026 R4 (oral + rectal superior a oral sola); ACG 2025 R10; Marteau 2005; Cochrane terapia combinada.",chk:["crea_asa"]},
 mz_sup:{n:"Mesalazina supositorio",cl:"asa",via:"Rectal",chile:"gen",
  cu:{ind:"1 g/noche (E1)",mant:"1 g/d o 3 veces por semana",int:"Agregar mesalazina oral o corticoide rectal"},ec:null,
  pres:["Supositorios 500 mg y 1 g"],calc:()=>"1 supositorio de 1 g al acostarse, 4–6 semanas; luego mantención.",
@@ -1141,23 +1202,19 @@ function evaluate(c){
     if(sev==="leve"||sev==="moderada"){
       step("<b>Confirmar actividad</b>: calprotectina basal, descartar C. difficile y enteropatógenos.");
       if(c.ext==="E1"){
-        add("mz_sup","pref","Inducción","Proctitis: 5-ASA rectal ≥1 g/d es de primera línea (ECCO R3, ACG R6)");
+        add("mz_sup","pref","Inducción y mantención","Proctitis: 5-ASA rectal ≥1 g/d es de primera línea (ECCO R3, ACG R6); misma vía en mantención (ACG R18)");
         add("mz_ene","alt","Inducción","Enema o espuma si el compromiso llega al rectosigma");
         add("cort_rect","alt","Inducción","Si intolerancia o falla a 5-ASA tópico; 5-ASA rectal es preferible (ECCO R6)");
-        add("mz_or","alt","Inducción","Agregar si no responde a tópico en 4–6 semanas (ECCO R4)");
-        add("mz_sup","pref","Mantención","1 g/d o 3 veces por semana (ACG R18)");
-      }else if(c.ext==="E2"){
-        add("mz_or","pref","Inducción","≥2–2,4 g/d combinada con enema 1 g/d: superior a oral sola (ECCO R4, ACG R10)",sev==="moderada"?"4,8 g/d + enema 1 g/d":"2,4 g/d + enema 1 g/d");
-        add("mz_ene","pref","Inducción","Combinar con oral");
-        add("bud_mmx","alt","Inducción","Si falla o intolerancia a 5-ASA oral + rectal (ACG R11)");
-        add("cort_rect","alt","Inducción","Alternativa tópica a 5-ASA rectal");
-        add("mz_or","pref","Mantención","≥2 g/d (ECCO R11)");
+        add("mz_comb","alt","Inducción y mantención","Si no responde a tópico en 4–6 semanas: agregar mesalazina oral (ECCO R4)",sev==="moderada"?"Supositorio 1 g/noche + oral 2,4–4,8 g/d → mantención supositorio 1 g 3 veces/semana ± oral 2 g/d":"Supositorio 1 g/noche + oral 2,4 g/d → mantención supositorio 1 g 3 veces/semana");
       }else{
-        add("mz_or","pref","Inducción",sev==="moderada"?"4,8 g/d en actividad moderada (ASCEND)":"2,4 g/d: igual eficacia que 4,8 g en leve (ACG R15)",sev==="moderada"?"4,8 g/d ± enema 1 g/d":"2,4 g/d ± enema 1 g/d");
-        add("mz_ene","alt","Inducción","Agregar enema si hay síntomas rectales");
-        add("bud_mmx","alt","Inducción","Si no responde a 5-ASA (ACG R16); no superior a 5-ASA como primera opción (ECCO R9)");
-        add("pred","alt","Inducción","Si falla 5-ASA a 4–8 semanas (ACG R13)");
-        add("mz_or","pref","Mantención","≥2 g/d");
+        const ext2=c.ext==="E2";
+        add("mz_comb","pref","Inducción y mantención",ext2?"Oral + rectal supera a oral sola (ECCO R4, ACG R10)":"Oral + rectal supera a oral sola desde proctosigmoiditis en adelante (ECCO R4); la vía rectal controla rápido la urgencia y el sangrado",
+          (sev==="moderada"?"Oral 4,8 g/d":"Oral 2,4 g/d")+" + enema 1 g/noche (supositorio 1 g si predomina lo rectal) × 8 semanas → mantención oral ≥2 g/d + rectal 1 g 2–3 veces/semana");
+        add("mz_or","alt","Inducción y mantención",ext2?"Monoterapia oral si no tolera la vía rectal":(sev==="moderada"?"Monoterapia oral si no tolera la vía rectal; 4,8 g/d en moderada (ASCEND)":"Monoterapia oral si no tolera la vía rectal; 2,4 g/d basta en leve (ACG R15)"),
+          (sev==="moderada"?"4,8 g/d":"2,4 g/d")+" × 8 semanas → mantención ≥2 g/d");
+        add("bud_mmx","alt","Inducción",ext2?"Si falla o intolerancia a 5-ASA oral + rectal (ACG R11)":"Si no responde a 5-ASA (ACG R16); no superior a 5-ASA como primera opción (ECCO R9)");
+        if(ext2)add("cort_rect","alt","Inducción","Alternativa tópica a 5-ASA rectal");
+        else add("pred","alt","Inducción","Si falla 5-ASA a 4–8 semanas (ACG R13)");
       }
       add("aza","evit","Inducción","Tiopurina no induce remisión (ECCO R10, ACG R23)");
       step("<b>Reevaluar a las 8 semanas</b> (ACG KC19). Sin remisión con 5-ASA a dosis plena: no cambiar a otra formulación; escalar de clase (ACG R14).");
@@ -1390,6 +1447,11 @@ function evaluate(c){
     }
   }
 
+  /* fusionar inducción + mantención del mismo fármaco y nivel */
+  R.items.filter(i=>i.ph==="Inducción").forEach(ind=>{
+    const m=R.items.find(i=>i.id===ind.id&&i.ph==="Mantención"&&i.tier===ind.tier);
+    if(m){ind.ph="Inducción y mantención";ind.why=ind.why.concat(m.why);R.items.splice(R.items.indexOf(m),1)}
+  });
   /* fusionar luminal + perianal: manda el tier perianal */
   R.items.filter(i=>i.ph==="Perianal").forEach(p=>{
     const l=R.items.find(i=>i.id===p.id&&i.ph==="Inducción y mantención");
@@ -1611,7 +1673,13 @@ function render(){
   const R=evaluate(c);lastR=R;
   let h=`<div class="casehead"><div class="k">Caso</div><h3>${esc(R.title)}</h3><div class="tags">${R.tags.map(([k,t])=>`<span class="tag ${k}">${esc(t)}</span>`).join("")}</div>
    <div class="acts"><button class="btn pri" type="button" id="copy">Copiar resumen para la ficha</button><label class="toggle"><input type="checkbox" id="onlycl" ${onlyChile?"checked":""}> Solo disponibles en Chile</label></div></div>`;
-  if(R.alerts.length)h+=`<div class="alerts">${R.alerts.map(a=>`<div class="al ${a.lvl}"><b class="ic">${a.lvl==="r"?"ALTO":a.lvl==="a"?"OJO":"NOTA"}</b><span>${a.t}</span></div>`).join("")}</div>`;
+  const prefs=R.items.filter(i=>i.tier==="pref"&&(!onlyChile||D[i.id].chile!=="no"));
+  if(prefs.length){
+    const main=prefs.filter(i=>!/Puente/.test(i.ph)).slice(0,4), bridge=prefs.filter(i=>/Puente/.test(i.ph));
+    h+=`<div class="reco"><div class="k"><i>✓</i>Recomendación principal</div><ul>${main.concat(bridge).map(i=>`<li><b>${esc(D[i.id].n)}<em>${esc(i.ph)}</em></b><span>${esc(doseLine(i,c.dz))}</span></li>`).join("")}</ul>${prefs.length>main.length+bridge.length?`<p class="note" style="margin-top:8px">+${prefs.length-main.length-bridge.length} opción(es) preferente(s) más abajo, con igual nivel de evidencia.</p>`:""}</div>`;
+  }
+  const bold=t=>t.replace(/^([^:<]{3,70}):/,"<b>$1:</b>");
+  if(R.alerts.length)h+=`<div class="alerts">${R.alerts.map(a=>`<div class="al ${a.lvl}"><b class="ic">${a.lvl==="r"?"ALTO":a.lvl==="a"?"OJO":"NOTA"}</b><span>${bold(a.t)}</span></div>`).join("")}</div>`;
   if(R.steps.length)h+=`<div class="box"><h4>Plan inmediato</h4><ol class="steps">${R.steps.map(s=>`<li>${s}</li>`).join("")}</ol></div>`;
   let hidden=0;
   TIERS.forEach(t=>{

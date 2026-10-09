@@ -1,6 +1,6 @@
-/* Service worker · Repositorio EII 2026 · versión 2026-10-09b */
+/* Service worker · Repositorio EII 2026 · versión 2026-10-09c */
 const PREFIX='eii-completa-';
-const CACHE=PREFIX+'2026-10-09b';
+const CACHE=PREFIX+'2026-10-09c';
 const FONTS='eii-fonts-v1';
 const ASSETS=["./", "index.html", "guia-2026.html", "quiz/", "quiz/index.html", "decision/", "decision/index.html", "manifest.webmanifest", "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png", "decision/icons/icon-192.png"];
 const FONT_CSS=["https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap", "https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap", "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap"];
