@@ -13,6 +13,7 @@ Material de estudio de enfermedad inflamatoria intestinal (EII) para postgrado d
 | 03 | **Índice de láminas** — catálogo de las 36 figuras de apoyo en 9 grupos temáticos, con buscador. Ver nota sobre imágenes más abajo. |
 | 04 | **Consulta rápida** — qué hay y qué no hay en Chile, criterios de falla y conducta según monitorización terapéutica (TDM), umbrales de colitis aguda grave, objetivos STRIDE-II, checklist prebiológico, poblaciones especiales y tabla de scores. |
 | 05 | **Quiz EII v6.1** — 220 casos clínicos con retroalimentación razonada (pieza independiente). |
+| 06 | **Decisión Terapéutica EII** — herramienta paso a paso para CU y enfermedad de Crohn en adultos: fenotipo, línea terapéutica, comorbilidades y manifestaciones extraintestinales → escalones de tratamiento con lo disponible en Chile primero, cinética de respuesta, niveles, presentación para la receta, checklist previo al inicio y calculadora de fragilidad (Fried / escala clínica). En `decision/`. |
 
 ## Sobre las imágenes
 
@@ -25,6 +26,7 @@ El Módulo 03 conserva el **índice completo de las 36 figuras**, con su título
 ```
 index.html        · repositorio: portada y módulos 02, 03 y 04 (rutas internas #clase, #atlas, #rapida, #fuentes)
 guia-2026.html    · módulo 01, documento completo con navegación propia
+decision/index.html · módulo 06, herramienta de decisión terapéutica (autocontenida)
 .nojekyll         · evita el procesamiento Jekyll en GitHub Pages
 ```
 

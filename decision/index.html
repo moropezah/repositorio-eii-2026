@@ -1,0 +1,1799 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"></head><body>
+<title>Decisión Terapéutica EII</title>
+<meta name="author" content="Dr. Moisés Oropeza Hernández">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: herramienta de dos columnas — paciente a la izquierda, decisión a la derecha (sticky); fichas en panel lateral. Tokens heredados del Repositorio EII 2026. */
+:root{
+  --bg:#f7f5f1; --panel:#fffefb; --panel-2:#f1ede6; --fg:#1c2530; --fg-2:#4a5664; --fg-3:#6f7a86;
+  --line:#ddd6cb; --line-2:#c9c0b2;
+  --marino:#173a5e; --marino-2:#255a8a; --acento:#b0561c;
+  --verde:#2f6b4f; --rojo:#9e2b25; --ambar:#8a6414; --gris:#6b7380; --inv:#5d4a8f;
+  --cu:#1f5f7a; --ec:#7a3e1f;
+  --sh:0 1px 2px rgba(28,37,48,.06),0 4px 14px rgba(28,37,48,.05);
+  --sh-2:0 8px 40px rgba(28,37,48,.22);
+  --r:12px; --maxw:1320px;
+  --ff-s:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --ff-b:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --ff-m:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12161c; --panel:#1a2029; --panel-2:#222b36; --fg:#e6e9ed; --fg-2:#b3bcc6; --fg-3:#8f99a5;
+  --line:#2c3642; --line-2:#3d4956;
+  --marino:#8fbde6; --marino-2:#a8cdf0; --acento:#e89a5c;
+  --verde:#6fc296; --rojo:#ee8f88; --ambar:#dcb760; --gris:#9aa3ae; --inv:#b3a2e6;
+  --cu:#79bdd8; --ec:#dda07a;
+  --sh:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25); --sh-2:0 8px 40px rgba(0,0,0,.55);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#12161c; --panel:#1a2029; --panel-2:#222b36; --fg:#e6e9ed; --fg-2:#b3bcc6; --fg-3:#8f99a5;
+  --line:#2c3642; --line-2:#3d4956;
+  --marino:#8fbde6; --marino-2:#a8cdf0; --acento:#e89a5c;
+  --verde:#6fc296; --rojo:#ee8f88; --ambar:#dcb760; --gris:#9aa3ae; --inv:#b3a2e6;
+  --cu:#79bdd8; --ec:#dda07a;
+  --sh:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25); --sh-2:0 8px 40px rgba(0,0,0,.55);
+  color-scheme:dark;
+}
+[hidden]{display:none!important}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--ff-b);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;margin:0}
+h1,h2,h3,h4{font-family:var(--ff-s);text-wrap:balance;line-height:1.22;margin:0}
+a{color:var(--marino-2)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--acento);outline-offset:2px}
+.num,table{font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* barra */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:60;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line)}
+.top-in{max-width:var(--maxw);margin:0 auto;padding:9px 20px;display:flex;align-items:center;gap:14px}
+.brand{display:flex;align-items:center;gap:9px;font-family:var(--ff-s);font-weight:700;font-size:1.02rem;color:var(--fg);text-decoration:none;white-space:nowrap}
+.brand .dot{width:24px;height:24px;border-radius:6px;background:linear-gradient(135deg,var(--marino),var(--acento));display:grid;place-items:center;color:var(--bg);font-size:.6rem;font-weight:700;font-family:var(--ff-b);flex:none}
+nav.tabs{display:flex;gap:2px;margin-left:auto;overflow-x:auto;scrollbar-width:none;min-width:0}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs a{font-size:.8rem;font-weight:600;color:var(--fg-2);text-decoration:none;padding:6px 11px;border-radius:7px;white-space:nowrap}
+nav.tabs a:hover{background:var(--panel-2);color:var(--fg)}
+nav.tabs a[aria-current="true"]{background:var(--marino);color:var(--bg)}
+.tema{background:none;border:1px solid var(--line-2);color:var(--fg-2);border-radius:7px;width:30px;height:30px;cursor:pointer;flex:none;display:grid;place-items:center}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:20px;padding-block:22px 80px}
+section.vista{display:none}
+section.vista.on{display:block}
+.eyebrow{font-size:.68rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--acento);margin:0 0 6px}
+h2.sec{font-size:clamp(1.4rem,3vw,1.9rem);font-weight:700;letter-spacing:-.02em;margin:0 0 6px}
+p.lead{color:var(--fg-2);max-width:72ch;margin:0 0 14px}
+
+/* cabecera decisión */
+.intro{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:end;justify-content:space-between;margin-bottom:16px}
+.intro .t{min-width:0;flex:1 1 420px}
+.presets{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.presets .lbl{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-3);margin-right:4px}
+.chipbtn{background:var(--panel);border:1px solid var(--line-2);color:var(--fg-2);border-radius:999px;padding:5px 11px;font-size:.78rem;font-weight:600;cursor:pointer}
+.chipbtn:hover{border-color:var(--marino);color:var(--marino)}
+.chipbtn[aria-pressed="true"]{background:var(--marino);border-color:var(--marino);color:var(--bg)}
+
+.grid{display:grid;grid-template-columns:minmax(330px,420px) minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:980px){.grid{grid-template-columns:1fr}}
+
+/* formulario */
+.form{display:flex;flex-direction:column;gap:12px;min-width:0}
+fieldset.blk{border:1px solid var(--line);background:var(--panel);border-radius:var(--r);padding:14px 15px 15px;margin:0;min-width:0}
+fieldset.blk>legend{font-family:var(--ff-b);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--acento);padding:0 6px;margin-left:-6px}
+.q{margin:10px 0 0}
+.q:first-of-type{margin-top:2px}
+.q>.ql{display:block;font-size:.8rem;font-weight:600;color:var(--fg);margin-bottom:6px}
+.q>.ql small{font-weight:500;color:var(--fg-3)}
+.seg{display:flex;flex-wrap:wrap;gap:5px}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{border:1px solid var(--line-2);background:var(--bg);color:var(--fg-2);border-radius:8px;padding:5px 10px;font-size:.8rem;font-weight:600;cursor:pointer;line-height:1.3;user-select:none}
+.seg label small{display:block;font-weight:500;font-size:.68rem;color:var(--fg-3)}
+.seg input:checked+label{background:var(--marino);border-color:var(--marino);color:var(--bg)}
+.seg input:checked+label small{color:color-mix(in srgb,var(--bg) 80%,transparent)}
+.seg input:focus-visible+label{outline:2px solid var(--acento);outline-offset:2px}
+.seg.cu input:checked+label{background:var(--cu);border-color:var(--cu)}
+.seg.ec input:checked+label{background:var(--ec);border-color:var(--ec)}
+.chk{display:flex;flex-wrap:wrap;gap:5px}
+.chk input{position:absolute;opacity:0;pointer-events:none}
+.chk label{border:1px dashed var(--line-2);background:transparent;color:var(--fg-2);border-radius:999px;padding:4px 10px;font-size:.76rem;font-weight:500;cursor:pointer;user-select:none}
+.chk input:checked+label{border-style:solid;border-color:var(--acento);background:color-mix(in srgb,var(--acento) 13%,transparent);color:var(--fg)}
+.chk input:focus-visible+label{outline:2px solid var(--acento);outline-offset:2px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.inp{display:flex;align-items:center;gap:6px;border:1px solid var(--line-2);border-radius:8px;background:var(--bg);padding:4px 10px}
+.inp input{border:0;background:transparent;color:var(--fg);font:inherit;font-size:.95rem;width:100%;min-width:0;padding:3px 0}
+.inp input:focus{outline:none}
+.inp:focus-within{border-color:var(--marino)}
+.inp span{font-size:.75rem;color:var(--fg-3)}
+.sub{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-3);margin:12px 0 6px}
+.hint{font-size:.74rem;color:var(--fg-3);margin:6px 0 0}
+
+/* resultado */
+.res{position:sticky;top:calc(env(safe-area-inset-top,0px) + 62px);min-width:0;display:flex;flex-direction:column;gap:14px}
+@media (max-width:980px){.res{position:static}}
+.casehead{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;box-shadow:var(--sh)}
+.casehead .k{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-3)}
+.casehead h3{font-size:1.25rem;margin:4px 0 8px}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-size:.72rem;font-weight:600;border-radius:6px;padding:2px 8px;background:var(--panel-2);color:var(--fg-2);border:1px solid var(--line)}
+.tag.cu{color:var(--cu);border-color:color-mix(in srgb,var(--cu) 40%,transparent)}
+.tag.ec{color:var(--ec);border-color:color-mix(in srgb,var(--ec) 40%,transparent)}
+.tag.risk{color:var(--rojo);border-color:color-mix(in srgb,var(--rojo) 40%,transparent)}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+.btn{border:1px solid var(--line-2);background:var(--panel);border-radius:8px;padding:6px 12px;font-size:.8rem;font-weight:600;cursor:pointer;color:var(--fg)}
+.btn:hover{border-color:var(--marino);color:var(--marino)}
+.btn.pri{background:var(--marino);border-color:var(--marino);color:var(--bg)}
+.btn.pri:hover{color:var(--bg);filter:brightness(1.1)}
+.toggle{display:inline-flex;align-items:center;gap:7px;font-size:.78rem;color:var(--fg-2);cursor:pointer}
+.toggle input{accent-color:var(--marino)}
+
+.alerts{display:flex;flex-direction:column;gap:6px}
+.al{display:flex;gap:10px;align-items:flex-start;border-radius:9px;padding:9px 12px;font-size:.84rem;border:1px solid var(--line);background:var(--panel)}
+.al b.ic{flex:none;font-family:var(--ff-m);font-size:.7rem;border-radius:5px;padding:1px 6px;margin-top:2px}
+.al.r{border-color:color-mix(in srgb,var(--rojo) 35%,var(--line))}.al.r b.ic{background:color-mix(in srgb,var(--rojo) 16%,transparent);color:var(--rojo)}
+.al.a{border-color:color-mix(in srgb,var(--ambar) 35%,var(--line))}.al.a b.ic{background:color-mix(in srgb,var(--ambar) 18%,transparent);color:var(--ambar)}
+.al.i b.ic{background:color-mix(in srgb,var(--marino) 14%,transparent);color:var(--marino)}
+.al span{min-width:0}
+
+.box{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:15px 17px;min-width:0}
+.box>h4{font-family:var(--ff-b);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--marino);margin:0 0 10px}
+ol.steps{margin:0;padding:0;list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:8px}
+ol.steps li{position:relative;padding-left:32px;font-size:.88rem;color:var(--fg-2)}
+ol.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:0;width:22px;height:22px;border-radius:50%;background:var(--panel-2);border:1px solid var(--line-2);font-family:var(--ff-m);font-size:.7rem;display:grid;place-items:center;color:var(--fg)}
+ol.steps li b{color:var(--fg)}
+
+.tier{border-radius:var(--r);border:1px solid var(--line);background:var(--panel);overflow:hidden}
+.tier>header{display:flex;align-items:baseline;gap:10px;padding:10px 15px;border-bottom:1px solid var(--line);background:var(--panel-2)}
+.tier>header h4{font-family:var(--ff-b);font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.tier>header small{font-size:.75rem;color:var(--fg-3)}
+.tier>header .n{margin-left:auto;font-family:var(--ff-m);font-size:.72rem;color:var(--fg-3)}
+.tier.pref>header h4{color:var(--verde)} .tier.pref{border-top:3px solid var(--verde)}
+.tier.alt>header h4{color:var(--marino)} .tier.alt{border-top:3px solid var(--marino)}
+.tier.baja>header h4{color:var(--gris)} .tier.baja{border-top:3px solid var(--gris)}
+.tier.prec>header h4{color:var(--ambar)} .tier.prec{border-top:3px solid var(--ambar)}
+.tier.evit>header h4{color:var(--rojo)} .tier.evit{border-top:3px solid var(--rojo)}
+.tier.inv>header h4{color:var(--inv)} .tier.inv{border-top:3px solid var(--inv)}
+.drow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 14px;padding:12px 15px;border-bottom:1px solid var(--line)}
+.drow:last-child{border-bottom:0}
+.drow .nm{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 8px;min-width:0}
+.drow .nm b{font-family:var(--ff-s);font-size:1.04rem;font-weight:700}
+.ph{font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-3);border:1px solid var(--line-2);border-radius:4px;padding:0 5px}
+.cls{font-size:.72rem;color:var(--fg-3)}
+.badge{font-size:.66rem;font-weight:700;letter-spacing:.04em;border-radius:5px;padding:1px 7px;white-space:nowrap}
+.badge.lrs{background:color-mix(in srgb,var(--verde) 17%,transparent);color:var(--verde)}
+.badge.isp{background:color-mix(in srgb,var(--marino) 15%,transparent);color:var(--marino)}
+.badge.gen{background:color-mix(in srgb,var(--fg-3) 15%,transparent);color:var(--fg-2)}
+.badge.no{background:color-mix(in srgb,var(--rojo) 14%,transparent);color:var(--rojo)}
+.badge.pipe{background:color-mix(in srgb,var(--inv) 16%,transparent);color:var(--inv)}
+.dose{grid-column:1/-1;font-size:.84rem;color:var(--fg);font-family:var(--ff-b)}
+.dose em{font-style:normal;color:var(--fg-3)}
+.why{grid-column:1/-1;margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:3px}
+.why li{font-size:.8rem;color:var(--fg-2);padding-left:18px;position:relative}
+.why li::before{position:absolute;left:0;top:0;font-family:var(--ff-m);font-size:.75rem}
+.why li.p::before{content:"+";color:var(--verde)}
+.why li.w::before{content:"!";color:var(--ambar)}
+.why li.x::before{content:"×";color:var(--rojo)}
+.why li.n::before{content:"·";color:var(--fg-3)}
+.drow .go{align-self:start}
+.mini{grid-column:1/-1}
+
+/* cinética */
+.kin{position:relative;height:30px;margin:2px 0 0}
+.kin .trk{position:absolute;left:0;right:0;top:12px;height:6px;border-radius:3px;background:var(--panel-2);border:1px solid var(--line)}
+.kin .on{position:absolute;top:12px;height:6px;border-radius:3px;background:color-mix(in srgb,var(--verde) 70%,transparent)}
+.kin .ev{position:absolute;top:7px;width:2px;height:16px;background:var(--marino)}
+.kin .ex{position:absolute;top:7px;width:2px;height:16px;background:var(--acento);opacity:.85}
+.kin .tk{position:absolute;top:21px;font-family:var(--ff-m);font-size:.58rem;color:var(--fg-3);transform:translateX(-50%)}
+.kin .lb{position:absolute;top:-2px;font-size:.62rem;font-weight:600;color:var(--marino);transform:translateX(-50%);white-space:nowrap}
+.kin .lb.x{color:var(--acento)}
+.kinleg{display:flex;gap:12px;flex-wrap:wrap;font-size:.7rem;color:var(--fg-3);margin-top:4px}
+.kinleg i{display:inline-block;width:14px;height:6px;border-radius:3px;vertical-align:middle;margin-right:4px}
+
+/* panel ficha */
+.scrim{position:fixed;inset:0;background:rgba(10,13,18,.45);z-index:90}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(640px,100%);background:var(--panel);z-index:100;box-shadow:var(--sh-2);display:flex;flex-direction:column;border-left:1px solid var(--line)}
+.drawer .dh{padding:calc(env(safe-area-inset-top,0px) + 14px) 18px 12px;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+.drawer .dh h3{font-size:1.4rem}
+.drawer .dh .x{margin-left:auto;background:var(--panel-2);border:1px solid var(--line);border-radius:50%;width:34px;height:34px;cursor:pointer;flex:none}
+.drawer .db{overflow-y:auto;padding:6px 18px calc(env(safe-area-inset-bottom,0px) + 30px)}
+.fs{margin:16px 0 0}
+.fs>h5{font-family:var(--ff-b);font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--acento);margin:0 0 7px;font-size:.7rem}
+.fs p,.fs li{font-size:.86rem;color:var(--fg-2)}
+.fs p{margin:0 0 6px}
+.fs ul{margin:0;padding-left:18px}
+.kv{display:grid;grid-template-columns:110px minmax(0,1fr);gap:4px 12px;font-size:.85rem}
+.kv dt{color:var(--fg-3);font-weight:600}
+.kv dd{margin:0;color:var(--fg)}
+.rx{border:1px dashed var(--line-2);border-radius:10px;padding:10px 12px;background:var(--bg);font-size:.85rem}
+.rx .calc{font-family:var(--ff-m);font-size:.78rem;color:var(--marino);margin-top:6px}
+.ae{display:flex;flex-direction:column;gap:5px}
+.ae div{display:grid;grid-template-columns:86px minmax(0,1fr);gap:8px;font-size:.84rem;color:var(--fg-2);align-items:start}
+.ae b{font-size:.64rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:4px;padding:2px 6px;text-align:center}
+.ae .e b{background:color-mix(in srgb,var(--verde) 15%,transparent);color:var(--verde)}
+.ae .v b{background:color-mix(in srgb,var(--ambar) 17%,transparent);color:var(--ambar)}
+.ae .s b{background:color-mix(in srgb,var(--rojo) 15%,transparent);color:var(--rojo)}
+.cl{display:flex;flex-direction:column;gap:4px}
+.cl label{display:flex;gap:9px;align-items:flex-start;font-size:.85rem;color:var(--fg-2);cursor:pointer;padding:4px 0;border-bottom:1px dotted var(--line)}
+.cl input{margin-top:3px;accent-color:var(--verde);flex:none}
+.cl em{font-style:normal;font-size:.66rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:4px;padding:1px 5px;margin-left:4px;white-space:nowrap}
+.cl em.o{background:color-mix(in srgb,var(--rojo) 14%,transparent);color:var(--rojo)}
+.cl em.f{background:color-mix(in srgb,var(--fg-3) 15%,transparent);color:var(--fg-2)}
+.cl input:checked+span{color:var(--fg-3);text-decoration:line-through}
+
+.autor{display:inline-flex;align-items:center;gap:10px;margin:2px 0 0;padding:8px 14px 8px 8px;background:var(--panel);border:1px solid var(--line);border-radius:999px;max-width:100%}
+.autor .ini{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--marino),var(--acento));color:var(--bg);font-family:var(--ff-s);font-weight:700;font-size:.8rem}
+.autor .d{min-width:0}.autor .n{font-family:var(--ff-s);font-weight:700;font-size:.92rem;line-height:1.2}.autor .r{font-size:.72rem;color:var(--fg-3);line-height:1.3}
+/* pasos y grupos desplegables */
+fieldset.step{animation:aparece .25s ease-out}
+@keyframes aparece{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
+details.grp{border:1px solid var(--line);border-radius:9px;background:var(--bg);margin-top:6px}
+details.grp>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:9px 12px;font-size:.84rem;font-weight:600;color:var(--fg)}
+details.grp>summary::-webkit-details-marker{display:none}
+details.grp>summary::before{content:"+";font-family:var(--ff-m);color:var(--acento);width:12px;flex:none}
+details.grp[open]>summary::before{content:"–"}
+details.grp .gin{padding:2px 12px 12px}
+.cnt{margin-left:auto;font-size:.68rem;font-weight:700;border-radius:999px;padding:1px 8px;background:color-mix(in srgb,var(--acento) 16%,transparent);color:var(--acento)}
+.cnt:empty{display:none}
+.sel{background:var(--panel);border:1px solid var(--line-2);color:var(--fg);border-radius:8px;padding:6px 10px;font:inherit;font-size:.82rem;max-width:100%}
+.empty{background:var(--panel);border:1px dashed var(--line-2);border-radius:var(--r);padding:22px 22px 18px}
+.empty h3{font-size:1.2rem;margin:0 0 6px}
+.empty p{color:var(--fg-2);font-size:.88rem;margin:0 0 12px;max-width:60ch}
+.prog{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+.prog li{display:flex;gap:10px;align-items:center;font-size:.86rem;color:var(--fg-3)}
+.prog li i{font-style:normal;width:20px;height:20px;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;font-size:.66rem;font-family:var(--ff-m);flex:none}
+.prog li.ok{color:var(--fg)}.prog li.ok i{background:var(--verde);border-color:var(--verde);color:var(--bg)}
+.prog li.now{color:var(--fg);font-weight:600}.prog li.now i{border-color:var(--acento);color:var(--acento)}
+details.more{border:1px solid var(--line);border-radius:var(--r);background:var(--panel)}
+details.more>summary{list-style:none;cursor:pointer;padding:11px 15px;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;display:flex;gap:10px;align-items:center}
+details.more>summary::-webkit-details-marker{display:none}
+details.more>summary::after{content:"Mostrar";margin-left:auto;font-size:.7rem;letter-spacing:.04em;text-transform:none;font-weight:600;color:var(--marino-2)}
+details.more[open]>summary::after{content:"Ocultar"}
+details.more>summary small{font-weight:500;letter-spacing:0;text-transform:none;color:var(--fg-3);font-size:.74rem}
+details.more .tier{border:0;border-radius:0;border-top:1px solid var(--line)}
+details.more .tier>header{display:none}
+details.more>.box{border:0;border-top:1px solid var(--line);border-radius:0}
+.more.baja>summary{color:var(--gris)} .more.inv>summary{color:var(--inv)} .more.gd>summary{color:var(--marino)}
+/* fragilidad */
+.fc{border-top:1px solid var(--line);padding:11px 0 8px}
+.fc:first-of-type{border-top:0;padding-top:2px}
+.fc p{font-size:.82rem;color:var(--fg-2);margin:4px 0 6px}
+.fh{display:flex;gap:10px;align-items:center;justify-content:space-between}
+.fh b{font-size:.88rem}
+.sw{display:inline-flex;gap:6px;align-items:center;font-size:.76rem;font-weight:600;color:var(--fg-2);cursor:pointer;border:1px solid var(--line-2);border-radius:999px;padding:3px 10px;flex:none}
+.sw input{accent-color:var(--acento)}
+.fc.on .sw{border-color:var(--acento);background:color-mix(in srgb,var(--acento) 13%,transparent);color:var(--fg)}
+.auto{font-family:var(--ff-m);font-size:.74rem!important;color:var(--marino)!important;margin:2px 0 0!important}
+.auto:empty{display:none}
+.score{display:flex;align-items:baseline;gap:12px;margin:4px 0 6px}
+.score b{font-family:var(--ff-s);font-size:2.6rem;line-height:1;font-variant-numeric:tabular-nums}
+.score span{font-family:var(--ff-s);font-size:1.3rem;font-weight:700}
+.meter{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:8px 0 10px}
+.meter div{height:8px;border-radius:4px;background:var(--panel-2);border:1px solid var(--line)}
+.meter .r.on{background:var(--verde);border-color:var(--verde)}.meter .p.on{background:var(--ambar);border-color:var(--ambar)}.meter .f.on{background:var(--rojo);border-color:var(--rojo)}
+.meterl{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;font-size:.68rem;color:var(--fg-3)}
+.st-r{color:var(--verde)}.st-p{color:var(--ambar)}.st-f{color:var(--rojo)}
+.cfsl{display:flex;flex-direction:column;gap:5px}
+.cfsl label{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start;border:1px solid var(--line);border-radius:9px;padding:8px 10px;cursor:pointer;background:var(--bg)}
+.cfsl input{position:absolute;opacity:0;pointer-events:none}
+.cfsl i{font-style:normal;font-family:var(--ff-s);font-weight:700;font-size:1.1rem;text-align:center}
+.cfsl b{display:block;font-size:.84rem}.cfsl small{font-size:.76rem;color:var(--fg-2)}
+.cfsl input:checked+label{border-color:var(--acento);background:color-mix(in srgb,var(--acento) 11%,var(--bg))}
+.cfsl input:focus-visible+label{outline:2px solid var(--acento);outline-offset:2px}
+.srow{display:grid;grid-template-columns:minmax(0,130px) minmax(0,1fr);gap:8px;align-items:center;padding:6px 0;border-bottom:1px dotted var(--line)}
+.srow:last-child{border-bottom:0}
+.srow .sl{font-size:.8rem;font-weight:600;color:var(--fg)}
+.seg.sm label{padding:3px 8px;font-size:.72rem}
+.seg.sm input[value="nd"]:checked+label{background:var(--panel-2);border-color:var(--line-2);color:var(--fg-3)}
+@media (max-width:460px){.srow{grid-template-columns:1fr}}
+/* tablas */
+.tw{overflow-x:auto;margin:12px 0;border:1px solid var(--line);border-radius:var(--r);background:var(--panel);-webkit-overflow-scrolling:touch}
+table.t{border-collapse:collapse;width:100%;font-size:.83rem;min-width:640px}
+table.t caption{caption-side:top;text-align:left;font-size:.75rem;color:var(--fg-3);padding:10px 13px 0;font-weight:600}
+table.t th,table.t td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+table.t thead th{background:var(--panel-2);font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-2);white-space:nowrap}
+table.t tbody tr:last-child td{border-bottom:0}
+table.t td b{color:var(--fg)}
+table.t td.nm{font-family:var(--ff-s);font-weight:700;white-space:nowrap}
+table.t tr.clk{cursor:pointer}
+table.t tr.clk:hover{background:var(--panel-2)}
+.cmp td:first-child{white-space:nowrap;font-weight:600;color:var(--fg)}
+
+/* fármacos, guías */
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px;align-items:center}
+.filters input[type=search]{flex:1 1 220px;min-width:0;background:var(--panel);border:1px solid var(--line-2);color:var(--fg);border-radius:8px;padding:7px 11px;font:inherit;font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.pc{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:15px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.pc h4{font-size:1.08rem}
+.pc .ph2{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.pc p{font-size:.84rem;color:var(--fg-2);margin:0}
+.pc .res2{font-size:.8rem;color:var(--fg);background:var(--panel-2);border-radius:8px;padding:8px 10px}
+.pc .q2{font-size:.78rem;color:var(--fg-3)}
+.pill{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:5px;padding:2px 7px}
+.pill.f2{background:color-mix(in srgb,var(--fg-3) 16%,transparent);color:var(--fg-2)}
+.pill.f3{background:color-mix(in srgb,var(--inv) 16%,transparent);color:var(--inv)}
+.pill.nda{background:color-mix(in srgb,var(--acento) 16%,transparent);color:var(--acento)}
+.tl{border-left:2px solid var(--line-2);margin:10px 0 0 6px;padding-left:18px;display:flex;flex-direction:column;gap:14px}
+.tl>div{position:relative}
+.tl>div::before{content:"";position:absolute;left:-24px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--acento)}
+.tl h5{font-family:var(--ff-s);font-size:1rem;margin:0 0 4px}
+.tl ul{margin:0;padding-left:18px;font-size:.85rem;color:var(--fg-2)}
+.refs{font-size:.82rem;color:var(--fg-2);padding-left:22px}
+.refs li{margin-bottom:6px}
+.note{font-size:.76rem;color:var(--fg-3);max-width:90ch}
+.foot{border-top:1px solid var(--line);margin-top:36px;padding-top:16px;font-size:.78rem;color:var(--fg-3)}
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 20px);transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:8px 16px;border-radius:999px;font-size:.82rem;z-index:200}
+.copybox{width:100%;min-height:160px;font-family:var(--ff-m);font-size:.74rem;background:var(--bg);color:var(--fg);border:1px solid var(--line-2);border-radius:8px;padding:10px}
+@media (max-width:700px){
+  .wrap{padding-inline:16px}.top-in{padding:9px 16px;gap:10px}
+  .brand span.nmb{display:none}
+  nav.tabs{margin-left:0;flex:1 1 auto}
+  .row2{grid-template-columns:1fr 1fr}
+  .kv{grid-template-columns:90px minmax(0,1fr)}
+  .ae div{grid-template-columns:76px minmax(0,1fr)}
+}
+</style>
+
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="#decision"><span class="dot">EII</span><span class="nmb">Decisión Terapéutica EII</span></a>
+    <nav class="tabs" id="tabs" aria-label="Secciones">
+      <a href="#decision">Decisión</a>
+      <a href="#farmacos">Fármacos</a>
+      <a href="#cinetica">Cinética y niveles</a>
+      <a href="#fragilidad">Fragilidad</a>
+      <a href="#pipeline">En investigación</a>
+      <a href="#guias">Guías</a>
+      <a href="#fuentes">Fuentes</a>
+    </nav>
+    <button class="tema" id="tema" type="button" aria-label="Cambiar tema">◐</button>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ================= DECISIÓN ================= -->
+<section class="vista" id="v-decision">
+  <div class="intro">
+    <div class="t">
+      <p class="eyebrow">Enfermedad inflamatoria intestinal · adultos</p>
+      <h2 class="sec">¿Qué terapia necesita este paciente?</h2>
+      <p class="lead">Responde paso a paso: cada bloque se abre al completar el anterior. La herramienta ordena las moléculas por escalón según ECCO 2026/2024, ACG 2025, AGA 2024–2025 y la Guía chilena 2026, con lo disponible en Chile primero.</p>
+      <div class="autor"><span class="ini">MO</span><div class="d"><div class="n">Dr. Moisés Oropeza Hernández</div><div class="r">Diseño y desarrollo de la herramienta · Residente de Gastroenterología, UANDES</div></div></div>
+    </div>
+    <div class="presets"><label class="lbl" for="preset">Casos tipo</label><select id="preset" class="sel"><option value="">Cargar un ejemplo…</option></select><button class="btn" type="button" id="nuevo">Nuevo caso</button></div>
+  </div>
+
+  <div class="grid">
+    <form class="form" id="f" autocomplete="off">
+      <fieldset class="blk">
+        <legend>1 · ¿De qué se trata?</legend>
+        <div class="q"><div class="seg" role="radiogroup" aria-label="Enfermedad">
+          <input type="radio" name="dz" id="dz-cu" value="cu"><label for="dz-cu">Colitis ulcerosa</label>
+          <input type="radio" name="dz" id="dz-ec" value="ec"><label for="dz-ec">Enfermedad de Crohn</label>
+        </div></div>
+      </fieldset>
+
+      <fieldset class="blk step" id="blk-pac">
+        <legend>2 · Paciente</legend>
+        <div class="row2">
+          <div class="q"><label class="ql" for="age">Edad</label><div class="inp"><input id="age" name="age" type="number" min="16" max="100" inputmode="numeric"><span>años</span></div></div>
+          <div class="q"><label class="ql" for="wt">Peso</label><div class="inp"><input id="wt" name="wt" type="number" min="30" max="200" inputmode="decimal"><span>kg</span></div></div>
+        </div>
+        <div class="q"><span class="ql">Sexo y etapa reproductiva</span><div class="seg">
+          <input type="radio" name="sex" id="sx-f" value="F"><label for="sx-f">Mujer</label>
+          <input type="radio" name="sex" id="sx-m" value="M"><label for="sx-m">Hombre</label>
+        </div>
+        <div class="seg" id="q-preg" style="margin-top:6px">
+          <input type="radio" name="preg" id="pg-0" value="no"><label for="pg-0">No aplica</label>
+          <input type="radio" name="preg" id="pg-d" value="deseo"><label for="pg-d">Deseo de embarazo</label>
+          <input type="radio" name="preg" id="pg-e" value="embarazo"><label for="pg-e">Embarazada</label>
+          <input type="radio" name="preg" id="pg-l" value="lactancia"><label for="pg-l">Lactancia</label>
+        </div></div>
+      </fieldset>
+
+      <!-- CU -->
+      <fieldset class="blk step" id="blk-cu">
+        <legend>3 · Fenotipo CU</legend>
+        <div class="q"><span class="ql">Extensión (Montreal)</span><div class="seg cu">
+          <input type="radio" name="ext" id="ext-1" value="E1"><label for="ext-1">E1<small>Proctitis</small></label>
+          <input type="radio" name="ext" id="ext-2" value="E2"><label for="ext-2">E2<small>Izquierda</small></label>
+          <input type="radio" name="ext" id="ext-3" value="E3"><label for="ext-3">E3<small>Extensa</small></label>
+        </div></div>
+        <div class="q"><span class="ql">Actividad</span><div class="seg cu">
+          <input type="radio" name="sev" id="sev-l" value="leve"><label for="sev-l">Leve<small>Mayo 3–5</small></label>
+          <input type="radio" name="sev" id="sev-m" value="moderada"><label for="sev-m">Moderada<small>Mayo 6–10</small></label>
+          <input type="radio" name="sev" id="sev-g" value="grave"><label for="sev-g">Grave ambulatoria<small>Mayo 11–12</small></label>
+          <input type="radio" name="sev" id="sev-a" value="asuc"><label for="sev-a">Colitis aguda grave<small>Truelove-Witts</small></label>
+        </div></div>
+        <div class="q" id="q-asuc"><span class="ql">Momento de la colitis aguda grave</span><div class="seg cu">
+          <input type="radio" name="asuc" id="as-0" value="ingreso"><label for="as-0">Ingreso<small>día 0</small></label>
+          <input type="radio" name="asuc" id="as-r" value="d3resp"><label for="as-r">Día 3 responde</label>
+          <input type="radio" name="asuc" id="as-n" value="d3noresp"><label for="as-n">Día 3 no responde<small>Oxford +</small></label>
+          <input type="radio" name="asuc" id="as-f" value="falla"><label for="as-f">Falla al rescate</label>
+        </div></div>
+        <div class="q"><span class="ql">Factores de mal pronóstico <small>(ACG 2025, tabla 8)</small></span><div class="chk">
+          <input type="checkbox" name="cur" id="cur-j" value="joven"><label for="cur-j">Diagnóstico &lt;40 años</label>
+          <input type="checkbox" name="cur" id="cur-m" value="mayo3"><label for="cur-m">Mayo endoscópico 3 / úlceras profundas</label>
+          <input type="checkbox" name="cur" id="cur-p" value="pcr"><label for="cur-p">PCR alta o albúmina baja</label>
+          <input type="checkbox" name="cur" id="cur-h" value="hosp"><label for="cur-h">Hospitalización previa</label>
+          <input type="checkbox" name="cur" id="cur-c" value="cortic"><label for="cur-c">≥2 cursos de corticoide/año</label>
+        </div></div>
+      </fieldset>
+
+      <!-- EC -->
+      <fieldset class="blk step" id="blk-ec">
+        <legend>3 · Fenotipo Crohn</legend>
+        <div class="q"><span class="ql">Localización (Montreal)</span><div class="seg ec">
+          <input type="radio" name="loc" id="loc-1" value="L1"><label for="loc-1">L1<small>Ileal</small></label>
+          <input type="radio" name="loc" id="loc-2" value="L2"><label for="loc-2">L2<small>Colónica</small></label>
+          <input type="radio" name="loc" id="loc-3" value="L3"><label for="loc-3">L3<small>Ileocolónica</small></label>
+        </div>
+        <div class="chk" style="margin-top:6px"><input type="checkbox" name="l4" id="l4" value="1"><label for="l4">+ L4 (tracto digestivo alto)</label></div></div>
+        <div class="q"><span class="ql">Comportamiento</span><div class="seg ec">
+          <input type="radio" name="beh" id="beh-1" value="B1"><label for="beh-1">B1<small>Inflamatorio</small></label>
+          <input type="radio" name="beh" id="beh-2" value="B2"><label for="beh-2">B2<small>Estenosante</small></label>
+          <input type="radio" name="beh" id="beh-3" value="B3"><label for="beh-3">B3<small>Penetrante</small></label>
+        </div></div>
+        <div class="q" id="q-b2"><span class="ql">Tipo de estenosis</span><div class="seg ec">
+          <input type="radio" name="b2" id="b2-i" value="inflamatoria"><label for="b2-i">Inflamatoria</label>
+          <input type="radio" name="b2" id="b2-m" value="mixta"><label for="b2-m">Mixta</label>
+          <input type="radio" name="b2" id="b2-f" value="fibrotica"><label for="b2-f">Fibrótica</label>
+        </div>
+        <div class="seg ec" style="margin-top:6px">
+          <input type="radio" name="b2l" id="b2l-c" value="corta"><label for="b2l-c">≤5 cm, accesible</label>
+          <input type="radio" name="b2l" id="b2l-l" value="larga"><label for="b2l-l">&gt;5 cm o múltiple</label>
+        </div></div>
+        <div class="q" id="q-b3"><span class="ql">Complicación penetrante</span><div class="seg ec">
+          <input type="radio" name="b3" id="b3-a" value="absceso"><label for="b3-a">Absceso intraabdominal</label>
+          <input type="radio" name="b3" id="b3-f" value="fistula"><label for="b3-f">Fístula interna sin absceso</label>
+        </div></div>
+        <div class="q"><span class="ql">Enfermedad perianal (p)</span><div class="seg ec">
+          <input type="radio" name="pa" id="pa-0" value="no"><label for="pa-0">No</label>
+          <input type="radio" name="pa" id="pa-s" value="simple"><label for="pa-s">Fístula simple</label>
+          <input type="radio" name="pa" id="pa-c" value="compleja"><label for="pa-c">Fístula compleja</label>
+          <input type="radio" name="pa" id="pa-a" value="absceso"><label for="pa-a">Absceso perianal</label>
+        </div></div>
+        <div class="q"><span class="ql">Actividad luminal</span><div class="seg ec">
+          <input type="radio" name="act" id="act-r" value="remision"><label for="act-r">Remisión<small>p. ej. posquirúrgico</small></label>
+          <input type="radio" name="act" id="act-l" value="leve"><label for="act-l">Leve<small>HBI 5–7</small></label>
+          <input type="radio" name="act" id="act-m" value="moderada"><label for="act-m">Moderada<small>HBI 8–16</small></label>
+          <input type="radio" name="act" id="act-g" value="grave"><label for="act-g">Grave<small>HBI &gt;16 / hospitalizado</small></label>
+        </div></div>
+        <div class="q"><span class="ql">Contexto quirúrgico</span><div class="chk">
+          <input type="checkbox" name="postop" id="postop" value="1"><label for="postop">Resección ileocólica reciente (&lt;3 meses)</label>
+        </div></div>
+        <div class="q"><span class="ql">Factores de progresión <small>(ACG 2025, AGA)</small></span><div class="chk">
+          <input type="checkbox" name="ecr" id="ecr-j" value="joven"><label for="ecr-j">Diagnóstico &lt;30 años</label>
+          <input type="checkbox" name="ecr" id="ecr-e" value="extenso"><label for="ecr-e">Compromiso extenso</label>
+          <input type="checkbox" name="ecr" id="ecr-u" value="ulceras"><label for="ecr-u">Úlceras profundas</label>
+          <input type="checkbox" name="ecr" id="ecr-q" value="cirugia"><label for="ecr-q">Resección previa</label>
+          <input type="checkbox" name="ecr" id="ecr-c" value="cortic"><label for="ecr-c">Corticoides al diagnóstico</label>
+          <input type="checkbox" name="ecr" id="ecr-m" value="mei"><label for="ecr-m">MEI al diagnóstico</label>
+        </div></div>
+      </fieldset>
+
+      <fieldset class="blk step" id="blk-lin">
+        <legend>4 · Línea terapéutica</legend>
+        <div class="q"><div class="seg">
+          <input type="radio" name="hist" id="h-n" value="naive"><label for="h-n">Sin tratamiento previo</label>
+          <input type="radio" name="hist" id="h-5" value="falla5asa"><label for="h-5">Falla a 5-ASA / budesonida</label>
+          <input type="radio" name="hist" id="h-cd" value="corticodep"><label for="h-cd">Corticodependiente</label>
+          <input type="radio" name="hist" id="h-cr" value="corticorref"><label for="h-cr">Corticorrefractario</label>
+          <input type="radio" name="hist" id="h-i" value="fallaImm"><label for="h-i">Falla a tiopurina / MTX</label>
+          <input type="radio" name="hist" id="h-t" value="tnf"><label for="h-t">Expuesto a anti-TNF</label>
+          <input type="radio" name="hist" id="h-m" value="multi"><label for="h-m">Falla a ≥2 mecanismos</label>
+        </div></div>
+        <div class="q" id="q-tnf"><span class="ql">Tipo de falla al anti-TNF</span><div class="seg">
+          <input type="radio" name="tnff" id="tf-p" value="primaria"><label for="tf-p">Primaria<small>sin respuesta a inducción</small></label>
+          <input type="radio" name="tnff" id="tf-i" value="inmuno"><label for="tf-i">Secundaria inmunogénica<small>nivel bajo + anticuerpos</small></label>
+          <input type="radio" name="tnff" id="tf-f" value="farmaco"><label for="tf-f">Secundaria con nivel adecuado</label>
+          <input type="radio" name="tnff" id="tf-x" value="intol"><label for="tf-x">Intolerancia</label>
+        </div></div>
+      </fieldset>
+
+      <fieldset class="blk step" id="blk-co">
+        <legend>5 · Comorbilidades y antecedentes</legend>
+        <p class="hint" style="margin:0 0 8px">Abre solo los grupos que apliquen. Sin marcar = sin antecedentes relevantes.</p>
+        <details class="grp" id="g-cv"><summary><span>Cardiovascular y trombosis</span><span class="cnt" data-cnt="cv"></span></summary><div class="gin">
+        <div class="chk">
+          <input type="checkbox" name="co" id="co-tab" value="tabaco"><label for="co-tab">Tabaquismo activo o previo</label>
+          <input type="checkbox" name="co" id="co-hta" value="hta"><label for="co-hta">HTA</label>
+          <input type="checkbox" name="co" id="co-dm" value="dm"><label for="co-dm">Diabetes</label>
+          <input type="checkbox" name="co" id="co-dlp" value="dlp"><label for="co-dlp">Dislipidemia</label>
+          <input type="checkbox" name="co" id="co-cvd" value="cvd"><label for="co-cvd">Enfermedad CV establecida (IAM, ACV)</label>
+          <input type="checkbox" name="co" id="co-tev" value="tev"><label for="co-tev">TEV previo / trombofilia</label>
+          <input type="checkbox" name="co" id="co-icc" value="icc34"><label for="co-icc">ICC NYHA III–IV</label>
+          <input type="checkbox" name="co" id="co-icc2" value="icc12"><label for="co-icc2">ICC NYHA I–II</label>
+          <input type="checkbox" name="co" id="co-brad" value="bradi"><label for="co-brad">Bradiarritmia / BAV / QTc largo</label>
+        </div>
+        </div></details>
+        <details class="grp" id="g-onc"><summary><span>Oncológico</span><span class="cnt" data-cnt="onc"></span></summary><div class="gin">
+        <div class="chk">
+          <input type="checkbox" name="co" id="co-na" value="neoActiva"><label for="co-na">Neoplasia activa</label>
+          <input type="checkbox" name="co" id="co-n5" value="neo5"><label for="co-n5">Neoplasia &lt;5 años</label>
+          <input type="checkbox" name="co" id="co-lin" value="linfoma"><label for="co-lin">Linfoma previo</label>
+          <input type="checkbox" name="co" id="co-mel" value="melanoma"><label for="co-mel">Melanoma previo</label>
+          <input type="checkbox" name="co" id="co-cp" value="cpnm"><label for="co-cp">Cáncer de piel no melanoma</label>
+        </div>
+        </div></details>
+        <details class="grp" id="g-ser"><summary><span>Tamizaje serológico y TBC</span><span class="cnt" data-cnt="ser"></span></summary><div class="gin">
+          <div class="srow"><span class="sl">Hepatitis B</span><div class="seg sm"><input type="radio" name="s_vhb" id="s-vhb-nd" value="nd" checked><label for="s-vhb-nd">No estudiado</label><input type="radio" name="s_vhb" id="s-vhb-neg" value="neg"><label for="s-vhb-neg">No inmune</label><input type="radio" name="s_vhb" id="s-vhb-vac" value="vac"><label for="s-vhb-vac">Vacunado</label><input type="radio" name="s_vhb" id="s-vhb-res" value="res"><label for="s-vhb-res">Anti-HBc + (resuelta)</label><input type="radio" name="s_vhb" id="s-vhb-pos" value="pos"><label for="s-vhb-pos">HBsAg +</label></div></div>
+          <div class="srow"><span class="sl">TBC (IGRA/PPD + Rx tórax)</span><div class="seg sm"><input type="radio" name="s_tbc" id="s-tbc-nd" value="nd" checked><label for="s-tbc-nd">No estudiado</label><input type="radio" name="s_tbc" id="s-tbc-neg" value="neg"><label for="s-tbc-neg">Negativo</label><input type="radio" name="s_tbc" id="s-tbc-lat" value="lat"><label for="s-tbc-lat">Latente</label><input type="radio" name="s_tbc" id="s-tbc-act" value="act"><label for="s-tbc-act">Activa</label></div></div>
+          <div class="srow"><span class="sl">Hepatitis C</span><div class="seg sm"><input type="radio" name="s_vhc" id="s-vhc-nd" value="nd" checked><label for="s-vhc-nd">No estudiado</label><input type="radio" name="s_vhc" id="s-vhc-neg" value="neg"><label for="s-vhc-neg">Negativo</label><input type="radio" name="s_vhc" id="s-vhc-pos" value="pos"><label for="s-vhc-pos">Positivo</label></div></div>
+          <div class="srow"><span class="sl">VIH</span><div class="seg sm"><input type="radio" name="s_vih" id="s-vih-nd" value="nd" checked><label for="s-vih-nd">No estudiado</label><input type="radio" name="s_vih" id="s-vih-neg" value="neg"><label for="s-vih-neg">Negativo</label><input type="radio" name="s_vih" id="s-vih-pos" value="pos"><label for="s-vih-pos">Positivo</label></div></div>
+          <div class="srow"><span class="sl">Varicela zóster IgG</span><div class="seg sm"><input type="radio" name="s_vzv" id="s-vzv-nd" value="nd" checked><label for="s-vzv-nd">No estudiado</label><input type="radio" name="s_vzv" id="s-vzv-pos" value="pos"><label for="s-vzv-pos">Inmune</label><input type="radio" name="s_vzv" id="s-vzv-neg" value="neg"><label for="s-vzv-neg">No inmune</label></div></div>
+          <div class="srow"><span class="sl">Epstein-Barr IgG</span><div class="seg sm"><input type="radio" name="s_ebv" id="s-ebv-nd" value="nd" checked><label for="s-ebv-nd">No estudiado</label><input type="radio" name="s_ebv" id="s-ebv-pos" value="pos"><label for="s-ebv-pos">Positivo</label><input type="radio" name="s_ebv" id="s-ebv-neg" value="neg"><label for="s-ebv-neg">Negativo</label></div></div>
+        </div></details>
+        <details class="grp" id="g-inf"><summary><span>Antecedentes infecciosos</span><span class="cnt" data-cnt="inf"></span></summary><div class="gin">
+        <div class="chk">
+          <input type="checkbox" name="co" id="co-ia" value="infAct"><label for="co-ia">Infección activa o absceso sin drenar</label>
+          <input type="checkbox" name="co" id="co-inf" value="infRec"><label for="co-inf">Infecciones graves recurrentes</label>
+          <input type="checkbox" name="co" id="co-hz" value="zoster"><label for="co-hz">Herpes zóster previo</label>
+          <input type="checkbox" name="co" id="co-end" value="endemico"><label for="co-end">Origen zona endémica Chagas / Strongyloides</label>
+        </div>
+        </div></details>
+        <details class="grp" id="g-otr"><summary><span>Otros y farmacogenética</span><span class="cnt" data-cnt="otr"></span></summary><div class="gin">
+        <div class="chk">
+          <input type="checkbox" name="co" id="co-fr" value="fragil"><label for="co-fr">Fragilidad (Fried ≥3 o CFS ≥5)</label>
+          <input type="checkbox" name="co" id="co-dem" value="desmiel"><label for="co-dem">Enfermedad desmielinizante</label>
+          <input type="checkbox" name="co" id="co-ojo" value="ojo"><label for="co-ojo">Edema macular / retinopatía</label>
+          <input type="checkbox" name="co" id="co-erc" value="erc"><label for="co-erc">ERC (TFG &lt;60)</label>
+          <input type="checkbox" name="co" id="co-hep" value="hepato"><label for="co-hep">Hepatopatía / alcohol</label>
+          <input type="checkbox" name="co" id="co-lup" value="lupus"><label for="co-lup">Lupus / ANA alto</label>
+          <input type="checkbox" name="co" id="co-ob" value="obeso"><label for="co-ob">IMC ≥30 o albúmina baja</label>
+          <input type="checkbox" name="co" id="co-or" value="oral"><label for="co-or">Prefiere vía oral</label>
+        </div>
+        <div class="q"><span class="ql">TPMT / NUDT15</span><div class="seg">
+          <input type="radio" name="tpmt" id="tp-0" value="nd"><label for="tp-0">No medido</label>
+          <input type="radio" name="tpmt" id="tp-n" value="normal"><label for="tp-n">Normal</label>
+          <input type="radio" name="tpmt" id="tp-i" value="intermedia"><label for="tp-i">Intermedia</label>
+          <input type="radio" name="tpmt" id="tp-b" value="baja"><label for="tp-b">Baja / ausente</label>
+        </div></div>
+        </div></details>
+      </fieldset>
+
+      <fieldset class="blk step" id="blk-mei">
+        <legend>6 · Manifestaciones extraintestinales</legend>
+        <details class="grp" id="g-mei"><summary><span>Marcar si tiene alguna</span><span class="cnt" data-cnt="mei"></span></summary><div class="gin">
+        <div class="chk">
+          <input type="checkbox" name="eim" id="ei-ax" value="axial"><label for="ei-ax">Espondiloartritis axial</label>
+          <input type="checkbox" name="eim" id="ei-ap" value="artper"><label for="ei-ap">Artritis periférica tipo 2</label>
+          <input type="checkbox" name="eim" id="ei-a1" value="art1"><label for="ei-a1">Artritis periférica tipo 1</label>
+          <input type="checkbox" name="eim" id="ei-uv" value="uveitis"><label for="ei-uv">Uveítis</label>
+          <input type="checkbox" name="eim" id="ei-pg" value="pg"><label for="ei-pg">Pioderma gangrenoso</label>
+          <input type="checkbox" name="eim" id="ei-en" value="en"><label for="ei-en">Eritema nodoso</label>
+          <input type="checkbox" name="eim" id="ei-ps" value="psoriasis"><label for="ei-ps">Psoriasis</label>
+          <input type="checkbox" name="eim" id="ei-aps" value="aps"><label for="ei-aps">Artritis psoriásica</label>
+          <input type="checkbox" name="eim" id="ei-hs" value="hs"><label for="ei-hs">Hidradenitis supurativa</label>
+          <input type="checkbox" name="eim" id="ei-cep" value="cep"><label for="ei-cep">Colangitis esclerosante primaria</label>
+        </div>
+        </div></details>
+      </fieldset>
+      <p class="hint" id="nexthint"></p>
+      <p class="hint">Herramienta de apoyo docente y de discusión clínica. No reemplaza el juicio del tratante ni el protocolo de la institución.</p>
+    </form>
+
+    <div class="res" id="res" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ================= FÁRMACOS ================= -->
+<section class="vista" id="v-farmacos">
+  <p class="eyebrow">Fichas</p>
+  <h2 class="sec">Fármacos en EII</h2>
+  <p class="lead">Dosis, presentación para la receta, cinética, niveles, efectos esperables en el control, embarazo, ensayos pivotales, situación en Chile y checklist previo al inicio. Toca una fila para abrir la ficha.</p>
+  <div class="filters" id="ffil">
+    <input type="search" id="fq" placeholder="Buscar fármaco o clase" aria-label="Buscar fármaco">
+  </div>
+  <div class="tw"><table class="t" id="ftab"><caption>Situación en Chile: LRS = Ley Ricarte Soto; ISP = registro sanitario sin cobertura LRS. Verificar antes de indicar.</caption>
+    <thead><tr><th>Fármaco</th><th>Clase</th><th>CU</th><th>EC</th><th>Vía</th><th>Inicio de acción</th><th>Chile</th></tr></thead><tbody></tbody></table></div>
+</section>
+
+<!-- ================= CINÉTICA ================= -->
+<section class="vista" id="v-cinetica">
+  <p class="eyebrow">Cuánto esperar y cuándo medir</p>
+  <h2 class="sec">Cinética de respuesta y niveles</h2>
+  <p class="lead">Barra verde: ventana habitual de inicio de acción. Línea azul: fin de inducción, cuando se decide respuesta o falla primaria. Línea naranja: evaluación tras inducción extendida, cuando existe. Escala en semanas.</p>
+  <div class="seg" id="kdz" style="margin:4px 0 6px">
+    <input type="radio" name="kdz" id="kdz-cu" value="cu" checked><label for="kdz-cu">Colitis ulcerosa</label>
+    <input type="radio" name="kdz" id="kdz-ec" value="ec"><label for="kdz-ec">Enfermedad de Crohn</label>
+  </div>
+  <div class="tw"><table class="t" id="ktab"><thead><tr><th>Fármaco</th><th style="min-width:280px">0 → 24 semanas</th><th>Fin de inducción</th><th>Inducción extendida</th><th>Niveles (TDM)</th></tr></thead><tbody></tbody></table></div>
+  <div class="box" style="margin-top:14px">
+    <h4>Definiciones operativas de falla</h4>
+    <div class="tw" style="margin:0"><table class="t"><thead><tr><th>Concepto</th><th>Definición</th><th>Conducta</th></tr></thead><tbody>
+      <tr><td><b>Falla primaria</b></td><td>Sin respuesta al terminar la inducción a dosis adecuada (8–14 semanas según fármaco; ver tabla).</td><td>Medir nivel y anticuerpos si es anti-TNF. Con nivel adecuado: cambiar de mecanismo, no de molécula dentro de la clase.</td></tr>
+      <tr><td><b>Pérdida secundaria de respuesta</b></td><td>Respuesta inicial documentada con recaída objetiva (calprotectina, endoscopía, imagen), con adherencia verificada.</td><td>TDM reactivo. Nivel bajo sin anticuerpos: intensificar. Nivel bajo con anticuerpos altos: cambio intraclase ± inmunomodulador. Nivel adecuado: cambiar de mecanismo.</td></tr>
+      <tr><td><b>Intolerancia</b></td><td>Evento adverso que obliga a suspender, con independencia de la eficacia.</td><td>Otro fármaco de la misma clase es válido si el evento no es de clase.</td></tr>
+      <tr><td><b>Corticorrefractario</b></td><td>Actividad pese a prednisona hasta 0,75 mg/kg/d por 4 semanas; en colitis aguda grave, sin respuesta a corticoide EV al día 3 (Oxford).</td><td>Terapia avanzada; en hospitalizado, rescate.</td></tr>
+      <tr><td><b>Corticodependiente</b></td><td>Imposibilidad de bajar de 10 mg/d de prednisona (3 mg budesonida) en 3 meses, o recaída antes de 3 meses tras suspender.</td><td>Terapia avanzada; tiopurina solo en CU &lt;65 años (ECCO 2026).</td></tr>
+      <tr><td><b>Refractariedad multimecanismo</b></td><td>Falla a ≥2 mecanismos distintos (Parigi 2023). Dos anti-TNF cuentan como uno.</td><td>Descartar C. difficile, CMV, estenosis, SII superpuesto; considerar cirugía, terapia combinada avanzada o ensayo clínico.</td></tr>
+    </tbody></table></div>
+    <h4 style="margin-top:16px">Objetivos STRIDE-II y momento de verificarlos</h4>
+    <div class="tw" style="margin:0"><table class="t"><thead><tr><th>Horizonte</th><th>Colitis ulcerosa</th><th>Enfermedad de Crohn</th></tr></thead><tbody>
+      <tr><td><b>Corto plazo</b></td><td>Respuesta clínica (↓ ≥50 % Mayo parcial): días con JAK y corticoides; 2–8 semanas con el resto.</td><td>Respuesta clínica (↓ ≥50 % HBI/PRO2): 2–12 semanas según fármaco.</td></tr>
+      <tr><td><b>Intermedio</b></td><td>Remisión clínica, PCR normal y calprotectina &lt;100–250 µg/g a los 3–6 meses.</td><td>Remisión clínica y normalización de biomarcadores a los 3–6 meses.</td></tr>
+      <tr><td><b>Largo plazo</b></td><td>Cicatrización endoscópica (Mayo 0–1, ideal 0) a los 6–12 meses; calidad de vida normal.</td><td>Cicatrización endoscópica (SES-CD &lt;3 o sin úlceras) a los 6–12 meses; ausencia de discapacidad.</td></tr>
+      <tr><td><b>Adicionales</b></td><td>Remisión histológica (Nancy, Robarts, Geboes).</td><td>Remisión transmural por ecografía intestinal o enteroRM.</td></tr>
+    </tbody></table></div>
+  </div>
+</section>
+
+
+<!-- ================= FRAGILIDAD ================= -->
+<section class="vista" id="v-fragilidad">
+  <p class="eyebrow">Adulto mayor y paciente vulnerable</p>
+  <h2 class="sec">Fragilidad</h2>
+  <p class="lead">La fragilidad es la pérdida de reserva fisiológica frente a un estrés: un mismo fármaco o una misma infección tienen consecuencias muy distintas en un paciente robusto y en uno frágil. En EII predice infecciones con biológicos mejor que la edad cronológica, por eso conviene medirla antes de elegir la terapia.</p>
+  <div class="grid">
+    <div class="form">
+      <div class="seg" id="ftool" style="margin-bottom:2px">
+        <input type="radio" name="ftool" id="ft-f" value="fried" checked><label for="ft-f">Fenotipo de Fried<small>5 criterios físicos</small></label>
+        <input type="radio" name="ftool" id="ft-c" value="cfs"><label for="ft-c">Escala clínica de fragilidad<small>CFS 1–9 · rápida</small></label>
+      </div>
+
+      <div id="fried">
+        <fieldset class="blk"><legend>Datos para los cálculos</legend>
+          <div class="row2">
+            <div class="q"><span class="ql">Sexo</span><div class="seg"><input type="radio" name="fsx" id="fsx-m" value="M"><label for="fsx-m">Hombre</label><input type="radio" name="fsx" id="fsx-f" value="F"><label for="fsx-f">Mujer</label></div></div>
+            <div class="q"><label class="ql" for="ftalla">Talla</label><div class="inp"><input id="ftalla" type="number" inputmode="numeric" min="120" max="210"><span>cm</span></div></div>
+          </div>
+          <div class="row2">
+            <div class="q"><label class="ql" for="fpeso">Peso actual</label><div class="inp"><input id="fpeso" type="number" inputmode="decimal" min="25" max="200"><span>kg</span></div></div>
+            <div class="q"><label class="ql" for="fpeso0">Peso hace 1 año</label><div class="inp"><input id="fpeso0" type="number" inputmode="decimal" min="25" max="200"><span>kg</span></div></div>
+          </div>
+          <p class="hint" id="fimc"></p>
+        </fieldset>
+
+        <fieldset class="blk"><legend>Criterios (Fried 2001)</legend>
+          <div class="fc" id="fc1"><div class="fh"><b>1 · Pérdida de peso no intencionada</b><label class="sw"><input type="checkbox" id="c1"><span>Cumple</span></label></div>
+            <p>&gt;4,5 kg o ≥5 % del peso en el último año, sin dieta ni ejercicio intencionados.</p><p class="auto" id="a1"></p></div>
+          <div class="fc" id="fc2"><div class="fh"><b>2 · Agotamiento autorreferido</b><label class="sw"><input type="checkbox" id="c2"><span>Cumple</span></label></div>
+            <p>Responde «3 o más días en la última semana» a alguna de estas preguntas (escala CES-D): «Sentía que todo lo que hacía era un esfuerzo» o «No tenía ánimo para ponerme en marcha».</p></div>
+          <div class="fc" id="fc3"><div class="fh"><b>3 · Baja actividad física</b><label class="sw"><input type="checkbox" id="c3"><span>Cumple</span></label></div>
+            <p>Gasto &lt;383 kcal/semana en hombres o &lt;270 kcal/semana en mujeres (cuestionario de Minnesota). En la práctica: no camina ni hace ejercicio de forma regular, o sale poco de casa.</p></div>
+          <div class="fc" id="fc4"><div class="fh"><b>4 · Debilidad: fuerza de prensión</b><label class="sw"><input type="checkbox" id="c4"><span>Cumple</span></label></div>
+            <p>Dinamómetro, mano dominante, mejor de 3 intentos. Quintil inferior ajustado por sexo e IMC.</p>
+            <div class="row2"><div class="inp"><input id="fgrip" type="number" inputmode="decimal" min="0" max="80" aria-label="Fuerza de prensión"><span>kg</span></div><span class="hint" id="cut4" style="margin:0;align-self:center"></span></div><p class="auto" id="a4"></p></div>
+          <div class="fc" id="fc5"><div class="fh"><b>5 · Lentitud de la marcha</b><label class="sw"><input type="checkbox" id="c5"><span>Cumple</span></label></div>
+            <p>Tiempo en recorrer 4,57 m (15 pies) a paso habitual. Punto de corte según sexo y talla. Alternativa práctica: velocidad &lt;0,8 m/s en 4 m.</p>
+            <div class="row2"><div class="inp"><input id="fgait" type="number" inputmode="decimal" min="1" max="60" step="0.1" aria-label="Tiempo de marcha"><span>s</span></div><span class="hint" id="cut5" style="margin:0;align-self:center"></span></div><p class="auto" id="a5"></p></div>
+        </fieldset>
+      </div>
+
+      <div id="cfs" hidden>
+        <fieldset class="blk"><legend>Escala clínica de fragilidad (Rockwood)</legend>
+          <p class="hint" style="margin:0 0 8px">Elige la categoría que mejor describe al paciente en las 2 semanas previas a la enfermedad actual, no durante una crisis aguda.</p>
+          <div class="cfsl" id="cfsl"></div>
+        </fieldset>
+      </div>
+    </div>
+
+    <div class="res">
+      <div class="casehead" id="fres"><div id="fresb"></div><div class="acts"><button class="btn" type="button" id="fapply" hidden></button></div></div>
+      <div class="box"><h4>Por qué medirla en EII</h4>
+        <ul class="why">
+          <li class="n"><b>Predice infecciones mejor que la edad.</b> Cohorte de 543 pacientes con biológicos: infección en 48,4 % de los frágiles vs 11,8 % de los no frágiles; HR 5,81 (IC 95 % 3,93–8,58) para cualquier infección y 4,65 (2,28–9,47) para infección grave (Fuochi 2026). Retrospectivo, unicéntrico, fragilidad por Hospital Frailty Risk Score.</li>
+          <li class="n"><b>GETECCU 2025</b> recomienda evaluar la fragilidad de forma sistemática en quien tenga factores de riesgo (edad, comorbilidad, polifarmacia, desnutrición, deterioro cognitivo) y sugiere la escala clínica por su rapidez.</li>
+          <li class="n"><b>Es dinámica y reversible.</b> La inflamación activa, la sarcopenia y los corticoides la empeoran; controlar la enfermedad puede revertirla. El riesgo documentado en el adulto mayor es el subtratamiento.</li>
+          <li class="n"><b>Fried o escala clínica.</b> Fried mide 5 rasgos físicos y detecta el estado prefrágil; la escala clínica es visual y rápida, útil en sala o en la colonoscopía, pero más subjetiva.</li>
+        </ul>
+      </div>
+      <div class="box"><h4>Qué cambia en la conducta</h4>
+        <div class="tw" style="margin:0"><table class="t" style="min-width:480px"><thead><tr><th>Estado</th><th>Conducta</th></tr></thead><tbody>
+          <tr><td><b>Robusto</b></td><td>Decidir por fenotipo y actividad como en cualquier adulto. La edad sola no contraindica terapia avanzada.</td></tr>
+          <tr><td><b>Prefrágil</b></td><td>Reevaluar cada 6–12 meses. Nutrición (cribado GLIM), ejercicio de fuerza (p. ej. programa Vivifrail), revisar polifarmacia (criterios de Beers) y minimizar corticoides.</td></tr>
+          <tr><td><b>Frágil</b></td><td>Priorizar mecanismos con buen perfil de seguridad (vedolizumab, ustekinumab, anti-IL-23). Evitar combinación con tiopurina y no iniciar tiopurinas. JAK solo sin alternativa. Corticoide: preferir budesonida y cursos cortos. Vacunas completas (zóster recombinante, neumococo, influenza, VRS). Valoración geriátrica integral y nutricional antes de cirugía electiva.</td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PIPELINE ================= -->
+<section class="vista" id="v-pipeline">
+  <p class="eyebrow">Horizonte · no es estándar de manejo</p>
+  <h2 class="sec">En investigación</h2>
+  <p class="lead">Moléculas sin aprobación FDA/EMA para EII a octubre de 2026. Se muestran por fase y con el estado regulatorio conocido. En el paciente refractario, la conducta práctica es la derivación a ensayo clínico.</p>
+  <div class="cards" id="pcards"></div>
+</section>
+
+<!-- ================= GUÍAS ================= -->
+<section class="vista" id="v-guias">
+  <p class="eyebrow">ECCO · ACG · AGA · Chile</p>
+  <h2 class="sec">Dónde coinciden y dónde no</h2>
+  <p class="lead">Las cuatro fuentes se ponderan igual. Cuando discrepan, se muestran las posturas antes de concluir.</p>
+  <div id="gcmp"></div>
+  <h3 style="font-size:1.25rem;margin:28px 0 4px">Qué cambió respecto de las versiones previas</h3>
+  <div class="tl" id="gtl"></div>
+</section>
+
+<!-- ================= FUENTES ================= -->
+<section class="vista" id="v-fuentes">
+  <p class="eyebrow">Referencias</p>
+  <h2 class="sec">Fuentes</h2>
+  <ol class="refs" id="refs"></ol>
+  <p class="note">Situación en Chile según datos abiertos FONASA/LRS (mayo de 2026), Protocolos LRS 2024 y registro ISP, tomada del Repositorio EII 2026. La disponibilidad comercial y las presentaciones cambian: confirmar con farmacia antes de prescribir. Las presentaciones listadas son las más habituales a nivel internacional.</p>
+</section>
+
+<footer class="foot">Herramienta diseñada y desarrollada por el Dr. Moisés Oropeza Hernández · Residente de Gastroenterología, UANDES · Clínica Dávila / Clínica Universidad de los Andes · Versión octubre 2026. Material de apoyo docente; la decisión final corresponde al equipo tratante.</footer>
+</main>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" hidden aria-modal="true" role="dialog" aria-labelledby="dtitle">
+  <div class="dh"><div style="min-width:0"><p class="eyebrow" id="dcls"></p><h3 id="dtitle"></h3><div class="tags" id="dtags" style="margin-top:6px"></div></div><button class="x" id="dclose" type="button" aria-label="Cerrar ficha">✕</button></div>
+  <div class="db" id="dbody"></div>
+</aside>
+<div class="toast" id="toast" hidden></div>
+<script>
+"use strict";
+/* ============ CLASES ============ */
+const CLS={asa:"Aminosalicilato",cort:"Corticoide",imm:"Inmunomodulador",cni:"Inhibidor de calcineurina",tnf:"Anti-TNF",int:"Anti-integrina α4β7",p40:"Anti-IL-12/23 (p40)",p19:"Anti-IL-23 (p19)",jak:"Inhibidor JAK",s1p:"Modulador S1P",abx:"Antibiótico",pipe:"En investigación"};
+const CHILE={lrs:["LRS","lrs","Financiado por Ley Ricarte Soto si cumple criterios del protocolo"],isp:["ISP","isp","Registro sanitario en Chile, sin cobertura LRS"],gen:["Disponible","gen","Genérico o de uso habitual en Chile"],no:["No disponible en Chile","no","Sin registro sanitario en Chile para EII"],pipe:["Investigacional","pipe","Sin aprobación FDA/EMA para EII"]};
+const CHILE_ORDER={lrs:0,gen:1,isp:1,no:2,pipe:3};
+
+/* ============ CHECKLIST PREVIO AL INICIO ============ */
+/* o = obligatorio; r = recomendado; f = si hay factores de riesgo */
+const CK={
+ tbc_o:["TBC latente: IGRA o PPD + radiografía de tórax. Si es positiva, iniciar tratamiento de TBL ≥3–4 semanas antes del fármaco (ECCO 2026)","o"],
+ tbc_f:["TBC latente: IGRA o PPD + radiografía de tórax si hay factores de riesgo (contacto, origen de zona de alta prevalencia, personal de salud). En TBL puede iniciarse en paralelo (ECCO 2026)","f"],
+ vhb:["Hepatitis B: HBsAg, anti-HBc, anti-HBs. HBsAg+: análogo de alta barrera antes de cualquier inmunosupresión, incluidos corticoides. Vacunar si no es inmune","o"],
+ vhc:["Hepatitis C: anticuerpos anti-VHC","o"],
+ vih:["VIH","o"],
+ vzv:["Varicela zóster: IgG si no hay antecedente; vacunar si es negativo (vacuna viva ≥4 semanas antes)","r"],
+ ebv:["Virus de Epstein-Barr: IgG (si es negativo, evitar tiopurinas, sobre todo en hombres jóvenes)","o"],
+ mmr:["Sarampión-rubéola-parotiditis: vacunar si no hay registro (vacuna viva ≥4 semanas antes)","r"],
+ rzv:["Vacuna recombinante contra herpes zóster (Shingrix, 2 dosis) en todo adulto que recibirá inmunosupresión (ECCO 2026)","r"],
+ rzv_o:["Vacuna recombinante contra herpes zóster antes de iniciar: riesgo dosis-dependiente con JAK","o"],
+ neumo:["Neumococo (PCV20, o PCV15 seguida de PPSV23)","r"],
+ flu:["Influenza anual y COVID-19 según calendario nacional; VRS si ≥60 años","r"],
+ vph:["VPH según calendario; PAP o test de VPH en mujeres","r"],
+ vivas:["Sin vacunas vivas durante el tratamiento ni hasta 1 mes después de suspender","o"],
+ infec:["Descartar infección activa y absceso no drenado","o"],
+ strongy:["Strongyloides: serología o ivermectina empírica si procede de zona endémica","f"],
+ chagas:["Trypanosoma cruzi: serología si procede de zona endémica","f"],
+ icc:["Antecedente de insuficiencia cardíaca (contraindicado NYHA III–IV) y de enfermedad desmielinizante","o"],
+ piel:["Examen dermatológico basal y anual (melanoma con anti-TNF; cáncer de piel no melanoma con tiopurinas y JAK)","r"],
+ jak_lab:["Hemograma: no iniciar si linfocitos <500/µL, neutrófilos <1.000/µL o Hb <8 g/dL","o"],
+ lip:["Perfil lipídico basal y a las 8–12 semanas","o"],
+ hep:["Perfil hepático basal","o"],
+ crea:["Creatinina y TFG","o"],
+ cv:["Riesgo cardiovascular (SCORE2), antecedente de TEV y neoplasia: con ≥65 años, tabaquismo o riesgo CV, usar solo sin alternativa adecuada (EMA 2023)","o"],
+ anticon:["Anticoncepción eficaz y plan reproductivo","o"],
+ ecg:["ECG basal: frecuencia cardíaca, PR, QTc. Contraindicado con BAV 2°–3° sin marcapasos, IAM/ACV/ICC descompensada en los últimos 6 meses","o"],
+ bradimed:["Revisar fármacos bradicardizantes y que prolongan QT; IMAO e inhibidores de CYP2C8 (ozanimod)","o"],
+ s1p_lab:["Hemograma: linfocitos basales (no iniciar si <200/µL); perfil hepático","o"],
+ ojo:["Fondo de ojo basal si diabetes, uveítis o edema macular previo; repetir a los 3–4 meses","f"],
+ tpmt:["TPMT (actividad o genotipo) y NUDT15 antes de iniciar","o"],
+ hemo_serie:["Hemograma y perfil hepático en semanas 2, 4, 8 y 12; luego cada 3 meses","o"],
+ folico:["Ácido fólico 5 mg semanal (o 1 mg/d)","o"],
+ rxtorax:["Radiografía de tórax basal; evitar si hay enfermedad pulmonar intersticial","r"],
+ alcohol:["Consumo de alcohol e hígado graso","o"],
+ csa_lab:["Creatinina, magnesio y colesterol (colesterol <120 mg/dL o Mg bajo: riesgo de convulsiones), presión arterial","o"],
+ pjp:["Profilaxis de Pneumocystis con cotrimoxazol si triple inmunosupresión (y considerar en doble con calcineurínico)","r"],
+ cort_lab:["Glicemia, presión arterial; calcio + vitamina D; densitometría si >3 meses de uso","r"],
+ tev_hosp:["Profilaxis tromboembólica con HBPM en el hospitalizado (el sangrado rectal no la contraindica)","o"],
+ crea_asa:["Creatinina basal y anual (nefritis intersticial)","r"],
+ hep12:["Perfil hepático basal y hasta la semana 12 de la inducción (hepatotoxicidad descrita en inducción de EC)","o"],
+ hep24:["Perfil hepático basal y durante las primeras 24 semanas","o"],
+ cdi:["Clostridioides difficile (algoritmo en 2 pasos) y coprocultivo","o"],
+ cmv:["Rectosigmoidoscopía con biopsias para CMV (inmunohistoquímica)","o"]
+};
+const CK_BIO=["vhb","vhc","vih","vzv","mmr","rzv","neumo","flu","vph","vivas","infec","strongy","chagas"];
+
+/* ============ FÁRMACOS ============ */
+/* kin: semanas. on=[inicio,fin] ventana de inicio de acción; ev=fin de inducción; ext=evaluación tras inducción extendida */
+const D={
+mz_or:{n:"Mesalazina oral",cl:"asa",via:"Oral",chile:"gen",
+ cu:{ind:"2,4–4,8 g/d (4,8 g en moderada), una toma diaria",mant:"≥2 g/d (ECCO 2026; ACG ≥1,5 g)",int:"Subir a 4,8 g/d + mesalazina rectal; no cambiar a otra formulación (ACG 2025)"},ec:null,
+ pres:["Comprimidos LP 500 mg y 1 g","Sobres de granulado 1 g, 2 g y 4 g","Comprimidos gastrorresistentes 400 mg, 800 mg y 1,2 g (MMX)"],
+ calc:()=>"4,8 g/d = 2 sobres de 2 g + 1 comprimido de 800 mg, o 4 sobres de 1,2 g MMX. Mantención 2,4 g/d en una toma.",
+ kin:{cu:{on:[1,3],ev:8,ext:null}},kinTx:"Respuesta en 2–4 semanas; remisión a las 8",
+ tdm:"No aplica.",
+ ae:[["e","Cefalea, náuseas, dolor abdominal leve"],["v","Creatinina: nefritis intersticial (rara) → control anual"],["s","Empeoramiento paradojal de la diarrea con sangre en las primeras semanas (intolerancia aguda ~3 %) → suspender"],["s","Pancreatitis, pericarditis o miocarditis"]],
+ preg:"Compatible. Evitar formulaciones con dibutilftalato.",lact:"Compatible (diarrea ocasional en el lactante).",
+ trials:"Metaanálisis Cochrane; ASCEND II–III (4,8 g/d en moderada); PODIUM (dosis única diaria).",chk:["crea_asa"]},
+mz_sup:{n:"Mesalazina supositorio",cl:"asa",via:"Rectal",chile:"gen",
+ cu:{ind:"1 g/noche (E1)",mant:"1 g/d o 3 veces por semana",int:"Agregar mesalazina oral o corticoide rectal"},ec:null,
+ pres:["Supositorios 500 mg y 1 g"],calc:()=>"1 supositorio de 1 g al acostarse, 4–6 semanas; luego mantención.",
+ kin:{cu:{on:[0.5,2],ev:6,ext:null}},kinTx:"Mejoría en 1–2 semanas",tdm:"No aplica.",
+ ae:[["e","Molestia anal, pujo, expulsión precoz"],["s","Empeoramiento paradojal (intolerancia a 5-ASA)"]],
+ preg:"Compatible.",lact:"Compatible.",trials:"Metaanálisis de terapia tópica en proctitis (ECCO R3, ACG R6).",chk:[]},
+mz_ene:{n:"Mesalazina enema o espuma",cl:"asa",via:"Rectal",chile:"gen",
+ cu:{ind:"1 g/d en enema o espuma (E2); combinar con oral ≥2 g/d",mant:"1 g/d o días alternos",int:"Agregar budesonida MMX o corticoide sistémico"},ec:null,
+ pres:["Enema 1 g/100 mL y 4 g/60 mL","Espuma rectal 1 g/aplicación"],calc:()=>"1 enema de 1 g al acostarse, retener ≥30 min, 4–8 semanas.",
+ kin:{cu:{on:[0.5,2],ev:6,ext:null}},kinTx:"Mejoría en 1–2 semanas",tdm:"No aplica.",
+ ae:[["e","Distensión, dificultad para retener"],["s","Empeoramiento paradojal"]],preg:"Compatible.",lact:"Compatible.",trials:"ECCO 2026 R4; ACG 2025 R9–R10.",chk:[]},
+ssz:{n:"Sulfasalazina",cl:"asa",via:"Oral",chile:"gen",
+ cu:{ind:"2–4 g/d (útil con artropatía periférica)",mant:"2 g/d",int:"—"},ec:{ind:"3–6 g/d solo en EC colónica leve sintomática (ACG 2025)",mant:"Sin beneficio en mantención",int:"—"},
+ pres:["Comprimidos 500 mg (también entéricos)"],calc:()=>"Iniciar 500 mg c/12 h y subir 500 mg cada 3–4 días hasta 1 g c/8 h. Ácido fólico 1 mg/d.",
+ kin:{cu:{on:[2,4],ev:8,ext:null},ec:{on:[2,4],ev:8,ext:null}},kinTx:"2–4 semanas",tdm:"No aplica.",
+ ae:[["e","Náuseas, cefalea, orina anaranjada, oligospermia reversible"],["v","Hemograma y perfil hepático los primeros 3 meses"],["s","Agranulocitosis, DRESS, hepatitis"]],
+ preg:"Compatible con ácido fólico 2 mg/d.",lact:"Compatible (precaución en prematuro).",trials:"National Cooperative Crohn's Disease Study; ECCO EC 2024.",chk:["hep"]},
+bud_cir:{n:"Budesonida liberación ileal",cl:"cort",via:"Oral",chile:"gen",chileTx:"Confirmar disponibilidad comercial",
+ cu:null,ec:{ind:"9 mg/d por 8 semanas en EC ileocecal (L1, L3 con predominio ileal) leve a moderada",mant:"No eficaz en mantención (ACG R6)",int:"Si falla o recae antes de 3 meses: terapia avanzada"},
+ pres:["Cápsulas 3 mg (liberación controlada ileal)","Gránulos 9 mg"],calc:()=>"9 mg (3 cápsulas) en la mañana × 8 semanas; luego 6 mg × 2 semanas y 3 mg × 2 semanas.",
+ kin:{ec:{on:[1,2],ev:8,ext:null}},kinTx:"Respuesta en 2 semanas; evaluar a las 8",tdm:"No aplica.",
+ ae:[["e","Efectos corticoides leves (primer paso hepático ~90 %)"],["v","Glicemia y presión en diabéticos; menor eficacia que prednisona en actividad moderada"],["s","Uso >3 meses sin plan de salida"]],
+ preg:"Aceptable.",lact:"Compatible.",trials:"Greenberg 1994; Cochrane (inducción sí, mantención no).",chk:["cort_lab"]},
+bud_mmx:{n:"Budesonida MMX",cl:"cort",via:"Oral",chile:"no",chileTx:"Verificar disponibilidad local",
+ cu:{ind:"9 mg/d por 8 semanas en CU leve a moderada que no responde a 5-ASA",mant:"No indicada en mantención",int:"Prednisona o terapia avanzada"},ec:null,
+ pres:["Comprimidos 9 mg (liberación colónica MMX)"],calc:()=>"9 mg en la mañana × 8 semanas; no requiere retiro escalonado (evidencia insuficiente, ECCO PP10).",
+ kin:{cu:{on:[1,3],ev:8,ext:null}},kinTx:"2–4 semanas",tdm:"No aplica.",
+ ae:[["e","Efectos corticoides menores que prednisona"],["v","Glicemia, ánimo"]],preg:"Datos limitados; aceptable.",lact:"Probablemente compatible.",trials:"CORE I–II; ECCO 2026 R8–R9 (no superior a 5-ASA); ACG 2025 R11, R16, R21.",chk:["cort_lab"]},
+cort_rect:{n:"Corticoide rectal",cl:"cort",via:"Rectal",chile:"gen",
+ cu:{ind:"Budesonida espuma 2 mg/d o hidrocortisona enema 100 mg/noche",mant:"No en mantención",int:"Combinar con 5-ASA oral"},ec:null,
+ pres:["Budesonida espuma rectal 2 mg/aplicación","Budesonida enema 2 mg","Hidrocortisona enema o espuma 100 mg"],calc:()=>"1 aplicación al acostarse × 4–6 semanas.",
+ kin:{cu:{on:[0.5,2],ev:4,ext:null}},kinTx:"1–2 semanas",tdm:"No aplica.",
+ ae:[["e","Molestia local"],["v","Absorción sistémica con uso prolongado"]],preg:"Aceptable.",lact:"Compatible.",trials:"ECCO 2026 R5–R7: 5-ASA rectal preferible; no combinar de rutina.",chk:[]},
+pred:{n:"Prednisona",cl:"cort",via:"Oral",chile:"gen",
+ cu:{ind:"40 mg/d (0,75 mg/kg, máx. 60 mg)",mant:"Nunca en mantención",int:"Sin respuesta a 2–4 semanas: corticorrefractario"},
+ ec:{ind:"40 mg/d, retiro en 8 semanas",mant:"Nunca en mantención",int:"Puente a terapia avanzada"},
+ pres:["Comprimidos 5 mg y 20 mg"],calc:()=>"40 mg/d × 1 semana; bajar 5 mg/semana hasta suspender (~8 semanas). Calcio + vitamina D durante el curso.",
+ kin:{cu:{on:[0.3,1],ev:4,ext:null},ec:{on:[0.3,1],ev:4,ext:null}},kinTx:"Días a 1 semana",tdm:"No aplica.",
+ ae:[["e","Insomnio, aumento del apetito, cambios del ánimo, hiperglicemia, acné"],["v","HTA, diabetes, infecciones; densitometría si >3 meses"],["s","Psicosis, hiperglicemia descompensada, infección grave"]],
+ preg:"Compatible (preferir prednisona/prednisolona; vigilar diabetes gestacional).",lact:"Compatible; dosis >20 mg: esperar 4 h.",trials:"Truelove 1955; ECCO 2026 R15; ACG R13, R22.",chk:["cort_lab","vhb"]},
+mpred:{n:"Metilprednisolona EV",cl:"cort",via:"EV",chile:"gen",
+ cu:{ind:"60 mg/d EV (o hidrocortisona 100 mg c/6–8 h)",mant:"Paso a prednisona oral 40 mg al responder",int:"No prolongar más de 7 días sin respuesta"},ec:{ind:"60 mg/d EV en EC grave hospitalizada, tras descartar absceso",mant:"—",int:"—"},
+ pres:["Frasco-ampolla 40 mg, 125 mg, 500 mg y 1 g"],calc:()=>"60 mg/d EV en 1–2 dosis. Evaluar el día 3 con índice de Oxford.",
+ kin:{cu:{on:[0.15,0.45],ev:0.45,ext:1},ec:{on:[0.3,1],ev:1,ext:null}},kinTx:"24–72 horas; decisión el día 3",tdm:"No aplica.",
+ ae:[["e","Hiperglicemia, insomnio, retención hídrica"],["v","Hipokalemia, HTA, glicemia c/6 h en diabéticos"],["s","Sin respuesta al día 3–5: no prolongar, rescate o cirugía"]],
+ preg:"Compatible.",lact:"Compatible.",trials:"Truelove-Jewell 1974; Turner 2007 (65 % responde); AGA 2026; ECCO 2026 R43.",chk:["cdi","cmv","tev_hosp","vhb","tbc_o"]},
+hc:{n:"Hidrocortisona EV",cl:"cort",via:"EV",chile:"gen",
+ cu:{ind:"100 mg c/6–8 h EV",mant:"Paso a prednisona oral",int:"Igual que metilprednisolona"},ec:null,
+ pres:["Frasco-ampolla 100 mg y 500 mg"],calc:()=>"100 mg c/6 h EV (400 mg/d) o c/8 h.",
+ kin:{cu:{on:[0.15,0.45],ev:0.45,ext:1}},kinTx:"24–72 horas",tdm:"No aplica.",
+ ae:[["e","Efecto mineralocorticoide mayor: hipokalemia, retención hídrica"],["v","Electrolitos diarios"]],preg:"Compatible.",lact:"Compatible.",trials:"ACG 2025 R50.",chk:["cdi","cmv","tev_hosp"]},
+aza:{n:"Azatioprina",cl:"imm",via:"Oral",chile:"gen",
+ cu:{ind:"No como inducción",mant:"2–2,5 mg/kg/d en corticodependiente <65 años; tras ciclosporina",int:"Ajustar por metabolitos"},
+ ec:{ind:"No como inducción",mant:"2–2,5 mg/kg/d tras inducción con corticoides (débil)",int:"Combinada con infliximab: 2–2,5 mg/kg (SONIC); dosis menores pueden bastar para inmunogenicidad"},
+ pres:["Comprimidos 50 mg (ranurados)"],calc:w=>w?`${(w*2).toFixed(0)}–${(w*2.5).toFixed(0)} mg/d → ${r25(w*2.5)} mg/d (${(r25(w*2.5)/50).toString().replace(".",",")} comp. de 50 mg). TPMT intermedia: 50 % de la dosis.`:"2–2,5 mg/kg/d; ingresar peso para calcular.",
+ kin:{cu:{on:[8,12],ev:16,ext:null},ec:{on:[8,12],ev:16,ext:null}},kinTx:"Efecto a las 12–17 semanas",
+ tdm:"Metabolitos a las 4 semanas de dosis estable o ante falla/toxicidad: 6-TGN 235–450 pmol/8×10⁸ GR; 6-MMP >5.700 → hepatotoxicidad (considerar AZA 25–33 % + alopurinol 100 mg).",
+ ae:[["e","Macrocitosis (VCM ↑) y leve linfopenia: efecto esperado"],["e","Náuseas: dividir dosis o tomar con comida"],["v","Transaminasas >2–3× LSN: medir 6-MMP; reducir dosis o alopurinol"],["v","Leucocitos <3.500/µL: reducir dosis"],["s","Pancreatitis (semanas 3–4, idiosincrática): suspender y no reintroducir"],["s","Leucocitos <3.000 o neutrófilos <1.000/µL; fiebre con citopenia"]],
+ preg:"Continuar si ya la usaba; no iniciar durante el embarazo.",lact:"Compatible.",trials:"SONIC (EC), UC SUCCESS (CU); Cochrane mantención; CESAME (linfoma).",chk:["tpmt","hemo_serie","ebv","piel","vhb","vzv","vph"]},
+mp:{n:"6-mercaptopurina",cl:"imm",via:"Oral",chile:"gen",
+ cu:{ind:"No como inducción",mant:"1–1,5 mg/kg/d",int:"—"},ec:{ind:"No como inducción",mant:"1–1,5 mg/kg/d",int:"—"},
+ pres:["Comprimidos 50 mg"],calc:w=>w?`${(w*1).toFixed(0)}–${(w*1.5).toFixed(0)} mg/d → ${r25(w*1.5)} mg/d.`:"1–1,5 mg/kg/d.",
+ kin:{cu:{on:[8,12],ev:16,ext:null},ec:{on:[8,12],ev:16,ext:null}},kinTx:"12–17 semanas",tdm:"Igual que azatioprina.",
+ ae:[["e","Macrocitosis esperable"],["v","Transaminasas, leucopenia"],["s","Pancreatitis, mielotoxicidad"]],preg:"Igual que azatioprina.",lact:"Compatible.",trials:"Present 1980; ACG CD R9.",chk:["tpmt","hemo_serie","ebv","piel","vhb"]},
+mtx:{n:"Metotrexato",cl:"imm",via:"SC / IM",chile:"gen",
+ cu:{ind:"No recomendado",mant:"No recomendado (ACG R37)",int:"—"},ec:{ind:"25 mg/semana SC/IM × 16 semanas",mant:"15 mg/semana SC/IM",int:"Con infliximab: 12,5–15 mg/semana para inmunogenicidad"},
+ pres:["Jeringas prellenadas 7,5–25 mg (25 mg/mL)","Ampollas 50 mg/2 mL","Comprimidos 2,5 mg (oral no recomendado en EC)"],calc:()=>"25 mg SC 1 vez/semana × 16 sem → 15 mg/semana. Ácido fólico 5 mg al día siguiente.",
+ kin:{ec:{on:[6,8],ev:16,ext:null}},kinTx:"6–8 semanas; evaluar a las 16",tdm:"No aplica.",
+ ae:[["e","Náuseas el día de la dosis (ondansetrón previo), astenia"],["v","Transaminasas >2× LSN: reducir o suspender"],["v","Úlceras orales: subir ácido fólico"],["s","Neumonitis (tos seca, disnea), citopenia, embarazo"]],
+ preg:"Contraindicado: suspender 3–6 meses antes de concebir.",lact:"Contraindicado.",trials:"Feagan 1995 y 2000 (EC); METEOR (CU, negativo).",chk:["hep","crea","folico","rxtorax","alcohol","anticon","vhb","vhc"]},
+csa:{n:"Ciclosporina",cl:"cni",via:"EV → oral",chile:"gen",
+ cu:{ind:"2 mg/kg/d EV en infusión continua (niveles 150–250 ng/mL)",mant:"Oral 4–5 mg/kg/d por 3 meses como puente a tiopurina o vedolizumab",int:"—"},ec:null,
+ pres:["Ampollas 50 mg/mL","Cápsulas 25, 50 y 100 mg"],calc:w=>w?`${(w*2).toFixed(0)} mg/d EV (2 mg/kg/d) en BIC.`:"2 mg/kg/d EV.",
+ kin:{cu:{on:[0.3,1],ev:1,ext:null}},kinTx:"Respuesta en 4–7 días",tdm:"Nivel valle 150–250 ng/mL en infusión; oral 150–200 ng/mL.",
+ ae:[["e","Temblor, hipertricosis, hiperplasia gingival, parestesias"],["v","HTA, creatinina ↑ (reducir dosis si sube >30 %), hipomagnesemia, hipokalemia"],["s","Convulsiones (colesterol <120 mg/dL, Mg bajo), infección oportunista, nefrotoxicidad grave"]],
+ preg:"Aceptable como rescate.",lact:"Probablemente compatible; monitorizar.",trials:"Lichtiger 1994; CYSIF y CONSTRUCT (equivalente a infliximab); ECCO 2026 R45.",chk:["csa_lab","pjp","vhb","crea"]},
+ifx:{n:"Infliximab EV",cl:"tnf",via:"EV",chile:"lrs",chileTx:"LRS: EC adulto grave o fistulizante; CU grave corticorrefractaria hospitalizada (plazo 3 días). Biosimilares incluidos",
+ cu:{ind:"5 mg/kg EV semanas 0, 2 y 6",mant:"5 mg/kg c/8 semanas",int:"10 mg/kg y/o c/4–6 semanas; en CU grave considerar 10 mg/kg o esquema acelerado si albúmina baja"},
+ ec:{ind:"5 mg/kg EV semanas 0, 2 y 6",mant:"5 mg/kg c/8 semanas (o SC 120 mg c/2 sem)",int:"10 mg/kg y/o acortar intervalo según niveles"},
+ pres:["Vial 100 mg polvo liofilizado (originador y biosimilares)"],calc:w=>w?`5 mg/kg = ${w*5} mg → ${Math.ceil(w*5/100)} viales de 100 mg · 10 mg/kg = ${w*10} mg → ${Math.ceil(w*10/100)} viales.`:"5 mg/kg; ingresar peso para calcular viales.",
+ kin:{cu:{on:[0.3,2],ev:8,ext:14},ec:{on:[1,2],ev:10,ext:14}},kinTx:"Días a 2 semanas",
+ tdm:"Reactivo ante pérdida de respuesta (todas las guías); proactivo sin recomendación general (ECCO 2026 PP7). Medir antes de la 4ª dosis (sem 14). Orientativos: sem 2 ≥20–25; sem 6 ≥15; mantención ≥5 µg/mL (≥7–10 para cicatrización); fístula perianal ≥10–12,7. CU grave: valle día 3 ≤57,9 µg/mL predice falla (PREDICT-UC).",
+ ae:[["e","Reacción infusional leve (rubor, prurito): bajar velocidad, antihistamínico"],["v","Lesiones psoriasiformes o eccema palmoplantar (psoriasis paradojal ~5 %): tópicos; si extensa, cambiar de clase"],["v","ANA/anti-DNA positivos sin clínica: no requiere suspender"],["s","Lupus inducido, reacción infusional grave/anafilaxia, infección grave, TBC, desmielinización, ICC"],["s","Linfoma hepatoesplénico T (hombre joven en combinación con tiopurina)"]],
+ preg:"Compatible; puede continuarse todo el embarazo. Vacunas vivas del lactante (rotavirus, BCG) diferidas hasta los 6 meses si hubo exposición en el 3er trimestre.",lact:"Compatible.",
+ trials:"ACCENT I–II, ACT 1–2, SONIC, UC SUCCESS, CYSIF, CONSTRUCT, PREVENT (posquirúrgico).",chk:["tbc_o","icc","piel"].concat(CK_BIO)},
+ifx_sc:{n:"Infliximab SC",cl:"tnf",via:"SC",chile:"lrs",chileTx:"LRS solo en EC: cambio desde IFX EV en remisión (5–10 mg/kg c/6–8 sem, calprotectina <200). Excluye perianal y CU",
+ cu:{ind:"Tras inducción EV",mant:"120 mg SC c/2 semanas desde semana 10",int:"240 mg c/2 semanas"},ec:{ind:"Tras inducción EV",mant:"120 mg SC c/2 semanas",int:"240 mg c/2 semanas; volver a EV si no mantiene remisión"},
+ pres:["Pluma o jeringa prellenada 120 mg"],calc:()=>"120 mg SC c/2 semanas, sin premedicación (dosis fija independiente del peso).",
+ kinTx:"Solo mantención (tras inducción EV)",
+ tdm:"Niveles valle más altos que con EV (habitualmente >15–20 µg/mL); útil ante pérdida de respuesta.",
+ ae:[["e","Reacción en el sitio de inyección"],["v","Igual que infliximab EV"]],preg:"Como infliximab.",lact:"Compatible.",trials:"LIBERTY-CD, LIBERTY-UC; CT-P13 SC 1.6.",chk:["tbc_o","icc"].concat(CK_BIO)},
+ada:{n:"Adalimumab",cl:"tnf",via:"SC",chile:"lrs",chileTx:"LRS: EC; CU moderada inmunorrefractaria (GOL o ADA)",
+ cu:{ind:"160 mg semana 0 y 80 mg semana 2",mant:"40 mg c/2 semanas",int:"40 mg semanal u 80 mg c/2 semanas"},ec:{ind:"160 mg semana 0 y 80 mg semana 2",mant:"40 mg c/2 semanas",int:"40 mg semanal u 80 mg c/2 semanas"},
+ pres:["Pluma o jeringa 40 mg (0,4 o 0,8 mL)","Pluma 80 mg"],calc:()=>"160 mg (2 plumas de 80 mg) sem 0 → 80 mg sem 2 → 40 mg c/2 semanas desde la sem 4.",
+ kin:{cu:{on:[1,4],ev:8,ext:12},ec:{on:[1,4],ev:12,ext:null}},kinTx:"1–4 semanas",
+ tdm:"Reactivo. Mantención ≥7,5–8 µg/mL (≥12 en perianal).",
+ ae:[["e","Reacción en el sitio de inyección"],["v","Psoriasis paradojal, eccema"],["s","Infección grave, TBC, lupus inducido, desmielinización, ICC"]],
+ preg:"Compatible.",lact:"Compatible.",trials:"CLASSIC, CHARM, ULTRA 1–2, SERENE, VARSITY (inferior a vedolizumab en CU), SEAVUE (= ustekinumab en EC), CREOLE (estenosis).",chk:["tbc_o","icc","piel"].concat(CK_BIO)},
+gol:{n:"Golimumab",cl:"tnf",via:"SC",chile:"lrs",chileTx:"LRS: CU moderada inmunorrefractaria (GOL o ADA). Verificar registro vigente",
+ cu:{ind:"200 mg semana 0 y 100 mg semana 2",mant:"50 mg c/4 sem (<80 kg) o 100 mg c/4 sem (≥80 kg)",int:"100 mg c/4 semanas"},ec:null,
+ pres:["Pluma o jeringa 50 mg y 100 mg"],calc:w=>w?(w>=80?"200 mg → 100 mg sem 2 → 100 mg c/4 semanas (≥80 kg).":"200 mg → 100 mg sem 2 → 50 mg c/4 semanas (<80 kg)."):"Mantención según peso (corte 80 kg).",
+ kin:{cu:{on:[1,4],ev:6,ext:14}},kinTx:"1–4 semanas",tdm:"Reactivo. ≥1–2,5 µg/mL (≥2,5 para cicatrización mucosa, Taxonera 2022).",
+ ae:[["e","Reacción local"],["v","Psoriasis paradojal"],["s","Igual que la clase"]],preg:"Compatible (datos menores).",lact:"Compatible.",trials:"PURSUIT-SC, PURSUIT-M.",chk:["tbc_o","icc"].concat(CK_BIO)},
+czp:{n:"Certolizumab pegol",cl:"tnf",via:"SC",chile:"no",
+ cu:null,ec:{ind:"400 mg semanas 0, 2 y 4",mant:"400 mg c/4 semanas",int:"400 mg c/2 semanas"},
+ pres:["Jeringa 200 mg"],calc:()=>"400 mg (2 jeringas) sem 0-2-4 → c/4 semanas.",
+ kin:{ec:{on:[2,6],ev:6,ext:null}},kinTx:"2–6 semanas",tdm:"Reactivo; datos limitados.",
+ ae:[["e","Reacción local"],["s","Igual que la clase"]],preg:"Transferencia placentaria mínima (sin Fc): ventaja en embarazo.",lact:"Compatible.",trials:"PRECISE 1–2.",chk:["tbc_o","icc"].concat(CK_BIO)},
+vdz:{n:"Vedolizumab",cl:"int",via:"EV / SC",chile:"isp",
+ cu:{ind:"300 mg EV semanas 0, 2 y 6",mant:"300 mg EV c/8 sem o 108 mg SC c/2 sem",int:"300 mg EV c/4 semanas"},ec:{ind:"300 mg EV semanas 0, 2 y 6 (+ dosis en sem 10 si respuesta parcial)",mant:"300 mg EV c/8 sem o 108 mg SC c/2 sem",int:"c/4 semanas"},
+ pres:["Vial 300 mg EV","Pluma o jeringa 108 mg SC"],calc:()=>"300 mg EV en 30 min sem 0-2-6 → c/8 semanas (dosis fija).",
+ kin:{cu:{on:[4,10],ev:10,ext:14},ec:{on:[6,14],ev:14,ext:null}},kinTx:"Lento: 6–10 semanas en CU, hasta 14 en EC",
+ tdm:"No recomendado de rutina (ACG 2025). Orientativo: semana 6 >28 µg/mL; mantención >12–15 µg/mL.",
+ ae:[["e","Nasofaringitis, cefalea, artralgias"],["v","Aparición o empeoramiento de artritis (no cubre MEI)"],["s","Sin señal de leucoencefalopatía multifocal progresiva; infección entérica grave"]],
+ preg:"Compatible (PIANO, datos crecientes).",lact:"Compatible.",trials:"GEMINI 1–3, VISIBLE 1–2 (SC), VARSITY (superior a ADA en CU), REPREVIO (posquirúrgico), EARNEST (reservoritis).",chk:["tbc_f"].concat(CK_BIO)},
+ust:{n:"Ustekinumab",cl:"p40",via:"EV → SC",chile:"isp",chileTx:"Registro ISP sin LRS; biosimilares en expansión",
+ cu:{ind:"~6 mg/kg EV dosis única (260/390/520 mg)",mant:"90 mg SC c/8 semanas (o c/12)",int:"90 mg c/4 semanas o reinducción EV"},ec:{ind:"~6 mg/kg EV dosis única",mant:"90 mg SC c/8 semanas",int:"90 mg c/4 semanas; dosis SC extra en sem 8 si respuesta parcial"},
+ pres:["Vial 130 mg/26 mL EV","Jeringa 45 mg y 90 mg SC"],calc:w=>{if(!w)return"≤55 kg 260 mg · 55–85 kg 390 mg · >85 kg 520 mg.";const d=w<=55?260:(w<=85?390:520);return `${d} mg EV (${d/130} viales de 130 mg) → 90 mg SC sem 8 y luego c/8 semanas.`},
+ kin:{cu:{on:[2,8],ev:8,ext:16},ec:{on:[3,8],ev:8,ext:16}},kinTx:"3–8 semanas",tdm:"No recomendado de rutina. Orientativo mantención >1–4,5 µg/mL.",
+ ae:[["e","Nasofaringitis, reacción local, cefalea"],["v","Infecciones respiratorias"],["s","Sin señal cardiovascular ni oncológica consistente"]],
+ preg:"Compatible (datos tranquilizadores).",lact:"Compatible.",trials:"UNITI, IM-UNITI, UNIFI, SEAVUE, SEQUENCE (inferior a risankizumab post anti-TNF), STARDUST.",chk:["tbc_f"].concat(CK_BIO)},
+rzb:{n:"Risankizumab",cl:"p19",via:"EV → SC",chile:"no",
+ cu:{ind:"1.200 mg EV semanas 0, 4 y 8",mant:"180 o 360 mg SC c/8 semanas",int:"360 mg"},ec:{ind:"600 mg EV semanas 0, 4 y 8",mant:"180 o 360 mg SC c/8 semanas (cartucho con inyector)",int:"360 mg; preferir alta dosis si carga inflamatoria alta o falla previa a anti-TNF"},
+ pres:["Vial 600 mg/10 mL EV","Cartucho con inyector corporal 180 mg y 360 mg SC"],calc:()=>"EC 600 mg EV sem 0-4-8 → 360 mg SC sem 12 y c/8 semanas. CU 1.200 mg EV (2 viales).",
+ kin:{cu:{on:[2,4],ev:12,ext:null},ec:{on:[2,4],ev:12,ext:null}},kinTx:"2–4 semanas",tdm:"Sin rol establecido.",
+ ae:[["e","Infección respiratoria alta, cefalea, artralgia"],["v","Transaminasas en inducción de EC (hepatotoxicidad descrita): perfil hepático hasta sem 12"],["s","Daño hepático inducido por fármaco"]],
+ preg:"Datos limitados; continuar si ya en uso, decisión individual.",lact:"Probablemente compatible.",trials:"ADVANCE, MOTIVATE, FORTIFY (EC), INSPIRE, COMMAND (CU), SEQUENCE.",chk:["tbc_f","hep12"].concat(CK_BIO)},
+miri:{n:"Mirikizumab",cl:"p19",via:"EV → SC",chile:"no",
+ cu:{ind:"300 mg EV semanas 0, 4 y 8",mant:"200 mg SC c/4 semanas",int:"Inducción extendida: 3 dosis EV más (sem 12, 16, 20)"},ec:{ind:"900 mg EV semanas 0, 4 y 8",mant:"300 mg SC c/4 semanas",int:"—"},
+ pres:["Vial 300 mg/15 mL EV","Pluma 100 mg y 200 mg SC"],calc:()=>"CU 300 mg EV sem 0-4-8 → 200 mg SC (2 plumas de 100 mg) c/4 semanas.",
+ kin:{cu:{on:[2,4],ev:12,ext:24},ec:{on:[2,4],ev:12,ext:null}},kinTx:"2–4 semanas; buen efecto en urgencia defecatoria",tdm:"Sin rol establecido.",
+ ae:[["e","Reacción local, artralgia, cefalea"],["v","Transaminasas: perfil hepático durante 24 semanas"],["s","Daño hepático"]],preg:"Datos limitados.",lact:"Sin datos.",trials:"LUCENT 1–3 (CU), VIVID-1 (EC).",chk:["tbc_f","hep24"].concat(CK_BIO)},
+gus:{n:"Guselkumab",cl:"p19",via:"EV o SC",chile:"isp",chileTx:"Registro ISP sin LRS; confirmar indicación EII vigente",
+ cu:{ind:"200 mg EV semanas 0, 4 y 8",mant:"100 mg SC c/8 sem o 200 mg SC c/4 sem",int:"200 mg c/4 semanas"},ec:{ind:"200 mg EV o 400 mg SC semanas 0, 4 y 8",mant:"100 mg SC c/8 sem o 200 mg SC c/4 sem",int:"200 mg c/4 semanas"},
+ pres:["Vial 200 mg/20 mL EV","Pluma o jeringa 100 mg y 200 mg SC"],calc:()=>"200 mg EV sem 0-4-8 → 100 mg SC c/8 semanas desde la sem 16, o 200 mg c/4 desde la sem 12.",
+ kin:{cu:{on:[2,4],ev:12,ext:null},ec:{on:[2,4],ev:12,ext:null}},kinTx:"2–4 semanas",tdm:"Sin rol establecido.",
+ ae:[["e","Infección respiratoria alta, cefalea, reacción local"],["v","Transaminasas (poco frecuente)"],["s","Sin señal cardiovascular"]],preg:"Datos limitados.",lact:"Probablemente compatible.",trials:"QUASAR (CU), GALAXI 2–3 y GRAVITI (EC), ASTRO (inducción SC en CU).",chk:["tbc_f"].concat(CK_BIO)},
+tofa:{n:"Tofacitinib",cl:"jak",via:"Oral",chile:"isp",
+ cu:{ind:"10 mg c/12 h × 8 semanas (extensible a 16)",mant:"5 mg c/12 h (10 mg si pierde respuesta)",int:"Colitis aguda grave: 10 mg c/8 h (TACOS, fuera de ficha)"},ec:null,
+ pres:["Comprimidos 5 mg y 10 mg","Liberación prolongada 11 mg y 22 mg"],calc:()=>"10 mg c/12 h × 8 semanas → 5 mg c/12 h. TFG <30 o hepatopatía moderada: reducir a la mitad.",
+ kin:{cu:{on:[0.3,1],ev:8,ext:16}},kinTx:"Días (≈3 días para mejoría sintomática)",tdm:"No aplica.",
+ ae:[["e","Alza de LDL y HDL, alza de CK, leve linfopenia"],["v","Herpes zóster (dosis-dependiente), acné, cefalea"],["v","Linfocitos 500–750/µL: reducir dosis"],["s","Linfocitos <500, neutrófilos <1.000/µL, Hb <8; TEV; MACE; infección grave"]],
+ preg:"Evitar: suspender ≥4 semanas antes de concebir; usar solo si no hay alternativa.",lact:"Evitar (si se usa, espaciar >8 h de la toma).",trials:"OCTAVE 1–2, Sustain, Open; RIVETING (desescalada); TACOS (colitis aguda grave); ORAL Surveillance (seguridad).",chk:["tbc_o","jak_lab","lip","hep","crea","cv","rzv_o","anticon","piel"].concat(CK_BIO)},
+upa:{n:"Upadacitinib",cl:"jak",via:"Oral",chile:"isp",
+ cu:{ind:"45 mg/d × 8 semanas (extensible 8 más)",mant:"15 o 30 mg/d (≥65 años: 15 mg)",int:"30 mg/d; reinducción 45 mg en pérdida de respuesta"},ec:{ind:"45 mg/d × 12 semanas",mant:"15 o 30 mg/d",int:"30 mg/d"},
+ pres:["Comprimidos LP 15 mg, 30 mg y 45 mg"],calc:()=>"45 mg/d (1 comprimido) × 8 semanas en CU (12 en EC) → 15 o 30 mg/d.",
+ kin:{cu:{on:[0.15,0.5],ev:8,ext:16},ec:{on:[0.3,1],ev:12,ext:null}},kinTx:"1–4 días",tdm:"No aplica.",
+ ae:[["e","Acné, alza de CK, alza de LDL/HDL"],["v","Herpes zóster, neutropenia leve, cefalea"],["s","Linfocitos <500, neutrófilos <1.000/µL, Hb <8; TEV; MACE; perforación intestinal; infección grave"]],
+ preg:"Evitar: suspender ≥4 semanas antes de concebir.",lact:"Evitar.",trials:"U-ACHIEVE, U-ACCOMPLISH (CU); U-EXCEL, U-EXCEED, U-ENDURE (EC); series en colitis aguda grave.",chk:["tbc_o","jak_lab","lip","hep","crea","cv","rzv_o","anticon","piel"].concat(CK_BIO)},
+fil:{n:"Filgotinib",cl:"jak",via:"Oral",chile:"no",chileTx:"Aprobado por EMA en CU; sin aprobación FDA ni registro en Chile",
+ cu:{ind:"200 mg/d × 10 semanas (extensible 12 más)",mant:"200 mg/d",int:"—"},ec:null,
+ pres:["Comprimidos 100 mg y 200 mg"],calc:()=>"200 mg/d; 100 mg si TFG 15–60 o ≥75 años.",
+ kin:{cu:{on:[1,2],ev:10,ext:22}},kinTx:"1–2 semanas",tdm:"No aplica.",
+ ae:[["e","Náuseas, cefalea"],["v","Herpes zóster (menor que otros JAK)"],["s","Igual que la clase"]],preg:"Contraindicado.",lact:"Contraindicado.",trials:"SELECTION.",chk:["tbc_o","jak_lab","lip","hep","crea","cv","rzv_o","anticon"].concat(CK_BIO)},
+oza:{n:"Ozanimod",cl:"s1p",via:"Oral",chile:"no",
+ cu:{ind:"Titulación: 0,23 mg días 1–4, 0,46 mg días 5–7",mant:"0,92 mg/d",int:"—"},ec:null,
+ pres:["Cápsulas 0,23 mg y 0,46 mg (envase de inicio)","Cápsulas 0,92 mg"],calc:()=>"0,23 mg d1–4 → 0,46 mg d5–7 → 0,92 mg/d desde el día 8. Si se omite >14 días, repetir titulación.",
+ kin:{cu:{on:[2,5],ev:10,ext:null}},kinTx:"2–5 semanas (titulación de 1 semana)",tdm:"No aplica.",
+ ae:[["e","Linfopenia (200–800/µL): efecto farmacológico esperado"],["e","Alza leve de transaminasas"],["v","Bradicardia en primera dosis, HTA, cefalea"],["v","Edema macular: control oftalmológico ante síntomas visuales"],["s","Linfocitos <200/µL (suspender temporalmente), BAV avanzado, edema macular, infección grave, LMP"]],
+ preg:"Contraindicado: suspender 3 meses antes de concebir.",lact:"Evitar.",trials:"True North; YELLOWSTONE (EC, negativo).",chk:["ecg","bradimed","s1p_lab","ojo","vzv","anticon","tbc_f"].concat(CK_BIO.filter(k=>k!=="vzv"))},
+etr:{n:"Etrasimod",cl:"s1p",via:"Oral",chile:"no",
+ cu:{ind:"2 mg/d sin titulación",mant:"2 mg/d",int:"—"},ec:null,
+ pres:["Comprimidos 2 mg"],calc:()=>"2 mg/d desde el día 1.",
+ kin:{cu:{on:[2,4],ev:12,ext:null}},kinTx:"2–4 semanas; útil en proctitis aislada",tdm:"No aplica.",
+ ae:[["e","Linfopenia esperable"],["v","Bradicardia en primera dosis, cefalea, transaminasas"],["s","Linfocitos <200/µL, BAV, edema macular"]],
+ preg:"Evitar: suspender ≥1–2 semanas antes de concebir.",lact:"Evitar.",trials:"ELEVATE UC 12 y 52; ENLIGHT UC.",chk:["ecg","bradimed","s1p_lab","ojo","vzv","anticon","tbc_f"].concat(CK_BIO.filter(k=>k!=="vzv"))},
+metro:{n:"Metronidazol",cl:"abx",via:"Oral",chile:"gen",
+ cu:null,ec:{ind:"Perianal: 500 mg c/8–12 h × 4–8 semanas. Posquirúrgico: 1–2 g/d × 3 meses",mant:"—",int:"—"},
+ pres:["Comprimidos 250 mg y 500 mg"],calc:()=>"500 mg c/12 h (perianal); 500 mg c/8 h × 3 meses (posquirúrgico).",
+ kin:{ec:{on:[1,2],ev:6,ext:null}},kinTx:"1–2 semanas",tdm:"No aplica.",
+ ae:[["e","Sabor metálico, náuseas, efecto disulfiram"],["v","Parestesias"],["s","Neuropatía periférica (uso >3 meses)"]],preg:"Aceptable en 2º–3er trimestre.",lact:"Compatible con precaución.",trials:"Rutgeerts 1995 (posquirúrgico); ADAFI (antibiótico + anti-TNF).",chk:[]},
+cipro:{n:"Ciprofloxacino",cl:"abx",via:"Oral",chile:"gen",
+ cu:null,ec:{ind:"Perianal: 500 mg c/12 h × 4–12 semanas, idealmente con anti-TNF",mant:"—",int:"—"},
+ pres:["Comprimidos 500 mg"],calc:()=>"500 mg c/12 h.",kin:{ec:{on:[1,2],ev:6,ext:null}},kinTx:"1–2 semanas",tdm:"No aplica.",
+ ae:[["e","Náuseas"],["v","QT largo"],["s","Tendinopatía o rotura tendinosa, aneurisma aórtico"]],preg:"Evitar.",lact:"Evitar si hay alternativa.",trials:"ADAFI; ECCO 2024.",chk:[]}
+};
+function r25(x){return Math.round(x/25)*25}
+
+/* ============ EN INVESTIGACIÓN ============ */
+const PIPE=[
+ {n:"Tulisokibart",mech:"Anti-TL1A (MK-7240)",dz:"CU · EC",fase:"f3",faseTx:"Fase 3",
+  res:"ATLAS-UC estudio 2 (solo inducción, jun 2026): cumplió remisión clínica sem 12 y secundarios clave; cifras aún no publicadas. Fase 2 ARTEMIS-UC: remisión 26 % vs 1 % (NEJM 2024).",
+  sig:"ATLAS-UC con mantención en curso; ARES-CD (fase 3) en curso. Potencial antifibrótico en EC estenosante.",prac:"Aún no",ref:"Sands BE et al. NEJM 2024;391:1119-29. MSD, comunicado 22-06-2026."},
+ {n:"Duvakitug",mech:"Anti-TL1A (TEV-48574 / SAR447189)",dz:"CU · EC",fase:"f3",faseTx:"Fase 3",
+  res:"RELIEVE UCCD (fase 2b, sem 14): CU remisión 48 % (900 mg) vs 20 %; EC respuesta endoscópica 48 % vs 13 %.",
+  sig:"Programa de fase 3 en CU y EC (Sanofi/Teva) en curso.",prac:"Aún no",ref:"HCPLive, presentación fase 2b."},
+ {n:"Afimkibart",mech:"Anti-TL1A (RVT-3101 / RO7790121)",dz:"CU · EC",fase:"f3",faseTx:"Fase 3",
+  res:"TUSCANY-2 (fase 2b) positiva en CU, mayor efecto en portadores del biomarcador.",
+  sig:"Fase 3 en CU (NCT06589986, NCT06588855) y EC (NCT06819878, NCT06819891) reclutando.",prac:"Aún no",ref:"TUSCANY-2, Lancet Gastroenterol Hepatol; ClinicalTrials.gov."},
+ {n:"Obefazimod",mech:"Potenciador de miR-124 (ABX464), oral",dz:"CU",fase:"nda",faseTx:"Fase 3 completa · NDA planificada",
+  res:"ABTECT mantención (sem 44): remisión 50,8 % (25 mg) y 51,3 % (50 mg) vs 10,4 % placebo. Inducción ABTECT-1/2 positiva (2025).",
+  sig:"Pre-NDA favorable con FDA (jul 2026); solicitud prevista antes de fin de 2026. Cefalea frecuente; CPNM 4 casos con 50 mg.",prac:"Aún no",ref:"Abivax, comunicados 01-06-2026 y 30-07-2026."},
+ {n:"Icotrokinra",mech:"Péptido oral antagonista del receptor de IL-23",dz:"CU · EC",fase:"f3",faseTx:"Fase 3 (CU) · 2b/3 (EC)",
+  res:"ANTHEM-UC (fase 2b, sem 28, 400 mg): remisión 31,7 % vs 9,5 %; mejoría endoscópica 38,1 % vs 11,1 %.",
+  sig:"ICONIC-UC (fase 3) e ICONIC-CD (fase 2b/3) iniciados. Primer bloqueo IL-23 oral.",prac:"Aún no",ref:"J&J, comunicado 27-10-2025."},
+ {n:"Combinación de terapias avanzadas",mech:"Guselkumab + golimumab (VEGA, DUET-UC/CD); combinaciones con anti-TL1A",dz:"CU · EC",fase:"f2",faseTx:"Fase 2",
+  res:"VEGA (fase 2a, CU): combinación superior a cada monoterapia en remisión clínica sem 12. Terapia dual dirigida en vida real: series observacionales.",
+  sig:"ECCO 2026 PP9: evidencia insuficiente para recomendar terapia avanzada combinada en CU. Uso actual: refractariedad multimecanismo o MEI no controlada, en centro experto.",prac:"Aún no",ref:"Feagan BG et al. Lancet Gastroenterol Hepatol 2023 (VEGA); ECCO 2026."}
+];
+
+/* ============ GUÍAS: COMPARACIÓN ============ */
+const GCMP={
+ jak:{t:"Posicionamiento de inhibidores JAK",rows:[
+  ["ECCO CU 2026","Recomienda tofacitinib, upadacitinib y filgotinib en CU moderada-grave sin exigir falla a anti-TNF; aplica restricciones EMA (≥65 años, riesgo CV, neoplasia)."],
+  ["ACG CU 2025","Recomienda tofacitinib y upadacitinib (fuerte); advierte que en EE. UU. la ficha exige falla a anti-TNF."],
+  ["ACG EC 2025","Upadacitinib tras exposición a anti-TNF (R23)."],
+  ["AGA CU 2024","Upadacitinib en grupo de mayor eficacia en naïve; tofacitinib y upadacitinib de mayor eficacia tras anti-TNF."],
+  ["AGA EC 2025","Upadacitinib en grupo de menor eficacia en naïve, mayor eficacia tras anti-TNF."],
+  ["FDA / EMA","FDA: tras falla o intolerancia a anti-TNF. EMA 2023: en ≥65 años, fumadores, riesgo CV o de neoplasia, solo si no hay alternativa."],
+  ["Guía chilena 2026","Recomienda JAK (fuerte) en CU moderada y en brote grave."]]},
+ combo:{t:"Infliximab con tiopurina",rows:[
+  ["ECCO CU 2026","Infliximab en monoterapia o combinado: ambos válidos (débil, R17). Adalimumab en monoterapia (R20)."],
+  ["ACG CU 2025","Recomienda combinación con tiopurina cuando se usa infliximab (fuerte, R33)."],
+  ["ACG EC 2025","Recomienda combinación en naïve a ambos (fuerte, R13)."],
+  ["AGA EC 2025","Sugiere combinación en naïve a tiopurinas (condicional); sin recomendación para adalimumab ni biológicos no anti-TNF."],
+  ["AGA CU 2024","Sugiere anti-TNF + inmunomodulador sobre monoterapia."]]},
+ asuc:{t:"Rescate en colitis aguda grave",rows:[
+  ["ECCO CU 2026","Infliximab o ciclosporina (fuerte, R45). JAK: alternativa prometedora (PP2; TACOS). Tercera línea solo en centro experto (R47)."],
+  ["ACG CU 2025","Infliximab o ciclosporina al día 3 (fuerte, R51); JAK no incluidos."],
+  ["AGA CPU 2026","Rescate con infliximab, ciclosporina o JAK (dosis estándar o alta fuera de ficha); evaluar a las 72 h."],
+  ["Guía chilena 2026","Infliximab o ciclosporina sin diferencias; JAK recomendado en brote grave (fuerte, R21)."]]},
+ vdzec:{t:"Vedolizumab en enfermedad de Crohn",rows:[
+  ["AGA EC 2025","Mayor eficacia en naïve; menor eficacia tras anti-TNF (condicional)."],
+  ["ACG EC 2025","Recomienda vedolizumab EV y SC (fuerte); posquirúrgico de alto riesgo (condicional)."],
+  ["ECCO EC 2024","Recomienda vedolizumab para inducción y mantención; inicio de acción lento."],
+  ["Clase 2026 (Chile)","Opción para EC luminal sin perianal priorizando seguridad; no en perianal activa."]]},
+ tbc:{t:"Tamizaje de tuberculosis (cambio 2026)",rows:[
+  ["ECCO infecciones 2026","Obligatorio antes de anti-TNF y JAK. Con vedolizumab, ustekinumab, anti-IL-23 y S1P, solo si hay factores de riesgo; con TBL pueden iniciarse en paralelo."],
+  ["ECCO infecciones 2021","Tamizaje antes de todo biológico."],
+  ["AGA EC 2025","Tamizaje de TBC y VHB antes de cualquier biológico o molécula pequeña."]]},
+ tiop:{t:"Tiopurinas en adulto mayor",rows:[
+  ["ECCO CU 2026","Mantención con tiopurina solo en <65 años corticodependientes o intolerantes a 5-ASA (R14)."],
+  ["ACTECCU 2026","Adulto mayor: preferir 5-ASA, anti-TNF, vedolizumab, ustekinumab; evitar JAK, metotrexato y S1P."],
+  ["GETECCU 2025","Fragilidad pesa más que la edad; el riesgo real es el subtratamiento."]]}
+};
+const GTL=[
+ {h:"ECCO CU tratamiento médico 2026 (vs 2022)",li:["Incorpora mirikizumab, risankizumab, guselkumab y etrasimod con recomendación fuerte.","Sugiere vedolizumab sobre adalimumab (R24).","Tiopurina en mantención restringida a <65 años (R14).","JAK como alternativa en colitis aguda grave (PP2) y tercera línea secuencial en centro experto (R47).","Sin evidencia suficiente para terapia avanzada combinada (PP9); TDM proactivo no recomendado (PP7)."]},
+ {h:"ECCO infecciones 2026 (vs 2021)",li:["Tamizaje de TBC obligatorio solo antes de anti-TNF y JAK; en el resto, según riesgo.","Vacuna recombinante de zóster para todo adulto con inmunosupresión; VRS desde los 60 años.","Strongyloides y Chagas en procedentes de zonas endémicas.","PAP/VPH en mujeres inmunosuprimidas; profilaxis de Pneumocystis en triple inmunosupresión."]},
+ {h:"ACG CU 2025 (vs 2019)",li:["Incluye S1P, anti-IL-23 y upadacitinib.","La extensión no limita la terapia avanzada: la proctitis moderada-grave accede a lo mismo (KC26).","Infliximab es el anti-TNF preferido (KC45); vedolizumab sobre adalimumab (R45).","Sin exigencia de terapia escalonada por terceros pagadores (KC41)."]},
+ {h:"ACG EC 2025 (vs 2018)",li:["No exige falla a terapia convencional antes de terapia avanzada (R3).","Risankizumab sobre ustekinumab tras anti-TNF (R19, SEQUENCE).","Infliximab y vedolizumab SC como mantención equivalente.","Vedolizumab en prevención posquirúrgica de alto riesgo (R34, REPREVIO)."]},
+ {h:"AGA EC 2025 (guía viva, vs 2021)",li:["Clasifica por eficacia relativa en naïve y en expuestos.","Sugiere terapia avanzada precoz sobre escalonada (R15).","Retirar el inmunomodulador tras ≥6 meses de remisión en combinación (R13), no el anti-TNF (R14)."]},
+ {h:"AGA CU 2024 (guía viva, vs 2020)",li:["Clasificación por eficacia relativa; adalimumab en el grupo de menor eficacia.","Terapia avanzada tras falla a 5-ASA, sin escalamiento gradual."]},
+ {h:"Guía chilena 2026 (Rev Med Chile)",li:["Primera guía nacional GRADE para CU y EC en adultos (Núñez et al.).","JAK recomendados en CU moderada y en brote grave.","Recomendaciones de buena práctica adaptadas a la disponibilidad local."]}
+];
+
+const REFS=[
+ "Gisbert JP, Chaparro M, Verstockt B, Kienle P, Minozzi S, et al. ECCO Guidelines on Therapeutics in Ulcerative Colitis: Medical Treatment. J Crohns Colitis. 2026;20(7):jjag066. doi:10.1093/ecco-jcc/jjag066",
+ "Adamina M, Kienle P, Chaparro M, Verstockt B, Minozzi S, et al. ECCO Guidelines on Therapeutics in Ulcerative Colitis: Surgical Treatment. J Crohns Colitis. 2026;20(6):jjag072. doi:10.1093/ecco-jcc/jjag072",
+ "Yanai H, Ellul P, Verstockt B, Greuter T, Kopylov U, et al. ECCO Guidelines on the Prevention, Diagnosis, and Management of Infections in Inflammatory Bowel Disease. J Crohns Colitis. 2026;20(7):jjag071. doi:10.1093/ecco-jcc/jjag071",
+ "Gordon H, Minozzi S, Kopylov U, Verstockt B, Chaparro M, et al. ECCO Guidelines on Therapeutics in Crohn's Disease: Medical Treatment. J Crohns Colitis. 2024;18(10):1531-55. doi:10.1093/ecco-jcc/jjae091",
+ "Rubin DT, Ananthakrishnan AN, Siegel CA, Barnes EL, Long MD. ACG Clinical Guideline Update: Ulcerative Colitis in Adults. Am J Gastroenterol. 2025;120(6):1187-224. doi:10.14309/ajg.0000000000003463",
+ "Lichtenstein GR, Loftus EV, Afzali A, Long MD, Barnes EL, Isaacs KL, Ha CY. ACG Clinical Guideline: Management of Crohn's Disease in Adults. Am J Gastroenterol. 2025;120(6):1225-64. doi:10.14309/ajg.0000000000003465",
+ "Scott FI, Ananthakrishnan AN, Click B, Agrawal M, Syal G, et al. AGA Living Clinical Practice Guideline on the Pharmacologic Management of Moderate-to-Severe Crohn's Disease. Gastroenterology. 2025;169:1397-448. doi:10.1053/j.gastro.2025.09.038",
+ "Singh S, Loftus EV Jr, Limketkai BN, Haydek JP, Agrawal M, et al. AGA Living Clinical Practice Guideline on Pharmacological Management of Moderate-to-Severe Ulcerative Colitis. Gastroenterology. 2024;167(7):1307-43.",
+ "AGA Clinical Practice Update on Inpatient Management of Adults With Inflammatory Bowel Disease: Expert Review. Gastroenterology. 2026;170:408-17. doi:10.1053/j.gastro.2025.08.039",
+ "Núñez P, et al. Guía de recomendaciones para el tratamiento de la colitis ulcerosa y la enfermedad de Crohn en pacientes adultos. Rev Med Chile. 2026;154(1):105-31. doi:10.4067/s0034-98872026000100105",
+ "Turner D, Ricciuto A, Lewis A, D'Amico F, Dhaliwal J, et al. STRIDE-II: an update on the Selecting Therapeutic Targets in Inflammatory Bowel Disease initiative. Gastroenterology. 2021;160(5):1570-83. doi:10.1053/j.gastro.2020.12.031",
+ "Torres J, Chaparro M, Julsgaard M, Katsanos K, Zelinkova Z, et al. European Crohn's and Colitis Guidelines on Sexuality, Fertility, Pregnancy, and Lactation. J Crohns Colitis. 2023;17(1):1-27. doi:10.1093/ecco-jcc/jjac115",
+ "Mañosa M, Calafat M, Francia E, et al. Documento de posicionamiento de GETECCU sobre fragilidad, edad avanzada y enfermedad inflamatoria intestinal. Gastroenterol Hepatol. 2025;48:502529. doi:10.1016/j.gastrohep.2025.502529",
+ "Fuochi E, Innocenti T, Lynch EN, Curto A, Caini S, et al. Frailty Rather Than Age Increases the Risk of Infections in Patients With Inflammatory Bowel Disease Treated With Biologics: An Observational Retrospective Cohort Study. JCC Plus. 2026;1:e70063. doi:10.1002/jcc5.70063",
+ "Fried LP, Tangen CM, Walston J, Newman AB, Hirsch C, et al. Frailty in older adults: evidence for a phenotype. J Gerontol A Biol Sci Med Sci. 2001;56(3):M146-56. doi:10.1093/gerona/56.3.m146",
+ "Rockwood K, Song X, MacKnight C, Bergman H, Hogan DB, et al. A global clinical measure of fitness and frailty in elderly people. CMAJ. 2005;173(5):489-95. doi:10.1503/cmaj.050051",
+ "Akyuz F, Bakkaloglu OK, Unal NG, Kalkan IH, Arhan M, et al. Management of Refractory and Difficult-To-Treat Inflammatory Bowel Disease: An Expert Opinion Review. JCC Plus. 2026. doi:10.1002/jcc5.70082",
+ "Nguyen GC, Loftus EV Jr, Hirano I, Falck-Ytter Y, Singh S, Sultan S. AGA Institute Guideline on the Management of Crohn's Disease After Surgical Resection. Gastroenterology. 2017;152:271-5. doi:10.1053/j.gastro.2016.10.038",
+ "Ministerio de Salud de Chile. Protocolos Ley 20.850 (Ricarte Soto): Enfermedad de Crohn (5ª ed.) y Colitis Ulcerosa (4ª ed.). 2024.",
+ "Ytterberg SR, Bhatt DL, Mikuls TR, Koch GG, Fleischmann R, et al. Cardiovascular and Cancer Risk with Tofacitinib in Rheumatoid Arthritis. N Engl J Med. 2022;386:316-26. doi:10.1056/NEJMoa2109927",
+ "Sands BE, Peyrin-Biroulet L, Loftus EV Jr, Danese S, Colombel JF, et al. Vedolizumab versus Adalimumab for Moderate-to-Severe Ulcerative Colitis (VARSITY). N Engl J Med. 2019;381:1215-26. doi:10.1056/NEJMoa1905725",
+ "Colombel JF, Sandborn WJ, Reinisch W, Mantzaris GJ, Kornbluth A, et al. Infliximab, Azathioprine, or Combination Therapy for Crohn's Disease (SONIC). N Engl J Med. 2010;362:1383-95. doi:10.1056/NEJMoa0904492",
+ "Laharie D, Bourreille A, Branche J, Allez M, Bouhnik Y, et al. Ciclosporin versus infliximab in patients with severe ulcerative colitis refractory to intravenous steroids (CYSIF). Lancet. 2012;380:1909-15. doi:10.1016/S0140-6736(12)61084-8",
+ "Sands BE, Feagan BG, Peyrin-Biroulet L, Danese S, Rubin DT, et al. Phase 2 Trial of Anti-TL1A Monoclonal Antibody Tulisokibart for Ulcerative Colitis. N Engl J Med. 2024;391:1119-29. doi:10.1056/NEJMoa2314076",
+ "Abivax. Phase 3 ABTECT maintenance trial results; positive pre-NDA interaction with the FDA. Comunicados de prensa, 1 jun y 30 jul 2026.",
+ "MSD. Tulisokibart met primary and key secondary endpoints in the Phase 3 ATLAS-UC induction-only study. Comunicado de prensa, 22 jun 2026."
+];
+/* ============ MOTOR DE DECISIÓN ============ */
+const TIERS=["pref","alt","baja","prec","evit"];
+const TIERTX={pref:["Preferente","Primera elección en este escenario"],alt:["Alternativa razonable","Eficacia comparable o evidencia menor"],baja:["Menor eficacia esperada","Válida, pero rinde menos en esta línea"],prec:["Con precaución","Condición del paciente que obliga a sopesar riesgo"],evit:["Evitar o contraindicado","No usar salvo situación excepcional"],inv:["En investigación","Sin aprobación; considerar ensayo clínico"]};
+
+function evaluate(c){
+  const R={items:[],steps:[],alerts:[],combo:null,fail:[],guides:new Set(),tags:[],title:""};
+  const ti=t=>TIERS.indexOf(t);
+  const add=(id,tier,ph,why,dose)=>{let it=R.items.find(x=>x.id===id&&x.ph===ph);if(!it){it={id,tier,ph,why:[],dose:dose||null};R.items.push(it)}else if(ti(tier)<ti(it.tier))it.tier=tier;if(why)it.why.push({c:"n",t:why});return it};
+  const step=(t)=>R.steps.push(t);
+  const alert=(lvl,t)=>R.alerts.push({lvl,t});
+  const has=k=>c.co.includes(k), eim=k=>c.eim.includes(k);
+  const age=c.age||0;
+  const cuRiskN=c.cur.length+(c.ext==="E3"?1:0);
+  const ecRisk=c.dz==="ec"&&(c.ecr.length>0||c.beh!=="B1"||c.pa!=="no"||c.l4);
+
+  /* ---------- etiquetas del caso ---------- */
+  if(c.dz==="cu"){
+    R.title="Colitis ulcerosa";
+    R.tags.push(["cu",c.ext+" · "+({E1:"proctitis",E2:"izquierda",E3:"extensa"})[c.ext]]);
+    R.tags.push(["cu",({leve:"Leve",moderada:"Moderada",grave:"Grave ambulatoria",asuc:"Colitis aguda grave"})[c.sev]]);
+  }else{
+    R.title="Enfermedad de Crohn";
+    R.tags.push(["ec",c.loc+(c.l4?"+L4":"")+" "+c.beh+(c.pa!=="no"?"p":"")]);
+    R.tags.push(["ec",({remision:"En remisión",leve:"Actividad leve",moderada:"Actividad moderada",grave:"Actividad grave"})[c.act]]);
+    if(c.postop)R.tags.push(["ec","Posquirúrgico"]);
+    R.tags.push([ecRisk?"risk":"",ecRisk?"Alto riesgo de progresión":"Bajo riesgo de progresión"]);
+  }
+  R.tags.push(["",({naive:"Sin tratamiento previo",falla5asa:"Falla a 5-ASA/budesonida",corticodep:"Corticodependiente",corticorref:"Corticorrefractario",fallaImm:"Falla a inmunomodulador",tnf:"Expuesto a anti-TNF",multi:"Falla a ≥2 mecanismos"})[c.hist]]);
+  if(age)R.tags.push([age>=65?"risk":"",age+" años"]);
+  if(c.preg!=="no"&&c.sex==="F")R.tags.push(["risk",({deseo:"Deseo de embarazo",embarazo:"Embarazada",lactancia:"Lactancia"})[c.preg]]);
+
+  /* ---------- alertas transversales ---------- */
+  if(has("hbsag"))alert("r","HBsAg positivo: iniciar entecavir o tenofovir antes de cualquier inmunosupresión, incluidos corticoides (ECCO 2026).");
+  if(has("antihbc"))alert("a","Anti-HBc aislado: ADN-VHB basal; profilaxis si es detectable o con inmunosupresión intensa, si no, ADN y transaminasas c/3 meses.");
+  if(has("tbcl"))alert("a","TBC latente: tratar. Anti-TNF y JAK se difieren ≥3–4 semanas; vedolizumab, anti-IL-12/23, anti-IL-23 y S1P pueden iniciarse en paralelo (ECCO 2026).");
+  if(has("tbcAct"))alert("r","TBC activa: tratamiento antituberculoso y decisión con infectología; no iniciar anti-TNF ni JAK hasta controlarla.");
+  if(has("infAct"))alert("r","Infección activa o absceso sin drenar: tratar o drenar antes de iniciar o escalar la inmunosupresión.");
+  if(has("vhbNoInm"))alert("i","No inmune a VHB: vacunar (de preferencia al diagnóstico; con inmunosupresión, esquema de alta dosis o adyuvado y control de anti-HBs).");
+  if(has("vzvneg"))alert("a","VVZ no inmune: vacuna de varicela (viva) ≥4 semanas antes de inmunosuprimir; requisito antes de S1P. Luego, vacuna recombinante de zóster.");
+  if(c.pend&&c.pend.length)alert("i","Tamizaje pendiente: "+c.pend.join(", ")+". Completar antes de iniciar terapia avanzada (checklist en cada ficha).");
+  if(has("vih"))alert("i","VIH: inmunosupresión posible con TAR, carga viral indetectable y CD4 estables; controlar CD4.");
+  if(has("vhc"))alert("i","VHC: tratar con antivirales de acción directa; son seguros con inmunosupresores.");
+  if(has("endemico"))alert("i","Zona endémica: serología de Strongyloides (o ivermectina empírica) y de Trypanosoma cruzi antes de inmunosuprimir.");
+  if(age>=65||has("fragil"))alert("a","Adulto mayor: medir fragilidad (<a href=\"#fragilidad\">calculadora de Fried y escala clínica</a>) y polifarmacia; el riesgo documentado es el subtratamiento. Preferir mecanismos con buen perfil agrupado (vedolizumab, ustekinumab, anti-IL-23).");
+  if(c.dz==="cu"&&eim("cep"))alert("i","CEP: ningún fármaco modifica su historia natural. Colonoscopía de vigilancia anual con cromoendoscopía desde el diagnóstico.");
+  if(c.sex==="F"&&c.preg==="embarazo")alert("a","Embarazo: la actividad, no el fármaco, determina el riesgo obstétrico. Mantener la terapia eficaz; manejo conjunto con obstetricia.");
+
+  /* ======================= COLITIS ULCEROSA ======================= */
+  if(c.dz==="cu"){
+    let sev=c.sev;
+    const failed=["falla5asa","corticodep","corticorref","fallaImm","tnf","multi"].includes(c.hist);
+    if(sev==="moderada"&&(c.cur.includes("mayo3")||cuRiskN>=2)&&!failed){
+      alert("a","Moderada con factores de mal pronóstico: tratar como moderada-grave (ACG 2025, KC18).");sev="grave";
+    }
+    if((sev==="leve"||sev==="moderada")&&["falla5asa","corticodep","corticorref","fallaImm"].includes(c.hist)){sev="grave";alert("i","Falla a terapia convencional: corresponde terapia de CU moderada-grave (ACG KC24).");}
+    if((sev==="leve"||sev==="moderada")&&["tnf","multi"].includes(c.hist))sev="grave";
+
+    if(sev==="leve"||sev==="moderada"){
+      step("<b>Confirmar actividad</b>: calprotectina basal, descartar C. difficile y enteropatógenos.");
+      if(c.ext==="E1"){
+        add("mz_sup","pref","Inducción","Proctitis: 5-ASA rectal ≥1 g/d es de primera línea (ECCO R3, ACG R6)");
+        add("mz_ene","alt","Inducción","Enema o espuma si el compromiso llega al rectosigma");
+        add("cort_rect","alt","Inducción","Si intolerancia o falla a 5-ASA tópico; 5-ASA rectal es preferible (ECCO R6)");
+        add("mz_or","alt","Inducción","Agregar si no responde a tópico en 4–6 semanas (ECCO R4)");
+        add("mz_sup","pref","Mantención","1 g/d o 3 veces por semana (ACG R18)");
+      }else if(c.ext==="E2"){
+        add("mz_or","pref","Inducción","≥2–2,4 g/d combinada con enema 1 g/d: superior a oral sola (ECCO R4, ACG R10)",sev==="moderada"?"4,8 g/d + enema 1 g/d":"2,4 g/d + enema 1 g/d");
+        add("mz_ene","pref","Inducción","Combinar con oral");
+        add("bud_mmx","alt","Inducción","Si falla o intolerancia a 5-ASA oral + rectal (ACG R11)");
+        add("cort_rect","alt","Inducción","Alternativa tópica a 5-ASA rectal");
+        add("mz_or","pref","Mantención","≥2 g/d (ECCO R11)");
+      }else{
+        add("mz_or","pref","Inducción",sev==="moderada"?"4,8 g/d en actividad moderada (ASCEND)":"2,4 g/d: igual eficacia que 4,8 g en leve (ACG R15)",sev==="moderada"?"4,8 g/d ± enema 1 g/d":"2,4 g/d ± enema 1 g/d");
+        add("mz_ene","alt","Inducción","Agregar enema si hay síntomas rectales");
+        add("bud_mmx","alt","Inducción","Si no responde a 5-ASA (ACG R16); no superior a 5-ASA como primera opción (ECCO R9)");
+        add("pred","alt","Inducción","Si falla 5-ASA a 4–8 semanas (ACG R13)");
+        add("mz_or","pref","Mantención","≥2 g/d");
+      }
+      add("aza","evit","Inducción","Tiopurina no induce remisión (ECCO R10, ACG R23)");
+      step("<b>Reevaluar a las 8 semanas</b> (ACG KC19). Sin remisión con 5-ASA a dosis plena: no cambiar a otra formulación; escalar de clase (ACG R14).");
+      R.fail.push("Sin respuesta a 5-ASA oral + rectal a dosis plena → budesonida MMX o prednisona 40 mg.","Corticodependencia o recaída frecuente → terapia avanzada (abre el escenario «Falla a 5-ASA»).");
+      if(c.ext==="E1")R.fail.push("Proctitis refractaria: descartar adherencia, proximalización y síndrome de intestino irritable; tacrolimus o beclometasona en supositorio (ACG R7, preparación magistral).");
+    }
+    else if(sev==="grave"){
+      R.tags.push(["risk","Moderada-grave"]);
+      step("<b>Descartar C. difficile y CMV</b> si es corticorrefractario o hay deterioro.");
+      step("<b>Rectosigmoidoscopía o colonoscopía</b> basal con Mayo endoscópico/UCEIS y calprotectina, para medir la respuesta después.");
+      step("<b>Checklist previo al inicio</b> de inmediato (TBC, VHB, vacunas) para no retrasar la terapia avanzada.");
+      if(c.ext==="E1")alert("i","La extensión no limita la terapia avanzada: la proctitis moderada-grave accede a lo mismo que la colitis extensa (ACG KC26). Etrasimod tiene datos específicos en proctitis aislada.");
+      if(c.hist==="corticorref")add("pred","evit","Puente","Corticorrefractario: no repetir corticoide sistémico");
+      else{add("pred","alt","Puente","Puente mientras actúa la terapia avanzada; puede omitirse si se elige un fármaco rápido (ACG KC25d)");}
+      if(c.sev==="moderada"&&c.hist==="naive")add("bud_mmx","alt","Puente","Opción no sistémica en actividad moderada (ACG R21)");
+      const naive=["naive","falla5asa","corticodep","corticorref","fallaImm"].includes(c.hist);
+      if(naive){
+        R.tags.push(["","Naïve a terapia avanzada"]);
+        [["ifx","Mayor eficacia en naïve (AGA 2024); anti-TNF preferido en CU (ACG KC45)"],["vdz","Mayor eficacia en naïve (AGA); superior a adalimumab (VARSITY; ECCO R24, ACG R45)"],["upa","Mayor eficacia en naïve (AGA); inicio en días"],["rzb","Mayor eficacia en naïve (AGA 2024)"],["gus","Mayor eficacia en naïve (AGA 2024)"],["oza","Mayor eficacia en naïve (AGA 2024); oral"],["etr","Mayor eficacia en naïve (AGA 2024); oral, sin titulación"]].forEach(([id,w])=>add(id,"pref","Inducción y mantención",w));
+        [["gol","Eficacia intermedia (AGA 2024)"],["ust","Eficacia intermedia (AGA 2024)"],["tofa","Eficacia intermedia en naïve (AGA 2024); inicio en días"],["miri","Eficacia intermedia (AGA 2024)"],["fil","Eficacia intermedia (AGA 2024)"]].forEach(([id,w])=>add(id,"alt","Inducción y mantención",w));
+        add("ada","baja","Inducción y mantención","Menor eficacia relativa en naïve (AGA 2024); inferior a vedolizumab en VARSITY");
+        if(c.hist==="corticodep")add("aza","alt","Mantención","Corticodependiente <65 años: mantención con tiopurina es opción (ECCO R14), con efecto a las 12–17 semanas");
+        else add("aza","baja","Mantención","Mantención tras inducción con corticoide (ACG R36); no induce remisión");
+      }else if(c.hist==="tnf"){
+        R.tags.push(["","Post anti-TNF"]);
+        [["upa","Mayor eficacia tras anti-TNF (AGA 2024)"],["tofa","Mayor eficacia tras anti-TNF (AGA 2024)"],["ust","Mayor eficacia tras anti-TNF (AGA 2024)"]].forEach(([id,w])=>add(id,"pref","Inducción y mantención",w));
+        [["rzb","Eficacia intermedia tras anti-TNF (AGA)"],["gus","Eficacia intermedia tras anti-TNF (AGA)"],["miri","Eficacia intermedia tras anti-TNF (AGA)"],["fil","Eficacia intermedia tras anti-TNF (AGA)"]].forEach(([id,w])=>add(id,"alt","Inducción y mantención",w));
+        [["vdz","Menor eficacia tras anti-TNF (AGA 2024)"],["oza","Menor eficacia tras anti-TNF (AGA 2024)"],["etr","Menor eficacia tras anti-TNF (AGA 2024)"]].forEach(([id,w])=>add(id,"baja","Inducción y mantención",w));
+        tnfSecond(c,add,["ifx","ada","gol"]);
+      }else{
+        R.tags.push(["risk","Refractario multimecanismo"]);
+        add("upa","pref","Inducción y mantención","Mejor rendimiento relativo en multiexpuestos; reinducción con 45 mg posible");
+        add("tofa","alt","Inducción y mantención","Eficaz tras biológicos (OCTAVE)");
+        [["rzb","p19 conserva eficacia tras varias fallas"],["gus","p19 conserva eficacia tras varias fallas"],["miri","p19; inducción extendida disponible"],["ust","Si no fue uno de los mecanismos fallidos"]].forEach(([id,w])=>add(id,"alt","Inducción y mantención",w));
+        [["vdz","Rinde poco tras múltiples fallas"],["oza","Eficacia reducida en multiexpuestos"],["etr","Eficacia reducida en multiexpuestos"]].forEach(([id,w])=>add(id,"baja","Inducción y mantención",w));
+        tnfSecond(c,add,["ifx","ada","gol"]);
+        step("<b>Consulta con cirugía</b>: la proctocolectomía es una opción curativa en CU refractaria (ACG KC32, ECCO quirúrgica 2026).");
+        step("<b>Descartar factores no inflamatorios</b>: C. difficile, CMV, adherencia, SII superpuesto.");
+        step("<b>Ensayo clínico</b> o terapia avanzada combinada en centro experto (ver pestaña En investigación).");
+      }
+      add("aza","evit","Inducción","Tiopurina o metotrexato en monoterapia no inducen remisión (ECCO R10/R13, ACG R23)");
+      if(R.items.some(i=>i.id==="ifx"&&ti(i.tier)<=1))R.combo="cu";
+      R.fail.push("Falla primaria (sin respuesta al final de la inducción con nivel adecuado) → cambiar de mecanismo.","Pérdida secundaria con nivel bajo sin anticuerpos → intensificar; con anticuerpos altos → cambio intraclase ± inmunomodulador.","Falla a ≥2 mecanismos → JAK si no se usó, cirugía o ensayo clínico.");
+      R.guides.add("jak");if(R.combo)R.guides.add("combo");
+    }
+    else if(sev==="asuc"){
+      R.tags.push(["risk","Hospitalizado"]);
+      const a=c.asuc;
+      if(a==="ingreso"){
+        step("<b>Hospitalizar</b> y calcular Truelove-Witts; hemograma, PCR, albúmina, electrolitos, perfil hepático.");
+        step("<b>C. difficile</b> en 2 pasos y coprocultivo; <b>rectosigmoidoscopía sin preparación</b> con biopsias para CMV (IHQ).");
+        step("<b>Radiografía de abdomen</b>: colon transverso ≥5,5–6 cm = megacolon tóxico.");
+        step("<b>HBPM profiláctica</b> (el sangrado no la contraindica; ACG R47, AGA 2026).");
+        step("Suspender AINE, opioides, anticolinérgicos y antidiarreicos. Sin antibióticos de rutina (ACG R48) ni NPT para reposo intestinal (ACG R49).");
+        step("<b>Interconsulta precoz a cirugía</b> y tamizaje prebiológico inmediato (TBC, VHB) para no retrasar el rescate.");
+        step("<b>Evaluar el día 3</b> con índice de Oxford: >8 deposiciones/día, o 3–8 con PCR >45 mg/L, predice ~85 % de colectomía.");
+        add("mpred","pref","Inducción","Primera línea (ECCO R43, ACG R50, AGA 2026)");
+        add("hc","alt","Inducción","Equivalente a metilprednisolona");
+        add("mz_or","evit","Inducción","Agregar 5-ASA oral no aporta (ECCO R44)");
+        add("vdz","evit","Inducción","Inicio lento: no usar como rescate en monoterapia");
+        add("oza","evit","Inducción","Sin evidencia en colitis aguda grave");add("etr","evit","Inducción","Sin evidencia en colitis aguda grave");
+      }else if(a==="d3resp"){
+        step("<b>Pasar a prednisona oral</b> 40 mg/d con retiro en 8 semanas.");
+        step("<b>Planificar la mantención antes del alta</b>: tras colitis aguda grave no basta tiopurina sola ni 5-ASA (ECCO PP1).");
+        add("pred","pref","Puente","Paso a vía oral al responder");
+        [["ifx","Mantención con la mayor evidencia tras colitis grave; LRS no cubre este subgrupo (solo corticorrefractario)"],["vdz","Mantención segura; requiere puente con corticoide por su inicio lento"],["upa","Rápido, permite retirar el corticoide antes"],["rzb","Opción de mayor eficacia en naïve (AGA)"],["gus","Opción de mayor eficacia en naïve (AGA)"]].forEach(([id,w])=>add(id,"pref","Mantención",w));
+        [["tofa","Eficacia intermedia en naïve"],["ust","Eficacia intermedia"],["miri","Eficacia intermedia"],["ada","Menor eficacia relativa"],["gol","Eficacia intermedia"]].forEach(([id,w])=>add(id,"alt","Mantención",w));
+        add("aza","baja","Mantención","Tiopurina sola no se recomienda tras colitis aguda grave (ECCO PP1)");
+        if(["tnf","multi"].includes(c.hist))tnfSecond(c,add,["ifx","ada","gol"]);
+        R.guides.add("jak");
+      }else if(a==="d3noresp"){
+        R.tags.push(["risk","Corticorrefractaria"]);
+        step("<b>Decidir rescate hoy</b> (día 3–5); prolongar corticoides más de 7 días no aporta y aumenta complicaciones.");
+        step("<b>Cirugía presente en la decisión</b>: colectomía si hay perforación, hemorragia masiva o megacolon tóxico, o si el rescate falla en 5–7 días.");
+        step("Antes de infliximab: confirmar TBC y VHB. Antes de ciclosporina: colesterol, Mg, creatinina y PA.");
+        const ifxFail=["tnf","multi"].includes(c.hist)&&c.tnff!=="intol";
+        add("ifx",ifxFail?"prec":"pref","Rescate",ifxFail?"Falla previa a anti-TNF: preferir ciclosporina o JAK":"Infliximab o ciclosporina, equivalentes en colectomía (CYSIF, CONSTRUCT; ECCO R45, ACG R51). Cubierto por LRS (CU grave corticorrefractaria hospitalizada)","5 mg/kg; albúmina baja o PCR alta: considerar 10 mg/kg o segunda dosis precoz (ECCO R46, PREDICT-UC)");
+        add("csa",c.hist==="fallaImm"?"alt":"pref","Rescate",c.hist==="fallaImm"?"Falla previa a tiopurina: sin puente de mantención natural; considerar vedolizumab como mantención (ACG R54)":"Equivalente a infliximab; vida media corta (ventaja si se va a cirugía)");
+        add("tofa","alt","Rescate","TACOS (ECA): respuesta 83 % vs 59 %, menos rescate. Guía chilena 2026 R21 (fuerte); ECCO PP2; AGA 2026","10 mg c/8 h (fuera de ficha) o 10 mg c/12 h");
+        add("upa","alt","Rescate","Series: sobrevida libre de colectomía a 90 días ~84 %; comparativa 2026 con tofacitinib","45 mg/d");
+        add("vdz","evit","Rescate","No como rescate");add("oza","evit","Rescate","Sin evidencia");add("etr","evit","Rescate","Sin evidencia");
+        R.fail.push("Sin respuesta al rescate en 5–7 días → colectomía subtotal con ileostomía.","Mantención: tras infliximab → infliximab ± tiopurina (ACG R52); tras ciclosporina → tiopurina (ACG R53) o vedolizumab (ACG R54); tras JAK → el mismo JAK.");
+        R.guides.add("asuc");if(!ifxFail)R.combo="cu";
+      }else{
+        R.tags.push(["risk","Falla al rescate"]);
+        step("<b>Colectomía subtotal con ileostomía</b> terminal es la conducta estándar.");
+        step("Una tercera línea secuencial (infliximab tras ciclosporina, ciclosporina tras infliximab o JAK) solo en centro experto y tras discusión quirúrgica: evita colectomía en ~53 %, con 26 % de eventos adversos y mortalidad 0,88 % (ECCO R47).");
+        add("upa","alt","Tercera línea","JAK tras falla a infliximab o ciclosporina (ECCO R47, centro experto)");
+        add("tofa","alt","Tercera línea","Igual que upadacitinib");
+        add("csa","alt","Tercera línea","Si el rescate fue infliximab");
+        add("ifx","alt","Tercera línea","Si el rescate fue ciclosporina");
+        R.guides.add("asuc");
+      }
+    }
+  }
+
+  /* ======================= CROHN ======================= */
+  if(c.dz==="ec"){
+    const ileal=c.loc==="L1"||c.loc==="L3";
+    const lowRisk=!ecRisk&&!c.postop;
+    const mild=c.act==="leve"&&lowRisk&&["naive","falla5asa"].includes(c.hist)&&c.hist!=="falla5asa";
+    if(c.beh==="B3"&&c.b3==="absceso"){alert("r","Absceso intraabdominal: antibiótico + drenaje percutáneo (>2–3 cm) o quirúrgico. Diferir la inmunosupresión hasta drenar (ACG R35).");}
+    if(c.pa==="absceso")alert("r","Absceso perianal: drenaje quirúrgico urgente antes de cualquier terapia avanzada (ACG KC50).");
+
+    if(c.postop){
+      const hr=c.ecr.includes("cirugia")||has("tabaco")||c.beh==="B3"||c.pa!=="no";
+      R.tags.push([hr?"risk":"",hr?"Alto riesgo de recurrencia":"Bajo riesgo de recurrencia"]);
+      step("<b>Dejar de fumar</b>: el tabaquismo duplica la recurrencia.");
+      step("<b>Ileocolonoscopía a los 6–12 meses</b> con Rutgeerts modificado (ACG R30); agendarla antes del alta. Calprotectina c/3–6 meses (&lt;100 µg/g a los 3–6 meses ayuda a descartar).");
+      if(hr){
+        const tnfF=["tnf","multi"].includes(c.hist)&&c.tnff!=="intol"&&c.tnff!=="inmuno";
+        add("ifx",tnfF?"baja":"pref","Prevención posquirúrgica",tnfF?"Falló anti-TNF antes de la cirugía":"Anti-TNF dentro de 4 semanas en alto riesgo (PREVENT: recurrencia endoscópica 30,6 % vs 60 %; ACG R33)");
+        add("ada",tnfF?"baja":"pref","Prevención posquirúrgica",tnfF?"Falló anti-TNF antes de la cirugía":"Alternativa SC (POCER, ACG R33)");
+        add("vdz",tnfF?"pref":"alt","Prevención posquirúrgica","REPREVIO: recurrencia endoscópica i2b+ 23 % vs 77 % (ACG R34); opción tras falla a anti-TNF");
+        add("ust","alt","Prevención posquirúrgica","Datos observacionales; útil tras falla a anti-TNF");
+        add("metro","alt","Prevención posquirúrgica","1–2 g/d × 3 meses (ACG R32); tolerancia limitada");
+        add("aza","baja","Prevención posquirúrgica","Eficacia modesta; a veces combinada con metronidazol");
+      }else{
+        step("<b>Bajo riesgo</b>: observación y colonoscopía a los 6–12 meses; tratar si Rutgeerts ≥ i2b (ACG R31).");
+        add("metro","alt","Prevención posquirúrgica","Opción en bajo riesgo (3 meses)");
+        add("aza","baja","Prevención posquirúrgica","Si se quiere profilaxis en bajo riesgo");
+      }
+      R.fail.push("Rutgeerts ≥ i2b → iniciar o escalar terapia avanzada (anti-TNF, vedolizumab, ustekinumab).");
+    }
+
+    if(c.act!=="remision"){
+      if(mild){
+        step("<b>Bajo riesgo y actividad leve</b>: tratamiento de inducción sin mantención obligatoria; monitorizar con calprotectina, PCR e imagen (ACG KC39).");
+        if(ileal){
+          add("bud_cir","pref","Inducción","EC ileocecal leve a moderada: 9 mg/d × 8 semanas (ACG R5); retiro en 2–4 semanas");
+          add("pred","alt","Inducción","Si no responde a budesonida o si la actividad es moderada");
+        }else{
+          add("ssz","pref","Inducción","Solo en EC colónica leve sintomática (ACG KC40)");
+          add("pred","alt","Inducción","40 mg/d con retiro en 8 semanas");
+        }
+        add("bud_cir","evit","Mantención","No mantiene la remisión (ACG R6)");
+        add("mz_or","evit","Inducción","Mesalazina oral no es eficaz en EC (ACG R4 fuerte en contra; Guía chilena 2026)");
+        step("<b>Reevaluar a las 8 semanas</b>: síntomas, PCR y calprotectina; recaída antes de 3 meses o dependencia → terapia avanzada.");
+        if(age>=65)alert("i","≥65 años: preferir budesonida sobre corticoide sistémico (menos fracturas, delirio e hiperglicemia; GETECCU 2025).");
+        R.fail.push("Sin respuesta a budesonida en 8 semanas, recaída precoz o corticodependencia → terapia avanzada según línea y perfil.","En ≥65 años o con comorbilidad: preferir vedolizumab, ustekinumab o anti-IL-23; evitar iniciar tiopurina y JAK.");
+      }else{
+        const grave=c.act==="grave";
+        if(grave){
+          step("<b>Hospitalizar si HBI &gt;16 o sistémico</b>: TC o RM con contraste para descartar absceso u obstrucción; C. difficile.");
+          step("<b>HBPM profiláctica</b> y soporte nutricional.");
+          add("mpred","pref","Puente","EC grave hospitalizada tras descartar absceso (ACG KC47)");
+        }else{
+          add("pred","alt","Puente","Opcional mientras actúa la terapia avanzada (AGA R15)");
+          if(ileal&&c.act==="moderada"&&!grave)add("bud_cir","alt","Puente","Ileocecal moderada: puente no sistémico");
+        }
+        step("<b>Terapia avanzada precoz</b> (AGA R15; ACG R3: no exige falla a terapia convencional).");
+        step("<b>Imagen basal</b> (enteroRM o ecografía intestinal) e ileocolonoscopía con SES-CD para tener con qué medir la respuesta.");
+        const naive=["naive","falla5asa","corticodep","corticorref","fallaImm"].includes(c.hist);
+        if(naive){
+          R.tags.push(["","Naïve a terapia avanzada"]);
+          [["ifx","Mayor eficacia en naïve (AGA 2025); el más estudiado en enfermedad grave y penetrante"],["ada","Mayor eficacia en naïve (AGA 2025)"],["rzb","Mayor eficacia en naïve (AGA 2025)"],["gus","Mayor eficacia en naïve (AGA 2025)"],["ust","Mayor eficacia en naïve (AGA 2025); equivalente a adalimumab (SEAVUE)"],["miri","Mayor eficacia en naïve (AGA 2025)"],["vdz","Mayor eficacia en naïve (AGA 2025), inicio lento (hasta 14 semanas)"]].forEach(([id,w])=>add(id,"pref","Inducción y mantención",w));
+          add("upa","baja","Inducción y mantención","Menor eficacia relativa en naïve según AGA 2025; FDA y ACG lo posicionan tras anti-TNF");
+          add("czp","baja","Inducción y mantención","Menor eficacia relativa (AGA 2025)");
+          if(!ecRisk){add("aza","alt","Mantención","Mantención tras inducción con corticoides en bajo riesgo (AGA R6, ACG R9)");add("mtx","alt","Mantención","SC/IM 25 → 15 mg/semana (AGA R7, ACG R11)");}
+          else{add("aza","baja","Mantención","En alto riesgo, la monoterapia con inmunomodulador queda corta");}
+        }else if(c.hist==="tnf"){
+          R.tags.push(["","Post anti-TNF"]);
+          [["rzb","Mayor eficacia tras anti-TNF (AGA); superior a ustekinumab (SEQUENCE; ACG R19)"],["gus","Mayor eficacia tras anti-TNF (AGA 2025)"],["upa","Mayor eficacia tras anti-TNF (AGA; ACG R23)"]].forEach(([id,w])=>add(id,"pref","Inducción y mantención",w));
+          [["ust","Eficacia intermedia tras anti-TNF (AGA)"],["miri","Eficacia intermedia tras anti-TNF (AGA)"]].forEach(([id,w])=>add(id,"alt","Inducción y mantención",w));
+          [["vdz","Menor eficacia tras anti-TNF (AGA)"],["czp","Menor eficacia (AGA)"]].forEach(([id,w])=>add(id,"baja","Inducción y mantención",w));
+          tnfSecond(c,add,["ada","ifx"]);
+        }else{
+          R.tags.push(["risk","Refractario multimecanismo"]);
+          [["upa","Eficaz con independencia de la exposición previa a biológicos"],["rzb","p19 con eficacia tras múltiples fallas (MOTIVATE)"],["gus","p19 con eficacia tras múltiples fallas"]].forEach(([id,w])=>add(id,"pref","Inducción y mantención",w));
+          [["miri","Opción p19"],["ust","Si no fue uno de los fallidos"]].forEach(([id,w])=>add(id,"alt","Inducción y mantención",w));
+          [["vdz","Rinde poco tras múltiples fallas"]].forEach(([id,w])=>add(id,"baja","Inducción y mantención",w));
+          tnfSecond(c,add,["ada","ifx"]);
+          step("<b>Cirugía</b>: resección ileocecal en enfermedad localizada es una alternativa real (LIR!C).");
+          step("<b>Terapia avanzada combinada</b> (p. ej. vedolizumab + anti-TNF, anti-IL-23 + JAK) en centro experto, o ensayo clínico.");
+        }
+        add("mz_or","evit","Inducción","Sin eficacia en EC (ACG R4)");
+        add("aza","evit","Inducción","Tiopurina no induce remisión (ACG R8, AGA R5)");
+        if(c.loc==="L1"&&c.beh==="B1"&&!grave)step("<b>EC ileal localizada</b>: la resección ileocecal laparoscópica es alternativa a la terapia avanzada (LIR!C), sobre todo con enfermedad corta.");
+        if(c.l4)step("<b>Compromiso alto (L4)</b>: IBP asociado; los anti-TNF tienen la mayor experiencia; la estenosis duodenal puede requerir dilatación.");
+        if(R.items.some(i=>i.id==="ifx"&&ti(i.tier)<=1))R.combo="ec";
+        R.fail.push("Falla primaria con nivel adecuado → cambiar de mecanismo (AGA: segundo anti-TNF solo si la falla fue inmunogénica o por intolerancia).","Pérdida de respuesta → TDM reactivo e intensificación antes de cambiar.","Falla a ≥2 mecanismos → JAK o anti-IL-23 si no se usaron, cirugía o terapia combinada avanzada.");
+        R.guides.add("jak");if(R.items.some(i=>i.id==="vdz"))R.guides.add("vdzec");if(R.combo)R.guides.add("combo");
+      }
+    }
+
+    /* fenotipo estenosante */
+    if(c.beh==="B2"){
+      step("<b>Caracterizar la estenosis</b>: enteroRM o ecografía intestinal y colonoscopía con biopsias (descartar neoplasia, sobre todo en colon).");
+      if(c.b2==="inflamatoria"||c.b2==="mixta"){
+        step("<b>Componente inflamatorio</b>: terapia avanzada; anti-TNF con la mejor evidencia (CREOLE: adalimumab).");
+        ["ada","ifx"].forEach(id=>{const it=R.items.find(x=>x.id===id&&x.ph==="Inducción y mantención");if(it&&ti(it.tier)>0&&ti(it.tier)<3){it.tier="pref";it.why.push({c:"p",t:"Estenosis inflamatoria: CREOLE"})}});
+      }
+      if(c.b2==="fibrotica"||c.b2==="mixta"){
+        if(c.b2l==="corta")step("<b>Estenosis fibrótica corta (≤5 cm) y accesible</b>: dilatación endoscópica con balón (18–20 mm); repetible. Sin fístula ni absceso asociados.");
+        else step("<b>Estenosis larga, múltiple o con fístula</b>: cirugía (resección o estricturoplastía).");
+        step("Sin terapia médica antifibrótica aprobada; los anti-TL1A se estudian con ese objetivo.");
+      }
+      step("Dieta baja en residuos durante los síntomas obstructivos; optimizar nutrición antes de cirugía.");
+    }
+    if(c.beh==="B3"){
+      if(c.b3==="absceso")step("<b>Absceso</b>: antibiótico + drenaje; iniciar anti-TNF una vez controlada la sepsis; considerar resección electiva.");
+      else step("<b>Fístula interna</b>: anti-TNF es la opción con más evidencia; definir con cirugía si requiere resección.");
+      ["ifx","ada"].forEach(id=>{const it=R.items.find(x=>x.id===id&&x.ph==="Inducción y mantención");if(it&&ti(it.tier)>0&&ti(it.tier)<3){it.tier="pref";it.why.push({c:"p",t:"Fenotipo penetrante: anti-TNF con mayor evidencia"})}});
+    }
+
+    /* perianal */
+    if(c.pa!=="no"){
+      R.guides.add("combo");
+      step("<b>RM de pelvis</b> (clasificación de Parks, MAGNIFI-CD/Van Assche) y evaluación por coloproctología.");
+      if(c.pa==="simple"){
+        add("metro","pref","Perianal","Fístula simple sin absceso: antibiótico como terapia primaria (ACG KC49)");
+        add("cipro","alt","Perianal","Alternativa o asociado");
+        if(c.act!=="remision"||ecRisk)add("ifx","pref","Perianal","Si hay actividad luminal o recurrencia: anti-TNF");
+      }else{
+        step("<b>Examen bajo anestesia</b> con drenaje y setón laxo antes de la terapia avanzada (ACG KC50).");
+        step("Retirar el setón tras la inducción; cirugía reparadora (colgajo de avance, LIFT) solo con recto sin actividad. Refractario: desfuncionalización o proctectomía.");
+        const tnfF=["tnf","multi"].includes(c.hist)&&(c.tnff==="primaria"||c.tnff==="farmaco");
+        add("ifx",tnfF?"baja":"pref","Perianal",tnfF?"Falla de mecanismo a anti-TNF":"Única clase con ECA de cierre fistuloso (ACCENT II; ACG R24). Cubierto por LRS (EC fístula perianal compleja)","5 mg/kg sem 0-2-6; objetivo valle ≥10 µg/mL");
+        add("ada",tnfF?"baja":"alt","Perianal","ACG R25 (condicional); CHARM subanálisis");
+        add("metro","alt","Perianal","Antibiótico + anti-TNF mejora la respuesta (ACG R26, ADAFI)");
+        add("cipro","alt","Perianal","Antibiótico + anti-TNF (ADAFI)");
+        add("ust",tnfF?"alt":"baja","Perianal","ACG R28 (condicional, evidencia muy baja)");
+        add("upa",tnfF?"alt":"baja","Perianal","Análisis post hoc de 3 ECA (ACG R29)");
+        add("rzb","baja","Perianal","Datos limitados");add("gus","baja","Perianal","Datos limitados");
+        add("vdz","baja","Perianal","ACG R27 (condicional, evidencia muy baja); no como monoterapia inicial");
+        if(!tnfF)R.combo="ec";
+        alert("i","Infliximab SC no se cubre por LRS con enfermedad perianal.");
+        R.fail.push("Fístula compleja sin cierre con infliximab optimizado (valle ≥10–20 µg/mL) → ustekinumab, upadacitinib o anti-IL-23; reevaluar cirugía.");
+      }
+    }
+  }
+
+  /* fusionar luminal + perianal: manda el tier perianal */
+  R.items.filter(i=>i.ph==="Perianal").forEach(p=>{
+    const l=R.items.find(i=>i.id===p.id&&i.ph==="Inducción y mantención");
+    if(l){p.ph="Luminal y perianal";p.why=p.why.concat(l.why);if(!p.dose)p.dose=null;R.items.splice(R.items.indexOf(l),1)}
+  });
+
+  /* ======================= MODIFICADORES ======================= */
+  const pos=(it,t)=>it.why.push({c:"p",t}), warn=(it,t)=>it.why.push({c:"w",t});
+  const down=(it,tier,t)=>{if(ti(tier)>ti(it.tier))it.tier=tier;it.why.push({c:tier==="evit"?"x":"w",t})};
+  const up=(it,t)=>{if(it.tier==="alt")it.tier="pref";else if(it.tier==="baja")it.tier="alt";it.why.push({c:"p",t})};
+  const cvRisk=["tabaco","hta","dm","dlp"].filter(has).length;
+  R.items.forEach(it=>{
+    const d=D[it.id];if(!d)return;const k=d.cl,id=it.id;
+    const isJ=k==="jak",isS=k==="s1p",isT=k==="tnf",isTio=id==="aza"||id==="mp",safe=["int","p40","p19"].includes(k);
+    // edad
+    if(age>=65){
+      if(isJ)down(it,"prec","≥65 años: usar solo si no hay alternativa adecuada (EMA 2023); upadacitinib 15 mg en mantención");
+      if(isTio)down(it,"prec","≥65 años: tiopurina solo en <65 (ECCO R14); ↑ linfoma y cáncer de piel no melanoma");
+      if(id==="mtx")down(it,"prec","Adulto mayor: evitar metotrexato (ACTECCU 2026)");
+      if(isS)down(it,"prec","Adulto mayor: S1P con precaución (bradicardia, edema macular; ACTECCU 2026)");
+      if(isT)warn(it,"≥65 años: ↑ infecciones graves, sobre todo combinado con tiopurina o corticoide");
+      if(safe&&it.tier!=="evit")up(it,"Perfil de seguridad favorable en adulto mayor");
+      if(id==="pred"||id==="mpred")warn(it,"Adulto mayor: minimizar dosis y duración del corticoide");
+    }else if(age>=50&&cvRisk>0&&isJ)warn(it,"≥50 años con factor de riesgo CV: población de ORAL Surveillance; discutir riesgo");
+    // cardiovascular
+    if(isJ){
+      if(has("cvd"))down(it,"evit","Enfermedad cardiovascular establecida: riesgo de MACE (ORAL Surveillance; EMA)");
+      if(has("tev"))down(it,"evit","TEV previo: riesgo trombótico con JAK");
+      if(has("tabaco"))down(it,"prec","Tabaquismo: solo si no hay alternativa (EMA 2023)");
+      if(has("dlp"))warn(it,"Dislipidemia: el JAK eleva LDL; perfil lipídico a las 8–12 semanas y estatina si corresponde");
+      if((has("hta")||has("dm"))&&!has("cvd"))warn(it,"HTA/diabetes suman riesgo CV: evaluar SCORE2");
+      if(has("zoster"))down(it,"prec","Herpes zóster previo: riesgo dosis-dependiente; vacuna recombinante antes");
+      if(has("neoActiva")||has("neo5"))down(it,"evit","Neoplasia reciente o activa: JAK restringido (EMA)");
+      if(has("linfoma"))down(it,"evit","Linfoma previo");
+      if(has("cpnm")||has("melanoma"))down(it,"prec","Antecedente de cáncer de piel: vigilancia dermatológica");
+      if(has("erc")&&id==="tofa")warn(it,"ERC: reducir a 5 mg c/12 h si TFG <30");
+      if(has("erc")&&id==="fil")warn(it,"ERC: 100 mg/d");
+      if(has("hepato"))down(it,"prec","Hepatopatía: evitar en daño hepático grave");
+      if(has("infRec")||has("fragil"))down(it,"prec","Fragilidad o infecciones graves: ↑ infecciones serias");
+      if(has("oral"))pos(it,"Vía oral");
+    }
+    if(isS){
+      if(has("bradi"))down(it,"evit","Bradiarritmia, BAV 2°–3° sin marcapasos o QTc largo: contraindicado");
+      if(has("cvd"))down(it,"prec","IAM, ACV o angina en los últimos 6 meses: contraindicado; fuera de ese plazo, precaución");
+      if(has("icc34"))down(it,"evit","ICC descompensada");
+      if(has("ojo"))down(it,"prec","Edema macular o retinopatía: riesgo de edema macular; fondo de ojo basal y a 3–4 meses");
+      if(has("dm"))warn(it,"Diabetes: fondo de ojo basal");
+      if(has("hta"))warn(it,"Puede elevar la presión arterial");
+      if(has("neoActiva")||has("neo5"))down(it,"prec","Neoplasia reciente: datos limitados");
+      if(has("cpnm")||has("melanoma"))down(it,"prec","Cáncer de piel previo: vigilancia dermatológica (S1P)");
+      if(has("hepato"))warn(it,"Perfil hepático: alza de transaminasas descrita");
+      if(has("oral"))pos(it,"Vía oral");
+      if(has("desmiel"))pos(it,"Los S1P se usan en esclerosis múltiple");
+    }
+    if(has("tbcAct")){if(isT||isJ)down(it,"evit","TBC activa: no iniciar hasta completar tratamiento inicial");else if(["int","p40","p19","s1p","imm","cni"].includes(k)||id==="pred"||id==="mpred")down(it,"prec","TBC activa: coordinar con infectología")}
+    if(has("infAct")&&["tnf","jak","int","p40","p19","s1p","imm","cni"].includes(k))warn(it,"Infección activa: diferir el inicio hasta controlarla");
+    if(isS&&has("vzvneg"))down(it,"prec","VVZ no inmune: vacunar y esperar 4 semanas antes de iniciar");
+    if(isT){
+      if(has("icc34"))down(it,"evit","ICC NYHA III–IV: anti-TNF contraindicado");
+      if(has("icc12"))down(it,"prec","ICC NYHA I–II: ecocardiograma; evitar dosis altas de infliximab");
+      if(has("desmiel"))down(it,"evit","Enfermedad desmielinizante: anti-TNF contraindicado");
+      if(has("lupus"))down(it,"prec","Lupus o ANA alto: riesgo de lupus inducido");
+      if(has("neoActiva"))down(it,"prec","Neoplasia activa: decisión con oncología");
+      else if(has("neo5"))warn(it,"Neoplasia <5 años: datos tranquilizadores, decidir con oncología");
+      if(has("linfoma"))down(it,"prec","Linfoma previo: evitar sobre todo combinado con tiopurina");
+      if(has("melanoma"))down(it,"prec","Melanoma previo: ↑ riesgo de melanoma con anti-TNF");
+      if(has("infRec")||has("fragil"))down(it,"prec","Fragilidad o infecciones graves recurrentes: ↑ infección grave");
+      if(has("obeso"))warn(it,"IMC alto o albúmina baja: mayor aclaramiento; TDM precoz e intensificación");
+    }
+    if(isTio){
+      if(c.tpmt==="baja")down(it,"evit","TPMT/NUDT15 deficiente: mielotoxicidad grave");
+      else if(c.tpmt==="intermedia")warn(it,"TPMT intermedia: iniciar con 50 % de la dosis");
+      else if(c.tpmt==="nd")warn(it,"Medir TPMT y NUDT15 antes de iniciar (ACG R10)");
+      if(has("ebvneg"))down(it,"prec","VEB IgG negativo: riesgo de linfoproliferación y HLH, sobre todo en hombres jóvenes");
+      if(has("neoActiva")||has("neo5"))down(it,"evit","Neoplasia reciente: evitar tiopurinas (ACTECCU 2026)");
+      if(has("linfoma"))down(it,"evit","Linfoma previo");
+      if(has("cpnm"))down(it,"evit","Cáncer de piel no melanoma: riesgo persistente con tiopurinas");
+      if(has("melanoma"))down(it,"prec","Melanoma previo");
+      if(has("hepato"))warn(it,"Hepatopatía: vigilar transaminasas y 6-MMP");
+      if(has("fragil"))down(it,"prec","Fragilidad: mielotoxicidad e infecciones");
+    }
+    if(id==="mtx"){
+      if(has("erc"))down(it,"prec","ERC: ajustar dosis; contraindicado si TFG <30");
+      if(has("hepato"))down(it,"evit","Hepatopatía o alcohol: hepatotoxicidad");
+      if(has("neoActiva")||has("neo5"))down(it,"prec","Neoplasia reciente (ACTECCU 2026)");
+    }
+    if(id==="csa"){
+      if(has("erc"))down(it,"prec","ERC: nefrotoxicidad");
+      if(has("hta"))warn(it,"HTA: la ciclosporina la agrava");
+      if(age>=65)warn(it,"Adulto mayor: mayor toxicidad renal e infecciosa");
+    }
+    if(safe){
+      if((has("neoActiva")||has("neo5")||has("linfoma"))&&it.tier!=="evit")up(it,"Antecedente oncológico: clase con menor señal de riesgo");
+      if((has("infRec")||has("fragil"))&&it.tier!=="evit"&&age<65)up(it,"Riesgo infeccioso alto: perfil de seguridad favorable (ACG KC46)");
+      if((has("cvd")||has("tev"))&&it.tier!=="evit")pos(it,"Sin señal cardiovascular ni trombótica");
+    }
+    if(k==="asa"&&has("erc"))warn(it,"ERC: creatinina basal y periódica (nefritis intersticial)");
+    // embarazo
+    if(c.sex==="F"&&c.preg!=="no"){
+      const p=c.preg;
+      if(isJ)down(it,"evit",p==="lactancia"?"Lactancia: evitar JAK":"Embarazo o deseo: suspender ≥4 semanas antes de concebir; usar solo sin alternativa");
+      if(isS)down(it,"evit",p==="lactancia"?"Lactancia: evitar S1P":"Teratogénico: ozanimod 3 meses y etrasimod 1–2 semanas de lavado antes de concebir");
+      if(id==="mtx")down(it,"evit","Teratogénico: suspender 3–6 meses antes de concebir; contraindicado en lactancia");
+      if(isTio&&p==="embarazo")warn(it,"No iniciar durante el embarazo; continuar si ya estaba en uso");
+      if((isT||k==="int"||k==="p40")&&it.tier!=="evit"){up(it,p==="lactancia"?"Compatible con lactancia":"Datos de seguridad en embarazo (PIANO)");if(isT&&p==="embarazo")warn(it,"Exposición en 3er trimestre: diferir vacunas vivas del lactante hasta los 6 meses")}
+      if(k==="p19")warn(it,"Datos limitados en embarazo: continuar si ya en uso, decisión individual");
+      if(id==="czp"&&p!=="lactancia")pos(it,"Transferencia placentaria mínima");
+      if(id==="cipro")down(it,"evit","Evitar quinolonas en embarazo");
+    }
+    // MEI
+    if(eim("axial")){if(isT||isJ)up(it,"Cubre espondiloartritis axial");if(safe)warn(it,"Sin eficacia en espondiloartritis axial");if(isS)warn(it,"No trata MEI articulares")}
+    if(eim("artper")){if(isT||isJ)up(it,"Controla artritis periférica independiente de la actividad");if(k==="int")warn(it,"Vedolizumab no controla artritis independiente; puede emerger")}
+    if(eim("uveitis")){if(id==="ada"||id==="ifx")up(it,"Uveítis: adalimumab aprobado (VISUAL); infliximab eficaz");if(k==="int")warn(it,"No trata uveítis");if(isS)down(it,"prec","Uveítis: riesgo de edema macular con S1P")}
+    if(eim("pg")){if(id==="ifx")up(it,"Pioderma gangrenoso: único ECA (infliximab)");if(id==="ada")up(it,"Pioderma: alternativa a infliximab");if(k==="p40"||k==="p19")pos(it,"Pioderma: series de casos favorables");if(k==="int")warn(it,"No trata pioderma gangrenoso")}
+    if(eim("psoriasis")){if(k==="p40"||id==="rzb"||id==="gus")up(it,"Psoriasis: aprobado también en psoriasis");if(id==="miri")pos(it,"Eje IL-23; sin aprobación en psoriasis");if(isT)warn(it,"Puede inducir psoriasis paradojal")}
+    if(eim("aps")){if(k==="p40"||id==="rzb"||id==="gus"||isT||id==="upa"||id==="tofa")up(it,"Artritis psoriásica: aprobado o con eficacia demostrada")}
+    if(eim("hs")){if(id==="ada"||id==="ifx")up(it,"Hidradenitis: adalimumab aprobado; infliximab eficaz");if(id==="rzb"||id==="gus")warn(it,"Sin eficacia demostrada en hidradenitis")}
+  });
+
+  // combinada
+  if(R.combo){
+    const it=R.items.find(i=>i.id==="ifx");
+    if(age>=65||has("ebvneg")||has("linfoma")||has("neoActiva")||has("neo5")||has("cpnm")||c.tpmt==="baja"||has("fragil"))R.comboWarn=true;
+  }
+  R.items.sort((a,b)=>ti(a.tier)-ti(b.tier)||(CHILE_ORDER[D[a.id].chile]-CHILE_ORDER[D[b.id].chile]));
+  return R;
+}
+
+function tnfSecond(c,add,ids){
+  ids.forEach(id=>{
+    if(c.tnff==="inmuno"||c.tnff==="intol")add(id,"alt","Inducción y mantención",c.tnff==="inmuno"?"Falla inmunogénica: un segundo anti-TNF es razonable, idealmente con inmunomodulador (AGA 2025)":"Intolerancia no de clase: segundo anti-TNF válido");
+    else add(id,"evit","Inducción y mantención","Falla de mecanismo a anti-TNF: cambiar de clase, no de molécula (ACG KC29, AGA)");
+  });
+}
+/* ============ INTERFAZ ============ */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+const F=$("#f");
+let onlyChile=false, lastR=null, lastC=null;
+
+const OPT=["b2","b2l","b3","preg","tpmt","asuc"];
+const DEF={dz:"ec",ext:"E3",sev:"moderada",asuc:"ingreso",loc:"L1",beh:"B1",b2:"inflamatoria",b2l:"corta",b3:"fistula",pa:"no",act:"moderada",hist:"naive",tnff:"primaria",sex:"M",preg:"no",tpmt:"nd"};
+const PRESETS=[
+ {k:"ec70",l:"EC ileal leve · 70 años",v:{dz:"ec",loc:"L1",beh:"B1",pa:"no",act:"leve",hist:"naive",age:70,wt:72,sex:"M",preg:"no",co:["hta"],eim:[],ecr:[],tpmt:"nd"}},
+ {k:"cu32",l:"CU E3 corticodependiente · 32 años",v:{dz:"cu",ext:"E3",sev:"moderada",hist:"corticodep",age:32,wt:61,sex:"F",preg:"deseo",cur:["joven"],co:[],eim:["art1"],tpmt:"normal"}},
+ {k:"asuc",l:"Colitis aguda grave · día 3",v:{dz:"cu",ext:"E3",sev:"asuc",asuc:"d3noresp",hist:"naive",age:44,wt:58,sex:"F",preg:"no",cur:["pcr","mayo3"],co:[],eim:[],tpmt:"nd"}},
+ {k:"peri",l:"EC perianal compleja · 26 años",v:{dz:"ec",loc:"L3",beh:"B1",pa:"compleja",act:"moderada",hist:"naive",age:26,wt:64,sex:"M",preg:"no",ecr:["joven"],co:[],eim:[],tpmt:"normal"}},
+ {k:"cu68",l:"CU post anti-TNF · 68 años, riesgo CV",v:{dz:"cu",ext:"E2",sev:"grave",hist:"tnf",tnff:"primaria",age:68,wt:80,sex:"M",preg:"no",cur:[],co:["tabaco","hta","dlp"],eim:[],tpmt:"nd"}},
+ {k:"b2",l:"EC estenosante mixta",v:{dz:"ec",loc:"L1",beh:"B2",b2:"mixta",b2l:"corta",pa:"no",act:"moderada",hist:"naive",age:38,wt:66,sex:"F",preg:"no",ecr:["ulceras"],co:[],eim:["axial"],tpmt:"nd"}},
+ {k:"emb",l:"CU en embarazo",v:{dz:"cu",ext:"E2",sev:"moderada",hist:"falla5asa",age:30,wt:64,sex:"F",preg:"embarazo",cur:[],co:[],eim:[],tpmt:"nd"}}
+];
+
+function readForm(){
+  const fd=new FormData(F), g=n=>fd.get(n)||(OPT.includes(n)?DEF[n]:null);
+  const c={dz:g("dz"),ext:g("ext"),sev:g("sev"),asuc:g("asuc"),loc:g("loc"),l4:!!fd.get("l4"),beh:g("beh"),b2:g("b2"),b2l:g("b2l"),b3:g("b3"),pa:g("pa"),act:g("act"),postop:!!fd.get("postop"),hist:g("hist"),tnff:g("tnff"),sex:g("sex"),preg:g("preg"),tpmt:g("tpmt"),
+    age:parseInt(fd.get("age"))||0,wt:parseFloat(fd.get("wt"))||0,cur:fd.getAll("cur"),ecr:fd.getAll("ecr"),co:fd.getAll("co"),eim:fd.getAll("eim")};
+  c.asucSet=!!fd.get("asuc");
+  const SER={vhb:{pos:"hbsag",res:"antihbc",neg:"vhbNoInm"},tbc:{lat:"tbcl",act:"tbcAct"},vhc:{pos:"vhc"},vih:{pos:"vih"},vzv:{neg:"vzvneg"},ebv:{neg:"ebvneg"}};
+  const SERN={vhb:"VHB",tbc:"TBC",vhc:"VHC",vih:"VIH",vzv:"VVZ",ebv:"VEB"};
+  c.pend=[];Object.keys(SER).forEach(k=>{const v=fd.get("s_"+k)||"nd";if(v==="nd")c.pend.push(SERN[k]);else if(SER[k][v])c.co.push(SER[k][v])});if(c.sex!=="F")c.preg="no";
+  if(!["tnf","multi"].includes(c.hist))c.tnff=null;
+  return c;
+}
+function setForm(v){
+  F.reset();
+  const o=Object.assign({},DEF,v);
+  ["dz","ext","sev","asuc","loc","beh","b2","b2l","b3","pa","act","hist","tnff","sex","preg","tpmt"].forEach(n=>{const el=F.querySelector(`input[name="${n}"][value="${o[n]}"]`);if(el)el.checked=true});
+  $("#age").value=o.age||"";$("#wt").value=o.wt||"";
+  ["cur","ecr","co","eim"].forEach(n=>(o[n]||[]).forEach(val=>{const el=F.querySelector(`input[name="${n}"][value="${val}"]`);if(el)el.checked=true}));
+  if(o.l4)$("#l4").checked=true; if(o.postop)$("#postop").checked=true;
+}
+function progress(c){
+  const s1=!!c.dz, s2=s1&&c.age>=16&&!!c.sex;
+  const ph=c.dz==="cu"?["ext","sev"].every(k=>c[k])&&(c.sev!=="asuc"||!!c.asucSet):["loc","beh","pa","act"].every(k=>c[k]);
+  const s3=s2&&ph, s4=s3&&!!c.hist&&(!["tnf","multi"].includes(c.hist)||!!c.tnff);
+  return {s1,s2,s3,s4};
+}
+function vis(c){
+  const p=progress(c);
+  $("#blk-pac").hidden=!p.s1;
+  $("#blk-cu").hidden=!(p.s2&&c.dz==="cu");$("#blk-ec").hidden=!(p.s2&&c.dz==="ec");
+  $("#blk-lin").hidden=!p.s3;$("#blk-co").hidden=!p.s4;$("#blk-mei").hidden=!p.s4;
+  const nx=!p.s1?"":!p.s2?"Ingresa edad y sexo para continuar.":!p.s3?"Completa el fenotipo para continuar.":!p.s4?"Indica la línea terapéutica para ver la recomendación.":"";
+  $("#nexthint").textContent=nx;
+  $$("[data-cnt]").forEach(el=>{const g=el.dataset.cnt;if(g==="ser"){const n=document.querySelectorAll('#g-ser input[type=radio]:checked:not([value="nd"])').length;el.textContent=n?`${n}/6 registradas`:"";return}const n=document.querySelectorAll(`#g-${g} input[type=checkbox]:checked`).length;el.textContent=n?n+" marcado"+(n>1?"s":""):""});
+  $("#q-asuc").hidden=c.sev!=="asuc";$("#q-b2").hidden=c.beh!=="B2";$("#q-b3").hidden=c.beh!=="B3";
+  $("#q-tnf").hidden=!["tnf","multi"].includes(c.hist);$("#q-preg").hidden=c.sex!=="F";
+}
+
+/* ---------- helpers de presentación ---------- */
+function badge(id){const d=D[id];const b=CHILE[d.chile];return `<span class="badge ${b[1]}" title="${esc(d.chileTx||b[2])}">${b[0]}</span>`}
+function wk(w){return w<1?`día ${Math.max(1,Math.round(w*7))}`:`sem ${w}`}
+function kinBar(k,max){
+  if(!k)return"";max=max||24;const P=w=>Math.min(100,w/max*100);
+  let h=`<div class="kin" role="img" aria-label="Inicio ${wk(k.on[0])}–${wk(k.on[1])}; fin de inducción ${wk(k.ev)}${k.ext?"; extendida "+wk(k.ext):""}"><div class="trk"></div>`;
+  h+=`<div class="on" style="left:${P(k.on[0])}%;width:${Math.max(1.2,P(k.on[1])-P(k.on[0]))}%"></div>`;
+  h+=`<div class="ev" style="left:${P(k.ev)}%"></div><span class="lb" style="left:${Math.max(6,Math.min(92,P(k.ev)))}%">${wk(k.ev)}</span>`;
+  if(k.ext&&k.ext<=max){let lx=Math.max(8,Math.min(94,P(k.ext)));const le=Math.max(6,Math.min(92,P(k.ev)));if(Math.abs(lx-le)<11)lx=Math.min(96,le+11);h+=`<div class="ex" style="left:${P(k.ext)}%"></div><span class="lb x" style="left:${lx}%">${wk(k.ext)}</span>`}
+  for(let t=0;t<=max;t+=4)h+=`<span class="tk" style="left:${Math.max(2,Math.min(98,P(t)))}%">${t}</span>`;
+  return h+"</div>";
+}
+function doseLine(it,dz){
+  if(it.dose)return it.dose;const d=D[it.id][dz];if(!d)return"";
+  if(/Mantención|Prevención/.test(it.ph)&&!/Inducción/.test(it.ph))return /Prevención/.test(it.ph)&&d.ind&&!/^No|^Tras/.test(d.ind)?`${d.ind} → ${d.mant}`:d.mant;
+  if(it.ph==="Inducción y mantención"||it.ph==="Luminal y perianal")return `${d.ind} → ${d.mant}`;
+  return d.ind;
+}
+
+/* ---------- render del resultado ---------- */
+function render(){
+  const c=readForm();vis(c);lastC=c;
+  const P=progress(c);
+  if(!P.s4){
+    const st=[["¿De qué se trata?",P.s1],["Edad y sexo",P.s2],["Fenotipo y actividad",P.s3],["Línea terapéutica",P.s4]];
+    const now=st.findIndex(x=>!x[1]);
+    $("#res").innerHTML=`<div class="empty"><p class="eyebrow">Recomendación</p><h3>${P.s1?"Sigue completando el caso":"Empieza eligiendo la enfermedad"}</h3><p>La recomendación aparece al completar los cuatro pasos. Comorbilidades y manifestaciones extraintestinales se agregan después y ajustan el resultado.</p><ol class="prog">${st.map((x,i)=>`<li class="${x[1]?"ok":i===now?"now":""}"><i>${x[1]?"✓":i+1}</i>${x[0]}</li>`).join("")}</ol><p class="note" style="margin-top:14px">También puedes cargar un caso tipo desde el selector de arriba.</p></div>`;
+    lastR=null;return;
+  }
+  const R=evaluate(c);lastR=R;
+  let h=`<div class="casehead"><div class="k">Caso</div><h3>${esc(R.title)}</h3><div class="tags">${R.tags.map(([k,t])=>`<span class="tag ${k}">${esc(t)}</span>`).join("")}</div>
+   <div class="acts"><button class="btn pri" type="button" id="copy">Copiar resumen para la ficha</button><label class="toggle"><input type="checkbox" id="onlycl" ${onlyChile?"checked":""}> Solo disponibles en Chile</label></div></div>`;
+  if(R.alerts.length)h+=`<div class="alerts">${R.alerts.map(a=>`<div class="al ${a.lvl}"><b class="ic">${a.lvl==="r"?"ALTO":a.lvl==="a"?"OJO":"NOTA"}</b><span>${a.t}</span></div>`).join("")}</div>`;
+  if(R.steps.length)h+=`<div class="box"><h4>Plan inmediato</h4><ol class="steps">${R.steps.map(s=>`<li>${s}</li>`).join("")}</ol></div>`;
+  let hidden=0;
+  TIERS.forEach(t=>{
+    let its=R.items.filter(i=>i.tier===t);
+    if(onlyChile){const n=its.length;its=its.filter(i=>D[i.id].chile!=="no");hidden+=n-its.length}
+    if(!its.length)return;
+    if(t==="baja")h+=`<details class="more baja"><summary>${TIERTX[t][0]} <small>${TIERTX[t][1]} · ${its.length}</small></summary>`;
+    h+=`<div class="tier ${t}"><header><h4>${TIERTX[t][0]}</h4><small>${TIERTX[t][1]}</small><span class="n">${its.length}</span></header>`;
+    its.forEach(it=>{
+      const d=D[it.id],k=(d.kin||{})[c.dz],dl=doseLine(it,c.dz);
+      const whys=it.why.filter((w,i,a)=>a.findIndex(x=>x.t===w.t)===i);
+      h+=`<div class="drow"><div class="nm"><b>${esc(d.n)}</b><span class="ph">${esc(it.ph)}</span><span class="cls">${CLS[d.cl]}</span>${badge(it.id)}</div>
+      <button class="btn go" type="button" data-ficha="${it.id}" data-ph="${esc(it.ph)}">Ficha</button>
+      ${dl?`<div class="dose">${esc(dl)}${d.kinTx?` <em>· inicio: ${esc(d.kinTx.charAt(0).toLowerCase()+d.kinTx.slice(1))}</em>`:""}</div>`:""}
+      <ul class="why">${whys.map(w=>`<li class="${w.c}">${esc(w.t)}</li>`).join("")}</ul>
+      ${k&&t!=="evit"?`<div class="mini">${kinBar(k,Math.max(16,(k.ext||k.ev)+2))}</div>`:""}</div>`;
+    });
+    h+="</div>";if(t==="baja")h+="</details>";
+  });
+  if(hidden)h+=`<p class="note">${hidden} opción(es) sin registro en Chile ocultas. Desmarca el filtro para verlas.</p>`;
+  if(R.items.some(i=>D[i.id].kin&&D[i.id].kin[c.dz]))h+=`<div class="kinleg"><span><i style="background:color-mix(in srgb,var(--verde) 70%,transparent)"></i>Inicio de acción</span><span><i style="background:var(--marino);width:3px"></i>Fin de inducción</span><span><i style="background:var(--acento);width:3px"></i>Inducción extendida</span></div>`;
+
+  if(R.combo){
+    const w=[];
+    w.push("TPMT y NUDT15 antes de iniciar; hemograma y perfil hepático en semanas 2, 4, 8 y 12, luego c/3 meses.");
+    w.push("Dosis: azatioprina 2–2,5 mg/kg (SONIC); 1–1,5 mg/kg puede bastar para reducir inmunogenicidad. Alternativa: metotrexato 12,5–15 mg/semana.");
+    w.push("Transaminasas en alza: medir 6-TGN/6-MMP; perfil hepatotóxico → azatioprina 25–33 % + alopurinol 100 mg.");
+    w.push("Hombre <35 años o VEB negativo: riesgo de linfoma hepatoesplénico T y linfoproliferación; valorar metotrexato o monoterapia con TDM.");
+    w.push("Tras ≥6 meses de remisión libre de corticoides: retirar el inmunomodulador y mantener el anti-TNF (AGA R13–R14).");
+    h+=`<div class="box"><h4>Terapia combinada</h4><p style="margin:0 0 8px;font-size:.88rem;color:var(--fg-2)"><b style="color:var(--fg)">Infliximab + tiopurina</b> ${c.dz==="cu"?"(UC SUCCESS: remisión libre de corticoides 40 % vs 22 % con infliximab solo)":"(SONIC: remisión libre de corticoides 57 % vs 44 % con infliximab solo)"}. Reduce anticuerpos antifármaco y aumenta niveles.</p>
+    ${R.comboWarn?`<div class="al a" style="margin-bottom:8px"><b class="ic">OJO</b><span>Este paciente tiene factores que desaconsejan la tiopurina (edad, neoplasia, VEB negativo, TPMT o fragilidad): preferir infliximab en monoterapia con TDM proactivo o metotrexato.</span></div>`:""}
+    <ul class="why">${w.map(x=>`<li class="n">${x}</li>`).join("")}</ul>
+    ${c.hist==="multi"?`<p class="note" style="margin-top:8px">Terapia avanzada combinada (dos biológicos o biológico + JAK): series observacionales en refractariedad o MEI no controlada; ECCO 2026 no la recomienda fuera de centro experto (PP9).</p>`:""}</div>`;
+  }else if(c.hist==="multi"){
+    h+=`<div class="box"><h4>Terapia combinada avanzada</h4><p style="font-size:.86rem;color:var(--fg-2);margin:0">Dos terapias avanzadas (p. ej. vedolizumab + anti-TNF o anti-IL-23 + JAK) solo en refractariedad multimecanismo o MEI no controlada, en centro experto. Evidencia observacional; VEGA y DUET en fase 2. ECCO 2026 PP9: insuficiente para recomendarla de rutina.</p></div>`;
+  }
+  if(R.fail.length)h+=`<div class="box"><h4>Si falla</h4><ul class="why">${R.fail.map(x=>`<li class="n">${esc(x)}</li>`).join("")}</ul></div>`;
+
+  const top=R.items.filter(i=>i.tier==="pref"&&D[i.id].kin&&D[i.id].kin[c.dz]);
+  if(top.length){
+    h+=`<div class="box"><h4>Cuándo reevaluar</h4><div class="tw" style="margin:0"><table class="t" style="min-width:480px"><thead><tr><th>Fármaco</th><th>Inicio</th><th>Fin de inducción</th><th>Niveles</th></tr></thead><tbody>${top.map(i=>{const d=D[i.id],k=d.kin[c.dz];return `<tr><td class="nm">${esc(d.n)}</td><td>${esc(d.kinTx||"")}</td><td>${wk(k.ev)}${k.ext?` · extendida ${wk(k.ext)}`:""}</td><td>${esc(d.tdm.split(".")[0])}</td></tr>`}).join("")}</tbody></table></div>
+    <p class="note" style="margin-top:8px">Objetivos STRIDE-II: respuesta clínica a corto plazo; calprotectina y PCR normales a los 3–6 meses; cicatrización endoscópica a los 6–12 meses.</p></div>`;
+  }
+  if(R.guides.size){h+=`<details class="more gd"><summary>Dónde discrepan las guías <small>${R.guides.size} tema(s)</small></summary><div class="box">${[...R.guides].map(g=>gTable(g)).join("")}</div></details>`}
+  const pp=PIPE.filter(p=>p.dz.includes(c.dz==="cu"?"CU":"EC"));
+  h+=`<details class="more inv"><summary>${TIERTX.inv[0]} <small>${pp.length} moléculas · sin aprobación</small></summary><div class="tier inv"><header><h4>${TIERTX.inv[0]}</h4></header>${pp.map(p=>`<div class="drow"><div class="nm"><b>${esc(p.n)}</b><span class="cls">${esc(p.mech)}</span><span class="pill ${p.fase}">${esc(p.faseTx)}</span></div><a class="btn go" href="#pipeline">Detalle</a><div class="dose" style="color:var(--fg-2)">${esc(p.res)}</div></div>`).join("")}</div></details>`;
+  $("#res").innerHTML=h;
+}
+function gTable(g){const G=GCMP[g];return `<div class="tw"><table class="t cmp"><caption>${esc(G.t)}</caption><tbody>${G.rows.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</tbody></table></div>`}
+
+/* ---------- ficha ---------- */
+function openFicha(id,ph){
+  const d=D[id],c=lastC||readForm();
+  $("#dcls").textContent=CLS[d.cl];$("#dtitle").textContent=d.n;
+  $("#dtags").innerHTML=`${badge(id)}<span class="tag">${esc(d.via)}</span>${d.cu?'<span class="tag cu">CU</span>':""}${d.ec?'<span class="tag ec">EC</span>':""}`;
+  let b="";
+  const it=ph&&lastR?lastR.items.find(i=>i.id===id&&i.ph===ph):null;
+  if(it){const ws=it.why.filter((w,i,a)=>a.findIndex(x=>x.t===w.t)===i);b+=`<div class="fs"><h5>En este paciente · ${TIERTX[it.tier][0]}</h5><ul class="why">${ws.map(w=>`<li class="${w.c}">${esc(w.t)}</li>`).join("")}</ul></div>`}
+  b+=`<div class="fs"><h5>Chile</h5><p>${esc(d.chileTx||CHILE[d.chile][2])}</p></div>`;
+  ["cu","ec"].forEach(z=>{const x=d[z];if(!x)return;b+=`<div class="fs"><h5>Dosis · ${z==="cu"?"colitis ulcerosa":"enfermedad de Crohn"}</h5><dl class="kv"><dt>Inducción</dt><dd>${esc(x.ind)}</dd><dt>Mantención</dt><dd>${esc(x.mant)}</dd><dt>Intensificación</dt><dd>${esc(x.int)}</dd></dl></div>`});
+  b+=`<div class="fs"><h5>Para la receta</h5><div class="rx"><ul>${d.pres.map(p=>`<li>${esc(p)}</li>`).join("")}</ul><div class="calc">${esc(d.calc(c.wt))}${c.wt?` <span style="color:var(--fg-3)">(peso ${c.wt} kg)</span>`:""}</div></div><p class="note" style="margin-top:6px">Presentaciones habituales; confirmar disponibilidad en farmacia.</p></div>`;
+  b+=`<div class="fs"><h5>Cinética · cuánto esperar</h5><p>${esc(d.kinTx||"")}</p>${["cu","ec"].map(z=>d.kin&&d.kin[z]?`<p style="margin:8px 0 0;font-size:.74rem;font-weight:700;color:var(--fg-3)">${z==="cu"?"CU":"EC"}</p>${kinBar(d.kin[z],Math.max(16,(d.kin[z].ext||d.kin[z].ev)+2))}`:"").join("")}</div>`;
+  b+=`<div class="fs"><h5>Niveles (TDM)</h5><p>${esc(d.tdm)}</p></div>`;
+  b+=`<div class="fs"><h5>En el control</h5><div class="ae">${d.ae.map(([l,t])=>`<div class="${l}"><b>${l==="e"?"Esperable":l==="v"?"Vigilar":"Suspender"}</b><span>${esc(t)}</span></div>`).join("")}</div></div>`;
+  b+=`<div class="fs"><h5>Embarazo y lactancia</h5><dl class="kv"><dt>Embarazo</dt><dd>${esc(d.preg)}</dd><dt>Lactancia</dt><dd>${esc(d.lact)}</dd></dl></div>`;
+  b+=`<div class="fs"><h5>Ensayos pivotales y guías</h5><p>${esc(d.trials)}</p></div>`;
+  if(d.chk.length){
+    b+=`<div class="fs"><h5>Checklist previo al inicio</h5><div class="cl" id="clist">${d.chk.map((k,i)=>{const x=CK[k];if(!x)return"";const tg=x[1]==="o"?'<em class="o">Obligatorio</em>':x[1]==="f"?'<em class="f">Según riesgo</em>':"";return `<label><input type="checkbox" id="ck-${id}-${i}"><span>${esc(x[0])}${tg}</span></label>`}).join("")}</div><div class="acts"><button class="btn" type="button" id="copyck">Copiar checklist</button></div></div>`;
+  }
+  $("#dbody").innerHTML=b;$("#dbody").scrollTop=0;
+  $("#drawer").hidden=false;$("#scrim").hidden=false;$("#dclose").focus();
+  const cb=$("#copyck");if(cb)cb.onclick=()=>{const t=`Checklist ${d.n}\n`+d.chk.map((k,i)=>`[${$("#ck-"+id+"-"+i).checked?"x":" "}] ${CK[k][0]}`).join("\n");copyText(t)};
+}
+function closeFicha(){$("#drawer").hidden=true;$("#scrim").hidden=true}
+
+/* ---------- copiar ---------- */
+function toast(t){const e=$("#toast");e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>e.hidden=true,2200)}
+function copyText(t){
+  const fb=()=>{const ta=document.createElement("textarea");ta.value=t;ta.className="copybox";const box=$("#dbody")&&!$("#drawer").hidden?$("#dbody"):$("#res");box.appendChild(ta);ta.select();toast("Selecciona y copia el texto")};
+  try{navigator.clipboard.writeText(t).then(()=>toast("Copiado"),fb)}catch(e){fb()}
+}
+function summary(){
+  const R=lastR,c=lastC;let s=`${R.title} — ${R.tags.map(t=>t[1]).join(" · ")}\n`;
+  if(R.alerts.length)s+="\nAlertas:\n"+R.alerts.map(a=>"- "+a.t.replace(/<[^>]+>/g,"")).join("\n")+"\n";
+  if(R.steps.length)s+="\nPlan:\n"+R.steps.map((x,i)=>`${i+1}. ${x.replace(/<[^>]+>/g,"")}`).join("\n")+"\n";
+  ["pref","alt"].forEach(t=>{const its=R.items.filter(i=>i.tier===t);if(its.length)s+=`\n${TIERTX[t][0]}:\n`+its.map(i=>`- ${D[i.id].n} (${i.ph}; ${CHILE[D[i.id].chile][0]}): ${doseLine(i,c.dz)}`).join("\n")+"\n"});
+  const ev=R.items.filter(i=>i.tier==="evit"||i.tier==="prec");if(ev.length)s+="\nEvitar / precaución:\n"+ev.map(i=>`- ${D[i.id].n}: ${i.why.filter(w=>w.c!=="n"&&w.c!=="p").map(w=>w.t).join("; ")||i.why.map(w=>w.t).join("; ")}`).join("\n")+"\n";
+  if(R.fail.length)s+="\nSi falla:\n"+R.fail.map(x=>"- "+x).join("\n")+"\n";
+  s+="\nFuente: Decisión Terapéutica EII, Dr. Moisés Oropeza Hernández (ECCO 2026/2024, ACG 2025, AGA 2024–2025, Guía chilena 2026). Apoyo a la decisión; no reemplaza el juicio clínico.";
+  return s;
+}
+
+/* ---------- otras vistas ---------- */
+function renderFarmacos(){
+  const q=($("#fq").value||"").toLowerCase();
+  $("#ftab tbody").innerHTML=Object.entries(D).filter(([id,d])=>!q||(d.n+" "+CLS[d.cl]).toLowerCase().includes(q)).map(([id,d])=>`<tr class="clk" data-ficha="${id}" tabindex="0"><td class="nm">${esc(d.n)}</td><td>${CLS[d.cl]}</td><td>${d.cu?"Sí":"—"}</td><td>${d.ec?"Sí":"—"}</td><td>${esc(d.via)}</td><td>${esc(d.kinTx||"")}</td><td>${badge(id)}</td></tr>`).join("");
+}
+function renderKin(){
+  const z=(F.ownerDocument.querySelector('input[name="kdz"]:checked')||{}).value||"cu";
+  $("#ktab tbody").innerHTML=Object.entries(D).filter(([id,d])=>d.kin&&d.kin[z]&&d.cl!=="abx").map(([id,d])=>{const k=d.kin[z];return `<tr class="clk" data-ficha="${id}" tabindex="0"><td class="nm">${esc(d.n)}<div class="cls" style="font-family:var(--ff-b);font-weight:400">${CLS[d.cl]}</div></td><td>${kinBar(k,24)}</td><td>${wk(k.ev)}</td><td>${k.ext?wk(k.ext):"—"}</td><td style="min-width:260px">${esc(d.tdm)}</td></tr>`}).join("");
+}
+function renderPipe(){
+  $("#pcards").innerHTML=PIPE.map(p=>`<article class="pc"><div class="ph2"><span class="pill ${p.fase}">${esc(p.faseTx)}</span><span class="tag">${esc(p.dz)}</span></div><h4>${esc(p.n)}</h4><p class="q2">${esc(p.mech)}</p><div class="res2">${esc(p.res)}</div><p>${esc(p.sig)}</p><p class="q2"><b>¿Cambia la práctica?</b> ${esc(p.prac)} · ${esc(p.ref)}</p></article>`).join("");
+}
+function renderGuias(){
+  $("#gcmp").innerHTML=Object.keys(GCMP).map(gTable).join("");
+  $("#gtl").innerHTML=GTL.map(g=>`<div><h5>${esc(g.h)}</h5><ul>${g.li.map(l=>`<li>${esc(l)}</li>`).join("")}</ul></div>`).join("");
+  $("#refs").innerHTML=REFS.map(r=>`<li>${esc(r).replace(/doi:(\S+)/,(m,x)=>`doi:<a href="https://doi.org/${x}" target="_blank" rel="noopener">${x}</a>`)}</li>`).join("");
+}
+
+/* ---------- navegación y tema ---------- */
+const VIEWS=["decision","farmacos","cinetica","fragilidad","pipeline","guias","fuentes"];
+function show(v){if(!VIEWS.includes(v))v="decision";VIEWS.forEach(x=>{$("#v-"+x).classList.toggle("on",x===v)});$$("#tabs a").forEach(a=>a.setAttribute("aria-current",a.getAttribute("href")==="#"+v?"true":"false"))}
+window.addEventListener("hashchange",()=>{closeFicha();show(location.hash.slice(1));window.scrollTo(0,0)});
+$("#tema").addEventListener("click",()=>{const r=document.documentElement;const cur=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");const n=cur==="dark"?"light":"dark";r.setAttribute("data-theme",n);try{localStorage.setItem("eii-tema",n)}catch(e){}});
+try{const t=localStorage.getItem("eii-tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}
+
+/* ---------- eventos ---------- */
+$("#preset").insertAdjacentHTML("beforeend",PRESETS.map(p=>`<option value="${p.k}">${esc(p.l)}</option>`).join(""));
+$("#preset").addEventListener("change",e=>{const p=PRESETS.find(x=>x.k===e.target.value);if(!p){newCase();return}setForm(p.v);$$("details.grp").forEach(d=>d.open=!!d.querySelector('input[type=checkbox]:checked, input[type=radio]:checked:not([value="nd"])'));render()});
+$("#nuevo").addEventListener("click",newCase);
+function newCase(){F.reset();$("#preset").value="";$$("details.grp").forEach(d=>d.open=false);render();window.scrollTo(0,0)}
+F.addEventListener("change",()=>{render()});
+F.addEventListener("input",e=>{if(e.target.type==="number")render()});
+F.addEventListener("submit",e=>e.preventDefault());
+document.addEventListener("click",e=>{
+  const f=e.target.closest("[data-ficha]");if(f){openFicha(f.dataset.ficha,f.dataset.ph||null);return}
+  if(e.target.id==="copy"&&lastR)copyText(summary());
+});
+document.addEventListener("change",e=>{if(e.target.id==="onlycl"){onlyChile=e.target.checked;render()}if(e.target.name==="kdz")renderKin()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("#drawer").hidden)closeFicha();if(e.key==="Enter"&&e.target.matches("tr[data-ficha]"))openFicha(e.target.dataset.ficha)});
+$("#dclose").addEventListener("click",closeFicha);$("#scrim").addEventListener("click",closeFicha);
+$("#fq").addEventListener("input",renderFarmacos);
+
+/* ---------- inicio ---------- */
+render();renderFarmacos();renderKin();renderPipe();renderGuias();
+show(location.hash.slice(1)||"decision");
+/* ============ FRAGILIDAD ============ */
+const CFS=[
+ [1,"Muy en forma","Robusto, activo y enérgico; hace ejercicio con regularidad. Entre los más en forma para su edad."],
+ [2,"En forma","Sin síntomas de enfermedad activa, pero menos en forma que la categoría 1. Ejercicio ocasional o estacional."],
+ [3,"Se maneja bien","Problemas médicos bien controlados aunque con síntomas ocasionales; no hace actividad física regular más allá de caminar."],
+ [4,"Fragilidad muy leve","Independiente, pero los síntomas limitan sus actividades. Refiere estar «más lento» o cansado durante el día."],
+ [5,"Fragilidad leve","Lentitud evidente; necesita ayuda en actividades instrumentales complejas (finanzas, transporte, tareas domésticas pesadas)."],
+ [6,"Fragilidad moderada","Necesita ayuda en todas las actividades fuera de casa y en las tareas del hogar; dificultad con escaleras; ayuda mínima para bañarse."],
+ [7,"Fragilidad grave","Dependiente para el cuidado personal por causa física o cognitiva, pero estable y sin alto riesgo de morir en 6 meses."],
+ [8,"Fragilidad muy grave","Totalmente dependiente, cerca del final de la vida; no se recuperaría de una enfermedad menor."],
+ [9,"Enfermo terminal","Expectativa de vida menor de 6 meses, sin otra fragilidad evidente."]
+];
+$("#cfsl").innerHTML=CFS.map(([n,t,d])=>`<input type="radio" name="cfs" id="cfs-${n}" value="${n}"><label for="cfs-${n}"><i>${n}</i><span><b>${t}</b><small>${d}</small></span></label>`).join("");
+
+function gripCut(sx,imc){if(!sx||!imc)return null;if(sx==="M")return imc<=24?29:imc<=26?30:imc<=28?30:32;return imc<=23?17:imc<=26?17.3:imc<=29?18:21}
+function gaitCut(sx,t){if(!sx||!t)return null;return sx==="M"?(t<=173?7:6):(t<=159?7:6)}
+const num=id=>parseFloat($("#"+id).value)||0;
+
+function frailAuto(e){
+  const sx=(document.querySelector('input[name="fsx"]:checked')||{}).value, t=num("ftalla"), p=num("fpeso"), p0=num("fpeso0");
+  const imc=t&&p?p/((t/100)**2):0;
+  $("#fimc").textContent=imc?`IMC ${imc.toFixed(1).replace(".",",")} kg/m²`:"Sexo, talla y peso permiten calcular los puntos de corte de prensión y marcha.";
+  const src=e&&e.target?e.target.id:"";
+  // 1 peso
+  if(p&&p0){const d=p0-p,pc=d/p0*100,ok=d>4.5||pc>=5;$("#a1").textContent=`Pérdida ${d.toFixed(1).replace(".",",")} kg (${pc.toFixed(1).replace(".",",")} %) → ${ok?"cumple":"no cumple"}`;if(["fpeso","fpeso0"].includes(src))$("#c1").checked=ok}else $("#a1").textContent="";
+  // 4 prensión
+  const gc=gripCut(sx,imc);$("#cut4").textContent=gc?`Corte: ≤${String(gc).replace(".",",")} kg`:"Requiere sexo, talla y peso";
+  const g=num("fgrip");if(g&&gc){const ok=g<=gc;$("#a4").textContent=`${String(g).replace(".",",")} kg vs ≤${String(gc).replace(".",",")} → ${ok?"cumple":"no cumple"}`;if(["fgrip","ftalla","fpeso","fsx-m","fsx-f"].includes(src))$("#c4").checked=ok}else $("#a4").textContent="";
+  // 5 marcha
+  const mc=gaitCut(sx,t);$("#cut5").textContent=mc?`Corte: ≥${mc} s`:"Requiere sexo y talla";
+  const s=num("fgait");if(s&&mc){const ok=s>=mc;$("#a5").textContent=`${String(s).replace(".",",")} s (${(4.57/s).toFixed(2).replace(".",",")} m/s) vs ≥${mc} s → ${ok?"cumple":"no cumple"}`;if(["fgait","ftalla","fsx-m","fsx-f"].includes(src))$("#c5").checked=ok}else $("#a5").textContent="";
+  frailRender();
+}
+function frailRender(){
+  const tool=(document.querySelector('input[name="ftool"]:checked')||{}).value||"fried";
+  $("#fried").hidden=tool!=="fried";$("#cfs").hidden=tool!=="cfs";
+  let st=null,score="",lab="",txt="",extra="";
+  if(tool==="fried"){
+    const n=[1,2,3,4,5].filter(i=>$("#c"+i).checked).length;
+    [1,2,3,4,5].forEach(i=>$("#fc"+i).classList.toggle("on",$("#c"+i).checked));
+    st=n>=3?"f":n>=1?"p":"r";score=`${n}<small style="font-size:1rem;color:var(--fg-3)">/5</small>`;
+    lab=st==="f"?"Frágil":st==="p"?"Prefrágil":"Robusto";
+    txt=st==="f"?"Tres o más criterios: mayor riesgo de infección grave, hospitalización, discapacidad y muerte.":st==="p"?"Uno o dos criterios: estado intermedio y reversible; intervenir y reevaluar.":"Ningún criterio. Si aún no los evaluaste todos, el resultado puede subestimar la fragilidad.";
+    extra=`<div class="meter"><div class="r ${st==="r"?"on":""}"></div><div class="p ${st==="p"?"on":""}"></div><div class="f ${st==="f"?"on":""}"></div></div><div class="meterl"><span>0 · robusto</span><span>1–2 · prefrágil</span><span>≥3 · frágil</span></div>`;
+  }else{
+    const v=parseInt((document.querySelector('input[name="cfs"]:checked')||{}).value)||0;
+    if(!v){$("#fresb").innerHTML=`<div class="k">Resultado</div><h3>Elige una categoría</h3><p class="note">Escala 1–9: 1–3 sin fragilidad; 4 fragilidad muy leve; ≥5 frágil (GETECCU 2025).</p>`;$("#fapply").hidden=true;return}
+    st=v>=5?"f":v===4?"p":"r";score=`${v}<small style="font-size:1rem;color:var(--fg-3)">/9</small>`;
+    lab=CFS[v-1][1];txt=st==="f"?"CFS ≥5: frágil. Mismo impacto clínico que Fried ≥3.":st==="p"?"CFS 4: equivale a prefragilidad; vigilar y reevaluar.":"Sin fragilidad.";
+    extra=`<div class="meter"><div class="r ${st==="r"?"on":""}"></div><div class="p ${st==="p"?"on":""}"></div><div class="f ${st==="f"?"on":""}"></div></div><div class="meterl"><span>1–3 · no frágil</span><span>4 · muy leve</span><span>≥5 · frágil</span></div>`;
+  }
+  $("#fresb").innerHTML=`<div class="k">Resultado · ${tool==="fried"?"Fenotipo de Fried":"Escala clínica de fragilidad"}</div><div class="score"><b class="st-${st}">${score}</b><span class="st-${st}">${lab}</span></div>${extra}<p style="margin:8px 0 0;font-size:.88rem;color:var(--fg-2)">${txt}</p>`;
+  const b=$("#fapply");b.hidden=false;
+  if(st==="f"){b.textContent="Marcar fragilidad en la decisión";b.className="btn pri";delete b.dataset.off}
+  else{b.textContent="Quitar fragilidad de la decisión";b.className="btn";b.dataset.off="1"}
+}
+$("#v-fragilidad").addEventListener("input",frailAuto);
+$("#v-fragilidad").addEventListener("change",e=>{if(/^c\d$/.test(e.target.id)||e.target.name==="ftool"||e.target.name==="cfs")frailRender();else frailAuto(e)});
+document.addEventListener("click",e=>{if(e.target.id!=="fapply")return;const on=!e.target.dataset.off;$("#co-fr").checked=on;if(on)$("#g-otr").open=true;render();toast(on?"Fragilidad marcada en el caso":"Fragilidad desmarcada en el caso");if(on)location.hash="decision"});
+frailAuto();
+</script>
+</body></html>
