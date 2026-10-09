@@ -26,11 +26,23 @@ El Módulo 03 conserva el **índice completo de las 36 figuras**, con su título
 ```
 index.html        · repositorio: portada y módulos 02, 03 y 04 (rutas internas #clase, #atlas, #rapida, #fuentes)
 guia-2026.html    · módulo 01, documento completo con navegación propia
+quiz/index.html   · módulo 05, Quiz EII v6.1 (220 casos)
 decision/index.html · módulo 06, herramienta de decisión terapéutica (autocontenida)
+manifest.webmanifest, sw.js, icons/            · app instalable completa (EII 2026)
+decision/manifest.webmanifest, decision/sw.js  · app instalable solo de decisión
 .nojekyll         · evita el procesamiento Jekyll en GitHub Pages
 ```
 
 Sitio estático puro: sin compilación, sin servidor, sin dependencias. Funciona abriendo `index.html` directamente o publicado con GitHub Pages.
+
+## Apps instalables (funcionan sin conexión)
+
+| App | Enlace | Contenido |
+|---|---|---|
+| **EII 2026** | https://moropezah.github.io/repositorio-eii-2026/ | Repositorio completo: guía, clase, consulta rápida, quiz y decisión terapéutica |
+| **Decisión EII** | https://moropezah.github.io/repositorio-eii-2026/decision/ | Solo la herramienta de decisión terapéutica, para compartir con el equipo |
+
+Abrir el enlace una vez con conexión y luego: **iPhone** (Safari) → Compartir → «Agregar a inicio»; **Android** (Chrome) → botón «Instalar» o menú ⋮ → «Instalar app». Después funciona sin internet y se actualiza sola en la siguiente apertura con conexión.
 
 ## Jerarquía de evidencia
 

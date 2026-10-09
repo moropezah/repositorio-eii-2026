@@ -1,4 +1,18 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"></head><body>
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#173a5e">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Decisión EII">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+</head>
+<body>
 <title>Decisión Terapéutica EII</title>
 <meta name="author" content="Dr. Moisés Oropeza Hernández">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1796,4 +1810,38 @@ $("#v-fragilidad").addEventListener("change",e=>{if(/^c\d$/.test(e.target.id)||e
 document.addEventListener("click",e=>{if(e.target.id!=="fapply")return;const on=!e.target.dataset.off;$("#co-fr").checked=on;if(on)$("#g-otr").open=true;render();toast(on?"Fragilidad marcada en el caso":"Fragilidad desmarcada en el caso");if(on)location.hash="decision"});
 frailAuto();
 </script>
-</body></html>
+
+<style>
+#pwa-ui{position:fixed;right:14px;bottom:calc(env(safe-area-inset-bottom,0px) + 14px);z-index:300;display:flex;flex-direction:column;align-items:flex-end;gap:8px;font-family:Inter,-apple-system,"Segoe UI",sans-serif}
+#pwa-ui button{border:0;border-radius:999px;padding:9px 16px;font:600 .82rem Inter,-apple-system,sans-serif;background:#173a5e;color:#fff;box-shadow:0 4px 18px rgba(0,0,0,.22);cursor:pointer}
+#pwa-ios{max-width:300px;background:#fffefb;color:#1c2530;border:1px solid #ddd6cb;border-radius:12px;padding:11px 14px;font-size:.8rem;line-height:1.45;box-shadow:0 6px 24px rgba(0,0,0,.18)}
+#pwa-ios b{display:block;margin-bottom:3px}#pwa-ios .x{float:right;background:none;border:0;color:#6f7a86;font-size:1rem;padding:0 0 0 8px;box-shadow:none;cursor:pointer}
+#pwa-back{position:fixed;left:14px;bottom:calc(env(safe-area-inset-bottom,0px) + 14px);z-index:300;border-radius:999px;padding:8px 14px;font:600 .8rem Inter,-apple-system,sans-serif;background:#fffefb;color:#173a5e;border:1px solid #c9c0b2;text-decoration:none;box-shadow:0 3px 12px rgba(0,0,0,.15)}
+@media (prefers-color-scheme:dark){#pwa-ios{background:#1a2029;color:#e6e9ed;border-color:#2c3642}#pwa-back{background:#1a2029;color:#a8cdf0;border-color:#3d4956}}
+@media print{#pwa-ui,#pwa-back{display:none}}
+</style>
+<div id="pwa-ui"></div>
+<script>
+(function(){
+  var SW="sw.js", KEY="pwa-ios-decision", APP="Decisión EII", BACK="../", MODE="param";
+  var standalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
+  if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)&&!/claude\.ai|claudeusercontent/.test(location.hostname)){
+    window.addEventListener('load',function(){navigator.serviceWorker.register(SW).catch(function(){})});
+  }
+  if(MODE==='always'||(MODE==='param'&&new URLSearchParams(location.search).get('from')==='eii')){
+    var a=document.createElement('a');a.id='pwa-back';a.href=BACK;a.textContent='← Repositorio EII';document.body.appendChild(a)}
+  if(standalone)return;
+  var ui=document.getElementById('pwa-ui'),dp=null;
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e;
+    var b=document.createElement('button');b.type='button';b.textContent='Instalar '+APP;
+    b.onclick=function(){dp.prompt();dp.userChoice.finally(function(){b.remove()})};ui.appendChild(b)});
+  var ios=/iphone|ipad|ipod/i.test(navigator.userAgent)&&/safari/i.test(navigator.userAgent)&&!/crios|fxios/i.test(navigator.userAgent);
+  var seen=false;try{seen=localStorage.getItem(KEY)==='1'}catch(e){}
+  if(ios&&!seen){var d=document.createElement('div');d.id='pwa-ios';
+    d.innerHTML='<button class="x" type="button" aria-label="Cerrar">✕</button><b>Instalar '+APP+'</b>Toca <span aria-label="Compartir">Compartir ⬆︎</span> y luego «Agregar a inicio». Funcionará sin conexión.';
+    d.querySelector('.x').onclick=function(){d.remove();try{localStorage.setItem(KEY,'1')}catch(e){}};ui.appendChild(d)}
+})();
+</script>
+
+</body>
+</html>
