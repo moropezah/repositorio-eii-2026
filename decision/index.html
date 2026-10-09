@@ -300,6 +300,40 @@ details.more>.box{border:0;border-top:1px solid var(--line);border-radius:0}
 .seg.sm label{padding:3px 8px;font-size:.72rem}
 .seg.sm input[value="nd"]:checked+label{background:var(--panel-2);border-color:var(--line-2);color:var(--fg-3)}
 @media (max-width:460px){.srow{grid-template-columns:1fr}}
+/* scores */
+.score b small{font-size:1rem;color:var(--fg-3)}
+.scq{border-top:1px solid var(--line);padding:11px 0 6px}
+.scq:first-child{border-top:0;padding-top:0}
+.scq .ql{display:flex;justify-content:space-between;gap:10px;font-size:.86rem;font-weight:700;margin-bottom:6px}
+.scq .ql span{font-family:var(--ff-m);color:var(--acento);font-size:.8rem}
+.opts{display:flex;flex-direction:column;gap:4px}
+.opts input{position:absolute;opacity:0;pointer-events:none}
+.opts label{display:grid;grid-template-columns:26px minmax(0,1fr);gap:8px;align-items:start;border:1.5px solid var(--line);border-radius:9px;padding:7px 10px;cursor:pointer;background:var(--bg);font-size:.82rem;color:var(--fg-2);transition:border-color .12s}
+.opts label i{font-style:normal;font-family:var(--ff-m);font-weight:700;color:var(--fg-3);text-align:center}
+.opts label:hover{border-color:var(--marino-2)}
+.opts input:checked+label{border-color:var(--marino);background:color-mix(in srgb,var(--marino) 10%,var(--bg));color:var(--fg)}
+.opts input:checked+label i{color:var(--marino)}
+.opts input:focus-visible+label{outline:2px solid var(--acento);outline-offset:2px}
+.seggrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
+.seggrid input{position:absolute;opacity:0;pointer-events:none}
+.seggrid label{border:1.5px solid var(--line-2);border-radius:8px;padding:5px 4px;text-align:center;font-size:.7rem;line-height:1.25;overflow-wrap:anywhere;hyphens:auto;cursor:pointer;background:var(--bg);color:var(--fg-2)}
+.seggrid label b{display:block;font-family:var(--ff-m);font-size:.82rem;color:var(--fg)}
+.seggrid input:checked+label{background:linear-gradient(135deg,var(--ec),color-mix(in srgb,var(--ec) 70%,#fff));border-color:transparent;color:#fff}
+.seggrid input:checked+label b{color:#fff}
+.sesrow{display:grid;grid-template-columns:1fr;gap:4px;padding:5px 0}
+.sesrow>span{font-size:.78rem;font-weight:600}
+details.segm{border:1px solid var(--line);border-radius:10px;background:var(--panel);margin-top:8px}
+details.segm>summary{list-style:none;cursor:pointer;padding:10px 13px;display:flex;align-items:center;gap:10px;font-weight:700;font-size:.9rem}
+details.segm>summary::-webkit-details-marker{display:none}
+details.segm>summary::before{content:"+";font-family:var(--ff-m);color:var(--acento);width:12px}
+details.segm[open]>summary::before{content:"–"}
+details.segm>summary .pt{margin-left:auto;font-family:var(--ff-m);font-size:.8rem;color:var(--ec)}
+details.segm .gin{padding:0 13px 10px}
+.noexp{display:inline-flex;gap:6px;align-items:center;font-size:.76rem;color:var(--fg-3);margin:2px 0 4px;cursor:pointer}
+.bands{display:grid;gap:3px;margin:10px 0 4px}
+.bands div{display:grid;grid-template-columns:70px minmax(0,1fr);gap:8px;font-size:.78rem;color:var(--fg-3);padding:3px 8px;border-radius:6px}
+.bands div.on{background:color-mix(in srgb,var(--marino) 12%,transparent);color:var(--fg);font-weight:700}
+.bands b{font-family:var(--ff-m);font-weight:600}
 /* tablas */
 .tw{overflow-x:auto;margin:12px 0;border:1px solid var(--line);border-radius:var(--r);background:var(--panel);-webkit-overflow-scrolling:touch}
 table.t{border-collapse:collapse;width:100%;font-size:.83rem;min-width:640px}
@@ -406,6 +440,7 @@ fieldset.blk{box-shadow:var(--sh)}
     <a class="brand" href="#decision"><span class="dot">EII</span><span class="nmb">Decisión Terapéutica EII</span></a>
     <nav class="tabs" id="tabs" aria-label="Secciones">
       <a href="#decision">Decisión</a>
+      <a href="#scores">Scores</a>
       <a href="#farmacos">Fármacos</a>
       <a href="#cinetica">Cinética y niveles</a>
       <a href="#fragilidad">Fragilidad</a>
@@ -687,6 +722,26 @@ fieldset.blk{box-shadow:var(--sh)}
   </div>
 </section>
 
+
+
+<!-- ================= SCORES ================= -->
+<section class="vista" id="v-scores">
+  <p class="eyebrow">Actividad clínica y endoscópica</p>
+  <h2 class="sec">Scores de actividad</h2>
+  <p class="lead">Calcula la actividad antes de decidir y repite el mismo score en el control para medir la respuesta. El resultado de Mayo y de Harvey-Bradshaw se puede llevar directo a la decisión.</p>
+  <div class="seg" id="stool" style="margin-bottom:14px">
+    <input type="radio" name="stool" id="st-mayo" value="mayo" checked><label for="st-mayo">Mayo<small>Colitis ulcerosa</small></label>
+    <input type="radio" name="stool" id="st-hbi" value="hbi"><label for="st-hbi">Harvey-Bradshaw<small>Crohn · clínico</small></label>
+    <input type="radio" name="stool" id="st-ses" value="ses"><label for="st-ses">SES-CD<small>Crohn · endoscópico</small></label>
+  </div>
+  <div class="grid">
+    <div class="form" id="sc-form"></div>
+    <div class="res">
+      <div class="casehead" id="sc-res"><div id="sc-resb"></div><div class="acts"><button class="btn pri" type="button" id="sc-apply" hidden></button></div></div>
+      <div class="box" id="sc-info"></div>
+    </div>
+  </div>
+</section>
 
 <!-- ================= FRAGILIDAD ================= -->
 <section class="vista" id="v-fragilidad">
@@ -1129,6 +1184,10 @@ const REFS=[
  "Torres J, Chaparro M, Julsgaard M, Katsanos K, Zelinkova Z, et al. European Crohn's and Colitis Guidelines on Sexuality, Fertility, Pregnancy, and Lactation. J Crohns Colitis. 2023;17(1):1-27. doi:10.1093/ecco-jcc/jjac115",
  "Mañosa M, Calafat M, Francia E, et al. Documento de posicionamiento de GETECCU sobre fragilidad, edad avanzada y enfermedad inflamatoria intestinal. Gastroenterol Hepatol. 2025;48:502529. doi:10.1016/j.gastrohep.2025.502529",
  "Fuochi E, Innocenti T, Lynch EN, Curto A, Caini S, et al. Frailty Rather Than Age Increases the Risk of Infections in Patients With Inflammatory Bowel Disease Treated With Biologics: An Observational Retrospective Cohort Study. JCC Plus. 2026;1:e70063. doi:10.1002/jcc5.70063",
+ "Schroeder KW, Tremaine WJ, Ilstrup DM. Coated oral 5-aminosalicylic acid therapy for mildly to moderately active ulcerative colitis. A randomized study. N Engl J Med. 1987;317:1625-9. doi:10.1056/NEJM198712243172603",
+ "Lewis JD, Chuai S, Nessel L, Lichtenstein GR, Aberra FN, Ellenberg JH. Use of the noninvasive components of the Mayo score to assess clinical response in ulcerative colitis. Inflamm Bowel Dis. 2008;14:1660-6. doi:10.1002/ibd.20520",
+ "Harvey RF, Bradshaw JM. A simple index of Crohn's-disease activity. Lancet. 1980;1(8167):514. doi:10.1016/s0140-6736(80)92767-1",
+ "Daperno M, D'Haens G, Van Assche G, Baert F, Bulois P, et al. Development and validation of a new, simplified endoscopic activity score for Crohn's disease: the SES-CD. Gastrointest Endosc. 2004;60(4):505-12. doi:10.1016/s0016-5107(04)01878-4",
  "Fried LP, Tangen CM, Walston J, Newman AB, Hirsch C, et al. Frailty in older adults: evidence for a phenotype. J Gerontol A Biol Sci Med Sci. 2001;56(3):M146-56. doi:10.1093/gerona/56.3.m146",
  "Rockwood K, Song X, MacKnight C, Bergman H, Hogan DB, et al. A global clinical measure of fitness and frailty in elderly people. CMAJ. 2005;173(5):489-95. doi:10.1503/cmaj.050051",
  "Akyuz F, Bakkaloglu OK, Unal NG, Kalkan IH, Arhan M, et al. Management of Refractory and Difficult-To-Treat Inflammatory Bowel Disease: An Expert Opinion Review. JCC Plus. 2026. doi:10.1002/jcc5.70082",
@@ -1724,8 +1783,7 @@ function render(){
     <p class="note" style="margin-top:8px">Objetivos STRIDE-II: respuesta clínica a corto plazo; calprotectina y PCR normales a los 3–6 meses; cicatrización endoscópica a los 6–12 meses.</p></div>`;
   }
   if(R.guides.size){h+=`<details class="more gd"><summary>Dónde discrepan las guías <small>${R.guides.size} tema(s)</small></summary><div class="box">${[...R.guides].map(g=>gTable(g)).join("")}</div></details>`}
-  const pp=PIPE.filter(p=>p.dz.includes(c.dz==="cu"?"CU":"EC"));
-  h+=`<details class="more inv"><summary>${TIERTX.inv[0]} <small>${pp.length} moléculas · sin aprobación</small></summary><div class="tier inv"><header><h4>${TIERTX.inv[0]}</h4></header>${pp.map(p=>`<div class="drow"><div class="nm"><b>${esc(p.n)}</b><span class="cls">${esc(p.mech)}</span><span class="pill ${p.fase}">${esc(p.faseTx)}</span></div><a class="btn go" href="#pipeline">Detalle</a><div class="dose" style="color:var(--fg-2)">${esc(p.res)}</div></div>`).join("")}</div></details>`;
+  if(c.hist==="multi")h+=`<p class="note">Refractario a ≥2 mecanismos: considerar ensayo clínico. Las moléculas en fase 2–3 están en la pestaña <a href="#pipeline">En investigación</a>.</p>`;
   $("#res").innerHTML=h;
 }
 function gTable(g){const G=GCMP[g];return `<div class="tw"><table class="t cmp"><caption>${esc(G.t)}</caption><tbody>${G.rows.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</tbody></table></div>`}
@@ -1791,7 +1849,7 @@ function renderGuias(){
 }
 
 /* ---------- navegación y tema ---------- */
-const VIEWS=["decision","farmacos","cinetica","fragilidad","pipeline","guias","fuentes"];
+const VIEWS=["decision","scores","farmacos","cinetica","fragilidad","pipeline","guias","fuentes"];
 function show(v){if(!VIEWS.includes(v))v="decision";VIEWS.forEach(x=>{$("#v-"+x).classList.toggle("on",x===v)});$$("#tabs a").forEach(a=>a.setAttribute("aria-current",a.getAttribute("href")==="#"+v?"true":"false"))}
 window.addEventListener("hashchange",()=>{closeFicha();show(location.hash.slice(1));window.scrollTo(0,0)});
 $("#tema").addEventListener("click",()=>{const r=document.documentElement;const cur=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");const n=cur==="dark"?"light":"dark";r.setAttribute("data-theme",n);try{localStorage.setItem("eii-tema",n)}catch(e){}});
@@ -1877,6 +1935,122 @@ $("#v-fragilidad").addEventListener("input",frailAuto);
 $("#v-fragilidad").addEventListener("change",e=>{if(/^c\d$/.test(e.target.id)||e.target.name==="ftool"||e.target.name==="cfs")frailRender();else frailAuto(e)});
 document.addEventListener("click",e=>{if(e.target.id!=="fapply")return;const on=!e.target.dataset.off;$("#co-fr").checked=on;if(on)$("#g-otr").open=true;render();toast(on?"Fragilidad marcada en el caso":"Fragilidad desmarcada en el caso");if(on)location.hash="decision"});
 frailAuto();
+/* ============ SCORES DE ACTIVIDAD ============ */
+const MAYO=[
+ {k:"sf",t:"Frecuencia de deposiciones",o:["Normal para el paciente","1–2 deposiciones más de lo normal","3–4 deposiciones más de lo normal","≥5 deposiciones más de lo normal"]},
+ {k:"rb",t:"Sangrado rectal",o:["Sin sangre","Hilos de sangre en menos de la mitad de las deposiciones","Sangre evidente en la mayoría de las deposiciones","Solo sangre"]},
+ {k:"pga",t:"Valoración global del médico",o:["Normal","Enfermedad leve","Enfermedad moderada","Enfermedad grave"]},
+ {k:"es",t:"Mayo endoscópico",o:["Normal o inactiva (cicatrización)","Leve: eritema, disminución del patrón vascular (friabilidad leve en la versión original; en ensayos actuales la friabilidad puntúa 2)","Moderada: eritema marcado, ausencia de patrón vascular, friabilidad, erosiones","Grave: sangrado espontáneo, úlceras"]}
+];
+const HBIQ=[
+ {k:"wb",t:"Estado general (día previo)",o:["Muy bueno","Ligeramente por debajo de lo normal","Malo","Muy malo","Pésimo"]},
+ {k:"pa",t:"Dolor abdominal (día previo)",o:["Ninguno","Leve","Moderado","Grave"]},
+ {k:"ms",t:"Masa abdominal",o:["Ausente","Dudosa","Definida","Definida y dolorosa"]}
+];
+const HBIC=["Artralgia","Uveítis","Eritema nodoso","Úlceras aftosas","Pioderma gangrenoso","Fisura anal","Fístula nueva","Absceso"];
+const SEGS=[["il","Íleon"],["cd","Colon derecho"],["ct","Colon transverso"],["ci","Colon izquierdo y sigma"],["re","Recto"]];
+const SESV=[
+ {k:"u",t:"Tamaño de úlceras",o:["Ninguna","Aftosas<br>0,1–0,5 cm","Grandes<br>0,5–2 cm","Muy grandes<br>&gt;2 cm"]},
+ {k:"s",t:"Superficie ulcerada",o:["Ninguna","&lt;10 %","10–30 %","&gt;30 %"]},
+ {k:"a",t:"Superficie afectada",o:["No afectada","&lt;50 %","50–75 %","&gt;75 %"]},
+ {k:"n",t:"Estenosis",o:["Ninguna","Única,<br>se pasa","Múltiples,<br>se pasan","No se<br>pasa"]}
+];
+const opts=(name,o)=>`<div class="opts">${o.map((t,i)=>`<input type="radio" name="${name}" id="${name}-${i}" value="${i}"><label for="${name}-${i}"><i>${i}</i><span>${t}</span></label>`).join("")}</div>`;
+$("#sc-form").innerHTML=`
+<div id="f-mayo"><fieldset class="blk"><legend>Mayo · colitis ulcerosa</legend>${MAYO.map(q=>`<div class="scq"><div class="ql">${q.t}<span id="mv-${q.k}"></span></div>${opts("my_"+q.k,q.o)}</div>`).join("")}</fieldset></div>
+<div id="f-hbi" hidden><fieldset class="blk"><legend>Harvey-Bradshaw · enfermedad de Crohn</legend>
+ ${HBIQ.slice(0,2).map(q=>`<div class="scq"><div class="ql">${q.t}</div>${opts("hb_"+q.k,q.o)}</div>`).join("")}
+ <div class="scq"><label class="ql" for="hb-st">Deposiciones líquidas o blandas (día previo)<span>1 punto c/u</span></label><div class="inp" style="max-width:180px"><input id="hb-st" type="number" min="0" max="40" inputmode="numeric"><span>n.º</span></div></div>
+ <div class="scq"><div class="ql">${HBIQ[2].t}</div>${opts("hb_ms",HBIQ[2].o)}</div>
+ <div class="scq"><div class="ql">Complicaciones<span>1 punto c/u</span></div><div class="chk">${HBIC.map((t,i)=>`<input type="checkbox" name="hb_c" id="hbc-${i}" value="${i}"><label for="hbc-${i}">${t}</label>`).join("")}</div></div>
+</fieldset></div>
+<div id="f-ses" hidden><fieldset class="blk"><legend>SES-CD · 5 segmentos × 4 variables</legend>
+ <p class="hint" style="margin:0 0 4px">Puntúa cada segmento de 0 a 3 en cada variable. Marca «No explorado» si no se alcanzó.</p>
+ ${SEGS.map(([k,n],si)=>`<details class="segm" id="sg-${k}"${si===0?" open":""}><summary>${n}<span class="pt" id="sp-${k}">—</span></summary><div class="gin">
+  <label class="noexp"><input type="checkbox" id="nx-${k}"> No explorado</label>
+  ${SESV.map(v=>`<div class="sesrow"><span>${v.t}</span><div class="seggrid">${v.o.map((t,i)=>`<input type="radio" name="ses_${k}_${v.k}" id="ses-${k}-${v.k}-${i}" value="${i}"><label for="ses-${k}-${v.k}-${i}"><b>${i}</b>${t}</label>`).join("")}</div></div>`).join("")}
+ </div></details>`).join("")}
+</fieldset></div>`;
+
+const val=n=>{const e=document.querySelector(`input[name="${n}"]:checked`);return e?parseInt(e.value):null};
+const band=(rows,v)=>`<div class="bands">${rows.map(([lo,hi,lab,rng])=>`<div class="${v!==null&&v>=lo&&v<=hi?"on":""}"><b>${rng}</b><span>${lab}</span></div>`).join("")}</div>`;
+let scApply=null;
+const INFO={
+ mayo:`<h4>Cómo se usa</h4><ul class="why">
+  <li class="n"><b>Mayo parcial</b> (0–9): frecuencia + sangrado + valoración global, sin endoscopía. Sirve para seguimiento clínico y para clasificar en la consulta.</li>
+  <li class="n"><b>Mayo total</b> (0–12): suma la endoscopía. Remisión ≤2 sin subpuntaje &gt;1. Respuesta: descenso ≥3 puntos y ≥30 %, con sangrado que baja ≥1 o queda en 0–1.</li>
+  <li class="n"><b>Mayo modificado</b> (0–9: frecuencia + sangrado + endoscopía), usado en ensayos recientes y por la FDA. Remisión: frecuencia ≤1, sangrado 0 y endoscópico ≤1.</li>
+  <li class="n"><b>Objetivo STRIDE-II</b>: Mayo endoscópico 0–1 (ideal 0) a los 6–12 meses.</li></ul>
+  <p class="note" style="margin-top:8px">Schroeder KW, Tremaine WJ, Ilstrup DM. N Engl J Med. 1987;317:1625-9. doi:10.1056/NEJM198712243172603 · Lewis JD et al. Inflamm Bowel Dis. 2008;14:1660-6. doi:10.1002/ibd.20520</p>`,
+ hbi:`<h4>Cómo se usa</h4><ul class="why">
+  <li class="n">Índice simplificado del CDAI con datos del <b>día previo</b>; se calcula en la consulta, sin diario de 7 días.</li>
+  <li class="n"><b>Respuesta</b>: descenso ≥3 puntos. <b>Remisión</b>: &lt;5.</li>
+  <li class="n">Se correlaciona mal con la inflamación: confirmar con calprotectina, PCR, endoscopía o imagen (ACG 2025, KC9).</li></ul>
+  <p class="note" style="margin-top:8px">Harvey RF, Bradshaw JM. A simple index of Crohn's-disease activity. Lancet. 1980;1(8167):514. doi:10.1016/s0140-6736(80)92767-1</p>`,
+ ses:`<h4>Cómo se usa</h4><ul class="why">
+  <li class="n">Puntaje endoscópico: 4 variables (0–3) en 5 segmentos; total 0–56. La estenosis no se mueve con el tratamiento médico.</li>
+  <li class="n"><b>Objetivo STRIDE-II</b>: SES-CD &lt;3 o ausencia de úlceras a los 6–12 meses.</li>
+  <li class="n"><b>Respuesta endoscópica</b>: descenso ≥50 % respecto del basal.</li>
+  <li class="n">En enfermedad ileal aislada el máximo es bajo: un mismo número pesa más que en colitis extensa.</li></ul>
+  <p class="note" style="margin-top:8px">Daperno M, D'Haens G, Van Assche G, et al. Development and validation of a new, simplified endoscopic activity score for Crohn's disease: the SES-CD. Gastrointest Endosc. 2004;60(4):505-12. doi:10.1016/s0016-5107(04)01878-4</p>`
+};
+function scRender(){
+  const tool=(document.querySelector('input[name="stool"]:checked')||{}).value||"mayo";
+  ["mayo","hbi","ses"].forEach(t=>$("#f-"+t).hidden=t!==tool);
+  $("#sc-info").innerHTML=INFO[tool];
+  const btn=$("#sc-apply");btn.hidden=true;scApply=null;let h="";
+  if(tool==="mayo"){
+    const v={};MAYO.forEach(q=>{v[q.k]=val("my_"+q.k);$("#mv-"+q.k).textContent=v[q.k]===null?"":v[q.k]});
+    const okP=v.sf!==null&&v.rb!==null&&v.pga!==null, partial=okP?v.sf+v.rb+v.pga:null;
+    const total=okP&&v.es!==null?partial+v.es:null, mms=v.sf!==null&&v.rb!==null&&v.es!==null?v.sf+v.rb+v.es:null;
+    const maxSub=Math.max(...Object.values(v).map(x=>x||0));
+    let main,lab,st;
+    if(total!==null){main=total+"<small>/12</small>";const rem=total<=2&&maxSub<=1;lab=rem?"Remisión":total<=5?"Leve":total<=10?"Moderada":"Grave";st=rem?"r":total<=5?"p":"f";
+      if(!rem)scApply=total<=5?"leve":total<=10?"moderada":"grave";
+      h=`<div class="k">Mayo total</div><div class="score"><b class="st-${st}">${main}</b><span class="st-${st}">${lab}</span></div>${band([[0,2,"Remisión (sin subpuntaje >1)","0–2"],[3,5,"Leve","3–5"],[6,10,"Moderada","6–10"],[11,12,"Grave","11–12"]],total)}`;
+    }else if(partial!==null){lab=partial<=1?"Remisión":partial<=4?"Leve":partial<=7?"Moderada":"Grave";st=partial<=1?"r":partial<=4?"p":"f";
+      if(partial>1)scApply=partial<=4?"leve":partial<=7?"moderada":"grave";
+      h=`<div class="k">Mayo parcial</div><div class="score"><b class="st-${st}">${partial}<small>/9</small></b><span class="st-${st}">${lab}</span></div>${band([[0,1,"Remisión","0–1"],[2,4,"Leve","2–4"],[5,7,"Moderada","5–7"],[8,9,"Grave","8–9"]],partial)}`;
+    }else h=`<div class="k">Mayo</div><h3>Completa frecuencia, sangrado y valoración global</h3><p class="note">Con esos tres se obtiene el Mayo parcial; agrega la endoscopía para el total.</p>`;
+    const extra=[];
+    if(partial!==null&&total!==null)extra.push(`Mayo parcial: <b>${partial}/9</b>`);
+    if(mms!==null)extra.push(`Mayo modificado: <b>${mms}/9</b>${v.sf<=1&&v.rb===0&&v.es<=1?" · remisión":""}`);
+    if(v.es!==null)extra.push(`Endoscópico: <b>${v.es}</b> · ${v.es===0?"remisión endoscópica":v.es===1?"mejoría endoscópica (objetivo STRIDE-II cumplido)":"actividad endoscópica"}`);
+    if(extra.length)h+=`<ul class="why" style="margin-top:8px">${extra.map(x=>`<li class="n">${x}</li>`).join("")}</ul>`;
+    if(scApply){btn.hidden=false;btn.textContent=`Usar en la decisión: CU ${scApply}`}
+  }else if(tool==="hbi"){
+    const wb=val("hb_wb"),pa=val("hb_pa"),ms=val("hb_ms"),stv=$("#hb-st").value,stn=parseInt(stv)||0,comp=document.querySelectorAll('input[name="hb_c"]:checked').length;
+    if(wb===null||pa===null||ms===null||stv===""){h=`<div class="k">Harvey-Bradshaw</div><h3>Completa los 5 ítems</h3><p class="note">Estado general, dolor, deposiciones, masa y complicaciones.</p>`}
+    else{const s=wb+pa+stn+ms+comp;const lab=s<5?"Remisión":s<=7?"Leve":s<=16?"Moderada":"Grave",st=s<5?"r":s<=7?"p":"f";
+      if(s>=5)scApply=s<=7?"leve":s<=16?"moderada":"grave";
+      h=`<div class="k">Harvey-Bradshaw</div><div class="score"><b class="st-${st}">${s}</b><span class="st-${st}">${lab}</span></div>${band([[0,4,"Remisión","<5"],[5,7,"Leve","5–7"],[8,16,"Moderada","8–16"],[17,999,"Grave",">16"]],s)}
+      <ul class="why" style="margin-top:8px"><li class="n">Estado general ${wb} · dolor ${pa} · deposiciones ${stn} · masa ${ms} · complicaciones ${comp}</li></ul>`;
+      if(scApply){btn.hidden=false;btn.textContent=`Usar en la decisión: Crohn ${scApply}`}
+    }
+  }else{
+    let tot=0,seen=0,ulc=false,stn=false;
+    SEGS.forEach(([k])=>{
+      const nx=$("#nx-"+k).checked;let p=0,any=false;
+      SESV.forEach(v=>{const x=val(`ses_${k}_${v.k}`);document.querySelectorAll(`input[name="ses_${k}_${v.k}"]`).forEach(e=>e.disabled=nx);if(!nx&&x!==null){p+=x;any=true;if(v.k==="u"&&x>0)ulc=true;if(v.k==="n"&&x>0)stn=true}});
+      $("#sp-"+k).textContent=nx?"no explorado":any?p+" pts":"—";if(!nx&&any){tot+=p;seen++}
+    });
+    if(!seen)h=`<div class="k">SES-CD</div><h3>Puntúa al menos un segmento</h3><p class="note">Abre cada segmento y marca sus 4 variables.</p>`;
+    else{const lab=tot<=2?"Remisión endoscópica":tot<=6?"Leve":tot<=15?"Moderada":"Grave",st=tot<=2?"r":tot<=6?"p":"f";
+      h=`<div class="k">SES-CD · ${seen} segmento(s) puntuado(s)</div><div class="score"><b class="st-${st}">${tot}<small>/56</small></b><span class="st-${st}">${lab}</span></div>${band([[0,2,"Remisión endoscópica","0–2"],[3,6,"Leve","3–6"],[7,15,"Moderada","7–15"],[16,56,"Grave","≥16"]],tot)}
+      <ul class="why" style="margin-top:8px"><li class="${ulc?"w":"p"}">${ulc?"Hay úlceras: no cumple el objetivo STRIDE-II":"Sin úlceras: objetivo endoscópico STRIDE-II cumplido"}${tot<3&&ulc?" (aunque el puntaje sea <3, revisar)":""}</li>${stn?`<li class="w">Estenosis presente: caracterizar con imagen (componente inflamatorio vs fibrótico)</li>`:""}</ul>`;
+    }
+  }
+  $("#sc-resb").innerHTML=h;
+}
+$("#v-scores").addEventListener("change",scRender);
+$("#v-scores").addEventListener("input",e=>{if(e.target.id==="hb-st")scRender()});
+$("#sc-apply").addEventListener("click",()=>{
+  const tool=(document.querySelector('input[name="stool"]:checked')||{}).value;if(!scApply)return;
+  if(tool==="mayo"){$("#dz-cu").checked=true;$("#sev-"+({leve:"l",moderada:"m",grave:"g"})[scApply]).checked=true}
+  else{$("#dz-ec").checked=true;$("#act-"+({leve:"l",moderada:"m",grave:"g"})[scApply]).checked=true}
+  render();toast("Actividad llevada al caso");location.hash="decision";
+});
+scRender();
 </script>
 
 <style>
