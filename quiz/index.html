@@ -2376,19 +2376,21 @@ function save(){
   if(!booting){DB._t=Date.now();dirty=true;clearTimeout(pushTimer);pushTimer=setTimeout(pushCloud,1500);}
   writeLocal();
 }
-function setSync(st,txt){const el=document.getElementById("syncState");if(!el)return;el.className="sync "+st;el.textContent=txt;
+function setSync(st,txt){const el=document.getElementById("syncState");if(!el)return;el.className="sync "+st;el.textContent=txt;el.title=st==="err"?"Motivo: "+syncWhy:"Estado de guardado";
   const p=document.getElementById("syncNote");if(p)p.textContent=syncNote();}
-let lastSync=null,syncErr=false;
-function syncNote(){return syncErr?"Sin conexión con la nube: el progreso queda en este navegador y se sincroniza al volver la conexión.":lastSync?`Progreso sincronizado con Google Sheets (${lastSync.toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"})}): lo retomas desde cualquier dispositivo.`:"Conectando con la nube…"}
+let lastSync=null,syncErr=false,syncWhy="";
+function syncNote(){return syncErr?`Sin conexión con la nube (${syncWhy||"error desconocido"}): el progreso queda en este navegador y se sincroniza al volver la conexión.`:lastSync?`Progreso sincronizado con Google Sheets (${lastSync.toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"})}): lo retomas desde cualquier dispositivo.`:"Conectando con la nube…"}
+async function readJSON(r){const t=await r.text();try{return JSON.parse(t)}catch(e){
+  const m=t.replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim().slice(0,140);throw new Error("Google respondió una página en vez de datos: "+m)}}
 async function pushCloud(){
   clearTimeout(pushTimer);pushTimer=null;
   if(!dirty&&!LOG.length)return;
   const lote=LOG.splice(0);dirty=false;
   try{
     const r=await fetch(CLOUD.api,{method:"POST",body:JSON.stringify({token:CLOUD.token,action:"save",quizId:CLOUD.id,estado:DB,respuestas:lote})});
-    const d=await r.json();if(!d.ok)throw new Error(d.error);
+    const d=await readJSON(r);if(!d.ok)throw new Error(d.error);
     lastSync=new Date();syncErr=false;setSync("ok","☁ guardado");
-  }catch(e){LOG.unshift(...lote);dirty=true;syncErr=true;setSync("err","● sin conexión");}
+  }catch(e){LOG.unshift(...lote);dirty=true;syncErr=true;syncWhy=e.message||String(e);setSync("err","● sin conexión");}
 }
 addEventListener("pagehide",()=>{
   if(!dirty&&!LOG.length)return;
@@ -2754,7 +2756,7 @@ function applyRemote(src){
 (async()=>{
   try{
     const r=await fetch(`${CLOUD.api}?action=load&quizId=${encodeURIComponent(CLOUD.id)}&token=${encodeURIComponent(CLOUD.token)}`);
-    const d=await r.json();if(!d.ok)throw new Error(d.error);
+    const d=await readJSON(r);if(!d.ok)throw new Error(d.error);
     const remote=d.estado;
     if(remote&&(remote._t||0)>(DB._t||0))applyRemote(remote);
     else if(!remote||(remote._t||0)<(DB._t||0)){
@@ -2762,7 +2764,7 @@ function applyRemote(src){
       if(Object.keys(DB.q).length||DB.exams.length||DB.ex||(DB.st&&Object.keys(DB.st.ans||{}).length)){DB._t=DB._t||Date.now();writeLocal();dirty=true;await pushCloud();return;}
     }
     lastSync=new Date();syncErr=false;setSync("ok","☁ guardado");
-  }catch(e){syncErr=true;setSync("err","● sin conexión");}
+  }catch(e){syncErr=true;syncWhy=e.message||String(e);setSync("err","● sin conexión");}
 })();
 })();
 
