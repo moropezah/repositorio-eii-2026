@@ -2366,7 +2366,8 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",
 
 /* ---------- almacenamiento: este navegador + nube (Google Sheets) ---------- */
 const KEY="quizEII_v6";
-const CLOUD={api:"https://script.google.com/macros/s/AKfycbyByCFBYNGbFYf7d6JS2CtFOqNCVFqS3Nj7uxHmSx2Myz0cDw4jmAFwyeJ7Ud70a7ee/exec",token:"1234",id:"quizEII_v6"};
+const CLOUD={api:"https://script.google.com/macros/s/AKfycbyByCFBYNGbFYf7d6JS2CtFOqNCVFqS3Nj7uxHmSx2Myz0cDw4jmAFwyeJ7Ud70a7ee/exec",tokens:["1234","CAMBIA-ESTE-TOKEN"],token:"1234",id:"quizEII_v6"};
+let tokenReady=null;         // se resuelve cuando se sabe qué clave acepta el script
 let booting=true;            // durante la carga no se marca cambio ni se envía a la nube
 const LOG=[];                // respuestas pendientes de enviar a la hoja "respuestas"
 let pushTimer=null,dirty=false;
@@ -2382,8 +2383,18 @@ let lastSync=null,syncErr=false,syncWhy="";
 function syncNote(){return syncErr?`Sin conexión con la nube (${syncWhy||"error desconocido"}): el progreso queda en este navegador y se sincroniza al volver la conexión.`:lastSync?`Progreso sincronizado con Google Sheets (${lastSync.toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"})}): lo retomas desde cualquier dispositivo.`:"Conectando con la nube…"}
 async function readJSON(r){const t=await r.text();try{return JSON.parse(t)}catch(e){
   const m=t.replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim().slice(0,140);throw new Error("Google respondió una página en vez de datos: "+m)}}
+async function resolveToken(){
+  for(const t of CLOUD.tokens){
+    const r=await fetch(`${CLOUD.api}?action=load&quizId=${encodeURIComponent(CLOUD.id)}&token=${encodeURIComponent(t)}`);
+    const d=await readJSON(r);
+    if(d.ok){CLOUD.token=t;return d;}
+    if(d.error!=="token inválido")throw new Error(d.error);
+  }
+  throw new Error("token inválido (la clave del script no coincide con la del quiz)");
+}
 async function pushCloud(){
   clearTimeout(pushTimer);pushTimer=null;
+  if(tokenReady)try{await tokenReady}catch(e){}
   if(!dirty&&!LOG.length)return;
   const lote=LOG.splice(0);dirty=false;
   try{
@@ -2755,8 +2766,8 @@ function applyRemote(src){
 }
 (async()=>{
   try{
-    const r=await fetch(`${CLOUD.api}?action=load&quizId=${encodeURIComponent(CLOUD.id)}&token=${encodeURIComponent(CLOUD.token)}`);
-    const d=await readJSON(r);if(!d.ok)throw new Error(d.error);
+    tokenReady=resolveToken();
+    const d=await tokenReady;
     const remote=d.estado;
     if(remote&&(remote._t||0)>(DB._t||0))applyRemote(remote);
     else if(!remote||(remote._t||0)<(DB._t||0)){
