@@ -177,6 +177,8 @@ textarea.dump{width:100%;min-height:180px;font:12px var(--mono);background:var(-
   #printArea .pq p{margin:3pt 0}
   #printArea .pb{break-before:page}
 }
+.sync{font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:10px;white-space:nowrap}
+.sync.ok{color:var(--ok)}.sync.err{color:var(--warn)}
 @media (max-width:560px){.brand small{display:none}.top .row{padding-top:8px}#themeBtn{padding:6px 10px;font-size:13px}.qcard{padding:16px}.stem{font-size:17px}.bar{grid-template-columns:110px 1fr 48px}.score .big{font-size:42px}}
 </style>
 
@@ -184,6 +186,7 @@ textarea.dump{width:100%;min-height:180px;font:12px var(--mono);background:var(-
   <div class="row">
     <div class="brand">Quiz EII <small>v6.1 · sep 2026 · 220 casos · CU · Crohn · transversal</small></div>
     <span class="spacer"></span>
+    <span id="syncState" class="sync" title="Estado de guardado">● local</span>
     <button class="btn ghost" id="themeBtn" type="button" aria-label="Cambiar tema">◐ Tema</button>
   </div>
   <nav class="tabs" role="tablist">
@@ -2361,12 +2364,41 @@ const LET="ABCDE";
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
-/* ---------- almacenamiento local (opcional) ---------- */
+/* ---------- almacenamiento: este navegador + nube (Google Sheets) ---------- */
 const KEY="quizEII_v6";
+const CLOUD={api:"https://script.google.com/macros/s/AKfycbyByCFBYNGbFYf7d6JS2CtFOqNCVFqS3Nj7uxHmSx2Myz0cDw4jmAFwyeJ7Ud70a7ee/exec",token:"1234",id:"quizEII_v6"};
+let booting=true;            // durante la carga no se marca cambio ni se envía a la nube
+const LOG=[];                // respuestas pendientes de enviar a la hoja "respuestas"
+let pushTimer=null,dirty=false;
 function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(DB))}catch(e){}}
+function writeLocal(){try{localStorage.setItem(KEY,JSON.stringify(DB))}catch(e){}}
+function save(){
+  if(!booting){DB._t=Date.now();dirty=true;clearTimeout(pushTimer);pushTimer=setTimeout(pushCloud,1500);}
+  writeLocal();
+}
+function setSync(st,txt){const el=document.getElementById("syncState");if(!el)return;el.className="sync "+st;el.textContent=txt;
+  const p=document.getElementById("syncNote");if(p)p.textContent=syncNote();}
+let lastSync=null,syncErr=false;
+function syncNote(){return syncErr?"Sin conexión con la nube: el progreso queda en este navegador y se sincroniza al volver la conexión.":lastSync?`Progreso sincronizado con Google Sheets (${lastSync.toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"})}): lo retomas desde cualquier dispositivo.`:"Conectando con la nube…"}
+async function pushCloud(){
+  clearTimeout(pushTimer);pushTimer=null;
+  if(!dirty&&!LOG.length)return;
+  const lote=LOG.splice(0);dirty=false;
+  try{
+    const r=await fetch(CLOUD.api,{method:"POST",body:JSON.stringify({token:CLOUD.token,action:"save",quizId:CLOUD.id,estado:DB,respuestas:lote})});
+    const d=await r.json();if(!d.ok)throw new Error(d.error);
+    lastSync=new Date();syncErr=false;setSync("ok","☁ guardado");
+  }catch(e){LOG.unshift(...lote);dirty=true;syncErr=true;setSync("err","● sin conexión");}
+}
+addEventListener("pagehide",()=>{
+  if(!dirty&&!LOG.length)return;
+  try{navigator.sendBeacon(CLOUD.api,new Blob([JSON.stringify({token:CLOUD.token,action:"save",quizId:CLOUD.id,estado:DB,respuestas:LOG.splice(0)})],{type:"text/plain"}));dirty=false}catch(e){}
+});
+addEventListener("online",()=>{if(dirty||LOG.length)pushCloud()});
 const DB=load(); DB.q=DB.q||{}; DB.exams=DB.exams||[];
-function record(id,ok){const r=DB.q[id]||{n:0,ok:0};r.n++;if(ok)r.ok++;r.last=ok?1:0;DB.q[id]=r;save()}
+function record(id,ok,chosen){const r=DB.q[id]||{n:0,ok:0};r.n++;if(ok)r.ok++;r.last=ok?1:0;DB.q[id]=r;
+  const q=byId[id];if(q)LOG.push({preguntaId:id,tema:`${q.b} · ${q.t}`,elegida:chosen==null?"":chosen,correcta:q.c,fecha:new Date().toISOString()});
+  save()}
 
 /* ---------- tema ---------- */
 $("#themeBtn").addEventListener("click",()=>{
@@ -2406,7 +2438,10 @@ function explainHTML(q,order,chosen){
 function themes(list){return [...new Set(list.map(q=>q.t))].sort((a,b)=>a.localeCompare(b,"es"))}
 
 /* ================= ESTUDIO ================= */
-const ST={bank:"E",b:"all",n:"all",t:"all",failed:false,i:0,orders:{},ans:{}};
+const ST_DEF=()=>({bank:"E",b:"all",n:"all",t:"all",failed:false,i:0,orders:{},ans:{}});
+const ST=ST_DEF();
+function restoreST(){const d=ST_DEF();Object.keys(ST).forEach(k=>delete ST[k]);Object.assign(ST,d,DB.st||{});ST.orders=ST.orders||{};ST.ans=ST.ans||{};}
+restoreST();
 function studyList(){return ALL.filter(q=>(ST.bank==="all"||q.mode==="E")&&(ST.b==="all"||q.b===ST.b)&&(ST.n==="all"||q.n===ST.n)&&(ST.t==="all"||q.t===ST.t)&&(!ST.failed||(DB.q[q.id]&&DB.q[q.id].last===0)))}
 function renderStudy(){
   const root=$("#tab-study");const list=studyList();
@@ -2419,7 +2454,7 @@ function renderStudy(){
     <span><label class="flabel" for="stTema">Tema</label><select id="stTema"><option value="all">Todos</option>${themes(pool).map(t=>`<option ${t===ST.t?"selected":""}>${esc(t)}</option>`).join("")}</select></span>
     <span>${segHTML("failed",[["0","Todas"],["1","Solo falladas"]],ST.failed?"1":"0")}</span>
   </div>`;
-  if(!list.length){root.innerHTML=h+`<div class="card empty">No hay preguntas con estos filtros${ST.failed?" (aún no registras preguntas falladas)":""}.</div>`;bindStudy(root);return;}
+  if(!list.length){root.innerHTML=h+`<div class="card empty">No hay preguntas con estos filtros${ST.failed?" (aún no registras preguntas falladas)":""}.</div>`;bindStudy(root);persistST();return;}
   const q=list[ST.i];
   if(!ST.orders[q.id])ST.orders[q.id]=shuffle(q.o.map((_,i)=>i));
   const order=ST.orders[q.id];const chosen=ST.ans[q.id];const done=chosen!==undefined;
@@ -2439,13 +2474,14 @@ function renderStudy(){
     </div>
     <div class="palette" aria-label="Navegación">${list.map((x,k)=>{const a=ST.ans[x.id];let c=k===ST.i?"cur":"";if(a!==undefined)c+=a===x.c?" ok":" bad";return `<button type="button" class="${c}" data-k="${k}" title="${x.id}">${k+1}</button>`}).join("")}</div>
   </article>`;
-  root.innerHTML=h;bindStudy(root);
-  root.querySelectorAll(".opt").forEach(b=>b.addEventListener("click",()=>{const oi=+b.dataset.oi;ST.ans[q.id]=oi;record(q.id,oi===q.c);renderStudy();}));
+  root.innerHTML=h;bindStudy(root);persistST();
+  root.querySelectorAll(".opt").forEach(b=>b.addEventListener("click",()=>{const oi=+b.dataset.oi;ST.ans[q.id]=oi;record(q.id,oi===q.c,oi);renderStudy();}));
   const r=$("#stRetry");if(r)r.addEventListener("click",()=>{delete ST.ans[q.id];ST.orders[q.id]=shuffle(q.o.map((_,i)=>i));renderStudy()});
   $("#stPrev").addEventListener("click",()=>{ST.i--;renderStudy();scrollTop()});
   $("#stNext").addEventListener("click",()=>{ST.i++;renderStudy();scrollTop()});
   root.querySelectorAll(".palette button").forEach(b=>b.addEventListener("click",()=>{ST.i=+b.dataset.k;renderStudy()}));
 }
+function persistST(){const nw=JSON.stringify(ST);if(JSON.stringify(DB.st||null)===nw)return;DB.st=JSON.parse(nw);save();}
 function bindStudy(root){
   bindSeg(root,"bank",v=>{ST.bank=v;ST.t="all";ST.i=0;renderStudy()});
   bindSeg(root,"b",v=>{ST.b=v;ST.i=0;renderStudy()});
@@ -2458,8 +2494,22 @@ function scrollTop(){const t=$("#tab-study");if(t&&t.getBoundingClientRect().top
 /* ================= EXAMEN ================= */
 const EX={b:"all",n:"all",count:"20",timer:"on",state:"setup",qs:[],orders:{},ans:{},i:0,t0:0,limit:0,tick:null,confirm:false,only:null};
 function examPool(){return ALL.filter(q=>q.mode==="X"&&(EX.b==="all"||q.b===EX.b)&&(EX.n==="all"||q.n===EX.n))}
+function persistEX(){
+  if(EX.state==="run")DB.ex={b:EX.b,n:EX.n,count:EX.count,timer:EX.timer,qids:EX.qs.map(q=>q.id),orders:EX.orders,ans:EX.ans,i:EX.i,t0:EX.t0,limit:EX.limit};
+  else if(!DB.ex)return; else delete DB.ex;
+  save();
+}
+function restoreEX(){
+  clearInterval(EX.tick);EX.tick=null;
+  const d=DB.ex;
+  if(d&&Array.isArray(d.qids)){const qs=d.qids.map(id=>byId[id]).filter(Boolean);
+    if(qs.length){Object.assign(EX,{b:d.b,n:d.n,count:d.count,timer:d.timer,qs,orders:d.orders||{},ans:d.ans||{},i:Math.min(d.i||0,qs.length-1),t0:d.t0,limit:d.limit||0,state:"run",confirm:false});
+      qs.forEach(q=>{if(!EX.orders[q.id])EX.orders[q.id]=shuffle(q.o.map((_,i)=>i))});
+      if(EX.limit)EX.tick=setInterval(updTimer,1000);return;}}
+  if(EX.state==="run")EX.state="setup";
+}
 function renderExam(){
-  const root=$("#tab-exam");
+  const root=$("#tab-exam");persistEX();
   if(EX.state==="setup"){
     const pool=examPool();
     root.innerHTML=`<div class="filters"></div><div class="card setup">
@@ -2544,7 +2594,7 @@ function updTimer(){
 }
 function finishExam(){
   clearInterval(EX.tick);EX.state="done";
-  EX.qs.forEach(q=>{if(EX.ans[q.id]!==undefined)record(q.id,EX.ans[q.id]===q.c)});
+  EX.qs.forEach(q=>{if(EX.ans[q.id]!==undefined)record(q.id,EX.ans[q.id]===q.c,EX.ans[q.id])});
   const ok=EX.qs.filter(q=>EX.ans[q.id]===q.c).length;
   DB.exams.push({d:Date.now(),n:EX.qs.length,ok});if(DB.exams.length>30)DB.exams.shift();save();
   renderExam();window.scrollTo({top:0});
@@ -2595,9 +2645,9 @@ function renderStats(){
     <div class="bars">${rows}</div></div>
   <div class="actions"><button class="btn primary" type="button" id="goFailed" ${failed.length?"":"disabled"}>Repasar ${failed.length} falladas en modo estudio</button>
   <span class="spacer"></span><button class="btn ghost" type="button" id="resetP">${statsConfirm?"Confirmar: borrar progreso":"Borrar progreso"}</button></div>
-  <p class="muted" style="font-size:13px">El progreso se guarda solo en este navegador.</p>`;
+  <p class="muted" style="font-size:13px" id="syncNote">${syncNote()}</p>`;
   $("#goFailed").addEventListener("click",()=>{ST.bank="all";ST.failed=true;ST.b="all";ST.n="all";ST.t="all";ST.i=0;renderStudy();showTab("study")});
-  $("#resetP").addEventListener("click",()=>{if(statsConfirm){DB.q={};DB.exams=[];save();statsConfirm=false}else statsConfirm=true;renderStats()});
+  $("#resetP").addEventListener("click",()=>{if(statsConfirm){DB.q={};DB.exams=[];DB.st=null;delete DB.ex;restoreST();EX.state="setup";clearInterval(EX.tick);save();statsConfirm=false;renderStudy();renderExam()}else statsConfirm=true;renderStats()});
 }
 let statsConfirm=false;
 
@@ -2687,8 +2737,33 @@ function renderExport(){
 const SIG=[["5-ASA","Ácido 5-aminosalicílico (mesalazina)"],["ACE","Índice Albúmina–PCR–Endoscopía"],["ACG","American College of Gastroenterology"],["ACTECCU","Agrupación Chilena de Trabajo en Enfermedad de Crohn y Colitis Ulcerosa"],["AGA","American Gastroenterological Association"],["CCR","Cáncer colorrectal"],["CDAI","Crohn's Disease Activity Index"],["CEP","Colangitis esclerosante primaria"],["CMV","Citomegalovirus"],["CPU","Clinical Practice Update (AGA)"],["CU","Colitis ulcerosa"],["CUAG","Colitis ulcerosa aguda grave (ASUC)"],["EC","Enfermedad de Crohn"],["ECCO","European Crohn's and Colitis Organisation"],["EII","Enfermedad inflamatoria intestinal"],["EM","Esclerosis múltiple"],["FEVI","Fracción de eyección del ventrículo izquierdo"],["HBI","Harvey-Bradshaw Index"],["HBPM","Heparina de bajo peso molecular"],["IC","Insuficiencia cardíaca"],["ICI","Inhibidores de puntos de control inmunitario"],["IGRA","Interferon-gamma release assay (QuantiFERON)"],["IPAA","Anastomosis ileoanal con reservorio"],["IUS","Ecografía intestinal"],["JAK","Janus quinasa"],["LMP","Leucoencefalopatía multifocal progresiva"],["LRS","Ley Ricarte Soto"],["MACE","Eventos cardiovasculares mayores"],["MEI","Manifestaciones extraintestinales"],["MES","Subscore endoscópico de Mayo"],["mPDAI","Modified Pouchitis Disease Activity Index"],["NEE","Nutrición enteral exclusiva"],["PCR","Proteína C reactiva"],["PRO2","Resultado reportado por el paciente de 2 ítems"],["S1P","Esfingosina-1-fosfato"],["SES-CD","Simple Endoscopic Score for Crohn's Disease"],["STRIDE","Selecting Therapeutic Targets in IBD (IOIBD)"],["TBC","Tuberculosis"],["TDM","Monitorización terapéutica de fármacos"],["TEV","Tromboembolismo venoso"],["TL1A","Ligando 1A tipo TNF"],["TPMT","Tiopurina metiltransferasa"],["UCEIS","Ulcerative Colitis Endoscopic Index of Severity"],["VEB","Virus de Epstein-Barr"],["VHB","Virus hepatitis B"],["6-MMP","6-metilmercaptopurina"],["6-TGN","6-tioguanina nucleótidos"]];
 $("#tab-gloss").innerHTML=`<div class="filters"></div><div class="card panel"><h2>Siglas usadas en el banco</h2><div class="gloss">${SIG.map(([a,b])=>`<div><b>${a}</b> · ${b}</div>`).join("")}</div></div>`;
 
+restoreEX();
 renderStudy();renderExam();renderChanges();renderExport();
 if(DB.tab&&DB.tab!=="study")showTab(DB.tab);
+booting=false;
+
+/* ---------- traer el progreso de la nube (gana la versión más reciente) ---------- */
+function applyRemote(src){
+  booting=true;
+  Object.keys(DB).forEach(k=>delete DB[k]);Object.assign(DB,src);DB.q=DB.q||{};DB.exams=DB.exams||[];
+  if(DB.theme)document.documentElement.setAttribute("data-theme",DB.theme);
+  restoreST();restoreEX();renderStudy();renderExam();
+  if(!$("#tab-stats").hidden)renderStats();
+  writeLocal();booting=false;
+}
+(async()=>{
+  try{
+    const r=await fetch(`${CLOUD.api}?action=load&quizId=${encodeURIComponent(CLOUD.id)}&token=${encodeURIComponent(CLOUD.token)}`);
+    const d=await r.json();if(!d.ok)throw new Error(d.error);
+    const remote=d.estado;
+    if(remote&&(remote._t||0)>(DB._t||0))applyRemote(remote);
+    else if(!remote||(remote._t||0)<(DB._t||0)){
+      // la nube está vacía o más atrasada: sube lo de este navegador (incluye el progreso previo a la sincronización)
+      if(Object.keys(DB.q).length||DB.exams.length||DB.ex||(DB.st&&Object.keys(DB.st.ans||{}).length)){DB._t=DB._t||Date.now();writeLocal();dirty=true;await pushCloud();return;}
+    }
+    lastSync=new Date();syncErr=false;setSync("ok","☁ guardado");
+  }catch(e){syncErr=true;setSync("err","● sin conexión");}
+})();
 })();
 
 </script>
