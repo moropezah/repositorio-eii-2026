@@ -64,7 +64,7 @@ button{font:inherit;color:inherit}
 /* barra */
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:60;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line)}
 .top-in{max-width:var(--maxw);margin:0 auto;padding:9px 20px;display:flex;align-items:center;gap:14px}
-.brand{display:flex;align-items:center;gap:9px;font-family:var(--ff-s);font-weight:700;font-size:1.02rem;color:var(--fg);text-decoration:none;white-space:nowrap}
+.brand{font-family:var(--ff-b);display:flex;align-items:center;gap:9px;font-family:var(--ff-s);font-weight:700;font-size:1.02rem;color:var(--fg);text-decoration:none;white-space:nowrap}
 .brand .dot{width:24px;height:24px;border-radius:6px;background:linear-gradient(135deg,var(--marino),var(--acento));display:grid;place-items:center;color:var(--bg);font-size:.6rem;font-weight:700;font-family:var(--ff-b);flex:none}
 nav.tabs{display:flex;gap:2px;margin-left:auto;overflow-x:auto;scrollbar-width:none;min-width:0}
 nav.tabs::-webkit-scrollbar{display:none}
@@ -433,6 +433,7 @@ fieldset.blk{box-shadow:var(--sh)}
 .reco li b{font-family:var(--ff-s);font-size:1.08rem}
 .reco li span{font-size:.84rem;color:var(--fg-2)}
 .reco li em{font-style:normal;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--fg-3);margin-left:6px}
+.brand{font-family:var(--ff-b);display:flex;flex-wrap:wrap;gap:4px 6px;margin-top:4px;font-size:.8rem}.brand span{padding:1px 8px;border-radius:999px;border:1px solid var(--line,#ccd)}.brand .bc{font-weight:700;color:var(--fg-1,inherit)}.brand .bn{color:var(--fg-3);font-style:italic}.brl{font-family:var(--ff-b);font-weight:400;font-size:.74rem;color:var(--fg-3);margin-top:2px}
 </style>
 
 <header class="top">
@@ -686,7 +687,7 @@ fieldset.blk{box-shadow:var(--sh)}
   <h2 class="sec">Fármacos en EII</h2>
   <p class="lead">Dosis, presentación para la receta, cinética, niveles, efectos esperables en el control, embarazo, ensayos pivotales, situación en Chile y checklist previo al inicio. Toca una fila para abrir la ficha.</p>
   <div class="filters" id="ffil">
-    <input type="search" id="fq" placeholder="Buscar fármaco o clase" aria-label="Buscar fármaco">
+    <input type="search" id="fq" placeholder="Buscar fármaco, marca o clase" aria-label="Buscar fármaco">
   </div>
   <div class="tw"><table class="t" id="ftab"><caption>Situación en Chile: LRS = Ley Ricarte Soto; ISP = registro sanitario sin cobertura LRS. Verificar antes de indicar.</caption>
     <thead><tr><th>Fármaco</th><th>Clase</th><th>CU</th><th>EC</th><th>Vía</th><th>Inicio de acción</th><th>Chile</th></tr></thead><tbody></tbody></table></div>
@@ -844,7 +845,7 @@ fieldset.blk{box-shadow:var(--sh)}
 
 <div class="scrim" id="scrim" hidden></div>
 <aside class="drawer" id="drawer" hidden aria-modal="true" role="dialog" aria-labelledby="dtitle">
-  <div class="dh"><div style="min-width:0"><p class="eyebrow" id="dcls"></p><h3 id="dtitle"></h3><div class="tags" id="dtags" style="margin-top:6px"></div></div><button class="x" id="dclose" type="button" aria-label="Cerrar ficha">✕</button></div>
+  <div class="dh"><div style="min-width:0"><p class="eyebrow" id="dcls"></p><h3 id="dtitle"></h3><div class="brand" id="dbrand" hidden></div><div class="tags" id="dtags" style="margin-top:6px"></div></div><button class="x" id="dclose" type="button" aria-label="Cerrar ficha">✕</button></div>
   <div class="db" id="dbody"></div>
 </aside>
 <div class="toast" id="toast" hidden></div>
@@ -1103,6 +1104,43 @@ cipro:{n:"Ciprofloxacino",cl:"abx",via:"Oral",chile:"gen",
 function r25(x){return Math.round(x/25)*25}
 
 /* ============ EN INVESTIGACIÓN ============ */
+
+/* Nombres comerciales: original primero, luego biosimilares/genéricos. cl=true → comercializado en Chile */
+const BRAND={
+mz_or:[["Pentasa · Salofalk",1],["Asacol, Mezavant (por confirmar en Chile)",0],["genéricos",1]],
+mz_comb:[["Pentasa · Salofalk (oral + supositorio/enema)",1]],
+mz_sup:[["Pentasa supositorio 1 g · Salofalk supositorio 500 mg y 1 g",1]],
+mz_ene:[["Salofalk enema y espuma · Pentasa enema",1]],
+ssz:[["Azulfidine (original)",1],["genéricos",1]],
+bud_cir:[["Entocort (original; en Chile por confirmar)",0],["Budenofalk",1]],
+bud_mmx:[["Cortiment (Uceris en EE. UU.)",1]],
+cort_rect:[["Budenofalk espuma",1]],
+pred:[["Meticorten (original)",0],["genéricos",1]],
+mpred:[["Solu-Medrol (original)",1],["genéricos",1]],
+hc:[["Solu-Cortef (original)",1],["genéricos",1]],
+aza:[["Imuran (original)",1],["genéricos",1]],
+mp:[["Purinethol (original; en Chile por confirmar)",0]],
+mtx:[["Metoject (SC)",1],["genéricos",1]],
+csa:[["Sandimmun (EV) · Sandimmun Neoral (oral)",1]],
+ifx:[["Remicade (original)",1],["Remsima (biosimilar)",1],["Inflectra y otros biosimilares (por confirmar)",0]],
+ifx_sc:[["Remsima SC",1]],
+ada:[["Humira (original)",1],["Biosimilares: Amgevita, Hyrimoz, Hadlima, Idacio (disponibilidad en Chile por confirmar)",0]],
+gol:[["Simponi",1]],
+czp:[["Cimzia",0]],
+vdz:[["Entyvio",1]],
+ust:[["Stelara (original)",1],["Biosimilares (en expansión; por confirmar en Chile)",0]],
+rzb:[["Skyrizi",0]],
+miri:[["Omvoh",0]],
+gus:[["Tremfya",1]],
+tofa:[["Xeljanz",1]],
+upa:[["Rinvoq",1]],
+fil:[["Jyseleca",0]],
+oza:[["Zeposia",0]],
+etr:[["Velsipity",0]],
+metro:[["Flagyl (original)",1],["genéricos",1]],
+cipro:[["Ciproxina (original)",1],["genéricos",1]]
+};
+function brandTx(id){const b=BRAND[id];return b?b.map(x=>x[0]).join(" · "):""}
 const PIPE=[
  {n:"Tulisokibart",mech:"Anti-TL1A (MK-7240)",dz:"CU · EC",fase:"f3",faseTx:"Fase 3",
   res:"ATLAS-UC estudio 2 (solo inducción, jun 2026): cumplió remisión clínica sem 12 y secundarios clave; cifras aún no publicadas. Fase 2 ARTEMIS-UC: remisión 26 % vs 1 % (NEJM 2024).",
@@ -1792,6 +1830,7 @@ function gTable(g){const G=GCMP[g];return `<div class="tw"><table class="t cmp">
 function openFicha(id,ph){
   const d=D[id],c=lastC||readForm();
   $("#dcls").textContent=CLS[d.cl];$("#dtitle").textContent=d.n;
+  const bb=BRAND[id];$("#dbrand").innerHTML=bb?bb.map(([t,c])=>`<span class="${c?"bc":"bn"}">${esc(t)}</span>`).join(""):"";$("#dbrand").hidden=!bb;
   $("#dtags").innerHTML=`${badge(id)}<span class="tag">${esc(d.via)}</span>${d.cu?'<span class="tag cu">CU</span>':""}${d.ec?'<span class="tag ec">EC</span>':""}`;
   let b="";
   const it=ph&&lastR?lastR.items.find(i=>i.id===id&&i.ph===ph):null;
@@ -1833,7 +1872,7 @@ function summary(){
 /* ---------- otras vistas ---------- */
 function renderFarmacos(){
   const q=($("#fq").value||"").toLowerCase();
-  $("#ftab tbody").innerHTML=Object.entries(D).filter(([id,d])=>!q||(d.n+" "+CLS[d.cl]).toLowerCase().includes(q)).map(([id,d])=>`<tr class="clk" data-ficha="${id}" tabindex="0"><td class="nm">${esc(d.n)}</td><td>${CLS[d.cl]}</td><td>${d.cu?"Sí":"—"}</td><td>${d.ec?"Sí":"—"}</td><td>${esc(d.via)}</td><td>${esc(d.kinTx||"")}</td><td>${badge(id)}</td></tr>`).join("");
+  $("#ftab tbody").innerHTML=Object.entries(D).filter(([id,d])=>!q||(d.n+" "+CLS[d.cl]+" "+brandTx(id)).toLowerCase().includes(q)).map(([id,d])=>`<tr class="clk" data-ficha="${id}" tabindex="0"><td class="nm">${esc(d.n)}${BRAND[id]?`<div class="brl">${esc(brandTx(id))}</div>`:""}</td><td>${CLS[d.cl]}</td><td>${d.cu?"Sí":"—"}</td><td>${d.ec?"Sí":"—"}</td><td>${esc(d.via)}</td><td>${esc(d.kinTx||"")}</td><td>${badge(id)}</td></tr>`).join("");
 }
 function renderKin(){
   const z=(F.ownerDocument.querySelector('input[name="kdz"]:checked')||{}).value||"cu";
