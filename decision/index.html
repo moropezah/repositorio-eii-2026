@@ -1682,7 +1682,10 @@ function evaluate(c){
       if(isTio)down(it,"prec","≥65 años: tiopurina solo en <65 (ECCO R14); ↑ linfoma y cáncer de piel no melanoma");
       if(id==="mtx")down(it,"prec","Adulto mayor: evitar metotrexato (ACTECCU 2026)");
       if(isS)down(it,"prec","Adulto mayor: S1P con precaución (bradicardia, edema macular; ACTECCU 2026)");
-      if(isT)warn(it,"≥65 años: ↑ infecciones graves, sobre todo combinado con tiopurina o corticoide");
+      if(isT){
+        if(it.tier==="pref"&&!/perianal|rescate/i.test(it.ph))down(it,"alt","≥65 años: ↑ infecciones graves y la tiopurina asociada no se recomienda (linfoma, cáncer de piel no melanoma); sin ella aumenta la inmunogenicidad. Si se elige: monoterapia con TDM proactivo");
+        else warn(it,"≥65 años: ↑ infecciones graves; evitar tiopurina asociada y usar TDM proactivo");
+      }
       if(safe&&it.tier!=="evit")up(it,"Perfil de seguridad favorable en adulto mayor");
       if(id==="pred"||id==="mpred")warn(it,"Adulto mayor: minimizar dosis y duración del corticoide");
     }else if(age>=50&&cvRisk>0&&isJ)warn(it,"≥50 años con factor de riesgo CV: población de ORAL Surveillance; discutir riesgo");
@@ -1786,7 +1789,18 @@ function evaluate(c){
     const it=R.items.find(i=>i.id==="ifx");
     if(age>=65||has("ebvneg")||has("linfoma")||has("neoActiva")||has("neo5")||has("cpnm")||c.tpmt==="baja"||has("fragil"))R.comboWarn=true;
   }
-  R.items.sort((a,b)=>ti(a.tier)-ti(b.tier)||(CHILE_ORDER[D[a.id].chile]-CHILE_ORDER[D[b.id].chile]));
+  /* orden dentro de cada nivel: según contexto */
+  const SAFE={int:0,p40:0,p19:0,asa:0,abx:0,prob:0,cort:1,tnf:1,s1p:2,jak:2,imm:2,cni:2};
+  const spd=it=>{const k=(D[it.id].kin||{})[c.dz];return k?k.on[0]:/Rescate|Puente/.test(it.ph)?0:6};
+  const sf=it=>SAFE[D[it.id].cl]??1, cl=it=>CHILE_ORDER[D[it.id].chile];
+  const severe=(c.dz==="cu"&&!pouch&&["grave","asuc"].includes(c.sev))||(c.dz==="ec"&&c.act==="grave");
+  const frailCtx=age>=65||has("fragil")||has("infRec")||has("neoActiva")||has("neo5");
+  let keys;
+  if(severe){keys=[spd,sf,cl];R.order="rapidez de acción y luego seguridad (actividad grave)"}
+  else if(frailCtx){keys=[sf,cl,spd];R.order=age>=65?"seguridad, disponibilidad en Chile y rapidez de acción (adulto mayor)":"seguridad, disponibilidad en Chile y rapidez de acción (riesgo infeccioso u oncológico)"}
+  else{keys=[cl,spd,sf];R.order="disponibilidad en Chile y luego rapidez de acción"}
+  if(c.dz==="ec"&&c.pa&&c.pa!=="no"){keys.unshift(it=>/perianal/i.test(it.ph)?0:1);R.order="eficacia perianal primero; luego "+R.order}
+  R.items.sort((a,b)=>{let d=ti(a.tier)-ti(b.tier);for(const f of keys){if(d)break;d=f(a)-f(b)}return d});
   return R;
 }
 
@@ -1889,7 +1903,7 @@ function render(){
   const prefs=R.items.filter(i=>i.tier==="pref"&&(!onlyChile||D[i.id].chile!=="no"));
   if(prefs.length){
     const main=prefs.filter(i=>!/Puente/.test(i.ph)).slice(0,4), bridge=prefs.filter(i=>/Puente/.test(i.ph));
-    h+=`<div class="reco"><div class="k"><i>✓</i>Recomendación principal</div><ul>${main.concat(bridge).map(i=>`<li><b>${esc(D[i.id].n)}<em>${esc(i.ph)}</em></b><span>${esc(doseLine(i,c.dz))}</span></li>`).join("")}</ul>${prefs.length>main.length+bridge.length?`<p class="note" style="margin-top:8px">+${prefs.length-main.length-bridge.length} opción(es) preferente(s) más abajo, con igual nivel de evidencia.</p>`:""}</div>`;
+    h+=`<div class="reco"><div class="k"><i>✓</i>Recomendación principal</div><ul>${main.concat(bridge).map(i=>`<li><b>${esc(D[i.id].n)}<em>${esc(i.ph)}</em></b><span>${esc(doseLine(i,c.dz))}</span></li>`).join("")}</ul>${prefs.length>main.length+bridge.length?`<p class="note" style="margin-top:8px">+${prefs.length-main.length-bridge.length} opción(es) preferente(s) más abajo, con igual nivel de evidencia.</p>`:""}<p class="note" style="margin-top:6px">Orden dentro de cada nivel: ${esc(R.order||"")}.</p></div>`;
   }
   const bold=t=>t.replace(/^([^:<]{3,70}):/,"<b>$1:</b>");
   if(R.alerts.length)h+=`<div class="alerts">${R.alerts.map(a=>`<div class="al ${a.lvl}"><b class="ic">${a.lvl==="r"?"ALTO":a.lvl==="a"?"OJO":"NOTA"}</b><span>${bold(a.t)}</span></div>`).join("")}</div>`;
