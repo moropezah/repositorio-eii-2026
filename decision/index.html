@@ -1936,9 +1936,34 @@ function render(){
     h+=`<div class="box"><h4>Cuándo reevaluar</h4><div class="tw" style="margin:0"><table class="t" style="min-width:480px"><thead><tr><th>Fármaco</th><th>Inicio</th><th>Fin de inducción</th><th>Niveles</th></tr></thead><tbody>${top.map(i=>{const d=D[i.id],k=d.kin[c.dz];return `<tr><td class="nm">${esc(d.n)}</td><td>${esc(d.kinTx||"")}</td><td>${wk(k.ev)}${k.ext?` · extendida ${wk(k.ext)}`:""}</td><td>${esc(d.tdm.split(".")[0])}</td></tr>`}).join("")}</tbody></table></div>
     <p class="note" style="margin-top:8px">Objetivos STRIDE-II: respuesta clínica a corto plazo; calprotectina y PCR normales a los 3–6 meses; cicatrización endoscópica a los 6–12 meses.</p></div>`;
   }
-  if(R.guides.size){h+=`<details class="more gd"><summary>Dónde discrepan las guías <small>${R.guides.size} tema(s)</small></summary><div class="box">${[...R.guides].map(g=>gTable(g)).join("")}</div></details>`}
+  const gl=relGuides(R,c);
+  if(gl.length){h+=`<details class="more gd"><summary>Dónde discrepan las guías <small>${gl.length} tema(s) · ${esc(gl.map(g=>GDRUG[g]).join(", "))}</small></summary><div class="box">${gl.map(g=>gTable(g)).join("")}</div></details>`}
   if(c.hist==="multi")h+=`<p class="note">Refractario a ≥2 mecanismos: considerar ensayo clínico. Las moléculas en fase 2–3 están en la pestaña <a href="#pipeline">En investigación</a>.</p>`;
   $("#res").innerHTML=h;
+}
+/* discrepancias: solo si el fármaco en conflicto aparece entre las sugerencias visibles */
+const GDRUG={jak:"JAK",combo:"infliximab + tiopurina",asuc:"rescate en colitis aguda grave",vdzec:"vedolizumab en EC",tbc:"tamizaje de TBC",tiop:"tiopurina ≥65 años"};
+const GREL={
+ jak:(v,c,R)=>v.some(i=>D[i.id].cl==="jak"),
+ combo:(v,c,R)=>!!R.combo&&v.some(i=>i.id==="ifx"),
+ asuc:(v,c,R)=>v.some(i=>i.ph==="Rescate"),
+ vdzec:(v,c,R)=>c.dz==="ec"&&v.some(i=>i.id==="vdz"),
+ tbc:(v,c,R)=>v.some(i=>["int","p40","p19","s1p"].includes(D[i.id].cl)),
+ tiop:(v,c,R)=>c.age>=65&&v.some(i=>i.id==="aza"||i.id==="mp")
+};
+function relGuides(R,c){
+  const v=R.items.filter(i=>["pref","alt","prec"].includes(i.tier)&&(!onlyChile||D[i.id].chile!=="no"));
+  return Object.keys(GREL).filter(g=>GREL[g](v,c,R));
+}
+function fichaGuides(id,c){
+  const d=D[id],k=d.cl,out=[];
+  if(k==="jak")out.push("jak");
+  if(id==="ifx"||id==="aza"||id==="mp")out.push("combo");
+  if((id==="ifx"||id==="csa"||k==="jak")&&c&&c.dz==="cu"&&c.sev==="asuc"&&c.ipaa!=="si")out.push("asuc");
+  if(id==="vdz"&&c&&c.dz==="ec")out.push("vdzec");
+  if(["int","p40","p19","s1p","tnf","jak"].includes(k))out.push("tbc");
+  if((id==="aza"||id==="mp")&&c&&c.age>=65)out.push("tiop");
+  return out;
 }
 function gTable(g){const G=GCMP[g];return `<div class="tw"><table class="t cmp"><caption>${esc(G.t)}</caption><tbody>${G.rows.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</tbody></table></div>`}
 
@@ -1960,6 +1985,7 @@ function openFicha(id,ph){
   b+=`<div class="fs"><h5>En el control</h5><div class="ae">${d.ae.map(([l,t])=>`<div class="${l}"><b>${l==="e"?"Esperable":l==="v"?"Vigilar":"Suspender"}</b><span>${esc(t)}</span></div>`).join("")}</div></div>`;
   b+=`<div class="fs"><h5>Embarazo y lactancia</h5><dl class="kv"><dt>Embarazo</dt><dd>${esc(d.preg)}</dd><dt>Lactancia</dt><dd>${esc(d.lact)}</dd></dl></div>`;
   b+=`<div class="fs"><h5>Ensayos pivotales y guías</h5><p>${esc(d.trials)}</p></div>`;
+  const fg=fichaGuides(id,c);if(fg.length)b+=`<div class="fs"><details class="more gd"><summary>Dónde discrepan las guías <small>${fg.length} tema(s)</small></summary><div class="box">${fg.map(g=>gTable(g)).join("")}</div></details></div>`;
   if(d.chk.length){
     b+=`<div class="fs"><h5>Checklist previo al inicio</h5><div class="cl" id="clist">${d.chk.map((k,i)=>{const x=CK[k];if(!x)return"";const tg=x[1]==="o"?'<em class="o">Obligatorio</em>':x[1]==="f"?'<em class="f">Según riesgo</em>':"";return `<label><input type="checkbox" id="ck-${id}-${i}"><span>${esc(x[0])}${tg}</span></label>`}).join("")}</div><div class="acts"><button class="btn" type="button" id="copyck">Copiar checklist</button></div></div>`;
   }
