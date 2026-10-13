@@ -1233,6 +1233,7 @@ const GTL=[
 ];
 
 const REFS=[
+ "Gordon H, Burisch J, Ellul P, Karmiris K, Katsanos K, et al. ECCO Guidelines on Extraintestinal Manifestations in Inflammatory Bowel Disease. J Crohns Colitis. 2024;18(1):1-37. doi:10.1093/ecco-jcc/jjad108",
  "Barnes EL, Agrawal M, Syal G, Ananthakrishnan AN, Cohen BL, et al. AGA Clinical Practice Guideline on the Management of Pouchitis and Inflammatory Pouch Disorders. Gastroenterology. 2024;166(1):59-85. doi:10.1053/j.gastro.2023.10.015",
  "Kayal M, Bislenghi G, Adamina M, Ardalan ZS, Avellaneda N, et al. ECCO Topical Review on Pouch Disorders. J Crohns Colitis. 2025;19(7):jjaf103. doi:10.1093/ecco-jcc/jjaf103",
  "Travis S, Silverberg MS, Danese S, Gionchetti P, Löwenberg M, et al. Vedolizumab for the Treatment of Chronic Pouchitis (EARNEST). N Engl J Med. 2023;388(13):1191-1200. doi:10.1056/NEJMoa2208450",
@@ -1638,6 +1639,22 @@ function evaluate(c){
       step("Si no responde: descartar cuffitis tipo Crohn y reservorio irritable; biopsias del cuff.");
       R.fail.push("Cuffitis refractaria a tópicos → terapia avanzada según el algoritmo de CU.");
     }
+  }
+
+  /* MEI que exigen tratamiento propio en un escenario sin terapia avanzada (leve / bajo riesgo) */
+  {
+    const ADV=["tnf","int","p40","p19","jak","s1p"];
+    const sysE=["axial","artper","uveitis","pg","psoriasis","aps","hs"].filter(eim);
+    const MEIN={axial:"espondiloartritis axial",artper:"artritis periférica tipo 2",uveitis:"uveítis",pg:"pioderma gangrenoso",psoriasis:"psoriasis",aps:"artritis psoriásica",hs:"hidradenitis supurativa"};
+    const hasAdv=R.items.some(i=>ADV.includes(D[i.id].cl)&&ti(i.tier)<=1);
+    if(!pouch&&sysE.length&&!hasAdv){
+      const tx=sysE.map(k=>MEIN[k]).join(", ");
+      step(`<b>Manifestación extraintestinal con curso propio</b> (${tx}): justifica terapia avanzada aunque la actividad luminal sea leve; elegir un fármaco que trate la EII y la MEI, con reumatología, oftalmología o dermatología (ECCO MEI 2024).`);
+      const cand=c.dz==="cu"?["ifx","ada","gol","ust","rzb","gus","upa","tofa"]:["ifx","ada","ust","rzb","gus","upa"];
+      cand.forEach(id=>add(id,"alt","Inducción y mantención",`Por MEI (${tx})`));
+      R.fail.push("La MEI sigue activa con la EII en remisión → cambiar a un mecanismo con eficacia demostrada en esa MEI (ver motivos en cada fármaco).");
+    }
+    if((eim("art1")||eim("en"))&&!sysE.length)step("<b>Artritis periférica tipo 1 y eritema nodoso</b> siguen la actividad intestinal: tratar la EII; si hace falta, AINE por pocos días (con precaución) o corticoide. No obligan por sí solos a escalar (ECCO MEI 2024).");
   }
 
   /* fusionar inducción + mantención del mismo fármaco y nivel */
