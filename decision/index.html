@@ -1689,6 +1689,12 @@ function evaluate(c){
       if(safe&&it.tier!=="evit")up(it,"Perfil de seguridad favorable en adulto mayor");
       if(id==="pred"||id==="mpred")warn(it,"Adulto mayor: minimizar dosis y duración del corticoide");
     }else if(age>=50&&cvRisk>0&&isJ)warn(it,"≥50 años con factor de riesgo CV: población de ORAL Surveillance; discutir riesgo");
+    // vedolizumab en Crohn: inicio lento
+    if(id==="vdz"&&c.dz==="ec"&&/Inducción|Luminal/.test(it.ph)){
+      if(c.act==="grave")down(it,"alt","Crohn grave: el inicio lento (10–14 semanas) no controla a tiempo; preferir anti-TNF, ustekinumab, anti-IL-23 o upadacitinib según el perfil");
+      else warn(it,"Inicio lento en EC (10–14 semanas; GEMINI 2: remisión sem 6 14,5 % vs 6,8 %): requiere puente corticoide. Si se necesita control más rápido, preferir ustekinumab o anti-IL-23 (2–4 semanas)");
+      if((age>=65||has("fragil"))&&["corticodep","corticorref"].includes(c.hist))warn(it,"Adulto mayor corticodependiente: el puente corticoide prolongado erosiona la ventaja de seguridad; ustekinumab o anti-IL-23 logran el mismo perfil con inicio más rápido");
+    }
     // cardiovascular
     if(isJ){
       if(has("cvd"))down(it,"evit","Enfermedad cardiovascular establecida: riesgo de MACE (ORAL Surveillance; EMA)");
