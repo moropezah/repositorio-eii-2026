@@ -1,6 +1,6 @@
-/* Service worker · Decisión Terapéutica EII · versión 2026-10-12c */
+/* Service worker · Decisión Terapéutica EII · versión 2026-10-13a */
 const PREFIX='eii-decision-';
-const CACHE=PREFIX+'2026-10-12c';
+const CACHE=PREFIX+'2026-10-13a';
 const FONTS='eii-fonts-v1';
 const ASSETS=["./", "index.html", "manifest.webmanifest", "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png"];
 const FONT_CSS=["https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap"];

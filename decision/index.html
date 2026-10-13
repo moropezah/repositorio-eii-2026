@@ -498,12 +498,24 @@ fieldset.blk{box-shadow:var(--sh)}
       <!-- CU -->
       <fieldset class="blk step" id="blk-cu">
         <legend>3 · Fenotipo CU</legend>
-        <div class="q"><span class="ql">Extensión (Montreal)</span><div class="seg cu">
+        <div class="q"><span class="ql">Contexto</span><div class="seg cu">
+          <input type="radio" name="ipaa" id="ip-n" value="no"><label for="ip-n">Colon in situ</label>
+          <input type="radio" name="ipaa" id="ip-s" value="si"><label for="ip-s">Reservorio ileal (IPAA)<small>tras proctocolectomía</small></label>
+        </div></div>
+        <div class="q" id="q-pch"><span class="ql">Trastorno del reservorio <small>(AGA 2024)</small></span><div class="seg cu">
+          <input type="radio" name="pch" id="pch-i" value="int"><label for="pch-i">Pouchitis aguda o intermitente<small>episodios aislados que responden a antibiótico</small></label>
+          <input type="radio" name="pch" id="pch-r" value="rec"><label for="pch-r">Recurrente que responde<small>≥3 episodios/año, remite con antibiótico</small></label>
+          <input type="radio" name="pch" id="pch-d" value="cadp"><label for="pch-d">Crónica dependiente de antibióticos<small>recae al suspender (&gt;4 semanas)</small></label>
+          <input type="radio" name="pch" id="pch-f" value="carp"><label for="pch-f">Crónica refractaria a antibióticos<small>sin respuesta a 4 semanas</small></label>
+          <input type="radio" name="pch" id="pch-c" value="cldp"><label for="pch-c">Tipo Crohn del reservorio<small>fístula tardía, estenosis o ileítis prereservorio</small></label>
+          <input type="radio" name="pch" id="pch-u" value="cuff"><label for="pch-u">Cuffitis<small>inflamación del manguito rectal</small></label>
+        </div></div>
+        <div class="q" id="q-ext"><span class="ql">Extensión (Montreal)</span><div class="seg cu">
           <input type="radio" name="ext" id="ext-1" value="E1"><label for="ext-1">E1<small>Proctitis</small></label>
           <input type="radio" name="ext" id="ext-2" value="E2"><label for="ext-2">E2<small>Izquierda</small></label>
           <input type="radio" name="ext" id="ext-3" value="E3"><label for="ext-3">E3<small>Extensa</small></label>
         </div></div>
-        <div class="q"><span class="ql">Actividad</span><div class="seg cu">
+        <div class="q" id="q-sev"><span class="ql">Actividad</span><div class="seg cu">
           <input type="radio" name="sev" id="sev-l" value="leve"><label for="sev-l">Leve<small>Mayo 3–5</small></label>
           <input type="radio" name="sev" id="sev-m" value="moderada"><label for="sev-m">Moderada<small>Mayo 6–10</small></label>
           <input type="radio" name="sev" id="sev-g" value="grave"><label for="sev-g">Grave ambulatoria<small>Mayo 11–12</small></label>
@@ -515,7 +527,7 @@ fieldset.blk{box-shadow:var(--sh)}
           <input type="radio" name="asuc" id="as-n" value="d3noresp"><label for="as-n">Día 3 no responde<small>Oxford +</small></label>
           <input type="radio" name="asuc" id="as-f" value="falla"><label for="as-f">Falla al rescate</label>
         </div></div>
-        <div class="q"><span class="ql">Factores de mal pronóstico <small>(ACG 2025, tabla 8)</small></span><div class="chk">
+        <div class="q" id="q-cur"><span class="ql">Factores de mal pronóstico <small>(ACG 2025, tabla 8)</small></span><div class="chk">
           <input type="checkbox" name="cur" id="cur-j" value="joven"><label for="cur-j">Diagnóstico &lt;40 años</label>
           <input type="checkbox" name="cur" id="cur-m" value="mayo3"><label for="cur-m">Mayo endoscópico 3 / úlceras profundas</label>
           <input type="checkbox" name="cur" id="cur-p" value="pcr"><label for="cur-p">PCR alta o albúmina baja</label>
@@ -728,13 +740,16 @@ fieldset.blk{box-shadow:var(--sh)}
 <!-- ================= SCORES ================= -->
 <section class="vista" id="v-scores">
   <p class="eyebrow">Actividad clínica y endoscópica</p>
-  <h2 class="sec">Scores de actividad</h2>
-  <p class="lead">Calcula la actividad antes de decidir y repite el mismo score en el control para medir la respuesta. El resultado de Mayo, Harvey-Bradshaw y CDAI se puede llevar directo a la decisión.</p>
+  <h2 class="sec">Scores y clasificaciones</h2>
+  <p class="lead">Calcula la actividad antes de decidir y repite el mismo score en el control para medir la respuesta. El resultado de Mayo, Harvey-Bradshaw, CDAI y PDAI se puede llevar directo a la decisión.</p>
   <div class="seg" id="stool" style="margin-bottom:14px">
     <input type="radio" name="stool" id="st-mayo" value="mayo" checked><label for="st-mayo">Mayo<small>Colitis ulcerosa</small></label>
     <input type="radio" name="stool" id="st-hbi" value="hbi"><label for="st-hbi">Harvey-Bradshaw<small>Crohn · clínico, 1 día</small></label>
     <input type="radio" name="stool" id="st-cdai" value="cdai"><label for="st-cdai">CDAI<small>Crohn · clínico, 7 días</small></label>
     <input type="radio" name="stool" id="st-ses" value="ses"><label for="st-ses">SES-CD<small>Crohn · endoscópico</small></label>
+    <input type="radio" name="stool" id="st-rut" value="rut"><label for="st-rut">Rutgeerts<small>Crohn · posquirúrgico</small></label>
+    <input type="radio" name="stool" id="st-top" value="top"><label for="st-top">TOpClass<small>Crohn · perianal</small></label>
+    <input type="radio" name="stool" id="st-pdai" value="pdai"><label for="st-pdai">PDAI<small>Reservorio ileal</small></label>
   </div>
   <div class="grid">
     <div class="form" id="sc-form"></div>
@@ -853,7 +868,7 @@ fieldset.blk{box-shadow:var(--sh)}
 <script>
 "use strict";
 /* ============ CLASES ============ */
-const CLS={asa:"Aminosalicilato",cort:"Corticoide",imm:"Inmunomodulador",cni:"Inhibidor de calcineurina",tnf:"Anti-TNF",int:"Anti-integrina α4β7",p40:"Anti-IL-12/23 (p40)",p19:"Anti-IL-23 (p19)",jak:"Inhibidor JAK",s1p:"Modulador S1P",abx:"Antibiótico",pipe:"En investigación"};
+const CLS={asa:"Aminosalicilato",cort:"Corticoide",imm:"Inmunomodulador",cni:"Inhibidor de calcineurina",tnf:"Anti-TNF",int:"Anti-integrina α4β7",p40:"Anti-IL-12/23 (p40)",p19:"Anti-IL-23 (p19)",jak:"Inhibidor JAK",s1p:"Modulador S1P",abx:"Antibiótico",prob:"Probiótico",pipe:"En investigación"};
 const CHILE={lrs:["LRS","lrs","Financiado por Ley Ricarte Soto si cumple criterios del protocolo"],isp:["ISP","isp","Registro sanitario en Chile, sin cobertura LRS"],gen:["Disponible","gen","Genérico o de uso habitual en Chile"],no:["No disponible en Chile","no","Sin registro sanitario en Chile para EII"],pipe:["Investigacional","pipe","Sin aprobación FDA/EMA para EII"]};
 const CHILE_ORDER={lrs:0,gen:1,isp:1,no:2,pipe:3};
 
@@ -931,7 +946,7 @@ mz_sup:{n:"Mesalazina supositorio",cl:"asa",via:"Rectal",chile:"gen",
  pres:["Supositorios 500 mg y 1 g"],calc:()=>"1 supositorio de 1 g al acostarse, 4–6 semanas; luego mantención.",
  kin:{cu:{on:[0.5,2],ev:6,ext:null}},kinTx:"Mejoría en 1–2 semanas",tdm:"No aplica.",
  ae:[["e","Molestia anal, pujo, expulsión precoz"],["s","Empeoramiento paradojal (intolerancia a 5-ASA)"]],
- preg:"Compatible.",lact:"Compatible.",trials:"Metaanálisis de terapia tópica en proctitis (ECCO R3, ACG R6).",chk:[]},
+ preg:"Compatible.",lact:"Compatible.",pouch:{ind:"Cuffitis: 500 mg c/12 h o 1 g/noche × 4 semanas",mant:"Según recaídas",int:"Refractaria: corticoide rectal o terapia avanzada"},trials:"Metaanálisis de terapia tópica en proctitis (ECCO R3, ACG R6). Cuffitis: extrapolado de CU (AGA 2024).",chk:[]},
 mz_ene:{n:"Mesalazina enema o espuma",cl:"asa",via:"Rectal",chile:"gen",
  cu:{ind:"1 g/d en enema o espuma (E2); combinar con oral ≥2 g/d",mant:"1 g/d o días alternos",int:"Agregar budesonida MMX o corticoide sistémico"},ec:null,
  pres:["Enema 1 g/100 mL y 4 g/60 mL","Espuma rectal 1 g/aplicación"],calc:()=>"1 enema de 1 g al acostarse, retener ≥30 min, 4–8 semanas.",
@@ -948,7 +963,8 @@ bud_cir:{n:"Budesonida liberación ileal",cl:"cort",via:"Oral",chile:"gen",chile
  pres:["Cápsulas 3 mg de liberación ileal, caja de 100 — Budenofalk (Chile)","Gránulos 9 mg (otros países)"],calc:()=>"9 mg (3 cápsulas) en la mañana × 8 semanas; luego 6 mg × 2 semanas y 3 mg × 2 semanas.",
  kin:{ec:{on:[1,2],ev:8,ext:null}},kinTx:"Respuesta en 2 semanas; evaluar a las 8",tdm:"No aplica.",
  ae:[["e","Efectos corticoides leves (primer paso hepático ~90 %)"],["v","Glicemia y presión en diabéticos; menor eficacia que prednisona en actividad moderada"],["s","Uso >3 meses sin plan de salida"]],
- preg:"Aceptable.",lact:"Compatible.",trials:"Misma molécula que Cortiment, distinta galénica: libera en íleon terminal y colon derecho (pH ~5,5–6,8) → indicada en EC ileocecal, sin eficacia en CU izquierda o extensa. Greenberg 1994; Cochrane (inducción sí, mantención no).",chk:["cort_lab"]},
+ preg:"Aceptable.",lact:"Compatible.",pouch:{ind:"Pouchitis refractaria o tipo Crohn: 9 mg/d × 8 semanas (Gionchetti 2007: remisión 75 %, n = 20)",mant:"Limitar a 8–12 semanas; planificar terapia ahorradora",int:"—"},
+ trials:"Misma molécula que Cortiment, distinta galénica: libera en íleon terminal y colon derecho (pH ~5,5–6,8) → indicada en EC ileocecal, sin eficacia en CU izquierda o extensa. Greenberg 1994; Cochrane (inducción sí, mantención no).",chk:["cort_lab"]},
 bud_mmx:{n:"Budesonida MMX",cl:"cort",via:"Oral",chile:"gen",chileTx:"Disponible en Chile: Cortiment MMX 9 mg × 30 comprimidos de liberación prolongada (~$178.000 en cadenas, oct 2026). Sin cobertura LRS",
  cu:{ind:"9 mg/d por 8 semanas en CU leve a moderada que no responde a 5-ASA",mant:"No indicada en mantención",int:"Prednisona o terapia avanzada"},ec:null,
  pres:["Comprimidos 9 mg (liberación colónica MMX), caja de 30 — Cortiment"],calc:()=>"9 mg en la mañana × 8 semanas; no requiere retiro escalonado (evidencia insuficiente, ECCO PP10).",
@@ -1035,6 +1051,7 @@ czp:{n:"Certolizumab pegol",cl:"tnf",via:"SC",chile:"no",
  kin:{ec:{on:[2,6],ev:6,ext:null}},kinTx:"2–6 semanas",tdm:"Reactivo; datos limitados.",
  ae:[["e","Reacción local"],["s","Igual que la clase"]],preg:"Transferencia placentaria mínima (sin Fc): ventaja en embarazo.",lact:"Compatible.",trials:"PRECISE 1–2.",chk:["tbc_o","icc"].concat(CK_BIO)},
 vdz:{n:"Vedolizumab",cl:"int",via:"EV / SC",chile:"isp",
+ pouch:{ind:"Pouchitis crónica: 300 mg EV sem 0, 2 y 6 + ciprofloxacino sem 1–4 (EARNEST)",mant:"300 mg EV c/8 semanas",int:"c/4 semanas (extrapolado de CU)"},
  cu:{ind:"300 mg EV semanas 0, 2 y 6",mant:"300 mg EV c/8 sem o 108 mg SC c/2 sem",int:"300 mg EV c/4 semanas"},ec:{ind:"300 mg EV semanas 0, 2 y 6 (+ dosis en sem 10 si respuesta parcial)",mant:"300 mg EV c/8 sem o 108 mg SC c/2 sem",int:"c/4 semanas"},
  pres:["Vial 300 mg EV","Pluma o jeringa 108 mg SC"],calc:()=>"300 mg EV en 30 min sem 0-2-6 → c/8 semanas (dosis fija).",
  kin:{cu:{on:[4,10],ev:10,ext:14},ec:{on:[6,14],ev:14,ext:null}},kinTx:"Lento: 6–10 semanas en CU, hasta 14 en EC",
@@ -1093,14 +1110,20 @@ etr:{n:"Etrasimod",cl:"s1p",via:"Oral",chile:"no",
  ae:[["e","Linfopenia esperable"],["v","Bradicardia en primera dosis, cefalea, transaminasas"],["s","Linfocitos <200/µL, BAV, edema macular"]],
  preg:"Evitar: suspender ≥1–2 semanas antes de concebir.",lact:"Evitar.",trials:"ELEVATE UC 12 y 52; ENLIGHT UC.",chk:["ecg","bradimed","s1p_lab","ojo","vzv","anticon","tbc_f"].concat(CK_BIO.filter(k=>k!=="vzv"))},
 metro:{n:"Metronidazol",cl:"abx",via:"Oral",chile:"gen",
+ pouch:{ind:"Pouchitis aguda: 15–20 mg/kg/d (≈500 mg c/8–12 h) × 2 semanas",mant:"Dependiente de antibióticos: rotar con ciprofloxacino a la menor dosis eficaz; vigilar neuropatía",int:"Refractaria: ciprofloxacino + metronidazol (o tinidazol) × 4 semanas"},
  cu:null,ec:{ind:"Perianal: 500 mg c/8–12 h × 4–8 semanas. Posquirúrgico: 1–2 g/d × 3 meses",mant:"—",int:"—"},
  pres:["Comprimidos 250 mg y 500 mg"],calc:()=>"500 mg c/12 h (perianal); 500 mg c/8 h × 3 meses (posquirúrgico).",
  kin:{ec:{on:[1,2],ev:6,ext:null}},kinTx:"1–2 semanas",tdm:"No aplica.",
  ae:[["e","Sabor metálico, náuseas, efecto disulfiram"],["v","Parestesias"],["s","Neuropatía periférica (uso >3 meses)"]],preg:"Aceptable en 2º–3er trimestre.",lact:"Compatible con precaución.",trials:"Rutgeerts 1995 (posquirúrgico); ADAFI (antibiótico + anti-TNF).",chk:[]},
 cipro:{n:"Ciprofloxacino",cl:"abx",via:"Oral",chile:"gen",
+ pouch:{ind:"Pouchitis aguda: 500 mg c/12 h × 2 semanas (Shen 2001: mayor descenso del PDAI y mejor tolerado que metronidazol)",mant:"Dependiente de antibióticos: menor dosis eficaz continua (p. ej. 250–500 mg/d) o ciclos rotativos",int:"Refractaria: ciprofloxacino + metronidazol, tinidazol o rifaximina × 4 semanas"},
  cu:null,ec:{ind:"Perianal: 500 mg c/12 h × 4–12 semanas, idealmente con anti-TNF",mant:"—",int:"—"},
  pres:["Comprimidos 500 mg"],calc:()=>"500 mg c/12 h.",kin:{ec:{on:[1,2],ev:6,ext:null}},kinTx:"1–2 semanas",tdm:"No aplica.",
- ae:[["e","Náuseas"],["v","QT largo"],["s","Tendinopatía o rotura tendinosa, aneurisma aórtico"]],preg:"Evitar.",lact:"Evitar si hay alternativa.",trials:"ADAFI; ECCO 2024.",chk:[]}
+ ae:[["e","Náuseas"],["v","QT largo"],["s","Tendinopatía o rotura tendinosa, aneurisma aórtico"]],preg:"Evitar.",lact:"Evitar si hay alternativa.",trials:"Perianal: Thia 2009 (n = 25; remisión 30 % vs 12,5 % placebo, p = 0,41); ADAFI (asociado a adalimumab). Reservorio: Shen 2001; AGA 2024 (pouchitis).",chk:[]},
+prob:{n:"Probiótico multicepa (De Simone)",cl:"prob",via:"Oral",chile:"no",chileTx:"Formulación De Simone (Vivomixx / Visbiome): disponibilidad en Chile por confirmar. El VSL#3 actual no es la formulación original de los ensayos",
+ cu:null,ec:null,pouch:{ind:"—",mant:"Prevención secundaria tras remisión inducida con antibiótico: 1 sobre (450–900 × 10⁹ UFC) c/12 h, continuo",int:"—"},
+ pres:["Sobres 450 × 10⁹ UFC (formulación De Simone, 8 cepas)"],calc:()=>"1–2 sobres/d según la formulación; continuo mientras mantenga la remisión.",kinTx:"Prevención: efecto en meses",tdm:"No aplica.",
+ ae:[["e","Distensión, flatulencia"],["v","Pérdida de eficacia fuera de ensayos (experiencia real menor que en los ECA)"],["s","Bacteriemia excepcional en inmunosuprimidos o con catéter central"]],preg:"Sin datos de riesgo.",lact:"Compatible.",trials:"Gionchetti 2000 y Mimura 2004 (recaída a 12 meses muy inferior a placebo); AGA 2024: sugerido en prevención secundaria; sin recomendación en prevención primaria.",chk:[]}
 };
 function r25(x){return Math.round(x/25)*25}
 
@@ -1139,7 +1162,8 @@ fil:[["Jyseleca",0]],
 oza:[["Zeposia",0]],
 etr:[["Velsipity",0]],
 metro:[["Flagyl (original)",1],["genéricos",1]],
-cipro:[["Ciproxina (original)",1],["genéricos",1]]
+cipro:[["Ciproxina (original)",1],["genéricos",1]],
+prob:[["Vivomixx / Visbiome (formulación De Simone; Chile por confirmar)",0]]
 };
 function brandTx(id){const b=BRAND[id];return b?b.map(x=>x[0]).join(" · "):""}
 const PIPE=[
@@ -1209,6 +1233,15 @@ const GTL=[
 ];
 
 const REFS=[
+ "Barnes EL, Agrawal M, Syal G, Ananthakrishnan AN, Cohen BL, et al. AGA Clinical Practice Guideline on the Management of Pouchitis and Inflammatory Pouch Disorders. Gastroenterology. 2024;166(1):59-85. doi:10.1053/j.gastro.2023.10.015",
+ "Kayal M, Bislenghi G, Adamina M, Ardalan ZS, Avellaneda N, et al. ECCO Topical Review on Pouch Disorders. J Crohns Colitis. 2025;19(7):jjaf103. doi:10.1093/ecco-jcc/jjaf103",
+ "Travis S, Silverberg MS, Danese S, Gionchetti P, Löwenberg M, et al. Vedolizumab for the Treatment of Chronic Pouchitis (EARNEST). N Engl J Med. 2023;388(13):1191-1200. doi:10.1056/NEJMoa2208450",
+ "Sandborn WJ, Tremaine WJ, Batts KP, Pemberton JH, Phillips SF. Pouchitis after ileal pouch-anal anastomosis: a Pouchitis Disease Activity Index. Mayo Clin Proc. 1994;69(5):409-15. doi:10.1016/s0025-6196(12)61634-6",
+ "Shen B, Achkar JP, Lashner BA, Ormsby AH, Remzi FH, et al. A randomized clinical trial of ciprofloxacin and metronidazole to treat acute pouchitis. Inflamm Bowel Dis. 2001;7(4):301-5. doi:10.1097/00054725-200111000-00004",
+ "Gionchetti P, Rizzello F, Poggioli G, Pierangeli F, Laureti S, et al. Oral budesonide in the treatment of chronic refractory pouchitis. Aliment Pharmacol Ther. 2007;25(10):1231-6. doi:10.1111/j.1365-2036.2007.03306.x",
+ "Rutgeerts P, Geboes K, Vantrappen G, Beyls J, Kerremans R, Hiele M. Predictability of the postoperative course of Crohn's disease. Gastroenterology. 1990;99(4):956-63. doi:10.1016/0016-5085(90)90613-6",
+ "Geldof J, Iqbal N, LeBlanc JF, Anandabaskaran S, Sawyer R, et al. Classifying perianal fistulising Crohn's disease: an expert consensus to guide decision-making in daily practice and clinical trials (TOpClass). Lancet Gastroenterol Hepatol. 2022;7(6):576-84. doi:10.1016/S2468-1253(22)00007-3",
+ "Thia KT, Mahadevan U, Feagan BG, Wong C, Cockeram A, et al. Ciprofloxacin or metronidazole for the treatment of perianal fistulas in patients with Crohn's disease: a randomized, double-blind, placebo-controlled pilot study. Inflamm Bowel Dis. 2009;15(1):17-24. doi:10.1002/ibd.20608",
  "Gisbert JP, Chaparro M, Verstockt B, Kienle P, Minozzi S, et al. ECCO Guidelines on Therapeutics in Ulcerative Colitis: Medical Treatment. J Crohns Colitis. 2026;20(7):jjag066. doi:10.1093/ecco-jcc/jjag066",
  "Adamina M, Kienle P, Chaparro M, Verstockt B, Minozzi S, et al. ECCO Guidelines on Therapeutics in Ulcerative Colitis: Surgical Treatment. J Crohns Colitis. 2026;20(6):jjag072. doi:10.1093/ecco-jcc/jjag072",
  "Yanai H, Ellul P, Verstockt B, Greuter T, Kopylov U, et al. ECCO Guidelines on the Prevention, Diagnosis, and Management of Infections in Inflammatory Bowel Disease. J Crohns Colitis. 2026;20(7):jjag071. doi:10.1093/ecco-jcc/jjag071",
@@ -1254,10 +1287,14 @@ function evaluate(c){
   const has=k=>c.co.includes(k), eim=k=>c.eim.includes(k);
   const age=c.age||0;
   const cuRiskN=c.cur.length+(c.ext==="E3"?1:0);
+  const pouch=c.dz==="cu"&&c.ipaa==="si";
   const ecRisk=c.dz==="ec"&&(c.ecr.length>0||c.beh!=="B1"||c.pa!=="no"||c.l4);
 
   /* ---------- etiquetas del caso ---------- */
-  if(c.dz==="cu"){
+  if(pouch){
+    R.title="Reservorio ileal (IPAA) · colitis ulcerosa";
+    R.tags.push(["cu",({int:"Pouchitis aguda o intermitente",rec:"Pouchitis recurrente que responde",cadp:"Pouchitis crónica dependiente de antibióticos",carp:"Pouchitis crónica refractaria a antibióticos",cldp:"Enfermedad tipo Crohn del reservorio",cuff:"Cuffitis"})[c.pch]]);
+  }else if(c.dz==="cu"){
     R.title="Colitis ulcerosa";
     R.tags.push(["cu",c.ext+" · "+({E1:"proctitis",E2:"izquierda",E3:"extensa"})[c.ext]]);
     R.tags.push(["cu",({leve:"Leve",moderada:"Moderada",grave:"Grave ambulatoria",asuc:"Colitis aguda grave"})[c.sev]]);
@@ -1268,7 +1305,7 @@ function evaluate(c){
     if(c.postop)R.tags.push(["ec","Posquirúrgico"]);
     R.tags.push([ecRisk?"risk":"",ecRisk?"Alto riesgo de progresión":"Bajo riesgo de progresión"]);
   }
-  R.tags.push(["",({naive:"Sin tratamiento previo",falla5asa:"Falla a 5-ASA/budesonida",corticodep:"Corticodependiente",corticorref:"Corticorrefractario",fallaImm:"Falla a inmunomodulador",tnf:"Expuesto a anti-TNF",multi:"Falla a ≥2 mecanismos"})[c.hist]]);
+  if(!pouch&&c.hist)R.tags.push(["",({naive:"Sin tratamiento previo",falla5asa:"Falla a 5-ASA/budesonida",corticodep:"Corticodependiente",corticorref:"Corticorrefractario",fallaImm:"Falla a inmunomodulador",tnf:"Expuesto a anti-TNF",multi:"Falla a ≥2 mecanismos"})[c.hist]]);
   if(age)R.tags.push([age>=65?"risk":"",age+" años"]);
   if(c.preg!=="no"&&c.sex==="F")R.tags.push(["risk",({deseo:"Deseo de embarazo",embarazo:"Embarazada",lactancia:"Lactancia"})[c.preg]]);
 
@@ -1289,7 +1326,7 @@ function evaluate(c){
   if(c.sex==="F"&&c.preg==="embarazo")alert("a","Embarazo: la actividad, no el fármaco, determina el riesgo obstétrico. Mantener la terapia eficaz; manejo conjunto con obstetricia.");
 
   /* ======================= COLITIS ULCEROSA ======================= */
-  if(c.dz==="cu"){
+  if(c.dz==="cu"&&!pouch){
     let sev=c.sev;
     const failed=["falla5asa","corticodep","corticorref","fallaImm","tnf","multi"].includes(c.hist);
     if(sev==="moderada"&&(c.cur.includes("mayo3")||cuRiskN>=2)&&!failed){
@@ -1422,7 +1459,7 @@ function evaluate(c){
       const hr=c.ecr.includes("cirugia")||has("tabaco")||c.beh==="B3"||c.pa!=="no";
       R.tags.push([hr?"risk":"",hr?"Alto riesgo de recurrencia":"Bajo riesgo de recurrencia"]);
       step("<b>Dejar de fumar</b>: el tabaquismo duplica la recurrencia.");
-      step("<b>Ileocolonoscopía a los 6–12 meses</b> con Rutgeerts modificado (ACG R30); agendarla antes del alta. Calprotectina c/3–6 meses (&lt;100 µg/g a los 3–6 meses ayuda a descartar).");
+      step("<b>Ileocolonoscopía a los 6–12 meses</b> con <a href=\"#scores\">Rutgeerts modificado</a> (ACG R30); agendarla antes del alta. Calprotectina c/3–6 meses (&lt;100 µg/g a los 3–6 meses ayuda a descartar).");
       if(hr){
         const tnfF=["tnf","multi"].includes(c.hist)&&c.tnff!=="intol"&&c.tnff!=="inmuno";
         add("ifx",tnfF?"baja":"pref","Prevención posquirúrgica",tnfF?"Falló anti-TNF antes de la cirugía":"Anti-TNF dentro de 4 semanas en alto riesgo (PREVENT: recurrencia endoscópica 30,6 % vs 60 %; ACG R33)");
@@ -1524,11 +1561,13 @@ function evaluate(c){
       R.guides.add("combo");
       step("<b>RM de pelvis</b> (clasificación de Parks, MAGNIFI-CD/Van Assche) y evaluación por coloproctología.");
       if(c.pa==="simple"){
-        add("metro","pref","Perianal","Fístula simple sin absceso: antibiótico como terapia primaria (ACG KC49)");
-        add("cipro","alt","Perianal","Alternativa o asociado");
-        if(c.act!=="remision"||ecRisk)add("ifx","pref","Perianal","Si hay actividad luminal o recurrencia: anti-TNF");
+        step("<b>Fístula simple</b>: asintomática y sin actividad luminal puede observarse; si es baja con recto sano, la fistulotomía es opción (coloproctología). Clasificar con <a href=\"#scores\">TOpClass</a>.");
+        add("ifx","pref","Perianal","Fístula simple sintomática o persistente: anti-TNF es la única clase con ECA de cierre fistuloso (ACCENT II)","5 mg/kg sem 0-2-6; objetivo valle ≥10 µg/mL");
+        add("ada","alt","Perianal","Anti-TNF SC (CHARM subanálisis)");
+        add("cipro","alt","Perianal","Control sintomático: mejora el drenaje, pero el cierre es pobre y recae al suspender (Thia 2009: remisión 30 % vs 12,5 % placebo, n = 25, p = 0,41). Mejor tolerado que metronidazol","500 mg c/12 h × 4–8 semanas");
+        add("metro","alt","Perianal","Control sintomático; peor tolerancia (abandono 71 % en Thia 2009, neuropatía en uso prolongado)","500 mg c/12 h × 4–8 semanas");
       }else{
-        step("<b>Examen bajo anestesia</b> con drenaje y setón laxo antes de la terapia avanzada (ACG KC50).");
+        step("<b>Examen bajo anestesia</b> con drenaje y setón laxo antes de la terapia avanzada (ACG KC50). Definir el objetivo con <a href=\"#scores\">TOpClass</a> (2a cierre, 2b control de síntomas, 2c-3 desfuncionalización o proctectomía).");
         step("Retirar el setón tras la inducción; cirugía reparadora (colgajo de avance, LIFT) solo con recto sin actividad. Refractario: desfuncionalización o proctectomía.");
         const tnfF=["tnf","multi"].includes(c.hist)&&(c.tnff==="primaria"||c.tnff==="farmaco");
         add("ifx",tnfF?"baja":"pref","Perianal",tnfF?"Falla de mecanismo a anti-TNF":"Única clase con ECA de cierre fistuloso (ACCENT II; ACG R24). Cubierto por LRS (EC fístula perianal compleja)","5 mg/kg sem 0-2-6; objetivo valle ≥10 µg/mL");
@@ -1543,6 +1582,61 @@ function evaluate(c){
         alert("i","Infliximab SC no se cubre por LRS con enfermedad perianal.");
         R.fail.push("Fístula compleja sin cierre con infliximab optimizado (valle ≥10–20 µg/mL) → ustekinumab, upadacitinib o anti-IL-23; reevaluar cirugía.");
       }
+    }
+  }
+
+  /* ======================= RESERVORIO ILEAL ======================= */
+  if(pouch){
+    const P=c.pch, ph="Reservorio";
+    step("<b>Confirmar inflamación</b>: endoscopía del reservorio con biopsias (asa aferente, cuerpo, cuff) y PDAI/mPDAI (<a href=\"#scores\">pestaña Scores</a>). Los síntomas solos no distinguen pouchitis de reservorio irritable, cuffitis o estenosis.");
+    step("<b>Descartar causas secundarias</b>: <i>C. difficile</i>, CMV en refractarios, AINE, isquemia, estenosis de la anastomosis o del asa aferente; fístula o absceso con RM pélvica si hay dolor perineal o supuración.");
+    if(P==="int"||P==="rec"){
+      add("cipro","pref",ph,"Primera línea en pouchitis aguda (AGA 2024; respuesta agrupada ~65 %). Mayor descenso del PDAI y mejor tolerado que metronidazol (Shen 2001)","500 mg c/12 h × 2 semanas");
+      add("metro","alt",ph,"Eficacia similar, peor tolerancia (náuseas, disgeusia, neuropatía)","15–20 mg/kg/d (≈500 mg c/8–12 h) × 2 semanas");
+      step("Respuesta esperable en días. Sin respuesta a 2–4 semanas: reevaluar el diagnóstico y tratar como refractaria.");
+      step("<b>Sin profilaxis antibiótica primaria</b> (AGA 2024, en contra); probióticos en prevención primaria: sin recomendación.");
+      if(P==="rec")add("prob","pref",ph,"Prevención secundaria tras inducir remisión con antibiótico (AGA 2024, condicional; formulación De Simone). La experiencia real rinde menos que los ECA","1 sobre (450–900 × 10⁹ UFC) c/12 h, continuo");
+      R.fail.push("≥3 episodios/año o recaída al suspender el antibiótico → pouchitis crónica dependiente de antibióticos.");
+      R.fail.push("Sin respuesta a 4 semanas de antibiótico → crónica refractaria: biopsia, CMV y terapia avanzada.");
+    }
+    if(P==="cadp"){
+      add("cipro","pref",ph,"Antibiótico crónico a la menor dosis eficaz o en ciclos rotativos (AGA 2024; basado en experiencia)","250–500 mg/d continuo o ciclos de 2 semanas rotando con metronidazol");
+      add("metro","alt",ph,"Para rotar; limitar la exposición prolongada por neuropatía","250 mg c/8–12 h en ciclos");
+      add("vdz","pref",ph,"Terapia avanzada sugerida (AGA 2024). EARNEST: remisión mPDAI sem 14 31 % vs 10 % (dif. 21 pp; IC95 % 5–38). Aprobado por EMA en pouchitis crónica","300 mg EV sem 0-2-6 + ciprofloxacino sem 1–4 → c/8 semanas");
+      add("ifx","alt",ph,"Cohortes (AGA 2024, sugerido); puede reutilizarse si respondía antes de la colectomía","5 mg/kg sem 0-2-6 → c/8 semanas");
+      add("ada","alt",ph,"Cohortes; resultados menores que infliximab","160/80 mg → 40 mg c/2 semanas");
+      add("ust","alt",ph,"Cohortes y series","EV según peso → 90 mg SC c/8 semanas");
+      add("prob","alt",ph,"Mantención tras remisión si se logra suspender el antibiótico","1 sobre c/12 h");
+      R.fail.push("Necesidad de antibiótico continuo o intolerancia → terapia avanzada (vedolizumab primero).");
+    }
+    if(P==="carp"){
+      add("vdz","pref",ph,"Único ECA en pouchitis crónica (EARNEST: remisión mPDAI sem 14 31 % vs 10 %; respuesta sem 34 dif. 22 pp); AGA 2024 sugerido","300 mg EV sem 0-2-6 + ciprofloxacino sem 1–4 → c/8 semanas");
+      add("bud_cir","pref","Puente","Budesonida de liberación ileal (AGA 2024, sugerido; Gionchetti 2007: remisión 75 %, n = 20, abierto). Limitar a 8–12 semanas","9 mg/d × 8 semanas");
+      add("ifx","alt",ph,"Cohortes; respuesta agrupada moderada (AGA 2024)","5 mg/kg sem 0-2-6 → c/8 semanas");
+      add("ust","alt",ph,"Cohortes y series","EV según peso → 90 mg SC c/8 semanas");
+      add("ada","alt",ph,"Cohortes","160/80 mg → 40 mg c/2 semanas");
+      add("upa","baja",ph,"Series pequeñas","45 mg × 8 sem → 15–30 mg");
+      add("cipro","alt","Puente","Antibiótico combinado × 4 semanas mientras actúa la terapia avanzada","Ciprofloxacino 500 mg c/12 h + metronidazol 500 mg c/12 h (o tinidazol/rifaximina) × 4 semanas");
+      step("<b>Biopsias con CMV</b> y revisar diagnóstico alternativo (tipo Crohn, isquemia, autoinmune/IgG4, CEP asociada) antes de escalar.");
+      R.fail.push("Falla a dos terapias avanzadas → derivar a centro de referencia; considerar desfuncionalización o escisión del reservorio.");
+    }
+    if(P==="cldp"){
+      step("<b>Caracterizar el fenotipo</b>: fístula >12 meses tras el cierre de la ileostomía, estenosis del cuerpo o del asa aferente, o ileítis prereservorio. RM pélvica y evaluación por coloproctología; examen bajo anestesia si hay absceso.");
+      add("bud_cir","pref","Puente","Recomendado en enfermedad tipo Crohn del reservorio (AGA 2024, experiencia y datos indirectos); limitar a 8–12 semanas","9 mg/d × 8 semanas");
+      add("ifx","pref",ph,"Terapia avanzada sugerida (AGA 2024; respuesta agrupada 74 %). Anti-TNF es el más estudiado; de elección si hay fístula","5 mg/kg sem 0-2-6 → c/8 semanas; valle ≥10 µg/mL si fistulizante");
+      add("ada","alt",ph,"Anti-TNF SC; cohortes","160/80 mg → 40 mg c/2 semanas");
+      add("vdz","alt",ph,"Cohortes; útil en ileítis prereservorio","300 mg EV sem 0-2-6 → c/8 semanas");
+      add("ust","alt",ph,"Cohortes, incluso tras anti-TNF","EV según peso → 90 mg SC c/8 semanas");
+      add("rzb","baja",ph,"Series","—");
+      R.fail.push("Estenosis fibrótica → dilatación endoscópica; fístula compleja refractaria → manejo quirúrgico (setón, desfuncionalización).");
+    }
+    if(P==="cuff"){
+      add("mz_sup","pref",ph,"Terapia tópica de primera línea, extrapolada de CU (AGA 2024)","500 mg c/12 h o 1 g/noche × 4 semanas");
+      add("cort_rect","alt",ph,"Alternativa tópica o si no responde a mesalazina","Budesonida espuma 2 mg/d × 4 semanas");
+      add("vdz","baja",ph,"Refractaria: terapia avanzada como en CU (AGA 2024)","Esquema de CU");
+      add("ifx","baja",ph,"Refractaria: terapia avanzada como en CU","Esquema de CU");
+      step("Si no responde: descartar cuffitis tipo Crohn y reservorio irritable; biopsias del cuff.");
+      R.fail.push("Cuffitis refractaria a tópicos → terapia avanzada según el algoritmo de CU.");
     }
   }
 
@@ -1691,8 +1785,8 @@ const esc=s=>String(s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",
 const F=$("#f");
 let onlyChile=false, lastR=null, lastC=null;
 
-const OPT=["b2","b2l","b3","preg","tpmt","asuc"];
-const DEF={dz:"ec",ext:"E3",sev:"moderada",asuc:"ingreso",loc:"L1",beh:"B1",b2:"inflamatoria",b2l:"corta",b3:"fistula",pa:"no",act:"moderada",hist:"naive",tnff:"primaria",sex:"M",preg:"no",tpmt:"nd"};
+const OPT=["b2","b2l","b3","preg","tpmt","asuc","ipaa"];
+const DEF={ipaa:"no",dz:"ec",ext:"E3",sev:"moderada",asuc:"ingreso",loc:"L1",beh:"B1",b2:"inflamatoria",b2l:"corta",b3:"fistula",pa:"no",act:"moderada",hist:"naive",tnff:"primaria",sex:"M",preg:"no",tpmt:"nd"};
 const PRESETS=[
  {k:"ec70",l:"EC ileal leve · 70 años",v:{dz:"ec",loc:"L1",beh:"B1",pa:"no",act:"leve",hist:"naive",age:70,wt:72,sex:"M",preg:"no",co:["hta"],eim:[],ecr:[],tpmt:"nd"}},
  {k:"cu32",l:"CU E3 corticodependiente · 32 años",v:{dz:"cu",ext:"E3",sev:"moderada",hist:"corticodep",age:32,wt:61,sex:"F",preg:"deseo",cur:["joven"],co:[],eim:["art1"],tpmt:"normal"}},
@@ -1700,12 +1794,13 @@ const PRESETS=[
  {k:"peri",l:"EC perianal compleja · 26 años",v:{dz:"ec",loc:"L3",beh:"B1",pa:"compleja",act:"moderada",hist:"naive",age:26,wt:64,sex:"M",preg:"no",ecr:["joven"],co:[],eim:[],tpmt:"normal"}},
  {k:"cu68",l:"CU post anti-TNF · 68 años, riesgo CV",v:{dz:"cu",ext:"E2",sev:"grave",hist:"tnf",tnff:"primaria",age:68,wt:80,sex:"M",preg:"no",cur:[],co:["tabaco","hta","dlp"],eim:[],tpmt:"nd"}},
  {k:"b2",l:"EC estenosante mixta",v:{dz:"ec",loc:"L1",beh:"B2",b2:"mixta",b2l:"corta",pa:"no",act:"moderada",hist:"naive",age:38,wt:66,sex:"F",preg:"no",ecr:["ulceras"],co:[],eim:["axial"],tpmt:"nd"}},
+ {k:"pouch",l:"Reservorio · pouchitis refractaria",v:{dz:"cu",ipaa:"si",pch:"carp",age:41,wt:68,sex:"M",preg:"no",cur:[],co:[],eim:[],tpmt:"nd"}},
  {k:"emb",l:"CU en embarazo",v:{dz:"cu",ext:"E2",sev:"moderada",hist:"falla5asa",age:30,wt:64,sex:"F",preg:"embarazo",cur:[],co:[],eim:[],tpmt:"nd"}}
 ];
 
 function readForm(){
   const fd=new FormData(F), g=n=>fd.get(n)||(OPT.includes(n)?DEF[n]:null);
-  const c={dz:g("dz"),ext:g("ext"),sev:g("sev"),asuc:g("asuc"),loc:g("loc"),l4:!!fd.get("l4"),beh:g("beh"),b2:g("b2"),b2l:g("b2l"),b3:g("b3"),pa:g("pa"),act:g("act"),postop:!!fd.get("postop"),hist:g("hist"),tnff:g("tnff"),sex:g("sex"),preg:g("preg"),tpmt:g("tpmt"),
+  const c={ipaa:g("ipaa"),pch:g("pch"),dz:g("dz"),ext:g("ext"),sev:g("sev"),asuc:g("asuc"),loc:g("loc"),l4:!!fd.get("l4"),beh:g("beh"),b2:g("b2"),b2l:g("b2l"),b3:g("b3"),pa:g("pa"),act:g("act"),postop:!!fd.get("postop"),hist:g("hist"),tnff:g("tnff"),sex:g("sex"),preg:g("preg"),tpmt:g("tpmt"),
     age:parseInt(fd.get("age"))||0,wt:parseFloat(fd.get("wt"))||0,cur:fd.getAll("cur"),ecr:fd.getAll("ecr"),co:fd.getAll("co"),eim:fd.getAll("eim")};
   c.asucSet=!!fd.get("asuc");
   const SER={vhb:{pos:"hbsag",res:"antihbc",neg:"vhbNoInm"},tbc:{lat:"tbcl",act:"tbcAct"},vhc:{pos:"vhc"},vih:{pos:"vih"},vzv:{neg:"vzvneg"},ebv:{neg:"ebvneg"}};
@@ -1717,26 +1812,28 @@ function readForm(){
 function setForm(v){
   F.reset();
   const o=Object.assign({},DEF,v);
-  ["dz","ext","sev","asuc","loc","beh","b2","b2l","b3","pa","act","hist","tnff","sex","preg","tpmt"].forEach(n=>{const el=F.querySelector(`input[name="${n}"][value="${o[n]}"]`);if(el)el.checked=true});
+  ["ipaa","pch","dz","ext","sev","asuc","loc","beh","b2","b2l","b3","pa","act","hist","tnff","sex","preg","tpmt"].forEach(n=>{const el=F.querySelector(`input[name="${n}"][value="${o[n]}"]`);if(el)el.checked=true});
   $("#age").value=o.age||"";$("#wt").value=o.wt||"";
   ["cur","ecr","co","eim"].forEach(n=>(o[n]||[]).forEach(val=>{const el=F.querySelector(`input[name="${n}"][value="${val}"]`);if(el)el.checked=true}));
   if(o.l4)$("#l4").checked=true; if(o.postop)$("#postop").checked=true;
 }
 function progress(c){
   const s1=!!c.dz, s2=s1&&c.age>=16&&!!c.sex;
-  const ph=c.dz==="cu"?["ext","sev"].every(k=>c[k])&&(c.sev!=="asuc"||!!c.asucSet):["loc","beh","pa","act"].every(k=>c[k]);
-  const s3=s2&&ph, s4=s3&&!!c.hist&&(!["tnf","multi"].includes(c.hist)||!!c.tnff);
-  return {s1,s2,s3,s4};
+  const pouch=c.dz==="cu"&&c.ipaa==="si";
+  const ph=pouch?!!c.pch:c.dz==="cu"?["ext","sev"].every(k=>c[k])&&(c.sev!=="asuc"||!!c.asucSet):["loc","beh","pa","act"].every(k=>c[k]);
+  const s3=s2&&ph, s4=s3&&(pouch||!!c.hist&&(!["tnf","multi"].includes(c.hist)||!!c.tnff));
+  return {s1,s2,s3,s4,pouch};
 }
 function vis(c){
   const p=progress(c);
   $("#blk-pac").hidden=!p.s1;
   $("#blk-cu").hidden=!(p.s2&&c.dz==="cu");$("#blk-ec").hidden=!(p.s2&&c.dz==="ec");
-  $("#blk-lin").hidden=!p.s3;$("#blk-co").hidden=!p.s4;$("#blk-mei").hidden=!p.s4;
-  const nx=!p.s1?"":!p.s2?"Ingresa edad y sexo para continuar.":!p.s3?"Completa el fenotipo para continuar.":!p.s4?"Indica la línea terapéutica para ver la recomendación.":"";
+  $("#blk-lin").hidden=!p.s3||p.pouch;$("#blk-co").hidden=!p.s4;$("#blk-mei").hidden=!p.s4;
+  const nx=!p.s1?"":!p.s2?"Ingresa edad y sexo para continuar.":!p.s3?(p.pouch?"Elige el trastorno del reservorio.":"Completa el fenotipo para continuar."):!p.s4?"Indica la línea terapéutica para ver la recomendación.":"";
   $("#nexthint").textContent=nx;
   $$("[data-cnt]").forEach(el=>{const g=el.dataset.cnt;if(g==="ser"){const n=document.querySelectorAll('#g-ser input[type=radio]:checked:not([value="nd"])').length;el.textContent=n?`${n}/6 registradas`:"";return}const n=document.querySelectorAll(`#g-${g} input[type=checkbox]:checked`).length;el.textContent=n?n+" marcado"+(n>1?"s":""):""});
-  $("#q-asuc").hidden=c.sev!=="asuc";$("#q-b2").hidden=c.beh!=="B2";$("#q-b3").hidden=c.beh!=="B3";
+  ["q-ext","q-sev","q-cur"].forEach(i=>$("#"+i).hidden=p.pouch);$("#q-pch").hidden=!p.pouch;
+  $("#q-asuc").hidden=c.sev!=="asuc"||p.pouch;$("#q-b2").hidden=c.beh!=="B2";$("#q-b3").hidden=c.beh!=="B3";
   $("#q-tnf").hidden=!["tnf","multi"].includes(c.hist);$("#q-preg").hidden=c.sex!=="F";
 }
 
@@ -1839,6 +1936,7 @@ function openFicha(id,ph){
   if(it){const ws=it.why.filter((w,i,a)=>a.findIndex(x=>x.t===w.t)===i);b+=`<div class="fs"><h5>En este paciente · ${TIERTX[it.tier][0]}</h5><ul class="why">${ws.map(w=>`<li class="${w.c}">${esc(w.t)}</li>`).join("")}</ul></div>`}
   b+=`<div class="fs"><h5>Chile</h5><p>${esc(d.chileTx||CHILE[d.chile][2])}</p></div>`;
   ["cu","ec"].forEach(z=>{const x=d[z];if(!x)return;b+=`<div class="fs"><h5>Dosis · ${z==="cu"?"colitis ulcerosa":"enfermedad de Crohn"}</h5><dl class="kv"><dt>Inducción</dt><dd>${esc(x.ind)}</dd><dt>Mantención</dt><dd>${esc(x.mant)}</dd><dt>Intensificación</dt><dd>${esc(x.int)}</dd></dl></div>`});
+  if(d.pouch)b+=`<div class="fs"><h5>Dosis · reservorio ileal</h5><dl class="kv"><dt>Inducción</dt><dd>${esc(d.pouch.ind)}</dd><dt>Mantención</dt><dd>${esc(d.pouch.mant)}</dd><dt>Escalamiento</dt><dd>${esc(d.pouch.int)}</dd></dl></div>`;
   b+=`<div class="fs"><h5>Para la receta</h5><div class="rx"><ul>${d.pres.map(p=>`<li>${esc(p)}</li>`).join("")}</ul><div class="calc">${esc(d.calc(c.wt))}${c.wt?` <span style="color:var(--fg-3)">(peso ${c.wt} kg)</span>`:""}</div></div><p class="note" style="margin-top:6px">Presentaciones habituales; confirmar disponibilidad en farmacia.</p></div>`;
   b+=`<div class="fs"><h5>Cinética · cuánto esperar</h5><p>${esc(d.kinTx||"")}</p>${["cu","ec"].map(z=>d.kin&&d.kin[z]?`<p style="margin:8px 0 0;font-size:.74rem;font-weight:700;color:var(--fg-3)">${z==="cu"?"CU":"EC"}</p>${kinBar(d.kin[z],Math.max(16,(d.kin[z].ext||d.kin[z].ev)+2))}`:"").join("")}</div>`;
   b+=`<div class="fs"><h5>Niveles (TDM)</h5><p>${esc(d.tdm)}</p></div>`;
@@ -1874,7 +1972,7 @@ function summary(){
 /* ---------- otras vistas ---------- */
 function renderFarmacos(){
   const q=($("#fq").value||"").toLowerCase();
-  $("#ftab tbody").innerHTML=Object.entries(D).filter(([id,d])=>!q||(d.n+" "+CLS[d.cl]+" "+brandTx(id)).toLowerCase().includes(q)).map(([id,d])=>`<tr class="clk" data-ficha="${id}" tabindex="0"><td class="nm">${esc(d.n)}${BRAND[id]?`<div class="brl">${esc(brandTx(id))}</div>`:""}</td><td>${CLS[d.cl]}</td><td>${d.cu?"Sí":"—"}</td><td>${d.ec?"Sí":"—"}</td><td>${esc(d.via)}</td><td>${esc(d.kinTx||"")}</td><td>${badge(id)}</td></tr>`).join("");
+  $("#ftab tbody").innerHTML=Object.entries(D).filter(([id,d])=>!q||(d.n+" "+CLS[d.cl]+" "+brandTx(id)).toLowerCase().includes(q)).map(([id,d])=>`<tr class="clk" data-ficha="${id}" tabindex="0"><td class="nm">${esc(d.n)}${BRAND[id]?`<div class="brl">${esc(brandTx(id))}</div>`:""}</td><td>${CLS[d.cl]}</td><td>${d.cu?"Sí":d.pouch?"Reservorio":"—"}</td><td>${d.ec?"Sí":"—"}</td><td>${esc(d.via)}</td><td>${esc(d.kinTx||"")}</td><td>${badge(id)}</td></tr>`).join("");
 }
 function renderKin(){
   const z=(F.ownerDocument.querySelector('input[name="kdz"]:checked')||{}).value||"cu";
@@ -1990,6 +2088,25 @@ const HBIQ=[
 ];
 const HBIC=["Artralgia","Uveítis","Eritema nodoso","Úlceras aftosas","Pioderma gangrenoso","Fisura anal","Fístula nueva","Absceso"];
 const CDC=["Artritis o artralgia","Iritis o uveítis","Eritema nodoso, pioderma gangrenoso o estomatitis aftosa","Fisura, fístula o absceso perianal","Otra fístula","Fiebre >37,8 °C en la última semana"];
+const RUT=[["i0","Sin lesiones en el íleon neoterminal"],["i1","≤5 lesiones aftosas"],["i2a","Lesiones confinadas a la anastomosis ileocólica (incluye estenosis anastomótica)"],["i2b",">5 aftas con mucosa normal entre ellas, o lesiones mayores salteadas, en el íleon neoterminal"],["i3","Ileítis aftosa difusa con mucosa difusamente inflamada"],["i4","Inflamación difusa con úlceras grandes, nódulos o estenosis"]];
+const TOP=[
+ ["1","Clase 1 · Enfermedad mínima","Síntomas y carga anorrectal mínimos, requiere poca intervención en el tiempo (definida por el paciente).","Sin intervención si no molesta","Manejo expectante con controles y acceso rápido si empeora; tratar la enfermedad luminal según guías."],
+ ["2a","Clase 2a · Reparación","Fístula sintomática apta para cierre combinado médico-quirúrgico (incluye retiro del setón).","Cierre de la fístula","Terapia médica optimizada (anti-TNF con niveles altos) y cirugía reparadora bien seleccionada y oportuna (colgajo de avance, LIFT) con recto sin actividad."],
+ ["2b","Clase 2b · Control de síntomas","Dolor y supuración crónicos que afectan la calidad de vida; fístula hoy no apta para reparación.","Control de síntomas","Mejor tratamiento médico y cirugía orientada a síntomas (setón de largo plazo, drenajes). Si el paciente lo desea, intentar llevarla a 2a."],
+ ["2c-i","Clase 2c-i · Precoz y rápidamente progresiva","Progresión destructiva del periné o de la calidad de vida en 3–6 meses pese a tratamiento optimizado.","Controlar la sepsis y evitar la destrucción","Drenaje y control médico-quirúrgico rápido; si no se logra, ostomía desfuncionalizante (a veces proctectomía precoz)."],
+ ["2c-ii","Clase 2c-ii · Gradualmente debilitante","Síntomas graves por ≥1 año, no apta para reparación, con calidad de vida limitada.","Control de síntomas","Terapia médica optimizada y, eventualmente, ostomía desfuncionalizante."],
+ ["3","Clase 3 · Periné agotado o rasgos adversos","Síntomas graves pese a desfuncionalización, destrucción perineal irreversible o síntomas tan limitantes que requieren proctectomía.","Calidad de vida","Discutir proctectomía."],
+ ["4a","Clase 4a · Posproctectomía, reparable","Seno o herida perineal sintomática apta para cierre.","Cierre del seno","Terapia médica optimizada y cirugía reparadora seleccionada."],
+ ["4b","Clase 4b · Posproctectomía, control de síntomas","Seno o herida crónica no apta para reparación, o el objetivo del paciente es controlar síntomas.","Control de síntomas","Mejor tratamiento médico y cirugía orientada a síntomas."]];
+const PDC=[
+ {k:"sf",t:"Frecuencia de deposiciones",o:["Habitual posoperatoria","1–2 más que lo habitual","≥3 más que lo habitual"]},
+ {k:"rb",t:"Sangrado rectal",o:["Ausente o raro","Diario"]},
+ {k:"ur",t:"Urgencia fecal o cólico abdominal",o:["Ninguno","Ocasional","Habitual"]},
+ {k:"fe",t:"Fiebre >37,8 °C",o:["Ausente","Presente"]}];
+const PDE=["Edema","Granularidad","Friabilidad","Pérdida del patrón vascular","Exudado mucoso","Ulceración"];
+const PDH=[
+ {k:"pmn",t:"Infiltrado de polimorfonucleares",o:["Ausente","Leve","Moderado + abscesos de cripta","Grave + abscesos de cripta"]},
+ {k:"ul",t:"Ulceración por campo de bajo aumento (promedio)",o:["Ausente","<25 %","25–50 %",">50 %"]}];
 const SEGS=[["il","Íleon"],["cd","Colon derecho"],["ct","Colon transverso"],["ci","Colon izquierdo y sigma"],["re","Recto"]];
 const SESV=[
  {k:"u",t:"Tamaño de úlceras",o:["Ninguna","Aftosas<br>0,1–0,5 cm","Grandes<br>0,5–2 cm","Muy grandes<br>&gt;2 cm"]},
@@ -2018,6 +2135,20 @@ $("#sc-form").innerHTML=`
  <div class="scq"><label class="ql" for="cd-wt">Peso actual y peso estándar<span>% bajo el estándar × 1 (mínimo −10)</span></label>
   <div style="display:flex;gap:8px;flex-wrap:wrap"><div class="inp" style="max-width:150px"><input id="cd-wt" type="number" min="25" max="250" step="0.1" inputmode="decimal" placeholder="actual"><span>kg</span></div><div class="inp" style="max-width:150px"><input id="cd-sw" type="number" min="25" max="250" step="0.1" inputmode="decimal" placeholder="estándar"><span>kg</span></div><div class="inp" style="max-width:150px"><input id="cd-ht" type="number" min="120" max="220" inputmode="numeric" placeholder="o talla"><span>cm</span></div></div>
   <p class="hint" style="margin:4px 0 0">Sin peso estándar, se estima con la talla (IMC 22 × talla²).</p></div>
+</fieldset></div>
+<div id="f-rut" hidden><fieldset class="blk"><legend>Rutgeerts modificado · ileocolonoscopía posquirúrgica</legend>
+ <p class="hint" style="margin:0 0 4px">Evaluar el íleon neoterminal y la anastomosis a los 6–12 meses de la resección ileocólica.</p>
+ <div class="scq"><div class="opts">${RUT.map(([k,t],i)=>`<input type="radio" name="rut" id="rut-${i}" value="${i}"><label for="rut-${i}"><i>${k}</i><span>${t}</span></label>`).join("")}</div></div>
+</fieldset></div>
+<div id="f-top" hidden><fieldset class="blk"><legend>TOpClass · enfermedad de Crohn perianal fistulizante</legend>
+ <p class="hint" style="margin:0 0 4px">Clasificación por objetivo del paciente y gravedad, no por anatomía (para la anatomía: Parks y RM). El paciente puede cambiar de clase en el tiempo.</p>
+ <div class="scq"><div class="opts">${TOP.map((x,i)=>`<input type="radio" name="topc" id="topc-${i}" value="${i}"><label for="topc-${i}"><i>${x[0]}</i><span><b>${x[1].split(" · ")[1]}</b> — ${x[2]}</span></label>`).join("")}</div></div>
+</fieldset></div>
+<div id="f-pdai" hidden><fieldset class="blk"><legend>PDAI · reservorio ileal (Sandborn 1994)</legend>
+ <p class="hint" style="margin:0 0 4px">Clínico + endoscópico = mPDAI (0–12). Agrega la histología para el PDAI completo (0–18).</p>
+ ${PDC.map(q=>`<div class="scq"><div class="ql">${q.t}</div>${opts("pd_"+q.k,q.o)}</div>`).join("")}
+ <div class="scq"><div class="ql">Hallazgos endoscópicos<span>1 punto c/u</span></div><div class="chk">${PDE.map((t,i)=>`<input type="checkbox" name="pd_e" id="pde-${i}" value="${i}"><label for="pde-${i}">${t}</label>`).join("")}</div></div>
+ <details class="segm"><summary>Histología (opcional)<span class="pt" id="pd-hpt">—</span></summary><div class="gin">${PDH.map(q=>`<div class="scq"><div class="ql">${q.t}</div>${opts("pd_"+q.k,q.o)}</div>`).join("")}</div></details>
 </fieldset></div>
 <div id="f-ses" hidden><fieldset class="blk"><legend>SES-CD · 5 segmentos × 4 variables</legend>
  <p class="hint" style="margin:0 0 4px">Puntúa cada segmento de 0 a 3 en cada variable. Marca «No explorado» si no se alcanzó.</p>
@@ -2048,6 +2179,23 @@ const INFO={
   <li class="n">Pesa mucho lo subjetivo (dolor y bienestar ≈ 60 % del puntaje) y puede estar alto en SII superpuesto o enfermedad fibroestenosante sin inflamación: confirmar con calprotectina, PCR, endoscopía o ecografía intestinal.</li>
   <li class="n">Los ensayos recientes y la FDA usan como coprimario el <b>PRO2</b> (frecuencia de deposiciones ≤2,8 y dolor ≤1 de promedio diario) junto con la respuesta endoscópica (SES-CD).</li></ul>
   <p class="note" style="margin-top:8px">Best WR, Becktel JM, Singleton JW, Kern F Jr. Gastroenterology. 1976;70(3):439-44. doi:10.1016/S0016-5085(76)80163-1</p>`,
+ rut:`<h4>Cómo se usa</h4><ul class="why">
+  <li class="n">Ileocolonoscopía a los <b>6–12 meses</b> de la resección ileocólica (ACG 2025, R30). Es el mejor predictor de recurrencia clínica.</li>
+  <li class="n"><b>Recurrencia endoscópica: ≥i2b</b>. La versión modificada separa i2a (solo anastomosis, menor riesgo) de i2b (íleon neoterminal).</li>
+  <li class="n">Conducta: i0–i1 mantener y repetir en 1–3 años; i2a individualizar; ≥i2b iniciar o escalar terapia (anti-TNF, vedolizumab, ustekinumab; ACG R31).</li>
+  <li class="n">Calprotectina &lt;100 µg/g a los 3–6 meses tiene alto valor predictivo negativo; la ecografía intestinal (grosor &gt;3 mm) apoya entre colonoscopías.</li></ul>
+  <p class="note" style="margin-top:8px">Rutgeerts P, Geboes K, Vantrappen G, et al. Gastroenterology. 1990;99(4):956-63. doi:10.1016/0016-5085(90)90613-6</p>`,
+ top:`<h4>Cómo se usa</h4><ul class="why">
+  <li class="n">Asigna una clase según la gravedad y el <b>objetivo acordado con el paciente</b>; cada clase trae su estrategia médico-quirúrgica y el tipo de ensayo para el que es candidato.</li>
+  <li class="n">Complementa, no reemplaza, la anatomía (Parks, RM con MAGNIFI-CD/Van Assche) y el examen bajo anestesia.</li>
+  <li class="n">Se reclasifica en el tiempo: 2b → 2a tras controlar la sepsis con setón y anti-TNF, o 2a → 2b si falla la reparación.</li></ul>
+  <p class="note" style="margin-top:8px">Geldof J, Iqbal N, LeBlanc JF, et al. Lancet Gastroenterol Hepatol. 2022;7(6):576-84. doi:10.1016/S2468-1253(22)00007-3</p>`,
+ pdai:`<h4>Cómo se usa</h4><ul class="why">
+  <li class="n"><b>Pouchitis</b>: PDAI ≥7 (completo) o mPDAI ≥5 (sin histología).</li>
+  <li class="n"><b>Remisión</b> (EARNEST): mPDAI ≤4 con descenso ≥2; PDAI ≤6 con descenso ≥3. <b>Respuesta</b>: descenso del mPDAI ≥2.</li>
+  <li class="n">Los síntomas solos no bastan: el reservorio irritable, la cuffitis y las estenosis dan clínica similar con endoscopía normal o distinta.</li>
+  <li class="n">Describir por separado asa aferente, cuerpo del reservorio y cuff (ileítis prereservorio o cuffitis cambian la categoría).</li></ul>
+  <p class="note" style="margin-top:8px">Sandborn WJ, Tremaine WJ, Batts KP, et al. Mayo Clin Proc. 1994;69(5):409-15. doi:10.1016/s0025-6196(12)61634-6 · Travis S et al. N Engl J Med. 2023;388:1191-200. doi:10.1056/NEJMoa2208450</p>`,
  ses:`<h4>Cómo se usa</h4><ul class="why">
   <li class="n">Puntaje endoscópico: 4 variables (0–3) en 5 segmentos; total 0–56. La estenosis no se mueve con el tratamiento médico.</li>
   <li class="n"><b>Objetivo STRIDE-II</b>: SES-CD &lt;3 o ausencia de úlceras a los 6–12 meses.</li>
@@ -2057,7 +2205,7 @@ const INFO={
 };
 function scRender(){
   const tool=(document.querySelector('input[name="stool"]:checked')||{}).value||"mayo";
-  ["mayo","hbi","cdai","ses"].forEach(t=>$("#f-"+t).hidden=t!==tool);
+  ["mayo","hbi","cdai","ses","rut","top","pdai"].forEach(t=>$("#f-"+t).hidden=t!==tool);
   $("#sc-info").innerHTML=INFO[tool];
   const btn=$("#sc-apply");btn.hidden=true;scApply=null;let h="";
   if(tool==="mayo"){
@@ -2087,6 +2235,36 @@ function scRender(){
       h=`<div class="k">Harvey-Bradshaw</div><div class="score"><b class="st-${st}">${s}</b><span class="st-${st}">${lab}</span></div>${band([[0,4,"Remisión","<5"],[5,7,"Leve","5–7"],[8,16,"Moderada","8–16"],[17,999,"Grave",">16"]],s)}
       <ul class="why" style="margin-top:8px"><li class="n">Estado general ${wb} · dolor ${pa} · deposiciones ${stn} · masa ${ms} · complicaciones ${comp}</li></ul>`;
       if(scApply){btn.hidden=false;btn.textContent=`Usar en la decisión: Crohn ${scApply}`}
+    }
+  }else if(tool==="rut"){
+    const v=val("rut");
+    if(v===null)h=`<div class="k">Rutgeerts modificado</div><h3>Elige el hallazgo endoscópico</h3><p class="note">Íleon neoterminal y anastomosis, a los 6–12 meses de la cirugía.</p>`;
+    else{const k=RUT[v][0],rec=v>=3,st=v<=1?"r":v===2?"p":"f",lab=v<=1?"Sin recurrencia endoscópica":v===2?"Lesión anastomótica (riesgo intermedio)":v===3?"Recurrencia endoscópica":"Recurrencia endoscópica grave";
+      const cond=v<=1?"Mantener la estrategia actual; nueva ileocolonoscopía en 1–3 años y calprotectina seriada.":v===2?"Individualizar: el riesgo es menor que en i2b. Considerar vigilancia estrecha (calprotectina, ecografía, nueva colonoscopía en 6–12 meses) o tratar si hay otros factores de riesgo.":"Iniciar o escalar terapia avanzada (anti-TNF, vedolizumab, ustekinumab; ACG R31); optimizar niveles si ya está en tratamiento.";
+      h=`<div class="k">Rutgeerts modificado</div><div class="score"><b class="st-${st}">${k}</b><span class="st-${st}">${lab}</span></div>${band([[0,1,"Sin recurrencia","i0–i1"],[2,2,"Anastomótica","i2a"],[3,3,"Recurrencia","i2b"],[4,5,"Recurrencia grave (alto riesgo clínico)","i3–i4"]],v)}
+      <ul class="why" style="margin-top:8px"><li class="${rec?"w":"p"}">${cond}</li>${v>=4?`<li class="w">i3–i4: alta probabilidad de recurrencia clínica y quirúrgica a 3–5 años.</li>`:""}</ul>`;}
+  }else if(tool==="top"){
+    const v=val("topc");
+    if(v===null)h=`<div class="k">TOpClass</div><h3>Elige la clase que describe al paciente</h3><p class="note">Define con el paciente si el objetivo es cerrar la fístula o controlar síntomas.</p>`;
+    else{const x=TOP[v],st=v===0?"r":v<=2||v===6?"p":"f";
+      h=`<div class="k">TOpClass</div><div class="score"><b class="st-${st}">${x[0]}</b><span class="st-${st}">${x[1].split(" · ")[1]}</span></div>
+      <dl class="kv" style="margin-top:10px"><dt>Definición</dt><dd>${x[2]}</dd><dt>Objetivo</dt><dd><b>${x[3]}</b></dd><dt>Estrategia</dt><dd>${x[4]}</dd></dl>
+      ${v>=1&&v<=5?`<ul class="why" style="margin-top:8px"><li class="n">Base médica: anti-TNF (infliximab con valle ≥10–20 µg/mL) ± tiopurina; antibiótico como puente en la sepsis. Examen bajo anestesia y setón antes de la terapia avanzada.</li></ul>`:""}`;}
+  }else if(tool==="pdai"){
+    const pc={};PDC.forEach(q=>pc[q.k]=val("pd_"+q.k));
+    const cOk=Object.values(pc).every(x=>x!==null),cl=cOk?Object.values(pc).reduce((a,b)=>a+b,0):null;
+    const en=document.querySelectorAll('input[name="pd_e"]:checked').length;
+    const pm=val("pd_pmn"),ul=val("pd_ul"),hi=pm!==null&&ul!==null?pm+ul:null;
+    $("#pd-hpt").textContent=hi===null?"—":hi+" pts";
+    if(!cOk)h=`<div class="k">PDAI</div><h3>Completa los 4 ítems clínicos</h3><p class="note">Marca los hallazgos endoscópicos presentes (ninguno marcado = 0).</p>`;
+    else{const m=cl+en,pou=hi!==null?m+hi>=7:m>=5;
+      const main=hi!==null?`${m+hi}<small>/18</small>`:`${m}<small>/12</small>`,st=pou?"f":"r";
+      h=`<div class="k">${hi!==null?"PDAI completo":"mPDAI (sin histología)"}</div><div class="score"><b class="st-${st}">${main}</b><span class="st-${st}">${pou?"Pouchitis":"Sin criterios de pouchitis"}</span></div>
+      ${hi!==null?band([[0,6,"Sin pouchitis","0–6"],[7,18,"Pouchitis","≥7"]],m+hi):band([[0,4,"Sin pouchitis","0–4"],[5,12,"Pouchitis","≥5"]],m)}
+      <ul class="why" style="margin-top:8px"><li class="n">Clínico ${cl}/6 · endoscópico ${en}/6${hi!==null?` · histológico ${hi}/6 · mPDAI ${m}/12`:""}</li>
+      ${!pou&&cl>=3?`<li class="w">Síntomas sin inflamación suficiente: considerar reservorio irritable, cuffitis, estenosis o disfunción del piso pélvico.</li>`:""}
+      <li class="n">En el control: respuesta si el mPDAI baja ≥2; remisión si queda ≤4 (y bajó ≥2).</li></ul>`;
+      if(pou){scApply="pouch";btn.hidden=false;btn.textContent="Usar en la decisión: reservorio con pouchitis"}
     }
   }else if(tool==="cdai"){
     const num=id=>{const x=parseFloat(($("#"+id).value||"").replace(",","."));return isNaN(x)?null:x};
@@ -2125,7 +2303,8 @@ $("#v-scores").addEventListener("input",e=>{if(e.target.id==="hb-st"||e.target.i
 document.querySelectorAll('a[href="#scores"]').forEach(a=>a.addEventListener("click",()=>{try{const c=readForm();if(c.wt&&!$("#cd-wt").value)$("#cd-wt").value=c.wt;const sx=(document.querySelector('input[name="sex"]:checked')||{}).value;if(sx&&val("cd_sx")===null)$("#cd_sx-"+(sx==="M"?1:0)).checked=true}catch(e){}}));
 $("#sc-apply").addEventListener("click",()=>{
   const tool=(document.querySelector('input[name="stool"]:checked')||{}).value;if(!scApply)return;
-  if(tool==="mayo"){$("#dz-cu").checked=true;$("#sev-"+({leve:"l",moderada:"m",grave:"g"})[scApply]).checked=true}
+  if(tool==="pdai"){$("#dz-cu").checked=true;$("#ip-s").checked=true}
+  else if(tool==="mayo"){$("#dz-cu").checked=true;$("#ip-n").checked=true;$("#sev-"+({leve:"l",moderada:"m",grave:"g"})[scApply]).checked=true}
   else{$("#dz-ec").checked=true;$("#act-"+({leve:"l",moderada:"m",grave:"g"})[scApply]).checked=true}
   render();toast("Actividad llevada al caso");location.hash="decision";
 });
