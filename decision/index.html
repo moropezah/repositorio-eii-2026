@@ -925,18 +925,18 @@ const CK_BIO=["vhb","vhc","vih","vzv","mmr","rzv","neumo","flu","vph","vivas","i
 /* kin: semanas. on=[inicio,fin] ventana de inicio de acción; ev=fin de inducción; ext=evaluación tras inducción extendida */
 const D={
 mz_or:{n:"Mesalazina oral",cl:"asa",via:"Oral",chile:"gen",
- cu:{ind:"2,4–4,8 g/d (4,8 g en moderada), una toma diaria",mant:"≥2 g/d (ECCO 2026; ACG ≥1,5 g)",int:"Subir a 4,8 g/d + mesalazina rectal; no cambiar a otra formulación (ACG 2025)"},ec:null,
- pres:["Comprimidos LP 500 mg y 1 g","Sobres de granulado 1 g, 2 g y 4 g","Comprimidos gastrorresistentes 400 mg, 800 mg y 1,2 g (MMX)"],
- calc:()=>"4,8 g/d = 2 sobres de 2 g + 1 comprimido de 800 mg, o 4 sobres de 1,2 g MMX. Mantención 2,4 g/d en una toma.",
+ cu:{ind:"Chile (comprimidos de 500 mg): 2,5–4,5 g/d, 4,5 g en moderada, una toma diaria. Guías: 2,4–4,8 g/d, cifras que reflejan las presentaciones de 400/800 mg y 1,2 g de otros países",mant:"≥2 g/d = 4 comprimidos de 500 mg (ECCO 2026; ACG ≥1,5 g)",int:"Subir a 4,5 g/d (4,8 g donde existen 800 mg o 1,2 g) + mesalazina rectal; no cambiar a otra formulación (ACG 2025)"},ec:null,
+ pres:["Chile: comprimidos 500 mg (Pentasa, Salofalk, Mecolzine)","Otros países: comprimidos 400 mg, 800 mg y 1,2 g (MMX); sobres de granulado 1, 2 y 4 g"],
+ calc:()=>"Chile: moderada 4,5 g/d = 9 comprimidos de 500 mg (una toma o repartidos); leve 2,5 g/d = 5 comprimidos; mantención 2–2,5 g/d = 4–5 comprimidos en una toma. En otros países: 4,8 g = 6 × 800 mg o 4 × 1,2 g MMX.",
  kin:{cu:{on:[1,3],ev:8,ext:null}},kinTx:"Respuesta en 2–4 semanas; remisión a las 8",
  tdm:"No aplica.",
  ae:[["e","Cefalea, náuseas, dolor abdominal leve"],["v","Creatinina: nefritis intersticial (rara) → control anual"],["s","Empeoramiento paradojal de la diarrea con sangre en las primeras semanas (intolerancia aguda ~3 %) → suspender"],["s","Pancreatitis, pericarditis o miocarditis"]],
  preg:"Compatible. Evitar formulaciones con dibutilftalato.",lact:"Compatible (diarrea ocasional en el lactante).",
  trials:"Metaanálisis Cochrane; ASCEND II–III (4,8 g/d en moderada); PODIUM (dosis única diaria).",chk:["crea_asa"]},
 mz_comb:{n:"Mesalazina oral + rectal",cl:"asa",via:"Oral + rectal",chile:"gen",
- cu:{ind:"Oral 2,4–4,8 g/d + enema 1 g/noche (o supositorio 1 g si predomina lo rectal) × 8 semanas",mant:"Oral ≥2 g/d + rectal 1 g 2–3 veces por semana",int:"Si no responde: budesonida MMX o prednisona; no cambiar de formulación de 5-ASA"},ec:null,
- pres:["Oral: comprimidos LP 500 mg y 1 g; sobres 1, 2 y 4 g; comprimidos 1,2 g MMX","Rectal: enema 1 g/100 mL; espuma 1 g; supositorios 500 mg y 1 g"],
- calc:()=>"Ejemplo moderada: 2 sobres de 2 g + 1 comprimido de 800 mg al día (4,8 g) + 1 enema de 1 g al acostarse. Mantención: 2,4 g/d oral + enema o supositorio 1 g 3 noches por semana.",
+ cu:{ind:"Oral 2,5–4,5 g/d en Chile (2,4–4,8 g en guías) + enema 1 g/noche (o supositorio 1 g si predomina lo rectal) × 8 semanas",mant:"Oral ≥2 g/d (4 comprimidos de 500 mg) + rectal 1 g 2–3 veces por semana",int:"Si no responde: budesonida MMX o prednisona; no cambiar de formulación de 5-ASA"},ec:null,
+ pres:["Oral en Chile: comprimidos 500 mg (Pentasa, Salofalk, Mecolzine); en otros países 800 mg, 1,2 g MMX y sobres","Rectal: enema 1 g/100 mL; espuma 1 g; supositorios 500 mg y 1 g"],
+ calc:()=>"Ejemplo moderada en Chile: 9 comprimidos de 500 mg al día (4,5 g) + 1 enema de 1 g al acostarse. Mantención: 4–5 comprimidos (2–2,5 g/d) + enema o supositorio 1 g 3 noches por semana.",
  kin:{cu:{on:[0.5,2],ev:8,ext:null}},kinTx:"La vía rectal mejora sangrado y urgencia en 1–2 semanas; remisión a las 8",
  tdm:"No aplica.",
  ae:[["e","Molestia anal o dificultad para retener el enema; cefalea"],["v","Creatinina basal y anual (nefritis intersticial)"],["s","Empeoramiento paradojal de la diarrea con sangre (intolerancia a 5-ASA): suspender"]],
@@ -1131,8 +1131,8 @@ function r25(x){return Math.round(x/25)*25}
 
 /* Nombres comerciales: original primero, luego biosimilares/genéricos. cl=true → comercializado en Chile */
 const BRAND={
-mz_or:[["Pentasa · Salofalk",1],["Asacol, Mezavant (por confirmar en Chile)",0],["genéricos",1]],
-mz_comb:[["Pentasa · Salofalk (oral + supositorio/enema)",1]],
+mz_or:[["Pentasa · Salofalk · Mecolzine (500 mg)",1],["Asacol, Mezavant (por confirmar en Chile)",0],["genéricos",1]],
+mz_comb:[["Pentasa · Salofalk · Mecolzine (oral) + supositorio o enema",1]],
 mz_sup:[["Pentasa supositorio 1 g · Salofalk supositorio 500 mg y 1 g",1]],
 mz_ene:[["Salofalk enema y espuma · Pentasa enema",1]],
 ssz:[["Azulfidine (original)",1],["genéricos",1]],
@@ -1342,13 +1342,13 @@ function evaluate(c){
         add("mz_sup","pref","Inducción y mantención","Proctitis: 5-ASA rectal ≥1 g/d es de primera línea (ECCO R3, ACG R6); misma vía en mantención (ACG R18)");
         add("mz_ene","alt","Inducción","Enema o espuma si el compromiso llega al rectosigma");
         add("cort_rect","alt","Inducción","Si intolerancia o falla a 5-ASA tópico; 5-ASA rectal es preferible (ECCO R6)");
-        add("mz_comb","alt","Inducción y mantención","Si no responde a tópico en 4–6 semanas: agregar mesalazina oral (ECCO R4)",sev==="moderada"?"Supositorio 1 g/noche + oral 2,4–4,8 g/d → mantención supositorio 1 g 3 veces/semana ± oral 2 g/d":"Supositorio 1 g/noche + oral 2,4 g/d → mantención supositorio 1 g 3 veces/semana");
+        add("mz_comb","alt","Inducción y mantención","Si no responde a tópico en 4–6 semanas: agregar mesalazina oral (ECCO R4)",sev==="moderada"?"Supositorio 1 g/noche + oral 2,5–4,5 g/d (5–9 comprimidos de 500 mg) → mantención supositorio 1 g 3 veces/semana ± oral 2 g/d":"Supositorio 1 g/noche + oral 2,5 g/d (5 comprimidos de 500 mg) → mantención supositorio 1 g 3 veces/semana");
       }else{
         const ext2=c.ext==="E2";
         add("mz_comb","pref","Inducción y mantención",ext2?"Oral + rectal supera a oral sola (ECCO R4, ACG R10)":"Oral + rectal supera a oral sola desde proctosigmoiditis en adelante (ECCO R4); la vía rectal controla rápido la urgencia y el sangrado",
-          (sev==="moderada"?"Oral 4,8 g/d":"Oral 2,4 g/d")+" + enema 1 g/noche (supositorio 1 g si predomina lo rectal) × 8 semanas → mantención oral ≥2 g/d + rectal 1 g 2–3 veces/semana");
-        add("mz_or","alt","Inducción y mantención",ext2?"Monoterapia oral si no tolera la vía rectal":(sev==="moderada"?"Monoterapia oral si no tolera la vía rectal; 4,8 g/d en moderada (ASCEND)":"Monoterapia oral si no tolera la vía rectal; 2,4 g/d basta en leve (ACG R15)"),
-          (sev==="moderada"?"4,8 g/d":"2,4 g/d")+" × 8 semanas → mantención ≥2 g/d");
+          (sev==="moderada"?"Oral 4,5 g/d (9 comprimidos de 500 mg; 4,8 g en guías)":"Oral 2,5 g/d (5 comprimidos de 500 mg; 2,4 g en guías)")+" + enema 1 g/noche (supositorio 1 g si predomina lo rectal) × 8 semanas → mantención oral ≥2 g/d + rectal 1 g 2–3 veces/semana");
+        add("mz_or","alt","Inducción y mantención",ext2?"Monoterapia oral si no tolera la vía rectal":(sev==="moderada"?"Monoterapia oral si no tolera la vía rectal; dosis alta en moderada (ASCEND: 4,8 g; en Chile 4,5 g con comprimidos de 500 mg)":"Monoterapia oral si no tolera la vía rectal; dosis estándar basta en leve (ACG R15: 2,4 g; en Chile 2,5 g)"),
+          (sev==="moderada"?"4,5 g/d (9 comprimidos de 500 mg; 4,8 g en guías)":"2,5 g/d (5 comprimidos de 500 mg; 2,4 g en guías)")+" × 8 semanas → mantención ≥2 g/d");
         add("bud_mmx","alt","Inducción",ext2?"Si falla o intolerancia a 5-ASA oral + rectal (ACG R11)":"Si no responde a 5-ASA (ACG R16); no superior a 5-ASA como primera opción (ECCO R9)");
         if(ext2)add("cort_rect","alt","Inducción","Alternativa tópica a 5-ASA rectal");
         else add("pred","alt","Inducción","Si falla 5-ASA a 4–8 semanas (ACG R13)");
