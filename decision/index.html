@@ -745,6 +745,7 @@ fieldset.blk{box-shadow:var(--sh)}
   <p class="lead">Calcula la actividad antes de decidir y repite el mismo score en el control para medir la respuesta. El resultado de Mayo, Harvey-Bradshaw, CDAI y PDAI se puede llevar directo a la decisión.</p>
   <div class="seg" id="stool" style="margin-bottom:14px">
     <input type="radio" name="stool" id="st-mayo" value="mayo" checked><label for="st-mayo">Mayo<small>Colitis ulcerosa</small></label>
+    <input type="radio" name="stool" id="st-uceis" value="uceis"><label for="st-uceis">UCEIS<small>CU · endoscópico</small></label>
     <input type="radio" name="stool" id="st-hbi" value="hbi"><label for="st-hbi">Harvey-Bradshaw<small>Crohn · clínico, 1 día</small></label>
     <input type="radio" name="stool" id="st-cdai" value="cdai"><label for="st-cdai">CDAI<small>Crohn · clínico, 7 días</small></label>
     <input type="radio" name="stool" id="st-ses" value="ses"><label for="st-ses">SES-CD<small>Crohn · endoscópico</small></label>
@@ -1234,6 +1235,8 @@ const GTL=[
 ];
 
 const REFS=[
+ "Travis SP, Schnell D, Krzeski P, Abreu MT, Altman DG, et al. Developing an instrument to assess the endoscopic severity of ulcerative colitis: the Ulcerative Colitis Endoscopic Index of Severity (UCEIS). Gut. 2012;61(4):535-42. doi:10.1136/gutjnl-2011-300486",
+ "Corte C, Fernandopulle N, Catuneanu AM, Burger D, Cesarini M, et al. Association between the ulcerative colitis endoscopic index of severity (UCEIS) and outcomes in acute severe ulcerative colitis. J Crohns Colitis. 2015;9(5):376-81. doi:10.1093/ecco-jcc/jjv047",
  "Gordon H, Burisch J, Ellul P, Karmiris K, Katsanos K, et al. ECCO Guidelines on Extraintestinal Manifestations in Inflammatory Bowel Disease. J Crohns Colitis. 2024;18(1):1-37. doi:10.1093/ecco-jcc/jjad108",
  "Barnes EL, Agrawal M, Syal G, Ananthakrishnan AN, Cohen BL, et al. AGA Clinical Practice Guideline on the Management of Pouchitis and Inflammatory Pouch Disorders. Gastroenterology. 2024;166(1):59-85. doi:10.1053/j.gastro.2023.10.015",
  "Kayal M, Bislenghi G, Adamina M, Ardalan ZS, Avellaneda N, et al. ECCO Topical Review on Pouch Disorders. J Crohns Colitis. 2025;19(7):jjaf103. doi:10.1093/ecco-jcc/jjaf103",
@@ -2153,6 +2156,10 @@ const HBIQ=[
 ];
 const HBIC=["Artralgia","Uveítis","Eritema nodoso","Úlceras aftosas","Pioderma gangrenoso","Fisura anal","Fístula nueva","Absceso"];
 const CDC=["Artritis o artralgia","Iritis o uveítis","Eritema nodoso, pioderma gangrenoso o estomatitis aftosa","Fisura, fístula o absceso perianal","Otra fístula","Fiebre >37,8 °C en la última semana"];
+const UCE=[
+ {k:"vp",t:"Patrón vascular",o:["Normal: vasos capilares visibles, ramificados","Obliteración parcheada del patrón","Obliteración completa"]},
+ {k:"bl",t:"Sangrado",o:["Ninguno","Mucoso: coágulos o puntos de sangre en la superficie, que se lavan","Luminal leve: algo de sangre libre en la luz","Luminal moderado o grave: sangre franca en la luz o rezumando tras lavar"]},
+ {k:"eu",t:"Erosiones y úlceras",o:["Ninguna","Erosiones: defectos ≤5 mm, planos, blancos o amarillos","Úlcera superficial: >5 mm, cubierta de fibrina","Úlcera profunda: excavada, con borde levantado"]}];
 const RUT=[["i0","Sin lesiones en el íleon neoterminal"],["i1","≤5 lesiones aftosas"],["i2a","Lesiones confinadas a la anastomosis ileocólica (incluye estenosis anastomótica)"],["i2b",">5 aftas con mucosa normal entre ellas, o lesiones mayores salteadas, en el íleon neoterminal"],["i3","Ileítis aftosa difusa con mucosa difusamente inflamada"],["i4","Inflamación difusa con úlceras grandes, nódulos o estenosis"]];
 const TOP=[
  ["1","Clase 1 · Enfermedad mínima","Síntomas y carga anorrectal mínimos, requiere poca intervención en el tiempo (definida por el paciente).","Sin intervención si no molesta","Manejo expectante con controles y acceso rápido si empeora; tratar la enfermedad luminal según guías."],
@@ -2182,6 +2189,10 @@ const SESV=[
 const opts=(name,o)=>`<div class="opts">${o.map((t,i)=>`<input type="radio" name="${name}" id="${name}-${i}" value="${i}"><label for="${name}-${i}"><i>${i}</i><span>${t}</span></label>`).join("")}</div>`;
 $("#sc-form").innerHTML=`
 <div id="f-mayo"><fieldset class="blk"><legend>Mayo · colitis ulcerosa</legend>${MAYO.map(q=>`<div class="scq"><div class="ql">${q.t}<span id="mv-${q.k}"></span></div>${opts("my_"+q.k,q.o)}</div>`).join("")}</fieldset></div>
+<div id="f-uceis" hidden><fieldset class="blk"><legend>UCEIS · colitis ulcerosa</legend>
+ <p class="hint" style="margin:0 0 4px">Puntuar el segmento más afectado (en la rectosigmoidoscopía).</p>
+ ${UCE.map(q=>`<div class="scq"><div class="ql">${q.t}</div>${opts("uc_"+q.k,q.o)}</div>`).join("")}
+</fieldset></div>
 <div id="f-hbi" hidden><fieldset class="blk"><legend>Harvey-Bradshaw · enfermedad de Crohn</legend>
  ${HBIQ.slice(0,2).map(q=>`<div class="scq"><div class="ql">${q.t}</div>${opts("hb_"+q.k,q.o)}</div>`).join("")}
  <div class="scq"><label class="ql" for="hb-st">Deposiciones líquidas o blandas (día previo)<span>1 punto c/u</span></label><div class="inp" style="max-width:180px"><input id="hb-st" type="number" min="0" max="40" inputmode="numeric"><span>n.º</span></div></div>
@@ -2233,6 +2244,11 @@ const INFO={
   <li class="n"><b>Mayo modificado</b> (0–9: frecuencia + sangrado + endoscopía), usado en ensayos recientes y por la FDA. Remisión: frecuencia ≤1, sangrado 0 y endoscópico ≤1.</li>
   <li class="n"><b>Objetivo STRIDE-II</b>: Mayo endoscópico 0–1 (ideal 0) a los 6–12 meses.</li></ul>
   <p class="note" style="margin-top:8px">Schroeder KW, Tremaine WJ, Ilstrup DM. N Engl J Med. 1987;317:1625-9. doi:10.1056/NEJM198712243172603 · Lewis JD et al. Inflamm Bowel Dis. 2008;14:1660-6. doi:10.1002/ibd.20520</p>`,
+ uceis:`<h4>Cómo se usa</h4><ul class="why">
+  <li class="n">Tres descriptores con definición precisa; total 0–8. Menor variabilidad entre observadores que el Mayo endoscópico y no satura en la enfermedad grave.</li>
+  <li class="n"><b>Remisión endoscópica</b>: UCEIS 0 (≤1 en muchos estudios). Bandas de uso habitual: 0–1 remisión, 2–4 leve, 5–6 moderada, 7–8 grave (no son cortes validados formalmente).</li>
+  <li class="n"><b>Colitis aguda grave</b> (Corte 2015, n = 89): con UCEIS ≥5 al ingreso, 50 % requirió rescate vs 27 % con ≤4; con 7–8, 11 de 14 necesitaron infliximab o ciclosporina. Un UCEIS ≥7 puede justificar planificar el rescate precozmente.</li></ul>
+  <p class="note" style="margin-top:8px">Travis SP, Schnell D, Krzeski P, et al. Gut. 2012;61(4):535-42. doi:10.1136/gutjnl-2011-300486 · Corte C, et al. J Crohns Colitis. 2015;9(5):376-81. doi:10.1093/ecco-jcc/jjv047</p>`,
  hbi:`<h4>Cómo se usa</h4><ul class="why">
   <li class="n">Índice simplificado del CDAI con datos del <b>día previo</b>; se calcula en la consulta, sin diario de 7 días.</li>
   <li class="n"><b>Respuesta</b>: descenso ≥3 puntos. <b>Remisión</b>: &lt;5.</li>
@@ -2270,7 +2286,7 @@ const INFO={
 };
 function scRender(){
   const tool=(document.querySelector('input[name="stool"]:checked')||{}).value||"mayo";
-  ["mayo","hbi","cdai","ses","rut","top","pdai"].forEach(t=>$("#f-"+t).hidden=t!==tool);
+  ["mayo","uceis","hbi","cdai","ses","rut","top","pdai"].forEach(t=>$("#f-"+t).hidden=t!==tool);
   $("#sc-info").innerHTML=INFO[tool];
   const btn=$("#sc-apply");btn.hidden=true;scApply=null;let h="";
   if(tool==="mayo"){
@@ -2301,6 +2317,15 @@ function scRender(){
       <ul class="why" style="margin-top:8px"><li class="n">Estado general ${wb} · dolor ${pa} · deposiciones ${stn} · masa ${ms} · complicaciones ${comp}</li></ul>`;
       if(scApply){btn.hidden=false;btn.textContent=`Usar en la decisión: Crohn ${scApply}`}
     }
+  }else if(tool==="uceis"){
+    const v={};UCE.forEach(q=>v[q.k]=val("uc_"+q.k));
+    if(Object.values(v).some(x=>x===null))h=`<div class="k">UCEIS</div><h3>Completa los 3 descriptores</h3><p class="note">Patrón vascular, sangrado, erosiones y úlceras.</p>`;
+    else{const t=v.vp+v.bl+v.eu,lab=t<=1?"Remisión endoscópica":t<=4?"Leve":t<=6?"Moderada":"Grave",st=t<=1?"r":t<=4?"p":"f";
+      h=`<div class="k">UCEIS</div><div class="score"><b class="st-${st}">${t}<small>/8</small></b><span class="st-${st}">${lab}</span></div>${band([[0,1,"Remisión","0–1"],[2,4,"Leve","2–4"],[5,6,"Moderada","5–6"],[7,8,"Grave","7–8"]],t)}
+      <ul class="why" style="margin-top:8px"><li class="n">Patrón vascular ${v.vp} · sangrado ${v.bl} · erosiones y úlceras ${v.eu}</li>
+      ${t===0?`<li class="p">Remisión endoscópica completa (objetivo ideal STRIDE-II).</li>`:""}
+      ${v.eu===3?`<li class="w">Úlceras profundas: factor de mal pronóstico (ACG 2025); márcalo en la Decisión («Mayo endoscópico 3 / úlceras profundas»).</li>`:""}
+      ${t>=7?`<li class="w">En colitis aguda grave, UCEIS ≥7 al ingreso: casi todos requieren rescate; planificar infliximab o ciclosporina desde el inicio (Corte 2015).</li>`:t>=5?`<li class="w">En colitis aguda grave, UCEIS ≥5 duplica la necesidad de rescate (50 % vs 27 %).</li>`:""}</ul>`;}
   }else if(tool==="rut"){
     const v=val("rut");
     if(v===null)h=`<div class="k">Rutgeerts modificado</div><h3>Elige el hallazgo endoscópico</h3><p class="note">Íleon neoterminal y anastomosis, a los 6–12 meses de la cirugía.</p>`;
