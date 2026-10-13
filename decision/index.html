@@ -434,6 +434,7 @@ fieldset.blk{box-shadow:var(--sh)}
 .reco li span{font-size:.84rem;color:var(--fg-2)}
 .reco li em{font-style:normal;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--fg-3);margin-left:6px}
 .brand{font-family:var(--ff-b);display:flex;flex-wrap:wrap;gap:4px 6px;margin-top:4px;font-size:.8rem}.brand span{padding:1px 8px;border-radius:999px;border:1px solid var(--line,#ccd)}.brand .bc{font-weight:700;color:var(--fg-1,inherit)}.brand .bn{color:var(--fg-3);font-style:italic}.brl{font-family:var(--ff-b);font-weight:400;font-size:.74rem;color:var(--fg-3);margin-top:2px}
+.evk{font-family:var(--ff-b);font-size:.68rem;font-weight:700;letter-spacing:.02em;padding:2px 8px;border-radius:999px;border:1px solid}.evk.ci{color:#fff;background:var(--rojo);border-color:var(--rojo)}.evk.rb{color:var(--rojo);border-color:var(--rojo)}.evk.sb{color:var(--fg-2);border-color:var(--line-2)}
 </style>
 
 <header class="top">
@@ -1277,7 +1278,7 @@ const REFS=[
 ];
 /* ============ MOTOR DE DECISIÓN ============ */
 const TIERS=["pref","alt","baja","prec","evit"];
-const TIERTX={pref:["Preferente","Primera elección en este escenario"],alt:["Alternativa razonable","Eficacia comparable o evidencia menor"],baja:["Menor eficacia esperada","Válida, pero rinde menos en esta línea"],prec:["Con precaución","Condición del paciente que obliga a sopesar riesgo"],evit:["Evitar o contraindicado","No usar salvo situación excepcional"],inv:["En investigación","Sin aprobación; considerar ensayo clínico"]};
+const TIERTX={pref:["Preferente","Primera elección en este escenario"],alt:["Alternativa razonable","Eficacia comparable o evidencia menor"],baja:["Menor eficacia esperada","Válida, pero rinde menos en esta línea"],prec:["Con precaución","Condición del paciente que obliga a sopesar riesgo"],evit:["Evitar","No usar en este paciente o escenario; el motivo indica si es contraindicación, riesgo mayor que el beneficio o falta de eficacia"],inv:["En investigación","Sin aprobación; considerar ensayo clínico"]};
 
 function evaluate(c){
   const R={items:[],steps:[],alerts:[],combo:null,fail:[],guides:new Set(),tags:[],title:""};
@@ -1670,7 +1671,7 @@ function evaluate(c){
 
   /* ======================= MODIFICADORES ======================= */
   const pos=(it,t)=>it.why.push({c:"p",t}), warn=(it,t)=>it.why.push({c:"w",t});
-  const down=(it,tier,t)=>{if(ti(tier)>ti(it.tier))it.tier=tier;it.why.push({c:tier==="evit"?"x":"w",t})};
+  const down=(it,tier,t,ci)=>{if(ti(tier)>ti(it.tier))it.tier=tier;it.why.push({c:tier==="evit"?"x":"w",t,ci:!!ci})};
   const up=(it,t)=>{if(it.tier==="alt")it.tier="pref";else if(it.tier==="baja")it.tier="alt";it.why.push({c:"p",t})};
   const cvRisk=["tabaco","hta","dm","dlp"].filter(has).length;
   R.items.forEach(it=>{
@@ -1713,7 +1714,7 @@ function evaluate(c){
       if(has("oral"))pos(it,"Vía oral");
     }
     if(isS){
-      if(has("bradi"))down(it,"evit","Bradiarritmia, BAV 2°–3° sin marcapasos o QTc largo: contraindicado");
+      if(has("bradi"))down(it,"evit","Bradiarritmia, BAV 2°–3° sin marcapasos o QTc largo (ficha técnica de ozanimod y etrasimod)",1);
       if(has("cvd"))down(it,"prec","IAM, ACV o angina en los últimos 6 meses: contraindicado; fuera de ese plazo, precaución");
       if(has("icc34"))down(it,"evit","ICC descompensada");
       if(has("ojo"))down(it,"prec","Edema macular o retinopatía: riesgo de edema macular; fondo de ojo basal y a 3–4 meses");
@@ -1725,13 +1726,13 @@ function evaluate(c){
       if(has("oral"))pos(it,"Vía oral");
       if(has("desmiel"))pos(it,"Los S1P se usan en esclerosis múltiple");
     }
-    if(has("tbcAct")){if(isT||isJ)down(it,"evit","TBC activa: no iniciar hasta completar tratamiento inicial");else if(["int","p40","p19","s1p","imm","cni"].includes(k)||id==="pred"||id==="mpred")down(it,"prec","TBC activa: coordinar con infectología")}
+    if(has("tbcAct")){if(isT||isJ)down(it,"evit","TBC activa: no iniciar hasta completar el tratamiento inicial (ECCO infecciones 2026)",1);else if(["int","p40","p19","s1p","imm","cni"].includes(k)||id==="pred"||id==="mpred")down(it,"prec","TBC activa: coordinar con infectología")}
     if(has("infAct")&&["tnf","jak","int","p40","p19","s1p","imm","cni"].includes(k))warn(it,"Infección activa: diferir el inicio hasta controlarla");
     if(isS&&has("vzvneg"))down(it,"prec","VVZ no inmune: vacunar y esperar 4 semanas antes de iniciar");
     if(isT){
-      if(has("icc34"))down(it,"evit","ICC NYHA III–IV: anti-TNF contraindicado");
+      if(has("icc34"))down(it,"evit","Insuficiencia cardíaca NYHA III–IV: empeoramiento y mortalidad con anti-TNF (ATTACH)",1);
       if(has("icc12"))down(it,"prec","ICC NYHA I–II: ecocardiograma; evitar dosis altas de infliximab");
-      if(has("desmiel"))down(it,"evit","Enfermedad desmielinizante: anti-TNF contraindicado");
+      if(has("desmiel"))down(it,"evit","Enfermedad desmielinizante (esclerosis múltiple, neuritis óptica): anti-TNF puede desencadenarla o agravarla",1);
       if(has("lupus"))down(it,"prec","Lupus o ANA alto: riesgo de lupus inducido");
       if(has("neoActiva"))down(it,"prec","Neoplasia activa: decisión con oncología");
       else if(has("neo5"))warn(it,"Neoplasia <5 años: datos tranquilizadores, decidir con oncología");
@@ -1741,7 +1742,7 @@ function evaluate(c){
       if(has("obeso"))warn(it,"IMC alto o albúmina baja: mayor aclaramiento; TDM precoz e intensificación");
     }
     if(isTio){
-      if(c.tpmt==="baja")down(it,"evit","TPMT/NUDT15 deficiente: mielotoxicidad grave");
+      if(c.tpmt==="baja")down(it,"evit","TPMT/NUDT15 sin actividad (homocigoto): mielotoxicidad grave. Con actividad intermedia: 30–50 % de la dosis y hemograma estrecho",1);
       else if(c.tpmt==="intermedia")warn(it,"TPMT intermedia: iniciar con 50 % de la dosis");
       else if(c.tpmt==="nd")warn(it,"Medir TPMT y NUDT15 antes de iniciar (ACG R10)");
       if(has("ebvneg"))down(it,"prec","VEB IgG negativo: riesgo de linfoproliferación y HLH, sobre todo en hombres jóvenes");
@@ -1772,8 +1773,8 @@ function evaluate(c){
     if(c.sex==="F"&&c.preg!=="no"){
       const p=c.preg;
       if(isJ)down(it,"evit",p==="lactancia"?"Lactancia: evitar JAK":"Embarazo o deseo: suspender ≥4 semanas antes de concebir; usar solo sin alternativa");
-      if(isS)down(it,"evit",p==="lactancia"?"Lactancia: evitar S1P":"Teratogénico: ozanimod 3 meses y etrasimod 1–2 semanas de lavado antes de concebir");
-      if(id==="mtx")down(it,"evit","Teratogénico: suspender 3–6 meses antes de concebir; contraindicado en lactancia");
+      if(isS)down(it,"evit",p==="lactancia"?"Lactancia: evitar S1P":p==="embarazo"?"Teratogénico: no usar en el embarazo":"Teratogénico: lavado antes de concebir (ozanimod 3 meses, etrasimod 1–2 semanas)",p==="embarazo");
+      if(id==="mtx")down(it,"evit",p==="deseo"?"Teratogénico y abortivo: suspender 3–6 meses antes de concebir":p==="lactancia"?"Se excreta en la leche: no usar en lactancia":"Teratogénico y abortivo: no usar en el embarazo",p!=="deseo");
       if(isTio&&p==="embarazo")warn(it,"No iniciar durante el embarazo; continuar si ya estaba en uso");
       if((isT||k==="int"||k==="p40")&&it.tier!=="evit"){up(it,p==="lactancia"?"Compatible con lactancia":"Datos de seguridad en embarazo (PIANO)");if(isT&&p==="embarazo")warn(it,"Exposición en 3er trimestre: diferir vacunas vivas del lactante hasta los 6 meses")}
       if(k==="p19")warn(it,"Datos limitados en embarazo: continuar si ya en uso, decisión individual");
@@ -1924,10 +1925,11 @@ function render(){
     its.forEach(it=>{
       const d=D[it.id],k=(d.kin||{})[c.dz],dl=doseLine(it,c.dz);
       const whys=it.why.filter((w,i,a)=>a.findIndex(x=>x.t===w.t)===i);
-      h+=`<div class="drow"><div class="nm"><b>${esc(d.n)}</b><span class="ph">${esc(it.ph)}</span><span class="cls">${CLS[d.cl]}</span>${badge(it.id)}</div>
+      const evk=t!=="evit"?"":whys.some(w=>w.ci)?["ci","Contraindicado"]:whys.some(w=>w.c==="x")?["rb","Riesgo mayor que el beneficio"]:["sb","Sin beneficio en este escenario"];
+      h+=`<div class="drow"><div class="nm"><b>${esc(d.n)}</b>${evk?`<span class="evk ${evk[0]}">${evk[1]}</span>`:""}<span class="ph">${esc(it.ph)}</span><span class="cls">${CLS[d.cl]}</span>${badge(it.id)}</div>
       <button class="btn go" type="button" data-ficha="${it.id}" data-ph="${esc(it.ph)}">Ficha</button>
       ${dl?`<div class="dose">${esc(dl)}${d.kinTx?` <em>· inicio: ${esc(d.kinTx.charAt(0).toLowerCase()+d.kinTx.slice(1))}</em>`:""}</div>`:""}
-      <ul class="why">${whys.map(w=>`<li class="${w.c}">${esc(w.t)}</li>`).join("")}</ul>
+      <ul class="why">${whys.map(w=>`<li class="${w.c}">${w.ci?"<b>Contraindicado:</b> ":""}${esc(w.t)}</li>`).join("")}</ul>
       ${k&&t!=="evit"?`<div class="mini">${kinBar(k,Math.max(16,(k.ext||k.ev)+2))}</div>`:""}</div>`;
     });
     h+="</div>";if(t==="baja")h+="</details>";
@@ -1995,7 +1997,7 @@ function openFicha(id,ph){
   $("#dtags").innerHTML=`${badge(id)}<span class="tag">${esc(d.via)}</span>${d.cu?'<span class="tag cu">CU</span>':""}${d.ec?'<span class="tag ec">EC</span>':""}`;
   let b="";
   const it=ph&&lastR?lastR.items.find(i=>i.id===id&&i.ph===ph):null;
-  if(it){const ws=it.why.filter((w,i,a)=>a.findIndex(x=>x.t===w.t)===i);b+=`<div class="fs"><h5>En este paciente · ${TIERTX[it.tier][0]}</h5><ul class="why">${ws.map(w=>`<li class="${w.c}">${esc(w.t)}</li>`).join("")}</ul></div>`}
+  if(it){const ws=it.why.filter((w,i,a)=>a.findIndex(x=>x.t===w.t)===i);b+=`<div class="fs"><h5>En este paciente · ${TIERTX[it.tier][0]}</h5><ul class="why">${ws.map(w=>`<li class="${w.c}">${w.ci?"<b>Contraindicado:</b> ":""}${esc(w.t)}</li>`).join("")}</ul></div>`}
   b+=`<div class="fs"><h5>Chile</h5><p>${esc(d.chileTx||CHILE[d.chile][2])}</p></div>`;
   ["cu","ec"].forEach(z=>{const x=d[z];if(!x)return;b+=`<div class="fs"><h5>Dosis · ${z==="cu"?"colitis ulcerosa":"enfermedad de Crohn"}</h5><dl class="kv"><dt>Inducción</dt><dd>${esc(x.ind)}</dd><dt>Mantención</dt><dd>${esc(x.mant)}</dd><dt>Intensificación</dt><dd>${esc(x.int)}</dd></dl></div>`});
   if(d.pouch)b+=`<div class="fs"><h5>Dosis · reservorio ileal</h5><dl class="kv"><dt>Inducción</dt><dd>${esc(d.pouch.ind)}</dd><dt>Mantención</dt><dd>${esc(d.pouch.mant)}</dd><dt>Escalamiento</dt><dd>${esc(d.pouch.int)}</dd></dl></div>`;
@@ -2026,7 +2028,7 @@ function summary(){
   if(R.alerts.length)s+="\nAlertas:\n"+R.alerts.map(a=>"- "+a.t.replace(/<[^>]+>/g,"")).join("\n")+"\n";
   if(R.steps.length)s+="\nPlan:\n"+R.steps.map((x,i)=>`${i+1}. ${x.replace(/<[^>]+>/g,"")}`).join("\n")+"\n";
   ["pref","alt"].forEach(t=>{const its=R.items.filter(i=>i.tier===t);if(its.length)s+=`\n${TIERTX[t][0]}:\n`+its.map(i=>`- ${D[i.id].n} (${i.ph}; ${CHILE[D[i.id].chile][0]}): ${doseLine(i,c.dz)}`).join("\n")+"\n"});
-  const ev=R.items.filter(i=>i.tier==="evit"||i.tier==="prec");if(ev.length)s+="\nEvitar / precaución:\n"+ev.map(i=>`- ${D[i.id].n}: ${i.why.filter(w=>w.c!=="n"&&w.c!=="p").map(w=>w.t).join("; ")||i.why.map(w=>w.t).join("; ")}`).join("\n")+"\n";
+  const ev=R.items.filter(i=>i.tier==="evit"||i.tier==="prec");if(ev.length)s+="\nEvitar / precaución:\n"+ev.map(i=>`- ${D[i.id].n}: ${i.why.filter(w=>w.c!=="n"&&w.c!=="p").map(w=>(w.ci?"CONTRAINDICADO: ":"")+w.t).join("; ")||i.why.map(w=>w.t).join("; ")}`).join("\n")+"\n";
   if(R.fail.length)s+="\nSi falla:\n"+R.fail.map(x=>"- "+x).join("\n")+"\n";
   s+="\nFuente: Decisión Terapéutica EII, Dr. Moisés Oropeza Hernández (ECCO 2026/2024, ACG 2025, AGA 2024–2025, Guía chilena 2026). Apoyo a la decisión; no reemplaza el juicio clínico.";
   return s;
