@@ -30,10 +30,26 @@ quiz/index.html   · módulo 05, Quiz EII v6.1 (220 casos)
 decision/index.html · módulo 06, herramienta de decisión terapéutica (autocontenida)
 manifest.webmanifest, sw.js, icons/            · app instalable completa (EII 2026)
 decision/manifest.webmanifest, decision/sw.js  · app instalable solo de decisión
+fuentes/decision/ · fuentes del módulo 06 y actualizar.py (regenera solo decision/)
 .nojekyll         · evita el procesamiento Jekyll en GitHub Pages
 ```
 
 Sitio estático puro: sin compilación, sin servidor, sin dependencias. Funciona abriendo `index.html` directamente o publicado con GitHub Pages.
+
+## Cómo actualizar cada módulo sin tocar los demás
+
+Cada módulo es independiente: un cambio en uno no debe reescribir los otros.
+
+| Módulo | Dónde se edita | Qué archivos cambian |
+|---|---|---|
+| 05 · Quiz (con sincronización Google Sheets) | directamente en `quiz/index.html` | solo `quiz/index.html` |
+| 06 · Decisión | en `fuentes/decision/` (01_head.html … 06_scores.js) y luego `python3 fuentes/decision/actualizar.py` | `fuentes/decision/*`, `decision/index.html`, `decision/sw.js` |
+| 01–04 · Repositorio y guía | directamente en `index.html` o `guia-2026.html` | solo ese archivo |
+
+Reglas:
+- `decision/index.html` se genera: no editar a mano lo que está entre `<!-- DECISION:INICIO -->` y `<!-- DECISION:FIN -->`.
+- Antes de subir: `git pull --rebase origin main`, y en el commit agregar solo los archivos del módulo que se cambió (`git add quiz/` o `git add decision/ fuentes/decision/`), nunca `git add -A` a ciegas.
+- No es necesario subir la versión de `sw.js` de la app completa al cambiar contenido: los service workers piden primero a la red y renuevan su copia solos.
 
 ## Apps instalables (funcionan sin conexión)
 

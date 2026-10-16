@@ -1,0 +1,855 @@
+<title>Decisión Terapéutica EII</title>
+<meta name="author" content="Dr. Moisés Oropeza Hernández">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: herramienta de dos columnas — paciente a la izquierda, decisión a la derecha (sticky); fichas en panel lateral. Tokens heredados del Repositorio EII 2026. */
+:root{
+  --bg:#f7f5f1; --panel:#fffefb; --panel-2:#f1ede6; --fg:#1c2530; --fg-2:#4a5664; --fg-3:#6f7a86;
+  --line:#ddd6cb; --line-2:#c9c0b2;
+  --marino:#173a5e; --marino-2:#255a8a; --acento:#b0561c;
+  --verde:#1d8a4e; --rojo:#c62a2a; --ambar:#b5670a; --gris:#6b7380; --inv:#5d4a8f;
+  --cu:#1f5f7a; --ec:#7a3e1f;
+  --sh:0 1px 2px rgba(28,37,48,.06),0 4px 14px rgba(28,37,48,.05);
+  --sh-2:0 8px 40px rgba(28,37,48,.22);
+  --r:12px; --maxw:1320px;
+  --ff-s:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --ff-b:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --ff-m:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12161c; --panel:#1a2029; --panel-2:#222b36; --fg:#e6e9ed; --fg-2:#b3bcc6; --fg-3:#8f99a5;
+  --line:#2c3642; --line-2:#3d4956;
+  --marino:#8fbde6; --marino-2:#a8cdf0; --acento:#e89a5c;
+  --verde:#4fd18c; --rojo:#ff7a70; --ambar:#f2b54a; --gris:#9aa3ae; --inv:#b3a2e6;
+  --cu:#79bdd8; --ec:#dda07a;
+  --sh:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25); --sh-2:0 8px 40px rgba(0,0,0,.55);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#12161c; --panel:#1a2029; --panel-2:#222b36; --fg:#e6e9ed; --fg-2:#b3bcc6; --fg-3:#8f99a5;
+  --line:#2c3642; --line-2:#3d4956;
+  --marino:#8fbde6; --marino-2:#a8cdf0; --acento:#e89a5c;
+  --verde:#4fd18c; --rojo:#ff7a70; --ambar:#f2b54a; --gris:#9aa3ae; --inv:#b3a2e6;
+  --cu:#79bdd8; --ec:#dda07a;
+  --sh:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25); --sh-2:0 8px 40px rgba(0,0,0,.55);
+  color-scheme:dark;
+}
+[hidden]{display:none!important}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--ff-b);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;margin:0}
+h1,h2,h3,h4{font-family:var(--ff-s);text-wrap:balance;line-height:1.22;margin:0}
+a{color:var(--marino-2)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--acento);outline-offset:2px}
+.num,table{font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* barra */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:60;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line)}
+.top-in{max-width:var(--maxw);margin:0 auto;padding:9px 20px;display:flex;align-items:center;gap:14px}
+.brand{font-family:var(--ff-b);display:flex;align-items:center;gap:9px;font-family:var(--ff-s);font-weight:700;font-size:1.02rem;color:var(--fg);text-decoration:none;white-space:nowrap}
+.brand .dot{width:24px;height:24px;border-radius:6px;background:linear-gradient(135deg,var(--marino),var(--acento));display:grid;place-items:center;color:var(--bg);font-size:.6rem;font-weight:700;font-family:var(--ff-b);flex:none}
+nav.tabs{display:flex;gap:2px;margin-left:auto;overflow-x:auto;scrollbar-width:none;min-width:0}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs a{font-size:.8rem;font-weight:600;color:var(--fg-2);text-decoration:none;padding:6px 11px;border-radius:7px;white-space:nowrap}
+nav.tabs a:hover{background:var(--panel-2);color:var(--fg)}
+nav.tabs a[aria-current="true"]{background:var(--marino);color:var(--bg)}
+.tema{background:none;border:1px solid var(--line-2);color:var(--fg-2);border-radius:7px;width:30px;height:30px;cursor:pointer;flex:none;display:grid;place-items:center}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:20px;padding-block:22px 80px}
+section.vista{display:none}
+section.vista.on{display:block}
+.eyebrow{font-size:.68rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--acento);margin:0 0 6px}
+h2.sec{font-size:clamp(1.4rem,3vw,1.9rem);font-weight:700;letter-spacing:-.02em;margin:0 0 6px}
+p.lead{color:var(--fg-2);max-width:72ch;margin:0 0 14px}
+
+/* cabecera decisión */
+.intro{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:end;justify-content:space-between;margin-bottom:16px}
+.intro .t{min-width:0;flex:1 1 420px}
+.presets{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.presets .lbl{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-3);margin-right:4px}
+.chipbtn{background:var(--panel);border:1px solid var(--line-2);color:var(--fg-2);border-radius:999px;padding:5px 11px;font-size:.78rem;font-weight:600;cursor:pointer}
+.chipbtn:hover{border-color:var(--marino);color:var(--marino)}
+.chipbtn[aria-pressed="true"]{background:var(--marino);border-color:var(--marino);color:var(--bg)}
+
+.grid{display:grid;grid-template-columns:minmax(330px,420px) minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:980px){.grid{grid-template-columns:1fr}}
+
+/* formulario */
+.form{display:flex;flex-direction:column;gap:12px;min-width:0}
+fieldset.blk{border:1px solid var(--line);background:var(--panel);border-radius:var(--r);padding:14px 15px 15px;margin:0;min-width:0}
+fieldset.blk>legend{font-family:var(--ff-b);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--acento);padding:0 6px;margin-left:-6px}
+.q{margin:10px 0 0}
+.q:first-of-type{margin-top:2px}
+.q>.ql{display:block;font-size:.8rem;font-weight:600;color:var(--fg);margin-bottom:6px}
+.q>.ql small{font-weight:500;color:var(--fg-3)}
+.seg{display:flex;flex-wrap:wrap;gap:5px}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{border:1px solid var(--line-2);background:var(--bg);color:var(--fg-2);border-radius:8px;padding:5px 10px;font-size:.8rem;font-weight:600;cursor:pointer;line-height:1.3;user-select:none}
+.seg label small{display:block;font-weight:500;font-size:.68rem;color:var(--fg-3)}
+.seg input:checked+label{background:var(--marino);border-color:var(--marino);color:var(--bg)}
+.seg input:checked+label small{color:color-mix(in srgb,var(--bg) 80%,transparent)}
+.seg input:focus-visible+label{outline:2px solid var(--acento);outline-offset:2px}
+.seg.cu input:checked+label{background:var(--cu);border-color:var(--cu)}
+.seg.ec input:checked+label{background:var(--ec);border-color:var(--ec)}
+.chk{display:flex;flex-wrap:wrap;gap:5px}
+.chk input{position:absolute;opacity:0;pointer-events:none}
+.chk label{border:1px dashed var(--line-2);background:transparent;color:var(--fg-2);border-radius:999px;padding:4px 10px;font-size:.76rem;font-weight:500;cursor:pointer;user-select:none}
+.chk input:checked+label{border-style:solid;border-color:var(--acento);background:color-mix(in srgb,var(--acento) 13%,transparent);color:var(--fg)}
+.chk input:focus-visible+label{outline:2px solid var(--acento);outline-offset:2px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.inp{display:flex;align-items:center;gap:6px;border:1px solid var(--line-2);border-radius:8px;background:var(--bg);padding:4px 10px}
+.inp input{border:0;background:transparent;color:var(--fg);font:inherit;font-size:.95rem;width:100%;min-width:0;padding:3px 0}
+.inp input:focus{outline:none}
+.inp:focus-within{border-color:var(--marino)}
+.inp span{font-size:.75rem;color:var(--fg-3)}
+.sub{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-3);margin:12px 0 6px}
+.hint{font-size:.74rem;color:var(--fg-3);margin:6px 0 0}
+
+/* resultado */
+.res{position:sticky;top:calc(env(safe-area-inset-top,0px) + 62px);min-width:0;display:flex;flex-direction:column;gap:14px}
+@media (max-width:980px){.res{position:static}}
+.casehead{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;box-shadow:var(--sh)}
+.casehead .k{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-3)}
+.casehead h3{font-size:1.25rem;margin:4px 0 8px}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-size:.72rem;font-weight:600;border-radius:6px;padding:2px 8px;background:var(--panel-2);color:var(--fg-2);border:1px solid var(--line)}
+.tag.cu{color:var(--cu);border-color:color-mix(in srgb,var(--cu) 40%,transparent)}
+.tag.ec{color:var(--ec);border-color:color-mix(in srgb,var(--ec) 40%,transparent)}
+.tag.risk{color:var(--rojo);border-color:color-mix(in srgb,var(--rojo) 40%,transparent)}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+.btn{border:1px solid var(--line-2);background:var(--panel);border-radius:8px;padding:6px 12px;font-size:.8rem;font-weight:600;cursor:pointer;color:var(--fg)}
+.btn:hover{border-color:var(--marino);color:var(--marino)}
+.btn.pri{background:var(--marino);border-color:var(--marino);color:var(--bg)}
+.btn.pri:hover{color:var(--bg);filter:brightness(1.1)}
+.toggle{display:inline-flex;align-items:center;gap:7px;font-size:.78rem;color:var(--fg-2);cursor:pointer}
+.toggle input{accent-color:var(--marino)}
+
+.alerts{display:flex;flex-direction:column;gap:6px}
+.al{display:flex;gap:10px;align-items:flex-start;border-radius:9px;padding:9px 12px;font-size:.84rem;border:1px solid var(--line);background:var(--panel)}
+.al b.ic{flex:none;font-family:var(--ff-m);font-size:.7rem;border-radius:5px;padding:1px 6px;margin-top:2px}
+.al.r{border-color:color-mix(in srgb,var(--rojo) 35%,var(--line))}.al.r b.ic{background:color-mix(in srgb,var(--rojo) 16%,transparent);color:var(--rojo)}
+.al.a{border-color:color-mix(in srgb,var(--ambar) 35%,var(--line))}.al.a b.ic{background:color-mix(in srgb,var(--ambar) 18%,transparent);color:var(--ambar)}
+.al.i b.ic{background:color-mix(in srgb,var(--marino) 14%,transparent);color:var(--marino)}
+.al span{min-width:0}
+
+.box{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:15px 17px;min-width:0}
+.box>h4{font-family:var(--ff-b);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--marino);margin:0 0 10px}
+ol.steps{margin:0;padding:0;list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:8px}
+ol.steps li{position:relative;padding-left:32px;font-size:.88rem;color:var(--fg-2)}
+ol.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:0;width:22px;height:22px;border-radius:50%;background:var(--panel-2);border:1px solid var(--line-2);font-family:var(--ff-m);font-size:.7rem;display:grid;place-items:center;color:var(--fg)}
+ol.steps li b{color:var(--fg)}
+
+.tier{border-radius:var(--r);border:1px solid var(--line);background:var(--panel);overflow:hidden}
+.tier>header{display:flex;align-items:baseline;gap:10px;padding:10px 15px;border-bottom:1px solid var(--line);background:var(--panel-2)}
+.tier>header h4{font-family:var(--ff-b);font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.tier>header small{font-size:.75rem;color:var(--fg-3)}
+.tier>header .n{margin-left:auto;font-family:var(--ff-m);font-size:.72rem;color:var(--fg-3)}
+.tier.pref>header h4{color:var(--verde)} .tier.pref{border-top:3px solid var(--verde)}
+.tier.alt>header h4{color:var(--marino)} .tier.alt{border-top:3px solid var(--marino)}
+.tier.baja>header h4{color:var(--gris)} .tier.baja{border-top:3px solid var(--gris)}
+.tier.prec>header h4{color:var(--ambar)} .tier.prec{border-top:3px solid var(--ambar)}
+.tier.evit>header h4{color:var(--rojo)} .tier.evit{border-top:3px solid var(--rojo)}
+.tier.inv>header h4{color:var(--inv)} .tier.inv{border-top:3px solid var(--inv)}
+.drow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 14px;padding:12px 15px;border-bottom:1px solid var(--line)}
+.drow:last-child{border-bottom:0}
+.drow .nm{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 8px;min-width:0}
+.drow .nm b{font-family:var(--ff-s);font-size:1.04rem;font-weight:700}
+.ph{font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-3);border:1px solid var(--line-2);border-radius:4px;padding:0 5px}
+.cls{font-size:.72rem;color:var(--fg-3)}
+.badge{font-size:.66rem;font-weight:700;letter-spacing:.04em;border-radius:5px;padding:1px 7px;white-space:nowrap}
+.badge.lrs{background:color-mix(in srgb,var(--verde) 17%,transparent);color:var(--verde)}
+.badge.isp{background:color-mix(in srgb,var(--marino) 15%,transparent);color:var(--marino)}
+.badge.gen{background:color-mix(in srgb,var(--fg-3) 15%,transparent);color:var(--fg-2)}
+.badge.no{background:color-mix(in srgb,var(--rojo) 14%,transparent);color:var(--rojo)}
+.badge.pipe{background:color-mix(in srgb,var(--inv) 16%,transparent);color:var(--inv)}
+.dose{grid-column:1/-1;font-size:.84rem;color:var(--fg);font-family:var(--ff-b)}
+.dose em{font-style:normal;color:var(--fg-3)}
+.why{grid-column:1/-1;margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:3px}
+.why li{font-size:.8rem;color:var(--fg-2);padding-left:18px;position:relative}
+.why li::before{position:absolute;left:0;top:0;font-family:var(--ff-m);font-size:.75rem}
+.why li.p::before{content:"+";color:var(--verde)}
+.why li.w::before{content:"!";color:var(--ambar)}
+.why li.x::before{content:"×";color:var(--rojo)}
+.why li.n::before{content:"·";color:var(--fg-3)}
+.drow .go{align-self:start}
+.mini{grid-column:1/-1}
+
+/* cinética */
+.kin{position:relative;height:30px;margin:2px 0 0}
+.kin .trk{position:absolute;left:0;right:0;top:12px;height:6px;border-radius:3px;background:var(--panel-2);border:1px solid var(--line)}
+.kin .on{position:absolute;top:12px;height:6px;border-radius:3px;background:color-mix(in srgb,var(--verde) 70%,transparent)}
+.kin .ev{position:absolute;top:7px;width:2px;height:16px;background:var(--marino)}
+.kin .ex{position:absolute;top:7px;width:2px;height:16px;background:var(--acento);opacity:.85}
+.kin .tk{position:absolute;top:21px;font-family:var(--ff-m);font-size:.58rem;color:var(--fg-3);transform:translateX(-50%)}
+.kin .lb{position:absolute;top:-2px;font-size:.62rem;font-weight:600;color:var(--marino);transform:translateX(-50%);white-space:nowrap}
+.kin .lb.x{color:var(--acento)}
+.kinleg{display:flex;gap:12px;flex-wrap:wrap;font-size:.7rem;color:var(--fg-3);margin-top:4px}
+.kinleg i{display:inline-block;width:14px;height:6px;border-radius:3px;vertical-align:middle;margin-right:4px}
+
+/* panel ficha */
+.scrim{position:fixed;inset:0;background:rgba(10,13,18,.45);z-index:90}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(640px,100%);background:var(--panel);z-index:100;box-shadow:var(--sh-2);display:flex;flex-direction:column;border-left:1px solid var(--line)}
+.drawer .dh{padding:calc(env(safe-area-inset-top,0px) + 14px) 18px 12px;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+.drawer .dh h3{font-size:1.4rem}
+.drawer .dh .x{margin-left:auto;background:var(--panel-2);border:1px solid var(--line);border-radius:50%;width:34px;height:34px;cursor:pointer;flex:none}
+.drawer .db{overflow-y:auto;padding:6px 18px calc(env(safe-area-inset-bottom,0px) + 30px)}
+.fs{margin:16px 0 0}
+.fs>h5{font-family:var(--ff-b);font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--acento);margin:0 0 7px;font-size:.7rem}
+.fs p,.fs li{font-size:.86rem;color:var(--fg-2)}
+.fs p{margin:0 0 6px}
+.fs ul{margin:0;padding-left:18px}
+.kv{display:grid;grid-template-columns:110px minmax(0,1fr);gap:4px 12px;font-size:.85rem}
+.kv dt{color:var(--fg-3);font-weight:600}
+.kv dd{margin:0;color:var(--fg)}
+.rx{border:1px dashed var(--line-2);border-radius:10px;padding:10px 12px;background:var(--bg);font-size:.85rem}
+.rx .calc{font-family:var(--ff-m);font-size:.78rem;color:var(--marino);margin-top:6px}
+.ae{display:flex;flex-direction:column;gap:5px}
+.ae div{display:grid;grid-template-columns:86px minmax(0,1fr);gap:8px;font-size:.84rem;color:var(--fg-2);align-items:start}
+.ae b{font-size:.64rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:4px;padding:2px 6px;text-align:center}
+.ae .e b{background:color-mix(in srgb,var(--verde) 15%,transparent);color:var(--verde)}
+.ae .v b{background:color-mix(in srgb,var(--ambar) 17%,transparent);color:var(--ambar)}
+.ae .s b{background:color-mix(in srgb,var(--rojo) 15%,transparent);color:var(--rojo)}
+.cl{display:flex;flex-direction:column;gap:4px}
+.cl label{display:flex;gap:9px;align-items:flex-start;font-size:.85rem;color:var(--fg-2);cursor:pointer;padding:4px 0;border-bottom:1px dotted var(--line)}
+.cl input{margin-top:3px;accent-color:var(--verde);flex:none}
+.cl em{font-style:normal;font-size:.66rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:4px;padding:1px 5px;margin-left:4px;white-space:nowrap}
+.cl em.o{background:color-mix(in srgb,var(--rojo) 14%,transparent);color:var(--rojo)}
+.cl em.f{background:color-mix(in srgb,var(--fg-3) 15%,transparent);color:var(--fg-2)}
+.cl input:checked+span{color:var(--fg-3);text-decoration:line-through}
+
+.autor{display:inline-flex;align-items:center;gap:10px;margin:2px 0 0;padding:8px 14px 8px 8px;background:var(--panel);border:1px solid var(--line);border-radius:999px;max-width:100%}
+.autor .ini{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--marino),var(--acento));color:var(--bg);font-family:var(--ff-s);font-weight:700;font-size:.8rem}
+.autor .d{min-width:0}.autor .n{font-family:var(--ff-s);font-weight:700;font-size:.92rem;line-height:1.2}.autor .r{font-size:.72rem;color:var(--fg-3);line-height:1.3}
+/* pasos y grupos desplegables */
+fieldset.step{animation:aparece .25s ease-out}
+@keyframes aparece{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
+details.grp{border:1px solid var(--line);border-radius:9px;background:var(--bg);margin-top:6px}
+details.grp>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:9px 12px;font-size:.84rem;font-weight:600;color:var(--fg)}
+details.grp>summary::-webkit-details-marker{display:none}
+details.grp>summary::before{content:"+";font-family:var(--ff-m);color:var(--acento);width:12px;flex:none}
+details.grp[open]>summary::before{content:"–"}
+details.grp .gin{padding:2px 12px 12px}
+.cnt{margin-left:auto;font-size:.68rem;font-weight:700;border-radius:999px;padding:1px 8px;background:color-mix(in srgb,var(--acento) 16%,transparent);color:var(--acento)}
+.cnt:empty{display:none}
+.sel{background:var(--panel);border:1px solid var(--line-2);color:var(--fg);border-radius:8px;padding:6px 10px;font:inherit;font-size:.82rem;max-width:100%}
+.empty{background:var(--panel);border:1px dashed var(--line-2);border-radius:var(--r);padding:22px 22px 18px}
+.empty h3{font-size:1.2rem;margin:0 0 6px}
+.empty p{color:var(--fg-2);font-size:.88rem;margin:0 0 12px;max-width:60ch}
+.prog{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+.prog li{display:flex;gap:10px;align-items:center;font-size:.86rem;color:var(--fg-3)}
+.prog li i{font-style:normal;width:20px;height:20px;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;font-size:.66rem;font-family:var(--ff-m);flex:none}
+.prog li.ok{color:var(--fg)}.prog li.ok i{background:var(--verde);border-color:var(--verde);color:var(--bg)}
+.prog li.now{color:var(--fg);font-weight:600}.prog li.now i{border-color:var(--acento);color:var(--acento)}
+details.more{border:1px solid var(--line);border-radius:var(--r);background:var(--panel)}
+details.more>summary{list-style:none;cursor:pointer;padding:11px 15px;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;display:flex;gap:10px;align-items:center}
+details.more>summary::-webkit-details-marker{display:none}
+details.more>summary::after{content:"Mostrar";margin-left:auto;font-size:.7rem;letter-spacing:.04em;text-transform:none;font-weight:600;color:var(--marino-2)}
+details.more[open]>summary::after{content:"Ocultar"}
+details.more>summary small{font-weight:500;letter-spacing:0;text-transform:none;color:var(--fg-3);font-size:.74rem}
+details.more .tier{border:0;border-radius:0;border-top:1px solid var(--line)}
+details.more .tier>header{display:none}
+details.more>.box{border:0;border-top:1px solid var(--line);border-radius:0}
+.more.baja>summary{color:var(--gris)} .more.inv>summary{color:var(--inv)} .more.gd>summary{color:var(--marino)}
+/* fragilidad */
+.fc{border-top:1px solid var(--line);padding:11px 0 8px}
+.fc:first-of-type{border-top:0;padding-top:2px}
+.fc p{font-size:.82rem;color:var(--fg-2);margin:4px 0 6px}
+.fh{display:flex;gap:10px;align-items:center;justify-content:space-between}
+.fh b{font-size:.88rem}
+.sw{display:inline-flex;gap:6px;align-items:center;font-size:.76rem;font-weight:600;color:var(--fg-2);cursor:pointer;border:1px solid var(--line-2);border-radius:999px;padding:3px 10px;flex:none}
+.sw input{accent-color:var(--acento)}
+.fc.on .sw{border-color:var(--acento);background:color-mix(in srgb,var(--acento) 13%,transparent);color:var(--fg)}
+.auto{font-family:var(--ff-m);font-size:.74rem!important;color:var(--marino)!important;margin:2px 0 0!important}
+.auto:empty{display:none}
+.score{display:flex;align-items:baseline;gap:12px;margin:4px 0 6px}
+.score b{font-family:var(--ff-s);font-size:2.6rem;line-height:1;font-variant-numeric:tabular-nums}
+.score span{font-family:var(--ff-s);font-size:1.3rem;font-weight:700}
+.meter{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:8px 0 10px}
+.meter div{height:8px;border-radius:4px;background:var(--panel-2);border:1px solid var(--line)}
+.meter .r.on{background:var(--verde);border-color:var(--verde)}.meter .p.on{background:var(--ambar);border-color:var(--ambar)}.meter .f.on{background:var(--rojo);border-color:var(--rojo)}
+.meterl{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;font-size:.68rem;color:var(--fg-3)}
+.st-r{color:var(--verde)}.st-p{color:var(--ambar)}.st-f{color:var(--rojo)}
+.cfsl{display:flex;flex-direction:column;gap:5px}
+.cfsl label{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start;border:1px solid var(--line);border-radius:9px;padding:8px 10px;cursor:pointer;background:var(--bg)}
+.cfsl input{position:absolute;opacity:0;pointer-events:none}
+.cfsl i{font-style:normal;font-family:var(--ff-s);font-weight:700;font-size:1.1rem;text-align:center}
+.cfsl b{display:block;font-size:.84rem}.cfsl small{font-size:.76rem;color:var(--fg-2)}
+.cfsl input:checked+label{border-color:var(--acento);background:color-mix(in srgb,var(--acento) 11%,var(--bg))}
+.cfsl input:focus-visible+label{outline:2px solid var(--acento);outline-offset:2px}
+.srow{display:grid;grid-template-columns:minmax(0,130px) minmax(0,1fr);gap:8px;align-items:center;padding:6px 0;border-bottom:1px dotted var(--line)}
+.srow:last-child{border-bottom:0}
+.srow .sl{font-size:.8rem;font-weight:600;color:var(--fg)}
+.seg.sm label{padding:3px 8px;font-size:.72rem}
+.seg.sm input[value="nd"]:checked+label{background:var(--panel-2);border-color:var(--line-2);color:var(--fg-3)}
+@media (max-width:460px){.srow{grid-template-columns:1fr}}
+/* scores */
+.score b small{font-size:1rem;color:var(--fg-3)}
+.scq{border-top:1px solid var(--line);padding:11px 0 6px}
+.scq:first-child{border-top:0;padding-top:0}
+.scq .ql{display:flex;justify-content:space-between;gap:10px;font-size:.86rem;font-weight:700;margin-bottom:6px}
+.scq .ql span{font-family:var(--ff-m);color:var(--acento);font-size:.8rem}
+.opts{display:flex;flex-direction:column;gap:4px}
+.opts input{position:absolute;opacity:0;pointer-events:none}
+.opts label{display:grid;grid-template-columns:26px minmax(0,1fr);gap:8px;align-items:start;border:1.5px solid var(--line);border-radius:9px;padding:7px 10px;cursor:pointer;background:var(--bg);font-size:.82rem;color:var(--fg-2);transition:border-color .12s}
+.opts label i{font-style:normal;font-family:var(--ff-m);font-weight:700;color:var(--fg-3);text-align:center}
+.opts label:hover{border-color:var(--marino-2)}
+.opts input:checked+label{border-color:var(--marino);background:color-mix(in srgb,var(--marino) 10%,var(--bg));color:var(--fg)}
+.opts input:checked+label i{color:var(--marino)}
+.opts input:focus-visible+label{outline:2px solid var(--acento);outline-offset:2px}
+.seggrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
+.seggrid input{position:absolute;opacity:0;pointer-events:none}
+.seggrid label{border:1.5px solid var(--line-2);border-radius:8px;padding:5px 4px;text-align:center;font-size:.7rem;line-height:1.25;overflow-wrap:anywhere;hyphens:auto;cursor:pointer;background:var(--bg);color:var(--fg-2)}
+.seggrid label b{display:block;font-family:var(--ff-m);font-size:.82rem;color:var(--fg)}
+.seggrid input:checked+label{background:linear-gradient(135deg,var(--ec),color-mix(in srgb,var(--ec) 70%,#fff));border-color:transparent;color:#fff}
+.seggrid input:checked+label b{color:#fff}
+.sesrow{display:grid;grid-template-columns:1fr;gap:4px;padding:5px 0}
+.sesrow>span{font-size:.78rem;font-weight:600}
+details.segm{border:1px solid var(--line);border-radius:10px;background:var(--panel);margin-top:8px}
+details.segm>summary{list-style:none;cursor:pointer;padding:10px 13px;display:flex;align-items:center;gap:10px;font-weight:700;font-size:.9rem}
+details.segm>summary::-webkit-details-marker{display:none}
+details.segm>summary::before{content:"+";font-family:var(--ff-m);color:var(--acento);width:12px}
+details.segm[open]>summary::before{content:"–"}
+details.segm>summary .pt{margin-left:auto;font-family:var(--ff-m);font-size:.8rem;color:var(--ec)}
+details.segm .gin{padding:0 13px 10px}
+.noexp{display:inline-flex;gap:6px;align-items:center;font-size:.76rem;color:var(--fg-3);margin:2px 0 4px;cursor:pointer}
+.bands{display:grid;gap:3px;margin:10px 0 4px}
+.bands div{display:grid;grid-template-columns:70px minmax(0,1fr);gap:8px;font-size:.78rem;color:var(--fg-3);padding:3px 8px;border-radius:6px}
+.bands div.on{background:color-mix(in srgb,var(--marino) 12%,transparent);color:var(--fg);font-weight:700}
+.bands b{font-family:var(--ff-m);font-weight:600}
+/* tablas */
+.tw{overflow-x:auto;margin:12px 0;border:1px solid var(--line);border-radius:var(--r);background:var(--panel);-webkit-overflow-scrolling:touch}
+table.t{border-collapse:collapse;width:100%;font-size:.83rem;min-width:640px}
+table.t caption{caption-side:top;text-align:left;font-size:.75rem;color:var(--fg-3);padding:10px 13px 0;font-weight:600}
+table.t th,table.t td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+table.t thead th{background:var(--panel-2);font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-2);white-space:nowrap}
+table.t tbody tr:last-child td{border-bottom:0}
+table.t td b{color:var(--fg)}
+table.t td.nm{font-family:var(--ff-s);font-weight:700;white-space:nowrap}
+table.t tr.clk{cursor:pointer}
+table.t tr.clk:hover{background:var(--panel-2)}
+.cmp td:first-child{white-space:nowrap;font-weight:600;color:var(--fg)}
+
+/* fármacos, guías */
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px;align-items:center}
+.filters input[type=search]{flex:1 1 220px;min-width:0;background:var(--panel);border:1px solid var(--line-2);color:var(--fg);border-radius:8px;padding:7px 11px;font:inherit;font-size:.85rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.pc{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:15px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.pc h4{font-size:1.08rem}
+.pc .ph2{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.pc p{font-size:.84rem;color:var(--fg-2);margin:0}
+.pc .res2{font-size:.8rem;color:var(--fg);background:var(--panel-2);border-radius:8px;padding:8px 10px}
+.pc .q2{font-size:.78rem;color:var(--fg-3)}
+.pill{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:5px;padding:2px 7px}
+.pill.f2{background:color-mix(in srgb,var(--fg-3) 16%,transparent);color:var(--fg-2)}
+.pill.f3{background:color-mix(in srgb,var(--inv) 16%,transparent);color:var(--inv)}
+.pill.nda{background:color-mix(in srgb,var(--acento) 16%,transparent);color:var(--acento)}
+.tl{border-left:2px solid var(--line-2);margin:10px 0 0 6px;padding-left:18px;display:flex;flex-direction:column;gap:14px}
+.tl>div{position:relative}
+.tl>div::before{content:"";position:absolute;left:-24px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--acento)}
+.tl h5{font-family:var(--ff-s);font-size:1rem;margin:0 0 4px}
+.tl ul{margin:0;padding-left:18px;font-size:.85rem;color:var(--fg-2)}
+.refs{font-size:.82rem;color:var(--fg-2);padding-left:22px}
+.refs li{margin-bottom:6px}
+.note{font-size:.76rem;color:var(--fg-3);max-width:90ch}
+.foot{border-top:1px solid var(--line);margin-top:36px;padding-top:16px;font-size:.78rem;color:var(--fg-3)}
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 20px);transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:8px 16px;border-radius:999px;font-size:.82rem;z-index:200}
+.copybox{width:100%;min-height:160px;font-family:var(--ff-m);font-size:.74rem;background:var(--bg);color:var(--fg);border:1px solid var(--line-2);border-radius:8px;padding:10px}
+@media (max-width:700px){
+  .wrap{padding-inline:16px}.top-in{padding:9px 16px;gap:10px}
+  .brand span.nmb{display:none}
+  nav.tabs{margin-left:0;flex:1 1 auto}
+  .row2{grid-template-columns:1fr 1fr}
+  .kv{grid-template-columns:90px minmax(0,1fr)}
+  .ae div{grid-template-columns:76px minmax(0,1fr)}
+}
+
+/* ===== capa visual v2: controles más vistosos y niveles con más contraste ===== */
+.seg label{border-width:1.5px;border-radius:10px;padding:7px 12px;background:var(--panel);box-shadow:0 1px 2px rgba(28,37,48,.06);transition:transform .12s,border-color .12s,box-shadow .12s}
+.seg label:hover{border-color:var(--marino-2);transform:translateY(-1px)}
+.seg input:checked+label{background:linear-gradient(135deg,var(--marino),var(--marino-2));border-color:transparent;color:#fff;box-shadow:0 4px 12px color-mix(in srgb,var(--marino) 35%,transparent)}
+.seg.cu input:checked+label{background:linear-gradient(135deg,var(--cu),color-mix(in srgb,var(--cu) 70%,#fff))}
+.seg.ec input:checked+label{background:linear-gradient(135deg,var(--ec),color-mix(in srgb,var(--ec) 70%,#fff))}
+.seg input:checked+label small{color:rgba(255,255,255,.85)}
+:root[data-theme="dark"] .seg input:checked+label,:root[data-theme="dark"] .seg input:checked+label small{color:#0f1419}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .seg input:checked+label,:root:not([data-theme="light"]) .seg input:checked+label small{color:#0f1419}}
+.seg.sm input[value="nd"]:checked+label{background:var(--panel-2);color:var(--fg-3);box-shadow:none}
+.chk label{border-width:1.5px;padding:5px 11px;transition:transform .12s}
+.chk label:hover{transform:translateY(-1px);border-color:var(--acento)}
+.chk input:checked+label{border-style:solid;background:color-mix(in srgb,var(--acento) 18%,var(--panel));font-weight:600}
+.chk input:checked+label::before{content:"✓ ";color:var(--acento);font-weight:700}
+fieldset.blk{box-shadow:var(--sh)}
+.btn{border-radius:10px;border-width:1.5px}
+.btn.pri{background:linear-gradient(135deg,var(--marino),var(--marino-2));border-color:transparent;box-shadow:0 4px 12px color-mix(in srgb,var(--marino) 30%,transparent)}
+.btn.go{border-radius:999px;border-color:color-mix(in srgb,var(--acento) 55%,var(--line-2));color:var(--acento);font-weight:700;padding:5px 14px}
+.btn.go:hover{background:var(--acento);color:#fff;border-color:var(--acento)}
+/* niveles */
+.tier{box-shadow:var(--sh)}
+.tier.pref{border:2px solid var(--verde);background:color-mix(in srgb,var(--verde) 5%,var(--panel))}
+.tier.pref>header{background:var(--verde);border-bottom:0}
+.tier.pref>header h4,.tier.pref>header .n{color:#fff}.tier.pref>header small{color:rgba(255,255,255,.85)}
+.tier.evit{border:2px solid var(--rojo);background:color-mix(in srgb,var(--rojo) 6%,var(--panel))}
+.tier.evit>header{background:var(--rojo);border-bottom:0}
+.tier.evit>header h4,.tier.evit>header .n{color:#fff}.tier.evit>header small{color:rgba(255,255,255,.88)}
+.tier.prec{border:2px solid var(--ambar);background:color-mix(in srgb,var(--ambar) 5%,var(--panel))}
+.tier.prec>header{background:color-mix(in srgb,var(--ambar) 22%,var(--panel));border-bottom:0}
+:root[data-theme="dark"] .tier.pref>header h4,:root[data-theme="dark"] .tier.pref>header .n,:root[data-theme="dark"] .tier.evit>header h4,:root[data-theme="dark"] .tier.evit>header .n{color:#0f1419}
+:root[data-theme="dark"] .tier.pref>header small,:root[data-theme="dark"] .tier.evit>header small{color:rgba(15,20,25,.8)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tier.pref>header h4,:root:not([data-theme="light"]) .tier.pref>header .n,:root:not([data-theme="light"]) .tier.evit>header h4,:root:not([data-theme="light"]) .tier.evit>header .n{color:#0f1419}:root:not([data-theme="light"]) .tier.pref>header small,:root:not([data-theme="light"]) .tier.evit>header small{color:rgba(15,20,25,.8)}}
+.tier.evit .drow .nm b{color:var(--rojo)}
+.why li.x{font-weight:700;color:var(--rojo)}
+.tier.evit .why li.n{font-weight:700;color:var(--fg)}
+.why li.w{font-weight:600;color:var(--fg)}
+.why li.p{color:var(--fg)}
+/* alertas */
+.al{border-width:1.5px}
+.al.r{background:color-mix(in srgb,var(--rojo) 9%,var(--panel));border-color:var(--rojo)}
+.al.a{background:color-mix(in srgb,var(--ambar) 9%,var(--panel));border-color:color-mix(in srgb,var(--ambar) 60%,var(--line))}
+.al.r b.ic{background:var(--rojo);color:#fff}
+.al span b{color:var(--fg)}
+/* recomendación principal */
+.reco{border-radius:var(--r);padding:16px 18px;background:linear-gradient(135deg,color-mix(in srgb,var(--verde) 14%,var(--panel)),var(--panel));border:2px solid var(--verde);box-shadow:var(--sh)}
+.reco .k{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--verde);display:flex;align-items:center;gap:8px}
+.reco .k i{font-style:normal;width:22px;height:22px;border-radius:50%;background:var(--verde);color:#fff;display:grid;place-items:center;font-size:.75rem}
+.reco ul{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.reco li{display:grid;grid-template-columns:minmax(0,1fr);gap:2px}
+.reco li b{font-family:var(--ff-s);font-size:1.08rem}
+.reco li span{font-size:.84rem;color:var(--fg-2)}
+.reco li em{font-style:normal;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--fg-3);margin-left:6px}
+.brand{font-family:var(--ff-b);display:flex;flex-wrap:wrap;gap:4px 6px;margin-top:4px;font-size:.8rem}.brand span{padding:1px 8px;border-radius:999px;border:1px solid var(--line,#ccd)}.brand .bc{font-weight:700;color:var(--fg-1,inherit)}.brand .bn{color:var(--fg-3);font-style:italic}.brl{font-family:var(--ff-b);font-weight:400;font-size:.74rem;color:var(--fg-3);margin-top:2px}
+.evk{font-family:var(--ff-b);font-size:.68rem;font-weight:700;letter-spacing:.02em;padding:2px 8px;border-radius:999px;border:1px solid}.evk.ci{color:#fff;background:var(--rojo);border-color:var(--rojo)}.evk.rb{color:var(--rojo);border-color:var(--rojo)}.evk.sb{color:var(--fg-2);border-color:var(--line-2)}
+.moa{font-family:var(--ff-b);font-size:.82rem;line-height:1.45;color:var(--fg-2);margin:6px 0 0;max-width:62ch}.moa b{color:var(--fg)}
+</style>
+
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="#decision"><span class="dot">EII</span><span class="nmb">Decisión Terapéutica EII</span></a>
+    <nav class="tabs" id="tabs" aria-label="Secciones">
+      <a href="#decision">Decisión</a>
+      <a href="#scores">Scores</a>
+      <a href="#farmacos">Fármacos</a>
+      <a href="#cinetica">Cinética y niveles</a>
+      <a href="#fragilidad">Fragilidad</a>
+      <a href="#pipeline">En investigación</a>
+      <a href="#guias">Guías</a>
+      <a href="#fuentes">Fuentes</a>
+    </nav>
+    <button class="tema" id="tema" type="button" aria-label="Cambiar tema">◐</button>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ================= DECISIÓN ================= -->
+<section class="vista" id="v-decision">
+  <div class="intro">
+    <div class="t">
+      <p class="eyebrow">Enfermedad inflamatoria intestinal · adultos</p>
+      <h2 class="sec">¿Qué terapia necesita este paciente?</h2>
+      <p class="lead">Responde paso a paso: cada bloque se abre al completar el anterior. La herramienta ordena las moléculas por escalón según ECCO 2026/2024, ACG 2025, AGA 2024–2025 y la Guía chilena 2026, con lo disponible en Chile primero.</p>
+      <div class="autor"><span class="ini">MO</span><div class="d"><div class="n">Dr. Moisés Oropeza Hernández</div><div class="r">Diseño y desarrollo de la herramienta · Residente de Gastroenterología, UANDES</div></div></div>
+    </div>
+    <div class="presets"><label class="lbl" for="preset">Casos tipo</label><select id="preset" class="sel"><option value="">Cargar un ejemplo…</option></select><button class="btn" type="button" id="nuevo">Nuevo caso</button></div>
+  </div>
+
+  <div class="grid">
+    <form class="form" id="f" autocomplete="off">
+      <fieldset class="blk">
+        <legend>1 · ¿De qué se trata?</legend>
+        <div class="q"><div class="seg" role="radiogroup" aria-label="Enfermedad">
+          <input type="radio" name="dz" id="dz-cu" value="cu"><label for="dz-cu">Colitis ulcerosa</label>
+          <input type="radio" name="dz" id="dz-ec" value="ec"><label for="dz-ec">Enfermedad de Crohn</label>
+        </div></div>
+      </fieldset>
+
+      <fieldset class="blk step" id="blk-pac">
+        <legend>2 · Paciente</legend>
+        <div class="row2">
+          <div class="q"><label class="ql" for="age">Edad</label><div class="inp"><input id="age" name="age" type="number" min="16" max="100" inputmode="numeric"><span>años</span></div></div>
+          <div class="q"><label class="ql" for="wt">Peso</label><div class="inp"><input id="wt" name="wt" type="number" min="30" max="200" inputmode="decimal"><span>kg</span></div></div>
+        </div>
+        <div class="q"><span class="ql">Sexo y etapa reproductiva</span><div class="seg">
+          <input type="radio" name="sex" id="sx-f" value="F"><label for="sx-f">Mujer</label>
+          <input type="radio" name="sex" id="sx-m" value="M"><label for="sx-m">Hombre</label>
+        </div>
+        <div class="seg" id="q-preg" style="margin-top:6px">
+          <input type="radio" name="preg" id="pg-0" value="no"><label for="pg-0">No aplica</label>
+          <input type="radio" name="preg" id="pg-d" value="deseo"><label for="pg-d">Deseo de embarazo</label>
+          <input type="radio" name="preg" id="pg-e" value="embarazo"><label for="pg-e">Embarazada</label>
+          <input type="radio" name="preg" id="pg-l" value="lactancia"><label for="pg-l">Lactancia</label>
+        </div></div>
+      </fieldset>
+
+      <!-- CU -->
+      <fieldset class="blk step" id="blk-cu">
+        <legend>3 · Fenotipo CU</legend>
+        <div class="q"><span class="ql">Contexto</span><div class="seg cu">
+          <input type="radio" name="ipaa" id="ip-n" value="no"><label for="ip-n">Colon in situ</label>
+          <input type="radio" name="ipaa" id="ip-s" value="si"><label for="ip-s">Reservorio ileal (IPAA)<small>tras proctocolectomía</small></label>
+        </div></div>
+        <div class="q" id="q-pch"><span class="ql">Trastorno del reservorio <small>(AGA 2024)</small></span><div class="seg cu">
+          <input type="radio" name="pch" id="pch-i" value="int"><label for="pch-i">Pouchitis aguda o intermitente<small>episodios aislados que responden a antibiótico</small></label>
+          <input type="radio" name="pch" id="pch-r" value="rec"><label for="pch-r">Recurrente que responde<small>≥3 episodios/año, remite con antibiótico</small></label>
+          <input type="radio" name="pch" id="pch-d" value="cadp"><label for="pch-d">Crónica dependiente de antibióticos<small>recae al suspender (&gt;4 semanas)</small></label>
+          <input type="radio" name="pch" id="pch-f" value="carp"><label for="pch-f">Crónica refractaria a antibióticos<small>sin respuesta a 4 semanas</small></label>
+          <input type="radio" name="pch" id="pch-c" value="cldp"><label for="pch-c">Tipo Crohn del reservorio<small>fístula tardía, estenosis o ileítis prereservorio</small></label>
+          <input type="radio" name="pch" id="pch-u" value="cuff"><label for="pch-u">Cuffitis<small>inflamación del manguito rectal</small></label>
+        </div></div>
+        <div class="q" id="q-ext"><span class="ql">Extensión (Montreal)</span><div class="seg cu">
+          <input type="radio" name="ext" id="ext-1" value="E1"><label for="ext-1">E1<small>Proctitis</small></label>
+          <input type="radio" name="ext" id="ext-2" value="E2"><label for="ext-2">E2<small>Izquierda</small></label>
+          <input type="radio" name="ext" id="ext-3" value="E3"><label for="ext-3">E3<small>Extensa</small></label>
+        </div></div>
+        <div class="q" id="q-sev"><span class="ql">Actividad</span><div class="seg cu">
+          <input type="radio" name="sev" id="sev-l" value="leve"><label for="sev-l">Leve<small>Mayo 3–5</small></label>
+          <input type="radio" name="sev" id="sev-m" value="moderada"><label for="sev-m">Moderada<small>Mayo 6–10</small></label>
+          <input type="radio" name="sev" id="sev-g" value="grave"><label for="sev-g">Grave ambulatoria<small>Mayo 11–12</small></label>
+          <input type="radio" name="sev" id="sev-a" value="asuc"><label for="sev-a">Colitis aguda grave<small>Truelove-Witts</small></label>
+        </div></div>
+        <div class="q" id="q-asuc"><span class="ql">Momento de la colitis aguda grave</span><div class="seg cu">
+          <input type="radio" name="asuc" id="as-0" value="ingreso"><label for="as-0">Ingreso<small>día 0</small></label>
+          <input type="radio" name="asuc" id="as-r" value="d3resp"><label for="as-r">Día 3 responde</label>
+          <input type="radio" name="asuc" id="as-n" value="d3noresp"><label for="as-n">Día 3 no responde<small>Oxford +</small></label>
+          <input type="radio" name="asuc" id="as-f" value="falla"><label for="as-f">Falla al rescate</label>
+        </div></div>
+        <div class="q" id="q-cur"><span class="ql">Factores de mal pronóstico <small>(ACG 2025, tabla 8)</small></span><div class="chk">
+          <input type="checkbox" name="cur" id="cur-j" value="joven"><label for="cur-j">Diagnóstico &lt;40 años</label>
+          <input type="checkbox" name="cur" id="cur-m" value="mayo3"><label for="cur-m">Mayo endoscópico 3 / úlceras profundas</label>
+          <input type="checkbox" name="cur" id="cur-p" value="pcr"><label for="cur-p">PCR alta o albúmina baja</label>
+          <input type="checkbox" name="cur" id="cur-h" value="hosp"><label for="cur-h">Hospitalización previa</label>
+          <input type="checkbox" name="cur" id="cur-c" value="cortic"><label for="cur-c">≥2 cursos de corticoide/año</label>
+        </div></div>
+      </fieldset>
+
+      <!-- EC -->
+      <fieldset class="blk step" id="blk-ec">
+        <legend>3 · Fenotipo Crohn</legend>
+        <div class="q"><span class="ql">Localización (Montreal)</span><div class="seg ec">
+          <input type="radio" name="loc" id="loc-1" value="L1"><label for="loc-1">L1<small>Ileal</small></label>
+          <input type="radio" name="loc" id="loc-2" value="L2"><label for="loc-2">L2<small>Colónica</small></label>
+          <input type="radio" name="loc" id="loc-3" value="L3"><label for="loc-3">L3<small>Ileocolónica</small></label>
+        </div>
+        <div class="chk" style="margin-top:6px"><input type="checkbox" name="l4" id="l4" value="1"><label for="l4">+ L4 (tracto digestivo alto)</label></div></div>
+        <div class="q"><span class="ql">Comportamiento</span><div class="seg ec">
+          <input type="radio" name="beh" id="beh-1" value="B1"><label for="beh-1">B1<small>Inflamatorio</small></label>
+          <input type="radio" name="beh" id="beh-2" value="B2"><label for="beh-2">B2<small>Estenosante</small></label>
+          <input type="radio" name="beh" id="beh-3" value="B3"><label for="beh-3">B3<small>Penetrante</small></label>
+        </div></div>
+        <div class="q" id="q-b2"><span class="ql">Tipo de estenosis</span><div class="seg ec">
+          <input type="radio" name="b2" id="b2-i" value="inflamatoria"><label for="b2-i">Inflamatoria</label>
+          <input type="radio" name="b2" id="b2-m" value="mixta"><label for="b2-m">Mixta</label>
+          <input type="radio" name="b2" id="b2-f" value="fibrotica"><label for="b2-f">Fibrótica</label>
+        </div>
+        <div class="seg ec" style="margin-top:6px">
+          <input type="radio" name="b2l" id="b2l-c" value="corta"><label for="b2l-c">≤5 cm, accesible</label>
+          <input type="radio" name="b2l" id="b2l-l" value="larga"><label for="b2l-l">&gt;5 cm o múltiple</label>
+        </div></div>
+        <div class="q" id="q-b3"><span class="ql">Complicación penetrante</span><div class="seg ec">
+          <input type="radio" name="b3" id="b3-a" value="absceso"><label for="b3-a">Absceso intraabdominal</label>
+          <input type="radio" name="b3" id="b3-f" value="fistula"><label for="b3-f">Fístula interna sin absceso</label>
+        </div></div>
+        <div class="q"><span class="ql">Enfermedad perianal (p)</span><div class="seg ec">
+          <input type="radio" name="pa" id="pa-0" value="no"><label for="pa-0">No</label>
+          <input type="radio" name="pa" id="pa-s" value="simple"><label for="pa-s">Fístula simple</label>
+          <input type="radio" name="pa" id="pa-c" value="compleja"><label for="pa-c">Fístula compleja</label>
+          <input type="radio" name="pa" id="pa-a" value="absceso"><label for="pa-a">Absceso perianal</label>
+        </div></div>
+        <div class="q"><span class="ql">Actividad luminal</span><div class="seg ec">
+          <input type="radio" name="act" id="act-r" value="remision"><label for="act-r">Remisión<small>p. ej. posquirúrgico</small></label>
+          <input type="radio" name="act" id="act-l" value="leve"><label for="act-l">Leve<small>HBI 5–7 · CDAI 150–219</small></label>
+          <input type="radio" name="act" id="act-m" value="moderada"><label for="act-m">Moderada<small>HBI 8–16 · CDAI 220–450</small></label>
+          <input type="radio" name="act" id="act-g" value="grave"><label for="act-g">Grave<small>HBI &gt;16 · CDAI &gt;450 / hospitalizado</small></label>
+        </div></div>
+        <div class="q"><span class="ql">Contexto quirúrgico</span><div class="chk">
+          <input type="checkbox" name="postop" id="postop" value="1"><label for="postop">Resección ileocólica reciente (&lt;3 meses)</label>
+        </div></div>
+        <div class="q"><span class="ql">Factores de progresión <small>(ACG 2025, AGA)</small></span><div class="chk">
+          <input type="checkbox" name="ecr" id="ecr-j" value="joven"><label for="ecr-j">Diagnóstico &lt;30 años</label>
+          <input type="checkbox" name="ecr" id="ecr-e" value="extenso"><label for="ecr-e">Compromiso extenso</label>
+          <input type="checkbox" name="ecr" id="ecr-u" value="ulceras"><label for="ecr-u">Úlceras profundas</label>
+          <input type="checkbox" name="ecr" id="ecr-q" value="cirugia"><label for="ecr-q">Resección previa</label>
+          <input type="checkbox" name="ecr" id="ecr-c" value="cortic"><label for="ecr-c">Corticoides al diagnóstico</label>
+          <input type="checkbox" name="ecr" id="ecr-m" value="mei"><label for="ecr-m">MEI al diagnóstico</label>
+        </div></div>
+      </fieldset>
+
+      <fieldset class="blk step" id="blk-lin">
+        <legend>4 · Línea terapéutica</legend>
+        <div class="q"><div class="seg">
+          <input type="radio" name="hist" id="h-n" value="naive"><label for="h-n">Sin tratamiento previo</label>
+          <input type="radio" name="hist" id="h-5" value="falla5asa"><label for="h-5">Falla a 5-ASA / budesonida</label>
+          <input type="radio" name="hist" id="h-cd" value="corticodep"><label for="h-cd">Corticodependiente</label>
+          <input type="radio" name="hist" id="h-cr" value="corticorref"><label for="h-cr">Corticorrefractario</label>
+          <input type="radio" name="hist" id="h-i" value="fallaImm"><label for="h-i">Falla a tiopurina / MTX</label>
+          <input type="radio" name="hist" id="h-t" value="tnf"><label for="h-t">Expuesto a anti-TNF</label>
+          <input type="radio" name="hist" id="h-m" value="multi"><label for="h-m">Falla a ≥2 mecanismos</label>
+        </div></div>
+        <div class="q" id="q-tnf"><span class="ql">Tipo de falla al anti-TNF</span><div class="seg">
+          <input type="radio" name="tnff" id="tf-p" value="primaria"><label for="tf-p">Primaria<small>sin respuesta a inducción</small></label>
+          <input type="radio" name="tnff" id="tf-i" value="inmuno"><label for="tf-i">Secundaria inmunogénica<small>nivel bajo + anticuerpos</small></label>
+          <input type="radio" name="tnff" id="tf-f" value="farmaco"><label for="tf-f">Secundaria con nivel adecuado</label>
+          <input type="radio" name="tnff" id="tf-x" value="intol"><label for="tf-x">Intolerancia</label>
+        </div></div>
+      </fieldset>
+
+      <fieldset class="blk step" id="blk-co">
+        <legend>5 · Comorbilidades y antecedentes</legend>
+        <p class="hint" style="margin:0 0 8px">Abre solo los grupos que apliquen. Sin marcar = sin antecedentes relevantes.</p>
+        <details class="grp" id="g-cv"><summary><span>Cardiovascular y trombosis</span><span class="cnt" data-cnt="cv"></span></summary><div class="gin">
+        <div class="chk">
+          <input type="checkbox" name="co" id="co-tab" value="tabaco"><label for="co-tab">Tabaquismo activo o previo</label>
+          <input type="checkbox" name="co" id="co-hta" value="hta"><label for="co-hta">HTA</label>
+          <input type="checkbox" name="co" id="co-dm" value="dm"><label for="co-dm">Diabetes</label>
+          <input type="checkbox" name="co" id="co-dlp" value="dlp"><label for="co-dlp">Dislipidemia</label>
+          <input type="checkbox" name="co" id="co-cvd" value="cvd"><label for="co-cvd">Enfermedad CV establecida (IAM, ACV)</label>
+          <input type="checkbox" name="co" id="co-tev" value="tev"><label for="co-tev">TEV previo / trombofilia</label>
+          <input type="checkbox" name="co" id="co-icc" value="icc34"><label for="co-icc">ICC NYHA III–IV</label>
+          <input type="checkbox" name="co" id="co-icc2" value="icc12"><label for="co-icc2">ICC NYHA I–II</label>
+          <input type="checkbox" name="co" id="co-brad" value="bradi"><label for="co-brad">Bradiarritmia / BAV / QTc largo</label>
+        </div>
+        </div></details>
+        <details class="grp" id="g-onc"><summary><span>Oncológico</span><span class="cnt" data-cnt="onc"></span></summary><div class="gin">
+        <div class="chk">
+          <input type="checkbox" name="co" id="co-na" value="neoActiva"><label for="co-na">Neoplasia activa</label>
+          <input type="checkbox" name="co" id="co-n5" value="neo5"><label for="co-n5">Neoplasia &lt;5 años</label>
+          <input type="checkbox" name="co" id="co-lin" value="linfoma"><label for="co-lin">Linfoma previo</label>
+          <input type="checkbox" name="co" id="co-mel" value="melanoma"><label for="co-mel">Melanoma previo</label>
+          <input type="checkbox" name="co" id="co-cp" value="cpnm"><label for="co-cp">Cáncer de piel no melanoma</label>
+        </div>
+        </div></details>
+        <details class="grp" id="g-ser"><summary><span>Tamizaje serológico y TBC</span><span class="cnt" data-cnt="ser"></span></summary><div class="gin">
+          <div class="srow"><span class="sl">Hepatitis B</span><div class="seg sm"><input type="radio" name="s_vhb" id="s-vhb-nd" value="nd" checked><label for="s-vhb-nd">No estudiado</label><input type="radio" name="s_vhb" id="s-vhb-neg" value="neg"><label for="s-vhb-neg">No inmune</label><input type="radio" name="s_vhb" id="s-vhb-vac" value="vac"><label for="s-vhb-vac">Vacunado</label><input type="radio" name="s_vhb" id="s-vhb-res" value="res"><label for="s-vhb-res">Anti-HBc + (resuelta)</label><input type="radio" name="s_vhb" id="s-vhb-pos" value="pos"><label for="s-vhb-pos">HBsAg +</label></div></div>
+          <div class="srow"><span class="sl">TBC (IGRA/PPD + Rx tórax)</span><div class="seg sm"><input type="radio" name="s_tbc" id="s-tbc-nd" value="nd" checked><label for="s-tbc-nd">No estudiado</label><input type="radio" name="s_tbc" id="s-tbc-neg" value="neg"><label for="s-tbc-neg">Negativo</label><input type="radio" name="s_tbc" id="s-tbc-lat" value="lat"><label for="s-tbc-lat">Latente</label><input type="radio" name="s_tbc" id="s-tbc-act" value="act"><label for="s-tbc-act">Activa</label></div></div>
+          <div class="srow"><span class="sl">Hepatitis C</span><div class="seg sm"><input type="radio" name="s_vhc" id="s-vhc-nd" value="nd" checked><label for="s-vhc-nd">No estudiado</label><input type="radio" name="s_vhc" id="s-vhc-neg" value="neg"><label for="s-vhc-neg">Negativo</label><input type="radio" name="s_vhc" id="s-vhc-pos" value="pos"><label for="s-vhc-pos">Positivo</label></div></div>
+          <div class="srow"><span class="sl">VIH</span><div class="seg sm"><input type="radio" name="s_vih" id="s-vih-nd" value="nd" checked><label for="s-vih-nd">No estudiado</label><input type="radio" name="s_vih" id="s-vih-neg" value="neg"><label for="s-vih-neg">Negativo</label><input type="radio" name="s_vih" id="s-vih-pos" value="pos"><label for="s-vih-pos">Positivo</label></div></div>
+          <div class="srow"><span class="sl">Varicela zóster IgG</span><div class="seg sm"><input type="radio" name="s_vzv" id="s-vzv-nd" value="nd" checked><label for="s-vzv-nd">No estudiado</label><input type="radio" name="s_vzv" id="s-vzv-pos" value="pos"><label for="s-vzv-pos">Inmune</label><input type="radio" name="s_vzv" id="s-vzv-neg" value="neg"><label for="s-vzv-neg">No inmune</label></div></div>
+          <div class="srow"><span class="sl">Epstein-Barr IgG</span><div class="seg sm"><input type="radio" name="s_ebv" id="s-ebv-nd" value="nd" checked><label for="s-ebv-nd">No estudiado</label><input type="radio" name="s_ebv" id="s-ebv-pos" value="pos"><label for="s-ebv-pos">Positivo</label><input type="radio" name="s_ebv" id="s-ebv-neg" value="neg"><label for="s-ebv-neg">Negativo</label></div></div>
+        </div></details>
+        <details class="grp" id="g-inf"><summary><span>Antecedentes infecciosos</span><span class="cnt" data-cnt="inf"></span></summary><div class="gin">
+        <div class="chk">
+          <input type="checkbox" name="co" id="co-ia" value="infAct"><label for="co-ia">Infección activa o absceso sin drenar</label>
+          <input type="checkbox" name="co" id="co-inf" value="infRec"><label for="co-inf">Infecciones graves recurrentes</label>
+          <input type="checkbox" name="co" id="co-hz" value="zoster"><label for="co-hz">Herpes zóster previo</label>
+          <input type="checkbox" name="co" id="co-end" value="endemico"><label for="co-end">Origen zona endémica Chagas / Strongyloides</label>
+        </div>
+        </div></details>
+        <details class="grp" id="g-otr"><summary><span>Otros y farmacogenética</span><span class="cnt" data-cnt="otr"></span></summary><div class="gin">
+        <div class="chk">
+          <input type="checkbox" name="co" id="co-fr" value="fragil"><label for="co-fr">Fragilidad (Fried ≥3 o CFS ≥5)</label>
+          <input type="checkbox" name="co" id="co-dem" value="desmiel"><label for="co-dem">Enfermedad desmielinizante</label>
+          <input type="checkbox" name="co" id="co-ojo" value="ojo"><label for="co-ojo">Edema macular / retinopatía</label>
+          <input type="checkbox" name="co" id="co-erc" value="erc"><label for="co-erc">ERC (TFG &lt;60)</label>
+          <input type="checkbox" name="co" id="co-hep" value="hepato"><label for="co-hep">Hepatopatía / alcohol</label>
+          <input type="checkbox" name="co" id="co-lup" value="lupus"><label for="co-lup">Lupus / ANA alto</label>
+          <input type="checkbox" name="co" id="co-ob" value="obeso"><label for="co-ob">IMC ≥30 o albúmina baja</label>
+          <input type="checkbox" name="co" id="co-or" value="oral"><label for="co-or">Prefiere vía oral</label>
+        </div>
+        <div class="q"><span class="ql">TPMT / NUDT15</span><div class="seg">
+          <input type="radio" name="tpmt" id="tp-0" value="nd"><label for="tp-0">No medido</label>
+          <input type="radio" name="tpmt" id="tp-n" value="normal"><label for="tp-n">Normal</label>
+          <input type="radio" name="tpmt" id="tp-i" value="intermedia"><label for="tp-i">Intermedia</label>
+          <input type="radio" name="tpmt" id="tp-b" value="baja"><label for="tp-b">Baja / ausente</label>
+        </div></div>
+        </div></details>
+      </fieldset>
+
+      <fieldset class="blk step" id="blk-mei">
+        <legend>6 · Manifestaciones extraintestinales</legend>
+        <details class="grp" id="g-mei"><summary><span>Marcar si tiene alguna</span><span class="cnt" data-cnt="mei"></span></summary><div class="gin">
+        <div class="chk">
+          <input type="checkbox" name="eim" id="ei-ax" value="axial"><label for="ei-ax">Espondiloartritis axial</label>
+          <input type="checkbox" name="eim" id="ei-ap" value="artper"><label for="ei-ap">Artritis periférica tipo 2</label>
+          <input type="checkbox" name="eim" id="ei-a1" value="art1"><label for="ei-a1">Artritis periférica tipo 1</label>
+          <input type="checkbox" name="eim" id="ei-uv" value="uveitis"><label for="ei-uv">Uveítis</label>
+          <input type="checkbox" name="eim" id="ei-pg" value="pg"><label for="ei-pg">Pioderma gangrenoso</label>
+          <input type="checkbox" name="eim" id="ei-en" value="en"><label for="ei-en">Eritema nodoso</label>
+          <input type="checkbox" name="eim" id="ei-ps" value="psoriasis"><label for="ei-ps">Psoriasis</label>
+          <input type="checkbox" name="eim" id="ei-aps" value="aps"><label for="ei-aps">Artritis psoriásica</label>
+          <input type="checkbox" name="eim" id="ei-hs" value="hs"><label for="ei-hs">Hidradenitis supurativa</label>
+          <input type="checkbox" name="eim" id="ei-cep" value="cep"><label for="ei-cep">Colangitis esclerosante primaria</label>
+        </div>
+        </div></details>
+      </fieldset>
+      <p class="hint" id="nexthint"></p>
+      <p class="hint">Herramienta de apoyo docente y de discusión clínica. No reemplaza el juicio del tratante ni el protocolo de la institución.</p>
+    </form>
+
+    <div class="res" id="res" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ================= FÁRMACOS ================= -->
+<section class="vista" id="v-farmacos">
+  <p class="eyebrow">Fichas</p>
+  <h2 class="sec">Fármacos en EII</h2>
+  <p class="lead">Dosis, presentación para la receta, cinética, niveles, efectos esperables en el control, embarazo, ensayos pivotales, situación en Chile y checklist previo al inicio. Toca una fila para abrir la ficha.</p>
+  <div class="filters" id="ffil">
+    <input type="search" id="fq" placeholder="Buscar fármaco, marca o clase" aria-label="Buscar fármaco">
+  </div>
+  <div class="tw"><table class="t" id="ftab"><caption>Situación en Chile: LRS = Ley Ricarte Soto; ISP = registro sanitario sin cobertura LRS. Verificar antes de indicar.</caption>
+    <thead><tr><th>Fármaco</th><th>Clase</th><th>CU</th><th>EC</th><th>Vía</th><th>Inicio de acción</th><th>Chile</th></tr></thead><tbody></tbody></table></div>
+</section>
+
+<!-- ================= CINÉTICA ================= -->
+<section class="vista" id="v-cinetica">
+  <p class="eyebrow">Cuánto esperar y cuándo medir</p>
+  <h2 class="sec">Cinética de respuesta y niveles</h2>
+  <p class="lead">Barra verde: ventana habitual de inicio de acción. Línea azul: fin de inducción, cuando se decide respuesta o falla primaria. Línea naranja: evaluación tras inducción extendida, cuando existe. Escala en semanas.</p>
+  <div class="seg" id="kdz" style="margin:4px 0 6px">
+    <input type="radio" name="kdz" id="kdz-cu" value="cu" checked><label for="kdz-cu">Colitis ulcerosa</label>
+    <input type="radio" name="kdz" id="kdz-ec" value="ec"><label for="kdz-ec">Enfermedad de Crohn</label>
+  </div>
+  <div class="tw"><table class="t" id="ktab"><thead><tr><th>Fármaco</th><th style="min-width:280px">0 → 24 semanas</th><th>Fin de inducción</th><th>Inducción extendida</th><th>Niveles (TDM)</th></tr></thead><tbody></tbody></table></div>
+  <div class="box" style="margin-top:14px">
+    <h4>Definiciones operativas de falla</h4>
+    <div class="tw" style="margin:0"><table class="t"><thead><tr><th>Concepto</th><th>Definición</th><th>Conducta</th></tr></thead><tbody>
+      <tr><td><b>Falla primaria</b></td><td>Sin respuesta al terminar la inducción a dosis adecuada (8–14 semanas según fármaco; ver tabla).</td><td>Medir nivel y anticuerpos si es anti-TNF. Con nivel adecuado: cambiar de mecanismo, no de molécula dentro de la clase.</td></tr>
+      <tr><td><b>Pérdida secundaria de respuesta</b></td><td>Respuesta inicial documentada con recaída objetiva (calprotectina, endoscopía, imagen), con adherencia verificada.</td><td>TDM reactivo. Nivel bajo sin anticuerpos: intensificar. Nivel bajo con anticuerpos altos: cambio intraclase ± inmunomodulador. Nivel adecuado: cambiar de mecanismo.</td></tr>
+      <tr><td><b>Intolerancia</b></td><td>Evento adverso que obliga a suspender, con independencia de la eficacia.</td><td>Otro fármaco de la misma clase es válido si el evento no es de clase.</td></tr>
+      <tr><td><b>Corticorrefractario</b></td><td>Actividad pese a prednisona hasta 0,75 mg/kg/d por 4 semanas; en colitis aguda grave, sin respuesta a corticoide EV al día 3 (Oxford).</td><td>Terapia avanzada; en hospitalizado, rescate.</td></tr>
+      <tr><td><b>Corticodependiente</b></td><td>Imposibilidad de bajar de 10 mg/d de prednisona (3 mg budesonida) en 3 meses, o recaída antes de 3 meses tras suspender.</td><td>Terapia avanzada; tiopurina solo en CU &lt;65 años (ECCO 2026).</td></tr>
+      <tr><td><b>Refractariedad multimecanismo</b></td><td>Falla a ≥2 mecanismos distintos (Parigi 2023). Dos anti-TNF cuentan como uno.</td><td>Descartar C. difficile, CMV, estenosis, SII superpuesto; considerar cirugía, terapia combinada avanzada o ensayo clínico.</td></tr>
+    </tbody></table></div>
+    <h4 style="margin-top:16px">Objetivos STRIDE-II y momento de verificarlos</h4>
+    <div class="tw" style="margin:0"><table class="t"><thead><tr><th>Horizonte</th><th>Colitis ulcerosa</th><th>Enfermedad de Crohn</th></tr></thead><tbody>
+      <tr><td><b>Corto plazo</b></td><td>Respuesta clínica (↓ ≥50 % Mayo parcial): días con JAK y corticoides; 2–8 semanas con el resto.</td><td>Respuesta clínica (↓ ≥50 % HBI/PRO2): 2–12 semanas según fármaco.</td></tr>
+      <tr><td><b>Intermedio</b></td><td>Remisión clínica, PCR normal y calprotectina &lt;100–250 µg/g a los 3–6 meses.</td><td>Remisión clínica y normalización de biomarcadores a los 3–6 meses.</td></tr>
+      <tr><td><b>Largo plazo</b></td><td>Cicatrización endoscópica (Mayo 0–1, ideal 0) a los 6–12 meses; calidad de vida normal.</td><td>Cicatrización endoscópica (SES-CD &lt;3 o sin úlceras) a los 6–12 meses; ausencia de discapacidad.</td></tr>
+      <tr><td><b>Adicionales</b></td><td>Remisión histológica (Nancy, Robarts, Geboes).</td><td>Remisión transmural por ecografía intestinal o enteroRM.</td></tr>
+    </tbody></table></div>
+  </div>
+</section>
+
+
+
+<!-- ================= SCORES ================= -->
+<section class="vista" id="v-scores">
+  <p class="eyebrow">Actividad clínica y endoscópica</p>
+  <h2 class="sec">Scores y clasificaciones</h2>
+  <p class="lead">Calcula la actividad antes de decidir y repite el mismo score en el control para medir la respuesta. El resultado de Mayo, Harvey-Bradshaw, CDAI y PDAI se puede llevar directo a la decisión.</p>
+  <div class="seg" id="stool" style="margin-bottom:14px">
+    <input type="radio" name="stool" id="st-mayo" value="mayo" checked><label for="st-mayo">Mayo<small>Colitis ulcerosa</small></label>
+    <input type="radio" name="stool" id="st-uceis" value="uceis"><label for="st-uceis">UCEIS<small>CU · endoscópico</small></label>
+    <input type="radio" name="stool" id="st-hbi" value="hbi"><label for="st-hbi">Harvey-Bradshaw<small>Crohn · clínico, 1 día</small></label>
+    <input type="radio" name="stool" id="st-cdai" value="cdai"><label for="st-cdai">CDAI<small>Crohn · clínico, 7 días</small></label>
+    <input type="radio" name="stool" id="st-ses" value="ses"><label for="st-ses">SES-CD<small>Crohn · endoscópico</small></label>
+    <input type="radio" name="stool" id="st-rut" value="rut"><label for="st-rut">Rutgeerts<small>Crohn · posquirúrgico</small></label>
+    <input type="radio" name="stool" id="st-top" value="top"><label for="st-top">TOpClass<small>Crohn · perianal</small></label>
+    <input type="radio" name="stool" id="st-pdai" value="pdai"><label for="st-pdai">PDAI<small>Reservorio ileal</small></label>
+  </div>
+  <div class="grid">
+    <div class="form" id="sc-form"></div>
+    <div class="res">
+      <div class="casehead" id="sc-res"><div id="sc-resb"></div><div class="acts"><button class="btn pri" type="button" id="sc-apply" hidden></button></div></div>
+      <div class="box" id="sc-info"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FRAGILIDAD ================= -->
+<section class="vista" id="v-fragilidad">
+  <p class="eyebrow">Adulto mayor y paciente vulnerable</p>
+  <h2 class="sec">Fragilidad</h2>
+  <p class="lead">La fragilidad es la pérdida de reserva fisiológica frente a un estrés: un mismo fármaco o una misma infección tienen consecuencias muy distintas en un paciente robusto y en uno frágil. En EII predice infecciones con biológicos mejor que la edad cronológica, por eso conviene medirla antes de elegir la terapia.</p>
+  <div class="grid">
+    <div class="form">
+      <div class="seg" id="ftool" style="margin-bottom:2px">
+        <input type="radio" name="ftool" id="ft-f" value="fried" checked><label for="ft-f">Fenotipo de Fried<small>5 criterios físicos</small></label>
+        <input type="radio" name="ftool" id="ft-c" value="cfs"><label for="ft-c">Escala clínica de fragilidad<small>CFS 1–9 · rápida</small></label>
+      </div>
+
+      <div id="fried">
+        <fieldset class="blk"><legend>Datos para los cálculos</legend>
+          <div class="row2">
+            <div class="q"><span class="ql">Sexo</span><div class="seg"><input type="radio" name="fsx" id="fsx-m" value="M"><label for="fsx-m">Hombre</label><input type="radio" name="fsx" id="fsx-f" value="F"><label for="fsx-f">Mujer</label></div></div>
+            <div class="q"><label class="ql" for="ftalla">Talla</label><div class="inp"><input id="ftalla" type="number" inputmode="numeric" min="120" max="210"><span>cm</span></div></div>
+          </div>
+          <div class="row2">
+            <div class="q"><label class="ql" for="fpeso">Peso actual</label><div class="inp"><input id="fpeso" type="number" inputmode="decimal" min="25" max="200"><span>kg</span></div></div>
+            <div class="q"><label class="ql" for="fpeso0">Peso hace 1 año</label><div class="inp"><input id="fpeso0" type="number" inputmode="decimal" min="25" max="200"><span>kg</span></div></div>
+          </div>
+          <p class="hint" id="fimc"></p>
+        </fieldset>
+
+        <fieldset class="blk"><legend>Criterios (Fried 2001)</legend>
+          <div class="fc" id="fc1"><div class="fh"><b>1 · Pérdida de peso no intencionada</b><label class="sw"><input type="checkbox" id="c1"><span>Cumple</span></label></div>
+            <p>&gt;4,5 kg o ≥5 % del peso en el último año, sin dieta ni ejercicio intencionados.</p><p class="auto" id="a1"></p></div>
+          <div class="fc" id="fc2"><div class="fh"><b>2 · Agotamiento autorreferido</b><label class="sw"><input type="checkbox" id="c2"><span>Cumple</span></label></div>
+            <p>Responde «3 o más días en la última semana» a alguna de estas preguntas (escala CES-D): «Sentía que todo lo que hacía era un esfuerzo» o «No tenía ánimo para ponerme en marcha».</p></div>
+          <div class="fc" id="fc3"><div class="fh"><b>3 · Baja actividad física</b><label class="sw"><input type="checkbox" id="c3"><span>Cumple</span></label></div>
+            <p>Gasto &lt;383 kcal/semana en hombres o &lt;270 kcal/semana en mujeres (cuestionario de Minnesota). En la práctica: no camina ni hace ejercicio de forma regular, o sale poco de casa.</p></div>
+          <div class="fc" id="fc4"><div class="fh"><b>4 · Debilidad: fuerza de prensión</b><label class="sw"><input type="checkbox" id="c4"><span>Cumple</span></label></div>
+            <p>Dinamómetro, mano dominante, mejor de 3 intentos. Quintil inferior ajustado por sexo e IMC.</p>
+            <div class="row2"><div class="inp"><input id="fgrip" type="number" inputmode="decimal" min="0" max="80" aria-label="Fuerza de prensión"><span>kg</span></div><span class="hint" id="cut4" style="margin:0;align-self:center"></span></div><p class="auto" id="a4"></p></div>
+          <div class="fc" id="fc5"><div class="fh"><b>5 · Lentitud de la marcha</b><label class="sw"><input type="checkbox" id="c5"><span>Cumple</span></label></div>
+            <p>Tiempo en recorrer 4,57 m (15 pies) a paso habitual. Punto de corte según sexo y talla. Alternativa práctica: velocidad &lt;0,8 m/s en 4 m.</p>
+            <div class="row2"><div class="inp"><input id="fgait" type="number" inputmode="decimal" min="1" max="60" step="0.1" aria-label="Tiempo de marcha"><span>s</span></div><span class="hint" id="cut5" style="margin:0;align-self:center"></span></div><p class="auto" id="a5"></p></div>
+        </fieldset>
+      </div>
+
+      <div id="cfs" hidden>
+        <fieldset class="blk"><legend>Escala clínica de fragilidad (Rockwood)</legend>
+          <p class="hint" style="margin:0 0 8px">Elige la categoría que mejor describe al paciente en las 2 semanas previas a la enfermedad actual, no durante una crisis aguda.</p>
+          <div class="cfsl" id="cfsl"></div>
+        </fieldset>
+      </div>
+    </div>
+
+    <div class="res">
+      <div class="casehead" id="fres"><div id="fresb"></div><div class="acts"><button class="btn" type="button" id="fapply" hidden></button></div></div>
+      <div class="box"><h4>Por qué medirla en EII</h4>
+        <ul class="why">
+          <li class="n"><b>Predice infecciones mejor que la edad.</b> Cohorte de 543 pacientes con biológicos: infección en 48,4 % de los frágiles vs 11,8 % de los no frágiles; HR 5,81 (IC 95 % 3,93–8,58) para cualquier infección y 4,65 (2,28–9,47) para infección grave (Fuochi 2026). Retrospectivo, unicéntrico, fragilidad por Hospital Frailty Risk Score.</li>
+          <li class="n"><b>GETECCU 2025</b> recomienda evaluar la fragilidad de forma sistemática en quien tenga factores de riesgo (edad, comorbilidad, polifarmacia, desnutrición, deterioro cognitivo) y sugiere la escala clínica por su rapidez.</li>
+          <li class="n"><b>Es dinámica y reversible.</b> La inflamación activa, la sarcopenia y los corticoides la empeoran; controlar la enfermedad puede revertirla. El riesgo documentado en el adulto mayor es el subtratamiento.</li>
+          <li class="n"><b>Fried o escala clínica.</b> Fried mide 5 rasgos físicos y detecta el estado prefrágil; la escala clínica es visual y rápida, útil en sala o en la colonoscopía, pero más subjetiva.</li>
+        </ul>
+      </div>
+      <div class="box"><h4>Qué cambia en la conducta</h4>
+        <div class="tw" style="margin:0"><table class="t" style="min-width:480px"><thead><tr><th>Estado</th><th>Conducta</th></tr></thead><tbody>
+          <tr><td><b>Robusto</b></td><td>Decidir por fenotipo y actividad como en cualquier adulto. La edad sola no contraindica terapia avanzada.</td></tr>
+          <tr><td><b>Prefrágil</b></td><td>Reevaluar cada 6–12 meses. Nutrición (cribado GLIM), ejercicio de fuerza (p. ej. programa Vivifrail), revisar polifarmacia (criterios de Beers) y minimizar corticoides.</td></tr>
+          <tr><td><b>Frágil</b></td><td>Priorizar mecanismos con buen perfil de seguridad (vedolizumab, ustekinumab, anti-IL-23). Evitar combinación con tiopurina y no iniciar tiopurinas. JAK solo sin alternativa. Corticoide: preferir budesonida y cursos cortos. Vacunas completas (zóster recombinante, neumococo, influenza, VRS). Valoración geriátrica integral y nutricional antes de cirugía electiva.</td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PIPELINE ================= -->
+<section class="vista" id="v-pipeline">
+  <p class="eyebrow">Horizonte · no es estándar de manejo</p>
+  <h2 class="sec">En investigación</h2>
+  <p class="lead">Moléculas sin aprobación FDA/EMA para EII a octubre de 2026. Se muestran por fase y con el estado regulatorio conocido. En el paciente refractario, la conducta práctica es la derivación a ensayo clínico.</p>
+  <div class="cards" id="pcards"></div>
+</section>
+
+<!-- ================= GUÍAS ================= -->
+<section class="vista" id="v-guias">
+  <p class="eyebrow">ECCO · ACG · AGA · Chile</p>
+  <h2 class="sec">Dónde coinciden y dónde no</h2>
+  <p class="lead">Las cuatro fuentes se ponderan igual. Cuando discrepan, se muestran las posturas antes de concluir.</p>
+  <div id="gcmp"></div>
+  <h3 style="font-size:1.25rem;margin:28px 0 4px">Qué cambió respecto de las versiones previas</h3>
+  <div class="tl" id="gtl"></div>
+</section>
+
+<!-- ================= FUENTES ================= -->
+<section class="vista" id="v-fuentes">
+  <p class="eyebrow">Referencias</p>
+  <h2 class="sec">Fuentes</h2>
+  <ol class="refs" id="refs"></ol>
+  <p class="note">Situación en Chile según datos abiertos FONASA/LRS (mayo de 2026), Protocolos LRS 2024 y registro ISP, tomada del Repositorio EII 2026. La disponibilidad comercial y las presentaciones cambian: confirmar con farmacia antes de prescribir. Las presentaciones listadas son las más habituales a nivel internacional.</p>
+</section>
+
+<footer class="foot">Herramienta diseñada y desarrollada por el Dr. Moisés Oropeza Hernández · Residente de Gastroenterología, UANDES · Clínica Dávila / Clínica Universidad de los Andes · Versión octubre 2026. Material de apoyo docente; la decisión final corresponde al equipo tratante.</footer>
+</main>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" hidden aria-modal="true" role="dialog" aria-labelledby="dtitle">
+  <div class="dh"><div style="min-width:0"><p class="eyebrow" id="dcls"></p><h3 id="dtitle"></h3><div class="brand" id="dbrand" hidden></div><p class="moa" id="dmoa" hidden></p><div class="tags" id="dtags" style="margin-top:6px"></div></div><button class="x" id="dclose" type="button" aria-label="Cerrar ficha">✕</button></div>
+  <div class="db" id="dbody"></div>
+</aside>
+<div class="toast" id="toast" hidden></div>
