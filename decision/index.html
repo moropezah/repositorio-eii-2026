@@ -1208,22 +1208,22 @@ prob:[["Vivomixx / Visbiome (formulación De Simone; Chile por confirmar)",0]]
 };
 function brandTx(id){const b=BRAND[id];return b?b.map(x=>x[0]).join(" · "):""}
 const PIPE=[
- {n:"Tulisokibart",mech:"Anti-TL1A (MK-7240)",dz:"CU · EC",fase:"f3",faseTx:"Fase 3",
+ {n:"Tulisokibart",mech:"Anti-TL1A (MK-7240)",moa:"Bloquea TL1A, que vía DR3 amplifica Th1/Th17 y activa fibroblastos: blanco inflamatorio y antifibrótico; con prueba genética de respuesta",dz:"CU · EC",fase:"f3",faseTx:"Fase 3",
   res:"ATLAS-UC estudio 2 (solo inducción, jun 2026): cumplió remisión clínica sem 12 y secundarios clave; cifras aún no publicadas. Fase 2 ARTEMIS-UC: remisión 26 % vs 1 % (NEJM 2024).",
   sig:"ATLAS-UC con mantención en curso; ARES-CD (fase 3) en curso. Potencial antifibrótico en EC estenosante.",prac:"Aún no",ref:"Sands BE et al. NEJM 2024;391:1119-29. MSD, comunicado 22-06-2026."},
- {n:"Duvakitug",mech:"Anti-TL1A (TEV-48574 / SAR447189)",dz:"CU · EC",fase:"f3",faseTx:"Fase 3",
+ {n:"Duvakitug",mech:"Anti-TL1A (TEV-48574 / SAR447189)",moa:"Bloquea TL1A, que vía DR3 amplifica Th1/Th17 y activa fibroblastos: blanco inflamatorio y antifibrótico",dz:"CU · EC",fase:"f3",faseTx:"Fase 3",
   res:"RELIEVE UCCD (fase 2b, sem 14): CU remisión 48 % (900 mg) vs 20 %; EC respuesta endoscópica 48 % vs 13 %.",
   sig:"Programa de fase 3 en CU y EC (Sanofi/Teva) en curso.",prac:"Aún no",ref:"HCPLive, presentación fase 2b."},
- {n:"Afimkibart",mech:"Anti-TL1A (RVT-3101 / RO7790121)",dz:"CU · EC",fase:"f3",faseTx:"Fase 3",
+ {n:"Afimkibart",mech:"Anti-TL1A (RVT-3101 / RO7790121)",moa:"Bloquea TL1A, que vía DR3 amplifica Th1/Th17 y activa fibroblastos: blanco inflamatorio y antifibrótico; con prueba genética de respuesta",dz:"CU · EC",fase:"f3",faseTx:"Fase 3",
   res:"TUSCANY-2 (fase 2b) positiva en CU, mayor efecto en portadores del biomarcador.",
   sig:"Fase 3 en CU (NCT06589986, NCT06588855) y EC (NCT06819878, NCT06819891) reclutando.",prac:"Aún no",ref:"TUSCANY-2, Lancet Gastroenterol Hepatol; ClinicalTrials.gov."},
- {n:"Obefazimod",mech:"Potenciador de miR-124 (ABX464), oral",dz:"CU",fase:"nda",faseTx:"Fase 3 completa · NDA planificada",
+ {n:"Obefazimod",mech:"Potenciador de miR-124 (ABX464), oral",moa:"Oral: se une al complejo CBC del ARN y aumenta miR-124 en células inmunes → baja IL-6, IL-17 y TNF y frena Th17",dz:"CU",fase:"nda",faseTx:"Fase 3 completa · NDA planificada",
   res:"ABTECT mantención (sem 44): remisión 50,8 % (25 mg) y 51,3 % (50 mg) vs 10,4 % placebo. Inducción ABTECT-1/2 positiva (2025).",
   sig:"Pre-NDA favorable con FDA (jul 2026); solicitud prevista antes de fin de 2026. Cefalea frecuente; CPNM 4 casos con 50 mg.",prac:"Aún no",ref:"Abivax, comunicados 01-06-2026 y 30-07-2026."},
- {n:"Icotrokinra",mech:"Péptido oral antagonista del receptor de IL-23",dz:"CU · EC",fase:"f3",faseTx:"Fase 3 (CU) · 2b/3 (EC)",
+ {n:"Icotrokinra",mech:"Péptido oral antagonista del receptor de IL-23",moa:"Péptido oral que bloquea el receptor de IL-23 (eje Th17), como los anti-p19 pero por boca",dz:"CU · EC",fase:"f3",faseTx:"Fase 3 (CU) · 2b/3 (EC)",
   res:"ANTHEM-UC (fase 2b, sem 28, 400 mg): remisión 31,7 % vs 9,5 %; mejoría endoscópica 38,1 % vs 11,1 %.",
   sig:"ICONIC-UC (fase 3) e ICONIC-CD (fase 2b/3) iniciados. Primer bloqueo IL-23 oral.",prac:"Aún no",ref:"J&J, comunicado 27-10-2025."},
- {n:"Combinación de terapias avanzadas",mech:"Guselkumab + golimumab (VEGA, DUET-UC/CD); combinaciones con anti-TL1A",dz:"CU · EC",fase:"f2",faseTx:"Fase 2",
+ {n:"Combinación de terapias avanzadas",moa:"Bloqueo simultáneo de dos vías no redundantes (p. ej. IL-23 + TNF) para superar el techo de la monoterapia",mech:"Guselkumab + golimumab (VEGA, DUET-UC/CD); combinaciones con anti-TL1A",dz:"CU · EC",fase:"f2",faseTx:"Fase 2",
   res:"VEGA (fase 2a, CU): combinación superior a cada monoterapia en remisión clínica sem 12. Terapia dual dirigida en vida real: series observacionales.",
   sig:"ECCO 2026 PP9: evidencia insuficiente para recomendar terapia avanzada combinada en CU. Uso actual: refractariedad multimecanismo o MEI no controlada, en centro experto.",prac:"Aún no",ref:"Feagan BG et al. Lancet Gastroenterol Hepatol 2023 (VEGA); ECCO 2026."}
 ];
@@ -2087,7 +2087,7 @@ function renderKin(){
   $("#ktab tbody").innerHTML=Object.entries(D).filter(([id,d])=>d.kin&&d.kin[z]&&d.cl!=="abx").map(([id,d])=>{const k=d.kin[z];return `<tr class="clk" data-ficha="${id}" tabindex="0"><td class="nm">${esc(d.n)}<div class="cls" style="font-family:var(--ff-b);font-weight:400">${CLS[d.cl]}</div></td><td>${kinBar(k,24)}</td><td>${wk(k.ev)}</td><td>${k.ext?wk(k.ext):"—"}</td><td style="min-width:260px">${esc(d.tdm)}</td></tr>`}).join("");
 }
 function renderPipe(){
-  $("#pcards").innerHTML=PIPE.map(p=>`<article class="pc"><div class="ph2"><span class="pill ${p.fase}">${esc(p.faseTx)}</span><span class="tag">${esc(p.dz)}</span></div><h4>${esc(p.n)}</h4><p class="q2">${esc(p.mech)}</p><div class="res2">${esc(p.res)}</div><p>${esc(p.sig)}</p><p class="q2"><b>¿Cambia la práctica?</b> ${esc(p.prac)} · ${esc(p.ref)}</p></article>`).join("");
+  $("#pcards").innerHTML=PIPE.map(p=>`<article class="pc"><div class="ph2"><span class="pill ${p.fase}">${esc(p.faseTx)}</span><span class="tag">${esc(p.dz)}</span></div><h4>${esc(p.n)}</h4><p class="q2">${esc(p.mech)}</p>${p.moa?`<p class="moa" style="margin:4px 0 8px"><b>Mecanismo propuesto:</b> ${esc(p.moa)}</p>`:""}<div class="res2">${esc(p.res)}</div><p>${esc(p.sig)}</p><p class="q2"><b>¿Cambia la práctica?</b> ${esc(p.prac)} · ${esc(p.ref)}</p></article>`).join("");
 }
 function renderGuias(){
   $("#gcmp").innerHTML=Object.keys(GCMP).map(gTable).join("");

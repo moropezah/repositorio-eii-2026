@@ -226,7 +226,7 @@ function renderKin(){
   $("#ktab tbody").innerHTML=Object.entries(D).filter(([id,d])=>d.kin&&d.kin[z]&&d.cl!=="abx").map(([id,d])=>{const k=d.kin[z];return `<tr class="clk" data-ficha="${id}" tabindex="0"><td class="nm">${esc(d.n)}<div class="cls" style="font-family:var(--ff-b);font-weight:400">${CLS[d.cl]}</div></td><td>${kinBar(k,24)}</td><td>${wk(k.ev)}</td><td>${k.ext?wk(k.ext):"—"}</td><td style="min-width:260px">${esc(d.tdm)}</td></tr>`}).join("");
 }
 function renderPipe(){
-  $("#pcards").innerHTML=PIPE.map(p=>`<article class="pc"><div class="ph2"><span class="pill ${p.fase}">${esc(p.faseTx)}</span><span class="tag">${esc(p.dz)}</span></div><h4>${esc(p.n)}</h4><p class="q2">${esc(p.mech)}</p><div class="res2">${esc(p.res)}</div><p>${esc(p.sig)}</p><p class="q2"><b>¿Cambia la práctica?</b> ${esc(p.prac)} · ${esc(p.ref)}</p></article>`).join("");
+  $("#pcards").innerHTML=PIPE.map(p=>`<article class="pc"><div class="ph2"><span class="pill ${p.fase}">${esc(p.faseTx)}</span><span class="tag">${esc(p.dz)}</span></div><h4>${esc(p.n)}</h4><p class="q2">${esc(p.mech)}</p>${p.moa?`<p class="moa" style="margin:4px 0 8px"><b>Mecanismo propuesto:</b> ${esc(p.moa)}</p>`:""}<div class="res2">${esc(p.res)}</div><p>${esc(p.sig)}</p><p class="q2"><b>¿Cambia la práctica?</b> ${esc(p.prac)} · ${esc(p.ref)}</p></article>`).join("");
 }
 function renderGuias(){
   $("#gcmp").innerHTML=Object.keys(GCMP).map(gTable).join("");
