@@ -435,6 +435,7 @@ fieldset.blk{box-shadow:var(--sh)}
 .reco li em{font-style:normal;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--fg-3);margin-left:6px}
 .brand{font-family:var(--ff-b);display:flex;flex-wrap:wrap;gap:4px 6px;margin-top:4px;font-size:.8rem}.brand span{padding:1px 8px;border-radius:999px;border:1px solid var(--line,#ccd)}.brand .bc{font-weight:700;color:var(--fg-1,inherit)}.brand .bn{color:var(--fg-3);font-style:italic}.brl{font-family:var(--ff-b);font-weight:400;font-size:.74rem;color:var(--fg-3);margin-top:2px}
 .evk{font-family:var(--ff-b);font-size:.68rem;font-weight:700;letter-spacing:.02em;padding:2px 8px;border-radius:999px;border:1px solid}.evk.ci{color:#fff;background:var(--rojo);border-color:var(--rojo)}.evk.rb{color:var(--rojo);border-color:var(--rojo)}.evk.sb{color:var(--fg-2);border-color:var(--line-2)}
+.moa{font-family:var(--ff-b);font-size:.82rem;line-height:1.45;color:var(--fg-2);margin:6px 0 0;max-width:62ch}.moa b{color:var(--fg)}
 </style>
 
 <header class="top">
@@ -863,7 +864,7 @@ fieldset.blk{box-shadow:var(--sh)}
 
 <div class="scrim" id="scrim" hidden></div>
 <aside class="drawer" id="drawer" hidden aria-modal="true" role="dialog" aria-labelledby="dtitle">
-  <div class="dh"><div style="min-width:0"><p class="eyebrow" id="dcls"></p><h3 id="dtitle"></h3><div class="brand" id="dbrand" hidden></div><div class="tags" id="dtags" style="margin-top:6px"></div></div><button class="x" id="dclose" type="button" aria-label="Cerrar ficha">✕</button></div>
+  <div class="dh"><div style="min-width:0"><p class="eyebrow" id="dcls"></p><h3 id="dtitle"></h3><div class="brand" id="dbrand" hidden></div><p class="moa" id="dmoa" hidden></p><div class="tags" id="dtags" style="margin-top:6px"></div></div><button class="x" id="dclose" type="button" aria-label="Cerrar ficha">✕</button></div>
   <div class="db" id="dbody"></div>
 </aside>
 <div class="toast" id="toast" hidden></div>
@@ -1130,6 +1131,43 @@ prob:{n:"Probiótico multicepa (De Simone)",cl:"prob",via:"Oral",chile:"no",chil
 function r25(x){return Math.round(x/25)*25}
 
 /* ============ EN INVESTIGACIÓN ============ */
+
+/* Mecanismo de acción: una línea por fármaco */
+const MOA={
+mz_or:"5-ASA (ácido 5-aminosalicílico) de acción tópica en la mucosa: agonista PPAR-γ, inhibe NF-κB, COX/LOX y radicales libres",
+mz_comb:"5-ASA por doble vía: oral para el colon proximal y rectal para el recto y sigma",
+mz_sup:"5-ASA tópico en el recto (alcanza ~10–15 cm)",
+mz_ene:"5-ASA tópico: el enema llega a la flexura esplénica, la espuma al sigma",
+ssz:"Profármaco: sulfapiridina + 5-ASA unidos por enlace azo, liberados por azorreductasas bacterianas del colon. La sulfapiridina causa la mayoría de los efectos adversos e inhibe la absorción de folato (suplementar ácido fólico)",
+bud_cir:"Glucocorticoide con ~90 % de metabolismo de primer paso hepático (CYP3A4); liberación en íleon terminal y colon derecho",
+bud_mmx:"Glucocorticoide de primer paso alto en matriz MMX: liberación a pH ≥7 a lo largo de todo el colon",
+cort_rect:"Glucocorticoide tópico rectal (budesonida o hidrocortisona) con baja absorción sistémica",
+pred:"Glucocorticoide sistémico: inhibe NF-κB y AP-1 e induce apoptosis de linfocitos activados",
+mpred:"Glucocorticoide sistémico EV, de potencia ~5 veces la de la hidrocortisona",
+hc:"Glucocorticoide sistémico EV con actividad mineralocorticoide",
+aza:"Profármaco de 6-MP → 6-tioguanina (6-TGN): Rac1-GTP → apoptosis de linfocitos T. Metabolismo por TPMT/NUDT15 (riesgo de mielotoxicidad) y xantina oxidasa (interacción con alopurinol)",
+mp:"Tiopurina → 6-TGN (inmunomodulador activo) y 6-MMP (hepatotóxico) vía TPMT",
+mtx:"Antimetabolito: inhibe la dihidrofolato reductasa y aumenta la adenosina extracelular (antiinflamatoria); ácido fólico 5 mg/semana reduce toxicidad",
+csa:"Inhibidor de calcineurina: bloquea la desfosforilación de NFAT y la transcripción de IL-2 en linfocitos T",
+ifx:"Anticuerpo monoclonal quimérico (IgG1) anti-TNF-α: neutraliza TNF soluble y de membrana, con citotoxicidad dependiente de complemento",
+ifx_sc:"Mismo anticuerpo anti-TNF-α quimérico (CT-P13) en formulación SC: niveles valle más estables",
+ada:"Anticuerpo monoclonal humano (IgG1) anti-TNF-α",
+gol:"Anticuerpo monoclonal humano (IgG1) anti-TNF-α, administración mensual",
+czp:"Fragmento Fab' humanizado anti-TNF-α pegilado: sin Fc, transferencia placentaria mínima",
+vdz:"Anticuerpo monoclonal humanizado anti-integrina α4β7: bloquea la unión a MAdCAM-1 y el tráfico de linfocitos al intestino (intestino-selectivo)",
+ust:"Anticuerpo monoclonal humano anti-p40: bloquea IL-12 e IL-23 (ejes Th1 y Th17)",
+rzb:"Anticuerpo monoclonal humanizado anti-p19: bloqueo selectivo de IL-23",
+miri:"Anticuerpo monoclonal humanizado anti-p19: bloqueo selectivo de IL-23",
+gus:"Anticuerpo monoclonal humano anti-p19 (IL-23) con dominio Fc que se une a CD64 en células productoras de IL-23",
+tofa:"Inhibidor JAK oral pan-JAK (predominio JAK1/JAK3): bloquea la señalización de múltiples citocinas vía STAT",
+upa:"Inhibidor JAK1 selectivo oral",
+fil:"Inhibidor JAK1 preferente oral",
+oza:"Modulador del receptor S1P1 y S1P5: internaliza el receptor y retiene linfocitos en los ganglios (linfopenia esperable)",
+etr:"Modulador del receptor S1P1, S1P4 y S1P5: retiene linfocitos en los ganglios",
+metro:"Nitroimidazol: daño del ADN en anaerobios y protozoos",
+cipro:"Fluoroquinolona: inhibe la ADN girasa y la topoisomerasa IV bacterianas",
+prob:"Mezcla de 8 cepas (lactobacilos, bifidobacterias y Streptococcus thermophilus): modula la microbiota del reservorio"
+};
 
 /* Nombres comerciales: original primero, luego biosimilares/genéricos. cl=true → comercializado en Chile */
 const BRAND={
@@ -1997,6 +2035,7 @@ function openFicha(id,ph){
   const d=D[id],c=lastC||readForm();
   $("#dcls").textContent=CLS[d.cl];$("#dtitle").textContent=d.n;
   const bb=BRAND[id];$("#dbrand").innerHTML=bb?bb.map(([t,c])=>`<span class="${c?"bc":"bn"}">${esc(t)}</span>`).join(""):"";$("#dbrand").hidden=!bb;
+  $("#dmoa").innerHTML=MOA[id]?`<b>Mecanismo:</b> ${esc(MOA[id])}`:"";$("#dmoa").hidden=!MOA[id];
   $("#dtags").innerHTML=`${badge(id)}<span class="tag">${esc(d.via)}</span>${d.cu?'<span class="tag cu">CU</span>':""}${d.ec?'<span class="tag ec">EC</span>':""}`;
   let b="";
   const it=ph&&lastR?lastR.items.find(i=>i.id===id&&i.ph===ph):null;
