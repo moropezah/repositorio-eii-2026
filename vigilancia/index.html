@@ -1,0 +1,833 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Vigilancia bibliográfica EII</title>
+<meta name="description" content="Lo más relevante de PubMed en enfermedad inflamatoria intestinal, semana a semana. Dr. Moisés Oropeza Hernández.">
+<meta name="author" content="Dr. Moisés Oropeza Hernández">
+<meta name="theme-color" content="#173a5e">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Vigilancia EII">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Tokens heredados del Repositorio EII 2026 */
+:root{
+  --bg:#f7f5f1; --panel:#fffefb; --panel-2:#f1ede6; --fg:#1c2530; --fg-2:#4a5664; --fg-3:#6f7a86;
+  --line:#ddd6cb; --line-2:#c9c0b2;
+  --marino:#173a5e; --marino-2:#255a8a; --acento:#b0561c;
+  --verde:#1d8a4e; --rojo:#c62a2a; --ambar:#b5670a; --gris:#6b7380; --inv:#5d4a8f;
+  --cu:#1f5f7a; --ec:#7a3e1f;
+  --sh:0 1px 2px rgba(28,37,48,.06),0 4px 14px rgba(28,37,48,.05);
+  --sh-2:0 8px 40px rgba(28,37,48,.22);
+  --r:12px; --maxw:1240px;
+  --ff-s:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --ff-b:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --ff-m:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12161c; --panel:#1a2029; --panel-2:#222b36; --fg:#e6e9ed; --fg-2:#b3bcc6; --fg-3:#8f99a5;
+  --line:#2c3642; --line-2:#3d4956;
+  --marino:#8fbde6; --marino-2:#a8cdf0; --acento:#e89a5c;
+  --verde:#4fd18c; --rojo:#ff7a70; --ambar:#f2b54a; --gris:#9aa3ae; --inv:#b3a2e6;
+  --cu:#79bdd8; --ec:#dda07a;
+  --sh:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25); --sh-2:0 8px 40px rgba(0,0,0,.55);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#12161c; --panel:#1a2029; --panel-2:#222b36; --fg:#e6e9ed; --fg-2:#b3bcc6; --fg-3:#8f99a5;
+  --line:#2c3642; --line-2:#3d4956;
+  --marino:#8fbde6; --marino-2:#a8cdf0; --acento:#e89a5c;
+  --verde:#4fd18c; --rojo:#ff7a70; --ambar:#f2b54a; --gris:#9aa3ae; --inv:#b3a2e6;
+  --cu:#79bdd8; --ec:#dda07a;
+  --sh:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25); --sh-2:0 8px 40px rgba(0,0,0,.55);
+  color-scheme:dark;
+}
+[hidden]{display:none!important}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--ff-b);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;margin:0;min-height:100vh}
+h1,h2,h3,h4{font-family:var(--ff-s);text-wrap:balance;line-height:1.22;margin:0}
+a{color:var(--marino-2)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--acento);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* barra superior */
+.top{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.top-in{max-width:var(--maxw);margin:0 auto;padding:9px 20px;display:flex;align-items:center;gap:12px}
+.brand{display:flex;align-items:center;gap:9px;font-family:var(--ff-s);font-weight:700;font-size:1.02rem;color:var(--fg);text-decoration:none;white-space:nowrap}
+.brand .dot{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,var(--marino),var(--acento));display:grid;place-items:center;color:var(--bg);font-size:.62rem;font-weight:700;font-family:var(--ff-b);flex:none}
+.brand small{display:block;font-family:var(--ff-b);font-weight:500;font-size:.68rem;color:var(--fg-3);letter-spacing:.02em}
+nav.tabs{display:flex;gap:2px;margin-left:auto;overflow-x:auto;scrollbar-width:none;min-width:0}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs a{font-size:.82rem;font-weight:600;color:var(--fg-2);text-decoration:none;padding:6px 11px;border-radius:7px;white-space:nowrap}
+nav.tabs a:hover{background:var(--panel-2);color:var(--fg)}
+nav.tabs a[aria-current="true"]{background:var(--marino);color:var(--bg)}
+.icon-btn{background:none;border:1px solid var(--line-2);color:var(--fg-2);border-radius:7px;height:30px;min-width:30px;padding:0 8px;cursor:pointer;flex:none;display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:.78rem;font-weight:600}
+.icon-btn:hover{background:var(--panel-2);color:var(--fg)}
+.icon-btn.on{border-color:var(--verde);color:var(--verde)}
+.sync{font-size:.72rem;font-weight:600;color:var(--fg-3);white-space:nowrap;flex:none}
+.sync.ok{color:var(--verde)} .sync.err{color:var(--ambar)}
+
+main{max-width:var(--maxw);margin:0 auto;padding:22px 20px 60px}
+.view-h{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px 20px;margin-bottom:18px}
+.view-h h1{font-size:1.85rem;letter-spacing:-.01em}
+.view-h p{margin:4px 0 0;color:var(--fg-2);max-width:68ch}
+.view-h .grow{flex:1 1 320px}
+.eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--acento);margin-bottom:6px}
+
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh)}
+select,input[type=search],input[type=text],input[type=password],textarea{background:var(--panel);border:1px solid var(--line-2);border-radius:8px;padding:7px 10px;min-height:36px}
+textarea{width:100%;min-height:120px;resize:vertical;line-height:1.5}
+
+/* KPIs */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 22px}
+.kpi{padding:14px 16px}
+.kpi .v{font-family:var(--ff-s);font-size:1.9rem;font-weight:700;line-height:1.05}
+.kpi .l{font-size:.78rem;color:var(--fg-2);margin-top:3px}
+
+/* chips */
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:.7rem;font-weight:700;letter-spacing:.02em;padding:2px 8px;border-radius:999px;border:1px solid var(--line-2);color:var(--fg-2);background:var(--panel);white-space:nowrap}
+.chip.a-CU{color:var(--cu);border-color:color-mix(in srgb,var(--cu) 45%,transparent);background:color-mix(in srgb,var(--cu) 9%,var(--panel))}
+.chip.a-EC{color:var(--ec);border-color:color-mix(in srgb,var(--ec) 45%,transparent);background:color-mix(in srgb,var(--ec) 9%,var(--panel))}
+.chip.a-EII,.chip.a-CEP,.chip.a-Reservorio{color:var(--inv);border-color:color-mix(in srgb,var(--inv) 40%,transparent);background:color-mix(in srgb,var(--inv) 8%,var(--panel))}
+.chip.pipe{color:var(--acento);border-color:color-mix(in srgb,var(--acento) 50%,transparent)}
+.chip.n1{color:var(--marino);border-color:var(--marino)}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+
+/* ¿cambia la práctica? */
+.cambia{display:flex;gap:8px;align-items:flex-start;padding:9px 11px;border-radius:9px;font-size:.86rem;background:var(--panel-2);border-left:3px solid var(--gris)}
+.cambia b{white-space:nowrap}
+.cambia.si{border-left-color:var(--verde)} .cambia.si b{color:var(--verde)}
+.cambia.aun{border-left-color:var(--ambar)} .cambia.aun b{color:var(--ambar)}
+.cambia.no b{color:var(--fg-2)}
+.cambia.eval{border-left-color:var(--inv)} .cambia.eval b{color:var(--inv)}
+
+/* tarjetas de lectura obligatoria */
+.grupo{margin:26px 0 10px;display:flex;align-items:baseline;gap:10px}
+.grupo h2{font-size:1.25rem}
+.grupo .c{font-size:.8rem;color:var(--fg-3)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
+.card{padding:16px 18px 14px;display:flex;flex-direction:column;gap:10px;border-top:3px solid var(--line-2)}
+.card.a-CU{border-top-color:var(--cu)} .card.a-EC{border-top-color:var(--ec)} .card.a-EII,.card.a-CEP,.card.a-Reservorio{border-top-color:var(--inv)}
+.card h3{font-size:1.08rem}
+.card .meta{font-size:.78rem;color:var(--fg-3)}
+.card .hall{font-size:.9rem;color:var(--fg);margin:0}
+.acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:4px}
+.btn{display:inline-flex;align-items:center;gap:5px;font-size:.76rem;font-weight:600;padding:5px 10px;border-radius:7px;border:1px solid var(--line-2);background:var(--panel);color:var(--fg-2);cursor:pointer;text-decoration:none;min-height:30px}
+.btn:hover{background:var(--panel-2);color:var(--fg)}
+.btn.prim{background:var(--marino);border-color:var(--marino);color:var(--bg)}
+.btn.prim:hover{filter:brightness(1.1)}
+.btn.sel{border-color:var(--verde);color:var(--verde);background:color-mix(in srgb,var(--verde) 8%,var(--panel))}
+.btn.star.sel{border-color:var(--ambar);color:var(--ambar);background:color-mix(in srgb,var(--ambar) 9%,var(--panel))}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.nota-v{font-size:.84rem;background:color-mix(in srgb,var(--ambar) 8%,var(--panel));border:1px dashed color-mix(in srgb,var(--ambar) 45%,transparent);border-radius:8px;padding:7px 10px;white-space:pre-wrap}
+.nota-v b{font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ambar);display:block}
+
+/* explorar */
+.explorar{display:grid;grid-template-columns:270px 1fr;gap:18px;align-items:start}
+.filtros{padding:14px;position:sticky;top:64px;max-height:calc(100vh - 80px);overflow:auto}
+.filtros h3{font-family:var(--ff-b);font-size:.72rem;letter-spacing:.07em;text-transform:uppercase;color:var(--fg-3);margin:14px 0 7px}
+.filtros h3:first-child{margin-top:0}
+.filtros input[type=search],.filtros select{width:100%}
+.toggles{display:flex;flex-wrap:wrap;gap:5px}
+.tg{font-size:.76rem;font-weight:600;padding:4px 9px;border-radius:999px;border:1px solid var(--line-2);background:var(--panel);color:var(--fg-2);cursor:pointer}
+.tg[aria-pressed="true"]{background:var(--marino);border-color:var(--marino);color:var(--bg)}
+.range-row{display:flex;align-items:center;gap:8px}
+.range-row input{flex:1;accent-color:var(--marino)}
+.lim{font-size:.78rem;color:var(--fg-2);text-decoration:underline;background:none;border:0;cursor:pointer;padding:0;margin-top:14px}
+.res-h{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-bottom:10px}
+.res-h .n{font-weight:700}
+.res-h .sp{flex:1}
+.lista{display:flex;flex-direction:column;gap:8px}
+.item{display:grid;grid-template-columns:auto 1fr;gap:12px;padding:12px 14px;cursor:pointer;transition:border-color .12s}
+.item:hover{border-color:var(--line-2)}
+.item .pt{width:38px;height:38px;border-radius:9px;display:grid;place-items:center;font-family:var(--ff-m);font-weight:500;font-size:.95rem;background:var(--panel-2);color:var(--fg)}
+.item .pt.hi{background:var(--marino);color:var(--bg)}
+.item .t{font-family:var(--ff-s);font-weight:600;font-size:.98rem;line-height:1.3}
+.item .m{font-size:.76rem;color:var(--fg-3);margin:3px 0 6px}
+.item .row{display:flex;flex-wrap:wrap;align-items:center;gap:5px}
+.item .mk{margin-left:auto;display:flex;gap:4px;font-size:.78rem}
+.ck{width:18px;height:18px;accent-color:var(--marino);margin:0}
+.vacio{padding:30px;text-align:center;color:var(--fg-3)}
+.mas{display:block;margin:14px auto 0}
+.filtro-movil{display:none}
+
+/* mi lectura */
+.ml-tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+
+/* tendencias */
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:16px}
+.chart{padding:16px 18px}
+.chart h3{font-size:1.02rem;margin-bottom:2px}
+.chart .sub{font-size:.78rem;color:var(--fg-3);margin-bottom:10px}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart .bar{fill:var(--marino)}
+.chart .bar:hover,.chart .bar.h{fill:var(--acento)}
+.chart .axis{stroke:var(--line-2);stroke-width:1}
+.chart .grid{stroke:var(--line);stroke-width:1}
+.chart text{fill:var(--fg-2);font-family:var(--ff-b);font-size:11px}
+.chart text.v{fill:var(--fg);font-weight:600}
+.tip{position:fixed;z-index:200;pointer-events:none;background:var(--fg);color:var(--bg);font-size:.76rem;padding:5px 8px;border-radius:6px;box-shadow:var(--sh-2);max-width:280px}
+details.tabla{margin-top:8px;font-size:.8rem}
+details.tabla summary{cursor:pointer;color:var(--fg-3)}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--line);font-size:.82rem;vertical-align:top}
+th{font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;color:var(--fg-3)}
+
+/* panel lateral de detalle */
+.scrim{position:fixed;inset:0;background:rgba(10,14,20,.45);z-index:90}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(560px,100%);z-index:100;background:var(--panel);border-left:1px solid var(--line);box-shadow:var(--sh-2);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
+.drawer .dh{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.drawer .db{padding:18px 20px 30px;overflow:auto;display:flex;flex-direction:column;gap:14px}
+.drawer h2{font-size:1.25rem}
+.dl{display:grid;grid-template-columns:120px 1fr;gap:5px 12px;font-size:.86rem}
+.dl dt{color:var(--fg-3)} .dl dd{margin:0}
+.cita{font-family:var(--ff-m);font-size:.78rem;background:var(--panel-2);border-radius:8px;padding:10px 12px;line-height:1.5;word-break:break-word}
+
+/* modal */
+dialog{border:1px solid var(--line);border-radius:14px;background:var(--panel);color:var(--fg);box-shadow:var(--sh-2);padding:20px 22px;width:min(440px,calc(100% - 32px))}
+dialog::backdrop{background:rgba(10,14,20,.5)}
+dialog h2{font-size:1.15rem;margin-bottom:8px}
+dialog p{font-size:.88rem;color:var(--fg-2)}
+dialog .fila{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
+dialog input{width:100%}
+
+.aviso{padding:11px 14px;font-size:.85rem;border-left:3px solid var(--ambar);margin-bottom:18px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--fg);color:var(--bg);font-size:.84rem;padding:9px 14px;border-radius:9px;z-index:300;box-shadow:var(--sh-2)}
+
+.acerca{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px}
+.acerca .panel{padding:18px 20px}
+.acerca h2{font-size:1.1rem;margin-bottom:8px}
+.acerca p,.acerca li{font-size:.9rem;color:var(--fg-2)}
+.autor{display:flex;gap:12px;align-items:center}
+.autor .ini{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--marino),var(--acento));color:var(--bg);display:grid;place-items:center;font-weight:700;flex:none}
+.autor .n{font-family:var(--ff-s);font-weight:700}
+.autor .r{font-size:.8rem;color:var(--fg-3)}
+.foot{max-width:var(--maxw);margin:0 auto;padding:18px 20px 40px;font-size:.76rem;color:var(--fg-3);border-top:1px solid var(--line)}
+
+@media (max-width:860px){
+  .explorar{grid-template-columns:1fr}
+  .filtros{position:static;max-height:none;display:none}
+  .filtros.open{display:block}
+  .filtro-movil{display:inline-flex}
+  .brand small{display:none}
+  .cards{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .top-in{padding:8px 14px;gap:8px;flex-wrap:wrap}
+  nav.tabs{order:3;width:100%;margin-left:0}
+  .sync{margin-left:auto}
+  main{padding:16px 14px 50px}
+  .view-h h1{font-size:1.5rem}
+  .dl{grid-template-columns:1fr}
+  .dl dt{margin-top:6px}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="#semana"><span class="dot">Ev</span><span>Vigilancia EII<small>PubMed · semana a semana</small></span></a>
+    <nav class="tabs" aria-label="Secciones">
+      <a href="#semana" data-v="semana">Semana</a>
+      <a href="#explorar" data-v="explorar">Explorar</a>
+      <a href="#lectura" data-v="lectura">Mi lectura</a>
+      <a href="#tendencias" data-v="tendencias">Tendencias</a>
+      <a href="#acerca" data-v="acerca">Acerca</a>
+    </nav>
+    <span class="sync" id="sync">cargando…</span>
+    <button class="icon-btn" id="btnClave" title="Modo edición: marcar y anotar">🔒</button>
+    <button class="icon-btn" id="btnTema" title="Cambiar tema" aria-label="Cambiar tema" style="font-size:1rem">◐</button>
+  </div>
+</header>
+
+<main id="app">
+  <div class="panel vacio">Cargando la base de datos…</div>
+</main>
+
+<footer class="foot">Diseño y desarrollo: Dr. Moisés Oropeza Hernández · Residente de Gastroenterología, UANDES · Clínica Dávila / Clínica Universidad de los Andes · Octubre 2026. Datos de PubMed (NCBI), seleccionados con el método descrito en «Acerca». Material de apoyo docente; no reemplaza la lectura del artículo original.</footer>
+
+<div id="drawerWrap" hidden>
+  <div class="scrim" data-cerrar></div>
+  <aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="dTitulo">
+    <div class="dh"><span class="chips" id="dChips"></span><span style="flex:1"></span><button class="icon-btn" data-cerrar aria-label="Cerrar">✕</button></div>
+    <div class="db" id="dBody"></div>
+  </aside>
+</div>
+
+<dialog id="dlgClave">
+  <h2>Modo edición</h2>
+  <p>Escribe la clave del script para marcar artículos y guardar notas en el Sheet. Se recuerda en este dispositivo. Sin clave, la app es de solo lectura.</p>
+  <input type="password" id="inClave" autocomplete="current-password" placeholder="Clave">
+  <p id="claveMsg" style="min-height:1.2em;margin:8px 0 0"></p>
+  <div class="fila"><button class="btn" id="claveSalir" hidden>Cerrar sesión</button><span style="flex:1"></span><button class="btn" value="cancel" formmethod="dialog" onclick="this.closest('dialog').close()">Cancelar</button><button class="btn prim" id="claveOk">Entrar</button></div>
+</dialog>
+
+<dialog id="dlgNota">
+  <h2 id="notaTit">Nota</h2>
+  <textarea id="inNota" placeholder="Qué rescatar para la visita, el journal club o el examen…"></textarea>
+  <div class="fila"><button class="btn" onclick="this.closest('dialog').close()">Cancelar</button><button class="btn prim" id="notaOk">Guardar</button></div>
+</dialog>
+
+<div class="tip" id="tip" hidden></div>
+
+<script>
+"use strict";
+/* ───────── Configuración ─────────
+   API: URL de la aplicación web de Apps Script (termina en /exec).
+   Mientras esté vacía, la app muestra los datos de respaldo (datos-respaldo.json). */
+const API = "";
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/1IeZIVXbMe8RHzewzeOJ9BosDqZ55aJB94OWxcdLquH0/edit";
+const LS = {cache:"vig-eii-cache-v1", key:"vig-eii-clave", api:"vig-eii-api", pend:"vig-eii-pendientes", tema:"vig-eii-tema"};
+
+const PTS_NIVEL = {"1":4,"2":3,"3":1};
+const PTS_TIPO = {"Guía/consenso":5,"ECA":4,"Metaanálisis/RS":4,"ECA – análisis secundario":3,"Cohorte/clínico":2,"Revisión":1};
+const TIPOS = ["Guía/consenso","ECA","ECA – análisis secundario","Metaanálisis/RS","Cohorte/clínico","Revisión"];
+const AREAS = ["CU","EC","EII","Reservorio","CEP"];
+const AREA_NOMBRE = {CU:"Colitis ulcerosa",EC:"Enfermedad de Crohn",EII:"EII (ambas)",Reservorio:"Reservorio ileal",CEP:"Colangitis esclerosante primaria"};
+const MESES = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+
+const ls = {
+  get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},
+  del(k){try{localStorage.removeItem(k)}catch(e){}}
+};
+const apiURL = () => new URLSearchParams(location.search).get("api") || ls.get(LS.api,"") || API;
+
+let DATA = null;          // {registro, lectura, bitacora, marcas, actualizado, respaldo}
+let CLAVE = ls.get(LS.key, "");
+let PEND = ls.get(LS.pend, {});   // cambios por PMID aún no guardados en el Sheet
+let fuente = "";
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+/* ───────── Tema ───────── */
+(function(){const t=ls.get(LS.tema,"");if(t)document.documentElement.dataset.theme=t;})();
+$("#btnTema").onclick = () => {
+  const dark = document.documentElement.dataset.theme ? document.documentElement.dataset.theme==="dark" : matchMedia("(prefers-color-scheme:dark)").matches;
+  const t = dark ? "light" : "dark"; document.documentElement.dataset.theme = t; ls.set(LS.tema, t);
+};
+
+/* ───────── Datos ───────── */
+function normalizar(d){
+  const reg = (d.registro||[]).map(r => {
+    const o = Object.assign({}, r);
+    o.pmid = String(o.pmid||"").replace(/\D/g,"");
+    o.nivel = String(o.nivel||"").trim();
+    const p = parseFloat(o.puntaje);
+    o.puntaje = isFinite(p) ? p : (PTS_NIVEL[o.nivel]||0) + (PTS_TIPO[o.tipo]||0) + (parseFloat(o.ajuste)||0);
+    o.ingreso = o.ingreso || "";
+    o.anio = (String(o.fecha).match(/\d{4}/)||[""])[0];
+    o.mes = mesDe(o.epub) || mesDe(o.fecha);
+    o.orden = o.epub || isoDeFecha(o.fecha);
+    return o;
+  }).filter(r => r.pmid);
+  const porDoi = {}; reg.forEach(r => { if (r.doi) porDoi[r.doi.toLowerCase()] = r; });
+  const lect = (d.lectura||[]).map(l => Object.assign({}, l, {reg: porDoi[String(l.doi||"").toLowerCase()] || null}));
+  return {registro:reg, lectura:lect, bitacora:d.bitacora||[], marcas:d.marcas||{}, actualizado:d.actualizado||"", respaldo:!!d.respaldo};
+}
+function mesDe(s){const m=String(s||"").match(/^(\d{4})-(\d{2})/);return m?`${m[1]}-${m[2]}`:"";}
+function isoDeFecha(s){
+  const m=String(s||"").match(/(\d{4})(?:\s+([A-Za-z]{3}))?(?:\s+(\d{1,2}))?/); if(!m) return "";
+  const en=["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
+  const mi = m[2] ? en.indexOf(m[2].toLowerCase()) : 0;
+  return `${m[1]}-${String(Math.max(mi,0)+1).padStart(2,"0")}-${String(m[3]||1).padStart(2,"0")}`;
+}
+
+async function fetchJSON(url, opts={}, ms=15000){
+  const ctl = new AbortController(); const t = setTimeout(()=>ctl.abort(), ms);
+  try{
+    const r = await fetch(url, Object.assign({signal:ctl.signal}, opts));
+    const txt = await r.text();
+    try { return JSON.parse(txt); } catch(e){ throw new Error("Google respondió una página en vez de datos (¿script sin implementar como «Cualquier usuario»?)"); }
+  } finally { clearTimeout(t); }
+}
+
+async function cargar(){
+  const api = apiURL();
+  if (api){
+    try{
+      const d = await fetchJSON(api + (api.includes("?")?"&":"?") + "action=data&t=" + Date.now());
+      if (!d.ok) throw new Error(d.error||"error del script");
+      ls.set(LS.cache, d); fuente = "sheet"; return d;
+    }catch(e){
+      const c = ls.get(LS.cache, null);
+      if (c){ fuente = "cache"; setSync("err","sin conexión · copia local", e.message); return c; }
+      setSync("err","sin conexión", e.message);
+    }
+  }
+  const c = ls.get(LS.cache, null);
+  if (api && c){ fuente="cache"; return c; }
+  fuente = "respaldo";
+  return await fetchJSON("datos-respaldo.json?t=" + Date.now());
+}
+
+function setSync(cls, txt, why){ const el=$("#sync"); el.className="sync "+(cls||""); el.textContent=txt; el.title=why||""; }
+function estadoFuente(){
+  const n = Object.keys(PEND).length;
+  if (fuente==="sheet") setSync(n?"err":"ok", n?`● ${n} sin guardar`:"☁ Sheet en vivo", DATA.actualizado ? "Leído del Sheet: "+fmtFechaHora(DATA.actualizado) : "");
+  else if (fuente==="cache") setSync("err","copia local", "No se pudo leer el Sheet; se muestran los últimos datos guardados en este dispositivo.");
+  else setSync("", "datos de respaldo", "La conexión con el Sheet aún no está configurada.");
+}
+
+/* ───────── Marcas (Mi lectura) ───────── */
+function marca(pmid){ return Object.assign({estado:"",destacado:false,nota:""}, DATA.marcas[pmid]||{}, PEND[pmid]||{}); }
+const editor = () => !!CLAVE && !!apiURL();
+let envioTimer = null;
+function cambiar(pmid, cambio){
+  if (!editor()){ abrirClave(); return; }
+  PEND[pmid] = Object.assign({}, PEND[pmid]||{}, cambio);
+  ls.set(LS.pend, PEND);
+  render(); estadoFuente();
+  clearTimeout(envioTimer); envioTimer = setTimeout(enviar, 800);
+}
+async function enviar(){
+  const pm = Object.keys(PEND); if (!pm.length || !editor()) return;
+  const lote = pm.map(p => Object.assign({pmid:p}, PEND[p]));
+  setSync("", "guardando…");
+  try{
+    const d = await fetchJSON(apiURL(), {method:"POST", body: JSON.stringify({key:CLAVE, action:"marcar", cambios:lote})});
+    if (!d.ok) throw new Error(d.error||"error");
+    lote.forEach(c => { if (JSON.stringify(PEND[c.pmid]) === JSON.stringify((({pmid,...x})=>x)(c))) delete PEND[c.pmid]; });
+    ls.set(LS.pend, PEND);
+    if (d.marcas) DATA.marcas = d.marcas;
+    const cache = ls.get(LS.cache, null); if (cache){ cache.marcas = DATA.marcas; ls.set(LS.cache, cache); }
+    estadoFuente(); render();
+  }catch(e){
+    setSync("err", `● ${pm.length} sin guardar`, "No se pudo guardar en el Sheet: " + e.message + ". Se reintenta al volver la conexión.");
+    if (/clave/.test(e.message)){ CLAVE=""; ls.del(LS.key); actualizarBtnClave(); toast("La clave no es válida. Vuelve a ingresarla."); }
+  }
+}
+addEventListener("online", enviar);
+
+/* ───────── Clave ───────── */
+function actualizarBtnClave(){ const b=$("#btnClave"); b.textContent = editor() ? "✎ edición" : "🔒"; b.classList.toggle("on", editor()); }
+function abrirClave(){
+  const d=$("#dlgClave"); $("#claveMsg").textContent = apiURL() ? "" : "La conexión con el Sheet aún no está configurada; el modo edición se activa cuando lo esté.";
+  $("#claveSalir").hidden = !CLAVE; $("#inClave").value=""; d.showModal(); setTimeout(()=>$("#inClave").focus(),50);
+}
+$("#btnClave").onclick = abrirClave;
+$("#claveSalir").onclick = () => { CLAVE=""; ls.del(LS.key); actualizarBtnClave(); $("#dlgClave").close(); render(); toast("Modo edición desactivado en este dispositivo."); };
+$("#claveOk").onclick = async () => {
+  const k = $("#inClave").value.trim(); if (!k) return;
+  if (!apiURL()){ $("#claveMsg").textContent="Primero hay que conectar la app con el Sheet (ver «Acerca»)."; return; }
+  $("#claveMsg").textContent = "Comprobando…";
+  try{
+    const d = await fetchJSON(apiURL() + (apiURL().includes("?")?"&":"?") + "action=check&key=" + encodeURIComponent(k));
+    if (d.ok && d.editor){ CLAVE=k; ls.set(LS.key,k); actualizarBtnClave(); $("#dlgClave").close(); render(); toast("Modo edición activo: tus marcas y notas se guardan en el Sheet."); enviar(); }
+    else $("#claveMsg").textContent = "Clave incorrecta.";
+  }catch(e){ $("#claveMsg").textContent = "No se pudo comprobar: " + e.message; }
+};
+$("#inClave").addEventListener("keydown", e => { if (e.key==="Enter"){ e.preventDefault(); $("#claveOk").click(); }});
+
+/* ───────── Utilidades de presentación ───────── */
+function fmtFechaHora(iso){ const d=new Date(iso); if (isNaN(d)) return iso; return d.toLocaleString("es-CL",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}); }
+function etiquetaSemana(s){
+  const m = String(s).match(/(\d{4})-(\d{2})-(\d{2})/);
+  if (/^Semana/.test(s) && m){
+    const lunes = new Date(+m[1], +m[2]-1, +m[3]);
+    const a = new Date(lunes); a.setDate(a.getDate()-7);
+    const b = new Date(lunes); b.setDate(b.getDate()-1);
+    const f = d => `${d.getDate()} ${MESES[d.getMonth()]}`;
+    return {t:`Semana del ${f(a)} al ${f(b)}`, sub:`Búsqueda del lunes ${f(lunes)} ${m[1]}`};
+  }
+  if (/^Carga inicial/.test(s)) return {t:"Trimestre jul–oct 2026", sub:"Carga inicial desde el Excel de PubMed del tutor (2.879 registros → 141 seleccionados)"};
+  return {t:s, sub:""};
+}
+function claseCambia(c){ const s=String(c||"").toLowerCase();
+  if (s.startsWith("sí")||s.startsWith("si")) return "si"; if (s.startsWith("aún")||s.startsWith("aun")) return "aun";
+  if (s.startsWith("no")) return "no"; return "eval"; }
+function partirCambia(c){ const m=String(c||"").match(/^([^:]+):\s*(.*)$/); return m?[m[1],m[2]]:[c||"Por evaluar",""]; }
+function grupoArea(a){ return a==="CU"?"CU":a==="EC"?"EC":"T"; }
+function vancouver(r){
+  if (!r) return "";
+  let a = String(r.autores||"").trim().replace(/\s+et al\.?$/i, ", et al");
+  const t = String(r.titulo||"").trim().replace(/\.?$/,".");
+  const j = String(r.revista||"").trim();
+  return `${a ? a+". " : ""}${t} ${j}. ${r.anio||""}${r.doi?`. doi:${r.doi}`:""}${r.pmid?`. PMID: ${r.pmid}`:""}.`.replace(/\.\./g,".");
+}
+async function copiar(txt, msg){
+  try{ await navigator.clipboard.writeText(txt); toast(msg||"Copiado"); }
+  catch(e){ const ta=document.createElement("textarea"); ta.value=txt; document.body.appendChild(ta); ta.select(); try{document.execCommand("copy");toast(msg||"Copiado")}catch(_){} ta.remove(); }
+}
+let toastT=null;
+function toast(m){ let el=$(".toast"); if(!el){el=document.createElement("div");el.className="toast";el.setAttribute("role","status");document.body.appendChild(el);} el.textContent=m; el.hidden=false; clearTimeout(toastT); toastT=setTimeout(()=>el.hidden=true,2600); }
+
+function chipsDe(r, extra=true){
+  if (!r) return "";
+  let h = `<span class="chip a-${esc(r.area)}">${esc(r.area)}</span><span class="chip">${esc(r.tipo)}</span>`;
+  if (extra){
+    if (r.nivel==="1") h += `<span class="chip n1">Nivel 1</span>`; else if (r.nivel) h += `<span class="chip">Nivel ${esc(r.nivel)}</span>`;
+    if (r.fase) h += `<span class="chip pipe">Pipeline · ${esc(r.fase)}</span>`;
+    if (r.ped==="Sí") h += `<span class="chip">Pediatría</span>`;
+  }
+  return h;
+}
+function botonesMarca(pmid){
+  if (!pmid || !editor()) return "";
+  const m = marca(pmid), dis = "";
+  return `<button class="btn ${m.estado==="Leído"?"sel":""}" data-act="leido" data-pmid="${pmid}"${dis}>${m.estado==="Leído"?"✓ Leído":"Marcar leído"}</button>
+    <button class="btn ${m.estado==="Por leer"?"sel":""}" data-act="porleer" data-pmid="${pmid}"${dis}>${m.estado==="Por leer"?"● Por leer":"Por leer"}</button>
+    <button class="btn star ${m.destacado?"sel":""}" data-act="star" data-pmid="${pmid}" aria-label="Destacar"${dis}>${m.destacado?"★":"☆"}</button>
+    <button class="btn" data-act="nota" data-pmid="${pmid}"${dis}>✎ Nota</button>`;
+}
+function notaDe(pmid){ const n = pmid && marca(pmid).nota; return n ? `<div class="nota-v"><b>Nota</b>${esc(n)}</div>` : ""; }
+
+/* ───────── Vistas ───────── */
+let VISTA = "semana", SEMANA = null;
+const F = {q:"", areas:new Set(), tipos:new Set(), niveles:new Set(), ingreso:"", ped:"", pipe:false, min:0, estado:"", orden:"puntaje", n:40};
+const SEL = new Set();
+let ML = "Destacados";
+
+function render(){
+  if (!DATA) return;
+  document.querySelectorAll("nav.tabs a").forEach(a => a.setAttribute("aria-current", a.dataset.v===VISTA ? "true":"false"));
+  const app = $("#app");
+  app.innerHTML = ({semana:vSemana, explorar:vExplorar, lectura:vLectura, tendencias:vTendencias, acerca:vAcerca}[VISTA]||vSemana)();
+  if (VISTA==="tendencias") pintarGraficos();
+}
+
+function semanas(){
+  const s = [...new Set([...DATA.lectura.map(l=>l.semana), ...DATA.registro.map(r=>r.ingreso)].filter(Boolean))];
+  return s.sort((a,b) => { const ka=/^Semana/.test(a)?a:"0"+a, kb=/^Semana/.test(b)?b:"0"+b; return kb.localeCompare(ka); });
+}
+
+function avisoRespaldo(){
+  if (fuente==="respaldo") return `<div class="panel aviso"><b>Vista previa con datos de respaldo (16 oct 2026).</b> Cuando la app quede conectada al Sheet mediante Apps Script, mostrará lo que agregue cada búsqueda semanal y permitirá marcar y anotar. Instrucciones en <a href="#acerca">Acerca</a>.</div>`;
+  if (fuente==="cache") return `<div class="panel aviso">Sin conexión con el Sheet: se muestran los últimos datos guardados en este dispositivo.</div>`;
+  return "";
+}
+
+function vSemana(){
+  const lista = semanas(); if (!SEMANA || !lista.includes(SEMANA)) SEMANA = lista[0];
+  const et = etiquetaSemana(SEMANA);
+  const lect = DATA.lectura.filter(l => l.semana===SEMANA);
+  const reg = DATA.registro.filter(r => r.ingreso===SEMANA);
+  const cuenta = t => reg.filter(r => r.tipo===t).length;
+  const pipe = reg.filter(r => r.fase).length;
+  const grupos = [["CU","Colitis ulcerosa"],["EC","Enfermedad de Crohn"],["T","Transversal (EII, CEP, reservorio)"]];
+  const enLect = new Set(lect.map(l => l.reg && l.reg.pmid).filter(Boolean));
+  const resto = reg.filter(r => !enLect.has(r.pmid)).sort((a,b)=>b.puntaje-a.puntaje).slice(0,8);
+
+  let h = avisoRespaldo() + `<div class="view-h"><div class="grow"><div class="eyebrow">Lectura obligatoria</div><h1>${esc(et.t)}</h1><p>${esc(et.sub)}</p></div>
+    <label style="font-size:.8rem;color:var(--fg-3)">Ver otra semana<br><select id="selSemana">${lista.map(s=>`<option value="${esc(s)}" ${s===SEMANA?"selected":""}>${esc(etiquetaSemana(s).t)}</option>`).join("")}</select></label></div>
+  <div class="kpis">
+    <div class="panel kpi"><div class="v num">${reg.length}</div><div class="l">artículos agregados al registro</div></div>
+    <div class="panel kpi"><div class="v num">${cuenta("Guía/consenso")}</div><div class="l">guías y consensos</div></div>
+    <div class="panel kpi"><div class="v num">${cuenta("ECA")+cuenta("ECA – análisis secundario")}</div><div class="l">ensayos aleatorizados</div></div>
+    <div class="panel kpi"><div class="v num">${cuenta("Metaanálisis/RS")}</div><div class="l">metaanálisis y RS</div></div>
+    <div class="panel kpi"><div class="v num">${pipe}</div><div class="l">pipeline (no aprobados)</div></div>
+  </div>`;
+  if (!lect.length) h += `<div class="panel vacio">Esta semana no hubo artículos de lectura obligatoria.</div>`;
+  for (const [g, nombre] of grupos){
+    const ls_ = lect.filter(l => grupoArea(l.area)===g); if (!ls_.length) continue;
+    h += `<div class="grupo"><h2>${nombre}</h2><span class="c">${ls_.length} ${ls_.length===1?"estudio":"estudios"}</span></div><div class="cards">`;
+    for (const l of ls_){
+      const r = l.reg, pm = r && r.pmid, [cb, ct] = partirCambia(l.cambia);
+      h += `<article class="panel card a-${esc(l.area)}">
+        <div class="chips"><span class="chip a-${esc(l.area)}">${esc(l.area)}</span><span class="chip">${esc(l.tipo)}</span>${r&&r.fase?`<span class="chip pipe">Pipeline · ${esc(r.fase)}</span>`:""}</div>
+        <h3>${esc(l.estudio)}</h3>
+        <div class="meta">${esc(l.revista)}${r?` · ${esc(r.anio)} · ${esc(r.autores)}`:""}</div>
+        <p class="hall">${esc(l.hallazgo)}</p>
+        <div class="cambia ${claseCambia(l.cambia)}"><b>${esc(cb)}</b><span>${esc(ct)}</span></div>
+        ${notaDe(pm)}
+        <div class="acts">
+          ${l.doi?`<a class="btn prim" href="https://doi.org/${esc(l.doi)}" target="_blank" rel="noopener">Abrir artículo ↗</a>`:""}
+          ${pm?`<button class="btn" data-act="detalle" data-pmid="${pm}">Ficha</button>`:""}
+          ${botonesMarca(pm)}
+        </div></article>`;
+    }
+    h += `</div>`;
+  }
+  if (resto.length){
+    h += `<div class="grupo"><h2>Lo demás de la semana, por puntaje</h2><span class="c"><a href="#explorar" data-ir-ingreso="${esc(SEMANA)}">ver los ${reg.length} en Explorar →</a></span></div><div class="lista">${resto.map(itemHTML).join("")}</div>`;
+  }
+  return h;
+}
+
+function filtrar(){
+  const q = F.q.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+  return DATA.registro.filter(r => {
+    if (F.areas.size && !F.areas.has(r.area)) return false;
+    if (F.tipos.size && !F.tipos.has(r.tipo)) return false;
+    if (F.niveles.size && !F.niveles.has(r.nivel)) return false;
+    if (F.ingreso && r.ingreso!==F.ingreso) return false;
+    if (F.ped==="si" && r.ped!=="Sí") return false;
+    if (F.ped==="no" && r.ped==="Sí") return false;
+    if (F.pipe && !r.fase) return false;
+    if (r.puntaje < F.min) return false;
+    if (F.estado){ const m = marca(r.pmid);
+      if (F.estado==="sin" && (m.estado||m.destacado)) return false;
+      if (F.estado==="Por leer" && m.estado!=="Por leer") return false;
+      if (F.estado==="Leído" && m.estado!=="Leído") return false;
+      if (F.estado==="star" && !m.destacado) return false;
+      if (F.estado==="nota" && !m.nota) return false; }
+    if (q){ const t = (r.titulo+" "+r.revista+" "+r.autores+" "+r.pmid+" "+r.doi).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+      if (!q.split(/\s+/).every(w => t.includes(w))) return false; }
+    return true;
+  }).sort((a,b) => F.orden==="fecha" ? String(b.orden).localeCompare(String(a.orden)) || b.puntaje-a.puntaje
+    : F.orden==="revista" ? a.revista.localeCompare(b.revista) || b.puntaje-a.puntaje
+    : b.puntaje-a.puntaje || String(b.orden).localeCompare(String(a.orden)));
+}
+
+function itemHTML(r, conCheck){
+  const m = marca(r.pmid);
+  return `<div class="panel item" data-act="detalle" data-pmid="${r.pmid}">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+      <div class="pt num ${r.puntaje>=8?"hi":""}" title="Puntaje ${r.puntaje}">${r.puntaje}</div>
+      ${conCheck?`<input type="checkbox" class="ck" data-sel="${r.pmid}" ${SEL.has(r.pmid)?"checked":""} aria-label="Seleccionar para citar">`:""}
+    </div>
+    <div><div class="t">${esc(r.titulo)}</div>
+      <div class="m">${esc(r.revista)} · ${esc(r.fecha||r.anio)} · ${esc(r.autores)}</div>
+      <div class="row">${chipsDe(r)}<span class="mk">${m.destacado?`<span title="Destacado" style="color:var(--ambar)">★</span>`:""}${m.estado==="Leído"?`<span title="Leído" style="color:var(--verde)">✓</span>`:m.estado==="Por leer"?`<span title="Por leer" style="color:var(--marino-2)">●</span>`:""}${m.nota?`<span title="Tiene nota">✎</span>`:""}</span></div>
+    </div></div>`;
+}
+
+function vExplorar(){
+  const res = filtrar(), lista = semanas();
+  const tg = (set, val, lab) => `<button class="tg" data-tg="${set}" data-val="${esc(val)}" aria-pressed="${F[set].has(val)}">${esc(lab||val)}</button>`;
+  return avisoRespaldo() + `<div class="view-h"><div class="grow"><div class="eyebrow">Registro completo</div><h1>Explorar</h1><p>${DATA.registro.length} artículos seleccionados de PubMed. Filtra, abre la ficha y selecciona varios para copiar sus citas en formato Vancouver.</p></div>
+    <button class="btn filtro-movil" id="btnFiltros">☰ Filtros</button></div>
+  <div class="explorar">
+    <aside class="panel filtros" id="panelFiltros">
+      <h3>Buscar</h3><input type="search" id="q" placeholder="Título, revista, autor, PMID…" value="${esc(F.q)}">
+      <h3>Área</h3><div class="toggles">${AREAS.map(a=>tg("areas",a)).join("")}</div>
+      <h3>Tipo de estudio</h3><div class="toggles">${TIPOS.map(t=>tg("tipos",t,t.replace("ECA – análisis secundario","ECA secundario"))).join("")}</div>
+      <h3>Nivel de revista</h3><div class="toggles">${["1","2","3"].map(n=>tg("niveles",n,"Nivel "+n)).join("")}</div>
+      <h3>Ingreso</h3><select id="fIngreso"><option value="">Todas las semanas</option>${lista.map(s=>`<option value="${esc(s)}" ${F.ingreso===s?"selected":""}>${esc(etiquetaSemana(s).t)}</option>`).join("")}</select>
+      <h3>Población</h3><select id="fPed"><option value="">Adultos y pediatría</option><option value="no" ${F.ped==="no"?"selected":""}>Sin pediatría</option><option value="si" ${F.ped==="si"?"selected":""}>Solo pediatría</option></select>
+      <h3>Puntaje mínimo: <span class="num" id="minV">${F.min}</span></h3><div class="range-row"><input type="range" id="fMin" min="0" max="10" step="1" value="${F.min}"></div>
+      <h3>Mi lectura</h3><select id="fEstado"><option value="">Todos</option><option value="sin" ${F.estado==="sin"?"selected":""}>Sin marcar</option><option value="Por leer" ${F.estado==="Por leer"?"selected":""}>Por leer</option><option value="Leído" ${F.estado==="Leído"?"selected":""}>Leídos</option><option value="star" ${F.estado==="star"?"selected":""}>Destacados</option><option value="nota" ${F.estado==="nota"?"selected":""}>Con nota</option></select>
+      <label style="display:flex;gap:8px;align-items:center;margin-top:14px;font-size:.85rem"><input type="checkbox" id="fPipe" class="ck" ${F.pipe?"checked":""}> Solo pipeline</label>
+      <button class="lim" id="limpiar">Limpiar filtros</button>
+    </aside>
+    <section>
+      <div class="res-h"><span class="n num">${res.length}</span><span style="color:var(--fg-3);font-size:.85rem">${res.length===1?"artículo":"artículos"}</span><span class="sp"></span>
+        <select id="fOrden" aria-label="Ordenar"><option value="puntaje">Mayor puntaje</option><option value="fecha" ${F.orden==="fecha"?"selected":""}>Más recientes</option><option value="revista" ${F.orden==="revista"?"selected":""}>Revista A–Z</option></select>
+        <button class="btn" id="selTodos">Seleccionar visibles</button>
+        <button class="btn prim" id="citar" ${SEL.size?"":"disabled"}>Copiar ${SEL.size||""} ${SEL.size===1?"cita":"citas"}</button></div>
+      <div class="lista">${res.length ? res.slice(0,F.n).map(r=>itemHTML(r,true)).join("") : `<div class="panel vacio">Ningún artículo cumple estos filtros.</div>`}</div>
+      ${res.length>F.n?`<button class="btn mas" id="verMas">Ver ${Math.min(40,res.length-F.n)} más (quedan ${res.length-F.n})</button>`:""}
+    </section></div>`;
+}
+
+function vLectura(){
+  const pms = Object.keys(Object.assign({}, DATA.marcas, PEND));
+  const regs = pms.map(p => DATA.registro.find(r => r.pmid===p)).filter(Boolean);
+  const cats = {"Destacados": regs.filter(r=>marca(r.pmid).destacado), "Por leer": regs.filter(r=>marca(r.pmid).estado==="Por leer"),
+                "Leídos": regs.filter(r=>marca(r.pmid).estado==="Leído"), "Con nota": regs.filter(r=>marca(r.pmid).nota)};
+  const lista = cats[ML] || [];
+  let h = avisoRespaldo() + `<div class="view-h"><div class="grow"><div class="eyebrow">Seguimiento personal</div><h1>Mi lectura</h1>
+    <p>${editor() ? "Tus marcas y notas se guardan en la pestaña «Mi lectura» del Sheet y se ven en todos tus dispositivos." : "Marcas y notas del Dr. Oropeza. Para marcar o anotar se necesita el modo edición (🔒)."}</p></div></div>
+    <div class="ml-tabs">${Object.keys(cats).map(k=>`<button class="tg" data-ml="${k}" aria-pressed="${ML===k}">${k} · ${cats[k].length}</button>`).join("")}</div>`;
+  if (!lista.length) h += `<div class="panel vacio">${regs.length ? "Nada en esta categoría todavía." : "Aún no hay artículos marcados. Usa «Marcar leído», «Por leer», ☆ o «Nota» en la semana o en Explorar."}</div>`;
+  else h += `<div class="lista">${lista.map(r => itemHTML(r).replace(/<\/div><\/div>$/, `${notaDe(r.pmid)}</div></div>`)).join("")}</div>`;
+  if (lista.length) h += `<p style="margin-top:14px"><button class="btn" id="citarML">Copiar las ${lista.length} citas de «${ML}»</button></p>`;
+  return h;
+}
+
+/* ───────── Tendencias ───────── */
+function contar(arr, f){ const m=new Map(); arr.forEach(x=>{const k=f(x); if(k) m.set(k,(m.get(k)||0)+1)}); return m; }
+function vTendencias(){
+  const reg = DATA.registro;
+  const mes = [...contar(reg, r=>r.mes)].sort((a,b)=>a[0].localeCompare(b[0])).filter(([k])=>k>="2025-09");
+  const tipo = TIPOS.map(t=>[t, reg.filter(r=>r.tipo===t).length]).filter(x=>x[1]);
+  const area = AREAS.map(a=>[a, reg.filter(r=>r.area===a).length]).filter(x=>x[1]);
+  const rev = [...contar(reg, r=>r.revista)].sort((a,b)=>b[1]-a[1]).slice(0,10);
+  const sem = semanas().slice().reverse().map(s=>[s, reg.filter(r=>r.ingreso===s).length]);
+  const pipe = reg.filter(r=>r.fase).sort((a,b)=>String(b.fase).localeCompare(String(a.fase)));
+  window._G = {mes, tipo, area, rev, sem};
+  const tabla = (rows, c1, c2="Artículos") => `<details class="tabla"><summary>Ver como tabla</summary><table><thead><tr><th>${c1}</th><th>${c2}</th></tr></thead><tbody>${rows.map(([k,v])=>`<tr><td>${esc(k)}</td><td class="num">${v}</td></tr>`).join("")}</tbody></table></details>`;
+  return avisoRespaldo() + `<div class="view-h"><div class="grow"><div class="eyebrow">Panorama del registro</div><h1>Tendencias</h1><p>Qué se está publicando en EII en las revistas que importan. Se actualiza con cada búsqueda semanal.</p></div></div>
+  <div class="charts">
+    <div class="panel chart"><h3>Artículos por semana de ingreso</h3><div class="sub">Agregados al registro en cada búsqueda semanal</div><div id="gSem"></div>${tabla(sem.map(([k,v])=>[etiquetaSemana(k).t,v]),"Semana")}</div>
+    <div class="panel chart"><h3>Artículos por mes de publicación electrónica</h3><div class="sub">Fecha e-pub o, si falta, fecha de la revista</div><div id="gMes"></div>${tabla(mes.map(([k,v])=>[etiquetaMes(k),v]),"Mes")}</div>
+    <div class="panel chart"><h3>Por tipo de estudio</h3><div class="sub">Registro completo</div><div id="gTipo"></div>${tabla(tipo,"Tipo")}</div>
+    <div class="panel chart"><h3>Por área</h3><div class="sub">CU y EC separadas; EII = ambas o general</div><div id="gArea"></div>${tabla(area.map(([k,v])=>[AREA_NOMBRE[k]||k,v]),"Área")}</div>
+    <div class="panel chart"><h3>Revistas con más artículos</h3><div class="sub">Top 10 del registro</div><div id="gRev"></div>${tabla(rev,"Revista")}</div>
+    <div class="panel chart"><h3>Pipeline</h3><div class="sub">Fármacos no aprobados por FDA/EMA para EII. Nunca son estándar de manejo.</div>
+      ${pipe.length?`<table><thead><tr><th>Fase</th><th>Área</th><th>Estudio</th></tr></thead><tbody>${pipe.map(r=>`<tr><td style="white-space:nowrap">${esc(r.fase)}</td><td>${esc(r.area)}</td><td><a href="#" data-act="detalle" data-pmid="${r.pmid}">${esc(r.titulo)}</a></td></tr>`).join("")}</tbody></table>`:`<div class="vacio">Sin estudios de pipeline en el registro.</div>`}</div>
+  </div>`;
+}
+function etiquetaMes(k){ const [y,m]=k.split("-"); return `${MESES[+m-1]} ${y}`; }
+
+function barrasV(el, datos, etq){
+  if (!el) return; if (!datos.length){ el.innerHTML=`<div class="vacio">Sin datos aún.</div>`; return; }
+  const W=520, H=200, ml=28, mb=34, mt=18, mr=6, iw=W-ml-mr, ih=H-mt-mb;
+  const max = Math.max(...datos.map(d=>d[1])), paso = niceStep(max), tope = Math.ceil(max/paso)*paso || 1;
+  const bw = Math.min(46, iw/datos.length - 6), gap = iw/datos.length;
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Gráfico de barras">`;
+  for (let v=0; v<=tope; v+=paso){ const y=mt+ih-ih*v/tope; s+=`<line class="grid" x1="${ml}" x2="${W-mr}" y1="${y}" y2="${y}"/><text x="${ml-6}" y="${y+4}" text-anchor="end">${v}</text>`; }
+  datos.forEach(([k,v],i)=>{ const h=ih*v/tope, x=ml+gap*i+(gap-bw)/2, y=mt+ih-h;
+    s+=`<path class="bar" d="${barPath(x,y,bw,h)}" data-tip="${esc(etq(k))}: ${v}"/><rect x="${ml+gap*i}" y="${mt}" width="${gap}" height="${ih}" fill="transparent" data-tip="${esc(etq(k))}: ${v}" data-hov="${i}"/>`;
+    if (datos.length<=14) s+=`<text class="v" x="${x+bw/2}" y="${y-5}" text-anchor="middle">${v}</text>`;
+    const lab = etq(k); if (datos.length<=8 || i%Math.ceil(datos.length/8)===0) s+=`<text x="${x+bw/2}" y="${H-mb+16}" text-anchor="middle">${esc(lab.length>12?lab.slice(0,11)+"…":lab)}</text>`; });
+  s += `<line class="axis" x1="${ml}" x2="${W-mr}" y1="${mt+ih}" y2="${mt+ih}"/></svg>`;
+  el.innerHTML = s;
+}
+function barrasH(el, datos, etq){
+  if (!el) return; if (!datos.length){ el.innerHTML=`<div class="vacio">Sin datos aún.</div>`; return; }
+  const lw = 190, W=520, bh=18, gap=8, H=datos.length*(bh+gap)+4, iw=W-lw-40;
+  const max = Math.max(...datos.map(d=>d[1])) || 1;
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Gráfico de barras horizontales">`;
+  datos.forEach(([k,v],i)=>{ const y=i*(bh+gap)+2, w=Math.max(3, iw*v/max), lab=etq(k);
+    s+=`<text x="${lw-8}" y="${y+bh/2+4}" text-anchor="end">${esc(lab.length>30?lab.slice(0,29)+"…":lab)}</text>
+      <path class="bar" d="${barPathH(lw,y,w,bh)}" data-tip="${esc(lab)}: ${v}"/><text class="v" x="${lw+w+6}" y="${y+bh/2+4}">${v}</text>
+      <rect x="0" y="${y-gap/2}" width="${W}" height="${bh+gap}" fill="transparent" data-tip="${esc(lab)}: ${v}" data-hov="${i}"/>`; });
+  el.innerHTML = s + `</svg>`;
+}
+function niceStep(max){ if (max<=5) return 1; if (max<=12) return 2; if (max<=30) return 5; if (max<=60) return 10; if (max<=150) return 25; return 50; }
+function barPath(x,y,w,h){ const r=Math.min(4,w/2,h); return h<=0?"":`M${x},${y+h}V${y+r}Q${x},${y} ${x+r},${y}H${x+w-r}Q${x+w},${y} ${x+w},${y+r}V${y+h}Z`; }
+function barPathH(x,y,w,h){ const r=Math.min(4,h/2,w); return `M${x},${y}H${x+w-r}Q${x+w},${y} ${x+w},${y+r}V${y+h-r}Q${x+w},${y+h} ${x+w-r},${y+h}H${x}Z`; }
+function pintarGraficos(){
+  const G = window._G;
+  barrasV($("#gSem"), G.sem, k=>etiquetaSemana(k).t.replace("Semana del ","").replace("Trimestre ","Carga "));
+  barrasV($("#gMes"), G.mes, etiquetaMes);
+  barrasH($("#gTipo"), G.tipo, k=>k);
+  barrasH($("#gArea"), G.area, k=>AREA_NOMBRE[k]||k);
+  barrasH($("#gRev"), G.rev, k=>k);
+}
+document.addEventListener("pointermove", e => {
+  const t = e.target.closest && e.target.closest("[data-tip]"), tip=$("#tip");
+  document.querySelectorAll(".bar.h").forEach(b=>b.classList.remove("h"));
+  if (!t){ tip.hidden=true; return; }
+  const svg = t.ownerSVGElement; if (svg && t.dataset.hov!==undefined){ const bars=svg.querySelectorAll(".bar"); const b=bars[+t.dataset.hov]; if(b) b.classList.add("h"); }
+  tip.textContent = t.dataset.tip; tip.hidden=false;
+  const x = Math.min(e.clientX+12, innerWidth-tip.offsetWidth-8); tip.style.left=x+"px"; tip.style.top=(e.clientY-34)+"px";
+});
+
+function vAcerca(){
+  const api = apiURL();
+  const b = DATA.bitacora.slice(-1)[0];
+  return `<div class="view-h"><div class="grow"><div class="eyebrow">Método y conexión</div><h1>Acerca de esta herramienta</h1><p>Cada lunes una búsqueda automática revisa lo que entró a PubMed en los 7 días previos, lo clasifica y lo agrega al Sheet. Esta app lee ese Sheet.</p></div></div>
+  <div class="acerca">
+    <div class="panel"><h2>Cómo se eligen los artículos</h2>
+      <ul><li><b>Tres consultas</b> por fecha de entrada a PubMed: revistas generales de alto impacto (NEJM, Lancet, JAMA, BMJ, Nature, Nat Med, Ann Intern Med, Lancet G&amp;H, Nat Rev G&amp;H), revistas top de GI/EII (Gastroenterology, Gut, AJG, CGH, JCC, AP&amp;T, IBD, UEG J, CC360, GIE, Endoscopy, JPGN, JAMA Netw Open) y ECA, metaanálisis, guías y consensos de cualquier revista.</li>
+      <li><b>Puntaje</b> = nivel de revista (1 → 4, 2 → 3, 3 → 1) + tipo (guía/consenso 5, ECA 4, MA/RS 4, ECA secundario 3, cohorte 2, revisión 1) + ajuste (−3 preclínico; +1 fase 3, multicéntrico o doble ciego; +1 guía de sociedad; +1 cohorte multicéntrica o poblacional). Entra al registro con ≥5.</li>
+      <li><b>Lectura obligatoria</b>: hasta 5 por semana, con el hallazgo tomado del resumen y si cambia la práctica (Sí / No / Aún no / Por evaluar).</li>
+      <li>El <b>pipeline</b> (fármacos no aprobados) se marca aparte y nunca se presenta como estándar de manejo.</li></ul></div>
+    <div class="panel"><h2>Estado de los datos</h2>
+      <dl class="dl"><dt>Fuente</dt><dd>${fuente==="sheet"?"Sheet en vivo (Apps Script)":fuente==="cache"?"Copia guardada en este dispositivo":"Datos de respaldo del 16 oct 2026"}</dd>
+      <dt>Leído</dt><dd>${esc(fmtFechaHora(DATA.actualizado))}</dd>
+      <dt>Registro</dt><dd>${DATA.registro.length} artículos · ${DATA.lectura.length} de lectura obligatoria</dd>
+      ${b?`<dt>Última búsqueda</dt><dd>${esc(b.fecha)} · ${esc(b.ventana)} · ${esc(b.agregados)} agregados</dd>`:""}
+      <dt>Modo</dt><dd>${editor()?"Edición (marcas y notas se guardan en el Sheet)":"Solo lectura"}</dd></dl>
+      <p style="margin-top:12px"><a class="btn" href="${SHEET_URL}" target="_blank" rel="noopener">Abrir el Sheet ↗</a> <span style="font-size:.78rem;color:var(--fg-3)">(solo con permiso del autor)</span></p></div>
+    <div class="panel"><h2>Conexión con el Sheet</h2>
+      <p>${api?"La app está conectada a una aplicación web de Apps Script.":"Todavía no hay conexión: la app muestra los datos de respaldo."} Para conectarla, el autor implementa el script de <code>fuentes/vigilancia/Code.gs</code> como aplicación web y la URL se escribe en la constante <code>API</code> de este archivo.</p>
+      <details><summary style="cursor:pointer;font-size:.85rem">Probar otra URL en este dispositivo</summary>
+        <p style="font-size:.8rem">Solo afecta a este navegador.</p>
+        <input type="text" id="inApi" placeholder="https://script.google.com/macros/s/…/exec" value="${esc(ls.get(LS.api,""))}" style="width:100%">
+        <div style="display:flex;gap:6px;margin-top:8px"><button class="btn prim" id="apiOk">Usar esta URL</button><button class="btn" id="apiDel">Volver a la URL por defecto</button></div></details></div>
+    <div class="panel"><h2>Autor</h2>
+      <div class="autor"><span class="ini">MO</span><div><div class="n">Dr. Moisés Oropeza Hernández</div><div class="r">Diseño y desarrollo de la herramienta · Residente de Gastroenterología, UANDES · Clínica Dávila / Clínica Universidad de los Andes</div></div></div>
+      <p style="margin-top:12px">Parte del <a href="../">Repositorio EII 2026</a>. Material de apoyo docente; la lectura crítica del artículo original sigue siendo indispensable.</p></div>
+  </div>`;
+}
+
+/* ───────── Ficha (panel lateral) ───────── */
+function abrirFicha(pmid){
+  const r = DATA.registro.find(x=>x.pmid===pmid); if (!r) return;
+  const l = DATA.lectura.find(x=>x.reg && x.reg.pmid===pmid), m = marca(pmid);
+  $("#dChips").innerHTML = chipsDe(r);
+  $("#dBody").innerHTML = `<h2 id="dTitulo">${esc(r.titulo)}</h2>
+    <dl class="dl"><dt>Revista</dt><dd>${esc(r.revista)} · nivel ${esc(r.nivel)}</dd><dt>Autores</dt><dd>${esc(r.autores)||"—"}</dd>
+      <dt>Fechas</dt><dd>${r.epub?`e-pub ${esc(r.epub)} · `:""}revista ${esc(r.fecha)}</dd><dt>Puntaje</dt><dd class="num">${r.puntaje} <span style="color:var(--fg-3)">(nivel ${PTS_NIVEL[r.nivel]||0} + tipo ${PTS_TIPO[r.tipo]||0} + ajuste ${r.ajuste||0})</span></dd>
+      <dt>Ingreso</dt><dd>${esc(etiquetaSemana(r.ingreso).t)}</dd><dt>Identificadores</dt><dd>PMID ${esc(r.pmid)}${r.doi?` · DOI ${esc(r.doi)}`:""}</dd></dl>
+    ${l?`<div><div class="eyebrow">Lectura obligatoria</div><p style="margin:0 0 8px">${esc(l.hallazgo)}</p><div class="cambia ${claseCambia(l.cambia)}"><b>${esc(partirCambia(l.cambia)[0])}</b><span>${esc(partirCambia(l.cambia)[1])}</span></div></div>`:
+      (r.cambia?`<div class="cambia ${claseCambia(r.cambia)}"><b>${esc(partirCambia(r.cambia)[0])}</b><span>${esc(partirCambia(r.cambia)[1])}</span></div>`:"")}
+    <div class="acts">${r.doi?`<a class="btn prim" href="https://doi.org/${esc(r.doi)}" target="_blank" rel="noopener">Abrir artículo ↗</a>`:""}<a class="btn" href="https://pubmed.ncbi.nlm.nih.gov/${esc(r.pmid)}/" target="_blank" rel="noopener">PubMed ↗</a></div>
+    <div><div class="eyebrow">Mi lectura</div><div class="acts">${botonesMarca(pmid)}</div>${notaDe(pmid)||(editor()?"":`<p style="font-size:.8rem;color:var(--fg-3);margin:6px 0 0">Sin nota.</p>`)}</div>
+    <div><div class="eyebrow">Cita (Vancouver)</div><div class="cita" id="citaTxt">${esc(vancouver(r))}</div>
+      <div class="acts" style="margin-top:8px"><button class="btn" data-act="copiarCita" data-pmid="${pmid}">Copiar cita</button></div>
+      <p style="font-size:.74rem;color:var(--fg-3);margin:6px 0 0">Volumen y páginas no vienen en el registro; complétalos desde PubMed si la cita es para publicación.</p></div>`;
+  $("#drawerWrap").hidden = false; $("#drawerWrap").dataset.pmid = pmid;
+  document.body.style.overflow="hidden";
+}
+function cerrarFicha(){ $("#drawerWrap").hidden = true; document.body.style.overflow=""; delete $("#drawerWrap").dataset.pmid; }
+document.querySelectorAll("[data-cerrar]").forEach(b=>b.onclick=cerrarFicha);
+addEventListener("keydown", e => { if (e.key==="Escape" && !$("#drawerWrap").hidden) cerrarFicha(); });
+
+/* ───────── Nota ───────── */
+let notaPM = null;
+function abrirNota(pmid){
+  if (!editor()){ abrirClave(); return; }
+  const r = DATA.registro.find(x=>x.pmid===pmid); notaPM = pmid;
+  $("#notaTit").textContent = r ? (r.titulo.length>80 ? r.titulo.slice(0,78)+"…" : r.titulo) : "Nota";
+  $("#inNota").value = marca(pmid).nota || ""; $("#dlgNota").showModal(); setTimeout(()=>$("#inNota").focus(),50);
+}
+$("#notaOk").onclick = () => { if (notaPM){ cambiar(notaPM, {nota: $("#inNota").value.trim()}); refrescarFicha(); } $("#dlgNota").close(); };
+function refrescarFicha(){ const p = $("#drawerWrap").dataset.pmid; if (p) abrirFicha(p); }
+
+/* ───────── Eventos ───────── */
+document.addEventListener("click", e => {
+  const ir = e.target.closest("[data-ir-ingreso]"); if (ir){ F.ingreso = ir.dataset.irIngreso; F.n=40; return; }
+  const sel = e.target.closest("[data-sel]");
+  if (sel){ e.stopPropagation(); sel.checked ? SEL.add(sel.dataset.sel) : SEL.delete(sel.dataset.sel);
+    const c=$("#citar"); if(c){ c.disabled=!SEL.size; c.textContent=`Copiar ${SEL.size||""} ${SEL.size===1?"cita":"citas"}`; } return; }
+  const t = e.target.closest("[data-act]"); if (!t) return;
+  const pm = t.dataset.pmid, act = t.dataset.act;
+  if (act==="detalle"){ e.preventDefault(); if (e.target.closest("button,a,input") && e.target.closest("button,a,input")!==t) return; abrirFicha(pm); return; }
+  e.stopPropagation();
+  if (act==="leido"){ cambiar(pm, {estado: marca(pm).estado==="Leído" ? "" : "Leído"}); refrescarFicha(); }
+  else if (act==="porleer"){ cambiar(pm, {estado: marca(pm).estado==="Por leer" ? "" : "Por leer"}); refrescarFicha(); }
+  else if (act==="star"){ cambiar(pm, {destacado: !marca(pm).destacado}); refrescarFicha(); }
+  else if (act==="nota") abrirNota(pm);
+  else if (act==="copiarCita"){ const r = DATA.registro.find(x=>x.pmid===pm); copiar(vancouver(r), "Cita copiada"); }
+});
+document.addEventListener("input", e => {
+  if (e.target.id==="q"){ F.q=e.target.value; F.n=40; const pos=e.target.selectionStart; render(); const q=$("#q"); q.focus(); q.setSelectionRange(pos,pos); }
+  if (e.target.id==="fMin"){ F.min=+e.target.value; F.n=40; render(); }
+});
+document.addEventListener("change", e => {
+  const id = e.target.id;
+  if (id==="selSemana"){ SEMANA=e.target.value; render(); scrollTo(0,0); }
+  else if (id==="fIngreso"){ F.ingreso=e.target.value; F.n=40; render(); }
+  else if (id==="fPed"){ F.ped=e.target.value; F.n=40; render(); }
+  else if (id==="fEstado"){ F.estado=e.target.value; F.n=40; render(); }
+  else if (id==="fOrden"){ F.orden=e.target.value; render(); }
+  else if (id==="fPipe"){ F.pipe=e.target.checked; F.n=40; render(); }
+});
+document.addEventListener("click", e => {
+  const tg = e.target.closest("[data-tg]");
+  if (tg){ const s=F[tg.dataset.tg], v=tg.dataset.val; s.has(v)?s.delete(v):s.add(v); F.n=40; render(); return; }
+  const ml = e.target.closest("[data-ml]"); if (ml){ ML=ml.dataset.ml; render(); return; }
+  const id = e.target.id;
+  if (id==="limpiar"){ Object.assign(F,{q:"",ingreso:"",ped:"",pipe:false,min:0,estado:"",n:40}); F.areas.clear(); F.tipos.clear(); F.niveles.clear(); render(); }
+  else if (id==="verMas"){ F.n+=40; render(); }
+  else if (id==="selTodos"){ filtrar().slice(0,F.n).forEach(r=>SEL.add(r.pmid)); render(); }
+  else if (id==="citar"){ const txt=[...SEL].map(p=>DATA.registro.find(r=>r.pmid===p)).filter(Boolean).map((r,i)=>`${i+1}. ${vancouver(r)}`).join("\n"); copiar(txt, `${SEL.size} citas copiadas`); }
+  else if (id==="citarML"){ const pms=[...document.querySelectorAll(".lista [data-pmid]")].map(x=>x.dataset.pmid); const u=[...new Set(pms)];
+    copiar(u.map(p=>DATA.registro.find(r=>r.pmid===p)).filter(Boolean).map((r,i)=>`${i+1}. ${vancouver(r)}`).join("\n"), `${u.length} citas copiadas`); }
+  else if (id==="btnFiltros"){ $("#panelFiltros").classList.toggle("open"); }
+  else if (id==="apiOk"){ const v=$("#inApi").value.trim(); if(v){ ls.set(LS.api,v); ls.del(LS.cache); location.reload(); } }
+  else if (id==="apiDel"){ ls.del(LS.api); ls.del(LS.cache); location.reload(); }
+});
+
+function ruta(){ const v = (location.hash||"#semana").slice(1); VISTA = ["semana","explorar","lectura","tendencias","acerca"].includes(v) ? v : "semana"; render(); scrollTo(0,0); }
+addEventListener("hashchange", ruta);
+
+/* ───────── Inicio ───────── */
+(async function(){
+  actualizarBtnClave();
+  try{
+    DATA = normalizar(await cargar());
+    estadoFuente(); ruta();
+    if (Object.keys(PEND).length) enviar();
+  }catch(e){
+    $("#app").innerHTML = `<div class="panel vacio">No se pudieron cargar los datos: ${esc(e.message)}</div>`; setSync("err","error");
+  }
+})();
+if ("serviceWorker" in navigator && location.protocol==="https:") navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script>
+</body>
+</html>

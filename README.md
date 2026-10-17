@@ -14,6 +14,7 @@ Material de estudio de enfermedad inflamatoria intestinal (EII) para postgrado d
 | 04 | **Consulta rápida** — qué hay y qué no hay en Chile, criterios de falla y conducta según monitorización terapéutica (TDM), umbrales de colitis aguda grave, objetivos STRIDE-II, checklist prebiológico, poblaciones especiales y tabla de scores. |
 | 05 | **Quiz EII v6.1** — 220 casos clínicos con retroalimentación razonada (pieza independiente). |
 | 06 | **Decisión Terapéutica EII** — herramienta paso a paso para CU (incluido reservorio ileal: pouchitis, tipo Crohn, cuffitis) y enfermedad de Crohn en adultos: fenotipo, línea terapéutica, comorbilidades y manifestaciones extraintestinales → escalones de tratamiento con lo disponible en Chile primero, cinética de respuesta, niveles, presentación para la receta, checklist previo al inicio, scores de actividad (Mayo parcial/total/endoscópico, UCEIS, Harvey-Bradshaw, CDAI, SES-CD, Rutgeerts modificado, PDAI/mPDAI) y clasificación TOpClass perianal, nombres comerciales y calculadora de fragilidad (Fried / escala clínica). En `decision/`. |
+| 07 | **Vigilancia bibliográfica EII** — lo más relevante de PubMed en EII, semana a semana: lectura obligatoria con hallazgo y «¿cambia la práctica?», registro filtrable por área (CU/EC), tipo de estudio y nivel de revista, seguimiento personal (leído, por leer, destacados, notas), tendencias y citas Vancouver. Lee el Google Sheet que llena la búsqueda semanal; las marcas se guardan en el Sheet vía Apps Script. En `vigilancia/`. |
 
 ## Sobre las imágenes
 
@@ -31,6 +32,8 @@ decision/index.html · módulo 06, herramienta de decisión terapéutica (autoco
 manifest.webmanifest, sw.js, icons/            · app instalable completa (EII 2026)
 decision/manifest.webmanifest, decision/sw.js  · app instalable solo de decisión
 fuentes/decision/ · fuentes del módulo 06 y actualizar.py (regenera solo decision/)
+vigilancia/       · módulo 07, app de vigilancia bibliográfica (index.html, sw.js, manifest, datos-respaldo.json)
+fuentes/vigilancia/ · Code.gs (Apps Script que conecta la app con el Sheet) e INSTRUCCIONES.md
 .nojekyll         · evita el procesamiento Jekyll en GitHub Pages
 ```
 
@@ -44,6 +47,7 @@ Cada módulo es independiente: un cambio en uno no debe reescribir los otros.
 |---|---|---|
 | 05 · Quiz (con sincronización Google Sheets) | directamente en `quiz/index.html` | solo `quiz/index.html` |
 | 06 · Decisión | en `fuentes/decision/` (01_head.html … 06_scores.js) y luego `python3 fuentes/decision/actualizar.py` | `fuentes/decision/*`, `decision/index.html`, `decision/sw.js` |
+| 07 · Vigilancia bibliográfica | directamente en `vigilancia/index.html`; la conexión en `fuentes/vigilancia/Code.gs` | `vigilancia/*`, `fuentes/vigilancia/*` |
 | 01–04 · Repositorio y guía | directamente en `index.html` o `guia-2026.html` | solo ese archivo |
 
 Reglas:
@@ -57,6 +61,7 @@ Reglas:
 |---|---|---|
 | **EII 2026** | https://moropezah.github.io/repositorio-eii-2026/ | Repositorio completo: guía, clase, consulta rápida, quiz y decisión terapéutica |
 | **Decisión EII** | https://moropezah.github.io/repositorio-eii-2026/decision/ | Solo la herramienta de decisión terapéutica, para compartir con el equipo |
+| **Vigilancia EII** | https://moropezah.github.io/repositorio-eii-2026/vigilancia/ | Vigilancia bibliográfica semanal de PubMed, para el equipo y los tutores |
 
 Abrir el enlace una vez con conexión y luego: **iPhone** (Safari) → Compartir → «Agregar a inicio»; **Android** (Chrome) → botón «Instalar» o menú ⋮ → «Instalar app». Después funciona sin internet y se actualiza sola en la siguiente apertura con conexión.
 
