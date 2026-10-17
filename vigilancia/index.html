@@ -114,7 +114,9 @@ textarea{width:100%;min-height:120px;resize:vertical;line-height:1.5}
 .grupo{margin:26px 0 10px;display:flex;align-items:baseline;gap:10px}
 .grupo h2{font-size:1.25rem}
 .grupo .c{font-size:.8rem;color:var(--fg-3)}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:14px}
+.card{min-width:0}
+.card .chip{white-space:normal}
 .card{padding:16px 18px 14px;display:flex;flex-direction:column;gap:10px;border-top:3px solid var(--line-2)}
 .card.a-CU{border-top-color:var(--cu)} .card.a-EC{border-top-color:var(--ec)} .card.a-EII,.card.a-CEP,.card.a-Reservorio{border-top-color:var(--inv)}
 .card h3{font-size:1.08rem}
@@ -238,6 +240,7 @@ dialog input{width:100%}
     <a class="brand" href="#semana"><span class="dot">Ev</span><span>Vigilancia EII<small>PubMed · semana a semana</small></span></a>
     <nav class="tabs" aria-label="Secciones">
       <a href="#semana" data-v="semana">Semana</a>
+      <a href="#fundamentales" data-v="fundamentales">Fundamentales</a>
       <a href="#explorar" data-v="explorar">Explorar</a>
       <a href="#lectura" data-v="lectura">Mi lectura</a>
       <a href="#tendencias" data-v="tendencias">Tendencias</a>
@@ -492,7 +495,7 @@ function render(){
   if (!DATA) return;
   document.querySelectorAll("nav.tabs a").forEach(a => a.setAttribute("aria-current", a.dataset.v===VISTA ? "true":"false"));
   const app = $("#app");
-  app.innerHTML = ({semana:vSemana, explorar:vExplorar, lectura:vLectura, tendencias:vTendencias, acerca:vAcerca}[VISTA]||vSemana)();
+  app.innerHTML = ({semana:vSemana, fundamentales:vFundamentales, explorar:vExplorar, lectura:vLectura, tendencias:vTendencias, acerca:vAcerca}[VISTA]||vSemana)();
   if (VISTA==="tendencias") pintarGraficos();
 }
 
@@ -620,9 +623,83 @@ function vExplorar(){
     </section></div>`;
 }
 
+/* ───────── Fundamentales (artículos de consulta obligatoria) ───────── */
+let FUND = [];
+const FF = {q:"", cats:new Set(), areas:new Set()};
+const CAT_ORDEN = ["Historia","Scores y clasificaciones","CU aguda grave","Anti-TNF","Anti-integrinas","Anti-IL-12/23","Anti-IL-23","Inhibidores JAK","Moduladores S1P","Head-to-head","Estrategia y treat-to-target","Cirugía y posoperatorio","Embarazo y seguridad","Guías y consensos"];
+function fundComoReg(f){ return {pmid:f.pmid, titulo:`${f.estudio}: ${f.titulo}`, revista:f.revista, fecha:f.anio, anio:f.anio, autores:f.autores, area:f.area, tipo:f.categoria, nivel:"", fase:"", ped:"", puntaje:"F", fund:f}; }
+function itemPorPmid(p){ return DATA.registro.find(r=>r.pmid===p) || (FUND.find(f=>f.pmid===p) ? fundComoReg(FUND.find(f=>f.pmid===p)) : null); }
+function citaPorPmid(p){ const f = FUND.find(x=>x.pmid===p); if (f && !DATA.registro.find(r=>r.pmid===p)) return vancouverFund(f); return vancouver(DATA.registro.find(r=>r.pmid===p)); }
+function vancouverFund(f){
+  let a = String(f.autores||"").trim().replace(/\s+et al\.?$/i, ", et al");
+  const t = String(f.titulo||"").trim().replace(/\.?$/,".");
+  const vp = `${f.anio}${f.vol?`;${f.vol}`:""}${f.num?`(${f.num})`:""}${f.pag?`:${f.pag}`:""}`;
+  return `${a ? a+". " : ""}${t} ${f.revista}. ${vp}.${f.doi?` doi:${f.doi}.`:""} PMID: ${f.pmid}.`;
+}
+function filtrarFund(){
+  const q = FF.q.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+  return FUND.filter(f => {
+    if (FF.cats.size && !FF.cats.has(f.categoria)) return false;
+    if (FF.areas.size && !FF.areas.has(f.area)) return false;
+    if (q){ const t = (f.estudio+" "+f.farmaco+" "+f.titulo+" "+f.revista+" "+f.autores+" "+f.hallazgo+" "+f.pmid).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+      if (!q.split(/\s+/).every(w => t.includes(w))) return false; }
+    return true;
+  });
+}
+function vFundamentales(){
+  if (!FUND.length) return `<div class="panel vacio">Cargando los artículos fundamentales…</div>`;
+  const res = filtrarFund();
+  const tg = (set, val, lab, n) => `<button class="tg" data-ftg="${set}" data-val="${esc(val)}" aria-pressed="${FF[set].has(val)}">${esc(lab||val)}${n!==undefined?` · ${n}`:""}</button>`;
+  const cats = CAT_ORDEN.filter(c => FUND.some(f=>f.categoria===c));
+  let h = `<div class="view-h"><div class="grow"><div class="eyebrow">Consulta obligatoria</div><h1>Artículos fundamentales</h1>
+    <p>${FUND.length} artículos que definieron el manejo de la EII: desde Truelove y Witts hasta los pivotales de cada fármaco en uso, los head-to-head, los ensayos de estrategia y las guías vigentes (ECCO, ACG, AGA, PANCCO, ACTECCU, STRIDE-II). Cada cita está verificada en PubMed.</p></div>
+    <input type="search" id="fq" placeholder="Buscar: VARSITY, upadacitinib, Oxford…" value="${esc(FF.q)}" style="min-width:260px"></div>
+    <div class="panel" style="padding:12px 14px;margin-bottom:16px">
+      <div class="toggles" style="margin-bottom:8px">${cats.map(c=>tg("cats",c,c,FUND.filter(f=>f.categoria===c).length)).join("")}</div>
+      <div class="toggles">${["CU","EC","EII"].map(a=>tg("areas",a,a==="EII"?"EII (ambas)":a)).join("")}${FF.cats.size||FF.areas.size||FF.q?`<button class="lim" id="flim" style="margin:0 0 0 8px">Limpiar</button>`:""}</div>
+    </div>`;
+  if (!res.length) return h + `<div class="panel vacio">Ningún artículo cumple estos filtros.</div>`;
+  for (const c of cats){
+    const grupo = res.filter(f=>f.categoria===c).sort((a,b)=> c==="Guías y consensos" ? (b.anio-a.anio)||(a.orden-b.orden) : (a.anio-b.anio)||(a.orden-b.orden));
+    if (!grupo.length) continue;
+    h += `<div class="grupo"><h2>${esc(c)}</h2><span class="c">${grupo.length}</span></div><div class="cards">`;
+    for (const f of grupo){
+      h += `<article class="panel card a-${esc(f.area)}">
+        <div class="chips"><span class="chip a-${esc(f.area)}">${esc(f.area)}</span><span class="chip">${esc(f.diseno)}</span></div>
+        <h3>${esc(f.estudio)}</h3>
+        <div class="meta">${esc(f.farmaco)} · ${esc(f.revista)} ${esc(f.anio)} · ${esc(f.autores)}</div>
+        <p class="hall">${esc(f.hallazgo)}</p>
+        <div class="cambia si" style="border-left-color:var(--marino)"><b style="color:var(--marino)">Por qué importa</b><span>${esc(f.importa)}</span></div>
+        ${notaDe(f.pmid)}
+        <div class="acts">
+          <a class="btn prim" href="${f.doi?`https://doi.org/${esc(f.doi)}`:`https://pubmed.ncbi.nlm.nih.gov/${esc(f.pmid)}/`}" target="_blank" rel="noopener">Abrir artículo ↗</a>
+          <button class="btn" data-act="detalle" data-pmid="${f.pmid}">Ficha</button>
+          <button class="btn" data-act="copiarCita" data-pmid="${f.pmid}">Copiar cita</button>
+          ${botonesMarca(f.pmid)}
+        </div></article>`;
+    }
+    h += `</div>`;
+  }
+  h += `<p style="margin-top:18px"><button class="btn" id="citarFund">Copiar las ${res.length} citas visibles (Vancouver)</button></p>`;
+  return h;
+}
+function abrirFichaFund(f){
+  $("#dChips").innerHTML = `<span class="chip a-${esc(f.area)}">${esc(f.area)}</span><span class="chip">${esc(f.categoria)}</span>`;
+  $("#dBody").innerHTML = `<div class="eyebrow">${esc(f.estudio)}</div><h2 id="dTitulo">${esc(f.titulo)}</h2>
+    <dl class="dl"><dt>Revista</dt><dd>${esc(f.revista)} ${esc(f.anio)}${f.vol?`;${esc(f.vol)}`:""}${f.pag?`:${esc(f.pag)}`:""}</dd><dt>Autores</dt><dd>${esc(f.autores)||"—"}</dd>
+      <dt>Diseño</dt><dd>${esc(f.diseno)}</dd><dt>Tema</dt><dd>${esc(f.farmaco)}</dd><dt>Identificadores</dt><dd>PMID ${esc(f.pmid)}${f.doi?` · DOI ${esc(f.doi)}`:""}</dd></dl>
+    <div><div class="eyebrow">Hallazgo clave</div><p style="margin:0">${esc(f.hallazgo)}</p></div>
+    <div class="cambia si" style="border-left-color:var(--marino)"><b style="color:var(--marino)">Por qué importa</b><span>${esc(f.importa)}</span></div>
+    <div class="acts">${f.doi?`<a class="btn prim" href="https://doi.org/${esc(f.doi)}" target="_blank" rel="noopener">Abrir artículo ↗</a>`:""}<a class="btn" href="https://pubmed.ncbi.nlm.nih.gov/${esc(f.pmid)}/" target="_blank" rel="noopener">PubMed ↗</a></div>
+    <div><div class="eyebrow">Mi lectura</div><div class="acts">${botonesMarca(f.pmid)}</div>${notaDe(f.pmid)}</div>
+    <div><div class="eyebrow">Cita (Vancouver)</div><div class="cita">${esc(vancouverFund(f))}</div>
+      <div class="acts" style="margin-top:8px"><button class="btn" data-act="copiarCita" data-pmid="${f.pmid}">Copiar cita</button></div></div>`;
+  $("#drawerWrap").hidden = false; $("#drawerWrap").dataset.pmid = f.pmid; document.body.style.overflow="hidden";
+}
+
 function vLectura(){
   const pms = Object.keys(Object.assign({}, DATA.marcas, PEND));
-  const regs = pms.map(p => DATA.registro.find(r => r.pmid===p)).filter(Boolean);
+  const regs = pms.map(p => itemPorPmid(p)).filter(Boolean);
   const cats = {"Destacados": regs.filter(r=>marca(r.pmid).destacado), "Por leer": regs.filter(r=>marca(r.pmid).estado==="Por leer"),
                 "Leídos": regs.filter(r=>marca(r.pmid).estado==="Leído"), "Con nota": regs.filter(r=>marca(r.pmid).nota)};
   const lista = cats[ML] || [];
@@ -714,7 +791,8 @@ function vAcerca(){
       <ul><li><b>Tres consultas</b> por fecha de entrada a PubMed: revistas generales de alto impacto (NEJM, Lancet, JAMA, BMJ, Nature, Nat Med, Ann Intern Med, Lancet G&amp;H, Nat Rev G&amp;H), revistas top de GI/EII (Gastroenterology, Gut, AJG, CGH, JCC, AP&amp;T, IBD, UEG J, CC360, GIE, Endoscopy, JPGN, JAMA Netw Open) y ECA, metaanálisis, guías y consensos de cualquier revista.</li>
       <li><b>Puntaje</b> = nivel de revista (1 → 4, 2 → 3, 3 → 1) + tipo (guía/consenso 5, ECA 4, MA/RS 4, ECA secundario 3, cohorte 2, revisión 1) + ajuste (−3 preclínico; +1 fase 3, multicéntrico o doble ciego; +1 guía de sociedad; +1 cohorte multicéntrica o poblacional). Entra al registro con ≥5.</li>
       <li><b>Lectura obligatoria</b>: hasta 5 por semana, con el hallazgo tomado del resumen y si cambia la práctica (Sí / No / Aún no / Por evaluar).</li>
-      <li>El <b>pipeline</b> (fármacos no aprobados) se marca aparte y nunca se presenta como estándar de manejo.</li></ul></div>
+      <li>El <b>pipeline</b> (fármacos no aprobados) se marca aparte y nunca se presenta como estándar de manejo.</li>
+      <li><b>Fundamentales</b>: colección curada fija (no la toca la búsqueda semanal) con los artículos históricos, pivotales, head-to-head, de estrategia y las guías vigentes. Citas verificadas en PubMed; vive en <code>vigilancia/fundamentales.json</code>.</li></ul></div>
     <div class="panel"><h2>Estado de los datos</h2>
       <dl class="dl"><dt>Fuente</dt><dd>${fuente==="sheet"?"Sheet en vivo (Apps Script)":fuente==="cache"?"Copia guardada en este dispositivo":"Datos de respaldo del 16 oct 2026"}</dd>
       <dt>Leído</dt><dd>${esc(fmtFechaHora(DATA.actualizado))}</dd>
@@ -736,7 +814,8 @@ function vAcerca(){
 
 /* ───────── Ficha (panel lateral) ───────── */
 function abrirFicha(pmid){
-  const r = DATA.registro.find(x=>x.pmid===pmid); if (!r) return;
+  const r = DATA.registro.find(x=>x.pmid===pmid);
+  if (!r){ const f = FUND.find(x=>x.pmid===pmid); if (f) abrirFichaFund(f); return; }
   const l = DATA.lectura.find(x=>x.reg && x.reg.pmid===pmid), m = marca(pmid);
   $("#dChips").innerHTML = chipsDe(r);
   $("#dBody").innerHTML = `<h2 id="dTitulo">${esc(r.titulo)}</h2>
@@ -782,7 +861,7 @@ document.addEventListener("click", e => {
   else if (act==="porleer"){ cambiar(pm, {estado: marca(pm).estado==="Por leer" ? "" : "Por leer"}); refrescarFicha(); }
   else if (act==="star"){ cambiar(pm, {destacado: !marca(pm).destacado}); refrescarFicha(); }
   else if (act==="nota") abrirNota(pm);
-  else if (act==="copiarCita"){ const r = DATA.registro.find(x=>x.pmid===pm); copiar(vancouver(r), "Cita copiada"); }
+  else if (act==="copiarCita"){ copiar(citaPorPmid(pm), "Cita copiada"); }
 });
 document.addEventListener("input", e => {
   if (e.target.id==="q"){ F.q=e.target.value; F.n=40; const pos=e.target.selectionStart; render(); const q=$("#q"); q.focus(); q.setSelectionRange(pos,pos); }
@@ -807,13 +886,23 @@ document.addEventListener("click", e => {
   else if (id==="selTodos"){ filtrar().slice(0,F.n).forEach(r=>SEL.add(r.pmid)); render(); }
   else if (id==="citar"){ const txt=[...SEL].map(p=>DATA.registro.find(r=>r.pmid===p)).filter(Boolean).map((r,i)=>`${i+1}. ${vancouver(r)}`).join("\n"); copiar(txt, `${SEL.size} citas copiadas`); }
   else if (id==="citarML"){ const pms=[...document.querySelectorAll(".lista [data-pmid]")].map(x=>x.dataset.pmid); const u=[...new Set(pms)];
-    copiar(u.map(p=>DATA.registro.find(r=>r.pmid===p)).filter(Boolean).map((r,i)=>`${i+1}. ${vancouver(r)}`).join("\n"), `${u.length} citas copiadas`); }
+    copiar(u.map((p,i)=>`${i+1}. ${citaPorPmid(p)}`).join("\n"), `${u.length} citas copiadas`); }
+  else if (id==="citarFund"){ copiar(filtrarFund().map((f,i)=>`${i+1}. ${vancouverFund(f)}`).join("\n"), `${filtrarFund().length} citas copiadas`); }
+  else if (id==="flim"){ FF.q=""; FF.cats.clear(); FF.areas.clear(); render(); }
   else if (id==="btnFiltros"){ $("#panelFiltros").classList.toggle("open"); }
   else if (id==="apiOk"){ const v=$("#inApi").value.trim(); if(v){ ls.set(LS.api,v); ls.del(LS.cache); location.reload(); } }
   else if (id==="apiDel"){ ls.del(LS.api); ls.del(LS.cache); location.reload(); }
 });
 
-function ruta(){ const v = (location.hash||"#semana").slice(1); VISTA = ["semana","explorar","lectura","tendencias","acerca"].includes(v) ? v : "semana"; render(); scrollTo(0,0); }
+function ruta(){ const v = (location.hash||"#semana").slice(1); VISTA = ["semana","fundamentales","explorar","lectura","tendencias","acerca"].includes(v) ? v : "semana"; render(); scrollTo(0,0); }
+document.addEventListener("click", e => {
+  const t = e.target.closest("[data-ftg]"); if (!t) return;
+  const s = FF[t.dataset.ftg], v = t.dataset.val; s.has(v) ? s.delete(v) : s.add(v); render();
+});
+document.addEventListener("input", e => {
+  if (e.target.id==="fq"){ FF.q=e.target.value; const pos=e.target.selectionStart; render(); const q=$("#fq"); if(q){ q.focus(); q.setSelectionRange(pos,pos); } }
+});
+fetch("fundamentales.json").then(r=>r.json()).then(d=>{ FUND=d; if (VISTA==="fundamentales"||VISTA==="lectura") render(); }).catch(()=>{});
 addEventListener("hashchange", ruta);
 
 /* ───────── Inicio ───────── */
