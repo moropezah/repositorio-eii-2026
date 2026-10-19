@@ -627,14 +627,15 @@ function vExplorar(){
 let FUND = [];
 const FF = {q:"", cats:new Set(), areas:new Set()};
 const CAT_ORDEN = ["Historia","Scores y clasificaciones","CU aguda grave","Anti-TNF","Anti-integrinas","Anti-IL-12/23","Anti-IL-23","Inhibidores JAK","Moduladores S1P","Head-to-head","Estrategia y treat-to-target","Cirugía y posoperatorio","Embarazo y seguridad","Guías y consensos"];
+const KF = f => f.pmid || f.id;
 function fundComoReg(f){ return {pmid:f.pmid, titulo:`${f.estudio}: ${f.titulo}`, revista:f.revista, fecha:f.anio, anio:f.anio, autores:f.autores, area:f.area, tipo:f.categoria, nivel:"", fase:"", ped:"", puntaje:"F", fund:f}; }
-function itemPorPmid(p){ return DATA.registro.find(r=>r.pmid===p) || (FUND.find(f=>f.pmid===p) ? fundComoReg(FUND.find(f=>f.pmid===p)) : null); }
-function citaPorPmid(p){ const f = FUND.find(x=>x.pmid===p); if (f && !DATA.registro.find(r=>r.pmid===p)) return vancouverFund(f); return vancouver(DATA.registro.find(r=>r.pmid===p)); }
+function itemPorPmid(p){ return DATA.registro.find(r=>r.pmid===p) || (FUND.find(f=>KF(f)===p) ? fundComoReg(FUND.find(f=>KF(f)===p)) : null); }
+function citaPorPmid(p){ const f = FUND.find(x=>KF(x)===p); if (f && !DATA.registro.find(r=>r.pmid===p)) return vancouverFund(f); return vancouver(DATA.registro.find(r=>r.pmid===p)); }
 function vancouverFund(f){
   let a = String(f.autores||"").trim().replace(/\s+et al\.?$/i, ", et al");
   const t = String(f.titulo||"").trim().replace(/\.?$/,".");
   const vp = `${f.anio}${f.vol?`;${f.vol}`:""}${f.num?`(${f.num})`:""}${f.pag?`:${f.pag}`:""}`;
-  return `${a ? a+". " : ""}${t} ${f.revista}. ${vp}.${f.doi?` doi:${f.doi}.`:""} PMID: ${f.pmid}.`;
+  return `${a ? a+". " : ""}${t} ${f.revista}. ${vp}.${f.doi?` doi:${f.doi}.`:""}${f.pmid?` PMID: ${f.pmid}.`:""}`;
 }
 function filtrarFund(){
   const q = FF.q.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
@@ -652,7 +653,7 @@ function vFundamentales(){
   const tg = (set, val, lab, n) => `<button class="tg" data-ftg="${set}" data-val="${esc(val)}" aria-pressed="${FF[set].has(val)}">${esc(lab||val)}${n!==undefined?` · ${n}`:""}</button>`;
   const cats = CAT_ORDEN.filter(c => FUND.some(f=>f.categoria===c));
   let h = `<div class="view-h"><div class="grow"><div class="eyebrow">Consulta obligatoria</div><h1>Artículos fundamentales</h1>
-    <p>${FUND.length} artículos que definieron el manejo de la EII: desde Truelove y Witts hasta los pivotales de cada fármaco en uso, los head-to-head, los ensayos de estrategia y las guías vigentes (ECCO, ACG, AGA, PANCCO, ACTECCU, STRIDE-II). Cada cita está verificada en PubMed.</p></div>
+    <p>${FUND.length} artículos que definieron el manejo de la EII: desde Truelove y Witts hasta los pivotales de cada fármaco en uso, los head-to-head, los ensayos de estrategia y las guías vigentes (ECCO, ACG, AGA, PANCCO, ACTECCU, STRIDE-III). Cada cita está verificada en PubMed o, si aún no está indexada, en la publicación original.</p></div>
     <input type="search" id="fq" placeholder="Buscar: VARSITY, upadacitinib, Oxford…" value="${esc(FF.q)}" style="min-width:260px"></div>
     <div class="panel" style="padding:12px 14px;margin-bottom:16px">
       <div class="toggles" style="margin-bottom:8px">${cats.map(c=>tg("cats",c,c,FUND.filter(f=>f.categoria===c).length)).join("")}</div>
@@ -673,8 +674,8 @@ function vFundamentales(){
         ${notaDe(f.pmid)}
         <div class="acts">
           <a class="btn prim" href="${f.doi?`https://doi.org/${esc(f.doi)}`:`https://pubmed.ncbi.nlm.nih.gov/${esc(f.pmid)}/`}" target="_blank" rel="noopener">Abrir artículo ↗</a>
-          <button class="btn" data-act="detalle" data-pmid="${f.pmid}">Ficha</button>
-          <button class="btn" data-act="copiarCita" data-pmid="${f.pmid}">Copiar cita</button>
+          <button class="btn" data-act="detalle" data-pmid="${esc(KF(f))}">Ficha</button>
+          <button class="btn" data-act="copiarCita" data-pmid="${esc(KF(f))}">Copiar cita</button>
           ${botonesMarca(f.pmid)}
         </div></article>`;
     }
@@ -687,14 +688,14 @@ function abrirFichaFund(f){
   $("#dChips").innerHTML = `<span class="chip a-${esc(f.area)}">${esc(f.area)}</span><span class="chip">${esc(f.categoria)}</span>`;
   $("#dBody").innerHTML = `<div class="eyebrow">${esc(f.estudio)}</div><h2 id="dTitulo">${esc(f.titulo)}</h2>
     <dl class="dl"><dt>Revista</dt><dd>${esc(f.revista)} ${esc(f.anio)}${f.vol?`;${esc(f.vol)}`:""}${f.pag?`:${esc(f.pag)}`:""}</dd><dt>Autores</dt><dd>${esc(f.autores)||"—"}</dd>
-      <dt>Diseño</dt><dd>${esc(f.diseno)}</dd><dt>Tema</dt><dd>${esc(f.farmaco)}</dd><dt>Identificadores</dt><dd>PMID ${esc(f.pmid)}${f.doi?` · DOI ${esc(f.doi)}`:""}</dd></dl>
+      <dt>Diseño</dt><dd>${esc(f.diseno)}</dd><dt>Tema</dt><dd>${esc(f.farmaco)}</dd><dt>Identificadores</dt><dd>${f.pmid?`PMID ${esc(f.pmid)}`:"Aún sin PMID (publicación en línea)"}${f.doi?` · DOI ${esc(f.doi)}`:""}</dd></dl>
     <div><div class="eyebrow">Hallazgo clave</div><p style="margin:0">${esc(f.hallazgo)}</p></div>
     <div class="cambia si" style="border-left-color:var(--marino)"><b style="color:var(--marino)">Por qué importa</b><span>${esc(f.importa)}</span></div>
-    <div class="acts">${f.doi?`<a class="btn prim" href="https://doi.org/${esc(f.doi)}" target="_blank" rel="noopener">Abrir artículo ↗</a>`:""}<a class="btn" href="https://pubmed.ncbi.nlm.nih.gov/${esc(f.pmid)}/" target="_blank" rel="noopener">PubMed ↗</a></div>
-    <div><div class="eyebrow">Mi lectura</div><div class="acts">${botonesMarca(f.pmid)}</div>${notaDe(f.pmid)}</div>
+    <div class="acts">${f.doi?`<a class="btn prim" href="https://doi.org/${esc(f.doi)}" target="_blank" rel="noopener">Abrir artículo ↗</a>`:""}${f.pmid?`<a class="btn" href="https://pubmed.ncbi.nlm.nih.gov/${esc(f.pmid)}/" target="_blank" rel="noopener">PubMed ↗</a>`:""}</div>
+    ${f.pmid?`<div><div class="eyebrow">Mi lectura</div><div class="acts">${botonesMarca(f.pmid)}</div>${notaDe(f.pmid)}</div>`:""}
     <div><div class="eyebrow">Cita (Vancouver)</div><div class="cita">${esc(vancouverFund(f))}</div>
-      <div class="acts" style="margin-top:8px"><button class="btn" data-act="copiarCita" data-pmid="${f.pmid}">Copiar cita</button></div></div>`;
-  $("#drawerWrap").hidden = false; $("#drawerWrap").dataset.pmid = f.pmid; document.body.style.overflow="hidden";
+      <div class="acts" style="margin-top:8px"><button class="btn" data-act="copiarCita" data-pmid="${esc(KF(f))}">Copiar cita</button></div></div>`;
+  $("#drawerWrap").hidden = false; $("#drawerWrap").dataset.pmid = KF(f); document.body.style.overflow="hidden";
 }
 
 function vLectura(){
@@ -815,7 +816,7 @@ function vAcerca(){
 /* ───────── Ficha (panel lateral) ───────── */
 function abrirFicha(pmid){
   const r = DATA.registro.find(x=>x.pmid===pmid);
-  if (!r){ const f = FUND.find(x=>x.pmid===pmid); if (f) abrirFichaFund(f); return; }
+  if (!r){ const f = FUND.find(x=>KF(x)===pmid); if (f) abrirFichaFund(f); return; }
   const l = DATA.lectura.find(x=>x.reg && x.reg.pmid===pmid), m = marca(pmid);
   $("#dChips").innerHTML = chipsDe(r);
   $("#dBody").innerHTML = `<h2 id="dTitulo">${esc(r.titulo)}</h2>
