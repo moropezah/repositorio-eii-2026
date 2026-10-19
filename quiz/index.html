@@ -184,7 +184,7 @@ textarea.dump{width:100%;min-height:180px;font:12px var(--mono);background:var(-
 
 <header class="top">
   <div class="row">
-    <div class="brand">Quiz EII <small>v6.1 · sep 2026 · 220 casos · CU · Crohn · transversal</small></div>
+    <div class="brand">Quiz EII <small>v6.2 · oct 2026 · 229 casos · CU · Crohn · transversal</small></div>
     <span class="spacer"></span>
     <span id="syncState" class="sync" title="Estado de guardado">● local</span>
     <button class="btn ghost" id="themeBtn" type="button" aria-label="Cambiar tema">◐ Tema</button>
@@ -347,24 +347,26 @@ w:{1:"Es la definición de corticorrefractariedad.",2:"Un curso aislado no defin
 p:"Un segundo curso de corticoides en 12 meses ya justifica terapia avanzada.",
 r:"ECCO UC Medical 2026 rec. 14 · Guía Estudio EII 2026 §9"},
 
-{id:"CU15",b:"CU",t:"Objetivos (STRIDE-II)",n:"F",
-q:"Paciente con CU en remisión clínica (sin sangre, frecuencia normal). Colonoscopía: Mayo endoscópico 0. Calprotectina 180 µg/g. Biopsias: plasmocitosis basal leve, sin neutrófilos. Según STRIDE-II, ¿alcanzó el objetivo?",
-o:["No: la plasmocitosis basal indica que no alcanzó la meta histológica obligatoria","Sí: alcanzó la curación endoscópica (MES 0), meta formal a largo plazo; la histología no es meta formal y la calprotectina está en el rango 100–250 µg/g","No: la calprotectina debe ser <50 µg/g","Sí, pero solo porque la remisión clínica es la meta final"],
+{id:"CU15",b:"CU",t:"Metas (STRIDE-III)",n:"F",
+q:"Paciente con CU en remisión clínica (sin sangre, frecuencia normal). Colonoscopía: Mayo endoscópico 0. Calprotectina 180 µg/g. Biopsias: plasmocitosis basal leve, sin neutrófilos. Según STRIDE-III, ¿alcanzó las metas?",
+o:["No: la plasmocitosis basal indica que no alcanzó una meta histológica obligatoria","Sí: logró la remisión endoscópica (MES 0), meta accionable de largo plazo, y la calprotectina está bajo 200 µg/g; al estar en zona gris (100–200) conviene confirmarla con una medición repetida","No: la calprotectina debe ser <50 µg/g","Sí, pero solo porque la remisión clínica es la meta final"],
 c:1,
-e:"STRIDE-II: metas formales en CU = respuesta y remisión clínica (PRO2), normalización de PCR, calprotectina en rango <b>100–250 µg/g</b>, y a largo plazo <b>curación endoscópica = MES 0</b> (UCEIS ≤1), más calidad de vida y ausencia de discapacidad. La <b>curación histológica NO es meta formal</b>: se evalúa como profundidad de la remisión (adyuvante). Por sí sola no obliga a cambiar de tratamiento.",
-w:{0:"Es precisamente el error de interpretación: la histología es adyuvante, no obligatoria.",2:"El umbral <50 µg/g no es de STRIDE-II.",3:"La remisión clínica es meta de corto-intermedio plazo, no la final."},
-p:"Remisión histológica (Nancy 0 / Geboes <2B.1) sí se asocia a menos recaída (RR ~0,37 adicional sobre MES 0), pero es evidencia observacional; STRIDE-III la clasificaría como 'adyuvante'.",
+e:"STRIDE-III: metas <b>accionables</b> en CU = respuesta y remisión clínica (PRO2), PCR normal, calprotectina <b>&lt;200 µg/g</b> (seriada) y, a largo plazo, <b>MES 0</b>. La histología (sin neutrófilos, erosiones ni úlceras; Nancy ≤1) es una meta <b>adyuvante</b>: orienta la optimización, pero no obliga a cambiar de clase. Aquí no hay neutrófilos, así que además cumple la remisión histológica. CF 100–200 es zona gris: se interpreta en tendencia y se repite.",
+w:{0:"La plasmocitosis basal sin neutrófilos no es actividad; y la histología es adyuvante, no obligatoria.",2:"Ese umbral no existe en STRIDE-III.",3:"La remisión clínica sola es insuficiente como meta de largo plazo."},
+p:"VERDICT: tratar hacia remisión endoscópica + histológica no superó a tratar hacia remisión endoscópica sola; por eso la histología quedó como adyuvante.",
 fix:"v5 marcaba la plasmocitosis basal como 'target no alcanzado' y la histología como meta formal de STRIDE-II.",
-r:"Turner D et al. Gastroenterology 2021;160:1570-83 (STRIDE-II) · STRIDE I-II-III consulta rápida (ago 2026)"},
+nuevo:"STRIDE-III (oct 2026): CF <200 µg/g como rango aceptable (antes 100–250) e histología en CU como meta adyuvante.",
+r:"Turner D et al. Lancet Gastroenterol Hepatol 2026 (STRIDE-III) · Turner D et al. Gastroenterology 2021 (STRIDE-II)"},
 
-{id:"CU16",b:"CU",t:"Objetivos (STRIDE-II)",n:"R",
-q:"¿Cuál es la definición STRIDE-II de curación endoscópica en CU?",
-o:["Subscore endoscópico de Mayo (MES) ≤1","MES = 0 (o UCEIS ≤1)","Ausencia de úlceras >5 mm","Nancy ≤1"],
+{id:"CU16",b:"CU",t:"Metas (STRIDE-III)",n:"R",
+q:"¿Cuál es la definición STRIDE-III de remisión endoscópica en CU?",
+o:["Subscore endoscópico de Mayo (MES) ≤1","MES = 0; MES 1 solo como meta transitoria si hay remisión clínica y bioquímica","Ausencia de úlceras >5 mm","Nancy ≤1"],
 c:1,
-e:"STRIDE-II define la curación endoscópica en CU como <b>MES = 0</b> (UCEIS ≤1 como alternativa). <b>MES ≤1</b> es la definición de 'mejoría endoscópica' usada como endpoint en ensayos clínicos (desde ACT-1/2) y el objetivo que adoptó ACG 2025, no la meta de STRIDE-II.",
-w:{0:"Es 'mejoría endoscópica' de ensayos; ACG 2025 lo usa como objetivo, STRIDE-II exige MES 0.",2:"No es un criterio de CU.",3:"Es un índice histológico, no endoscópico."},
+e:"STRIDE-III fija la remisión endoscópica en CU como <b>MES = 0</b> (meta accionable, 7–12 meses). <b>MES ≤1</b> puede aceptarse como meta <b>transitoria</b> cuando la remisión clínica y bioquímica lo respaldan, en decisión compartida. MES ≤1 es la 'mejoría endoscópica' de los ensayos (desde ACT-1/2) y el umbral usado en VERDICT. La rectosigmoidoscopía basta para el control.",
+w:{0:"Es la mejoría endoscópica de ensayos y solo una meta transitoria en STRIDE-III.",2:"No es un criterio de CU.",3:"Es un índice histológico (meta adyuvante), no endoscópico."},
 p:"Riesgo de recaída a 12 meses: MES 1 ~29% vs MES 0 ~14%.",
-r:"STRIDE-II 2021 · ACG UC 2025"},
+nuevo:"STRIDE-III (oct 2026): MES 0 como meta; MES 1 solo transitoria con remisión clínica y bioquímica.",
+r:"Turner D et al. Lancet Gastroenterol Hepatol 2026 (STRIDE-III) · ACG UC 2025"},
 
 {id:"CU17",b:"CU",t:"Scores",n:"R",
 q:"El UCEIS (Ulcerative Colitis Endoscopic Index of Severity) se compone de:",
@@ -610,14 +612,15 @@ w:{0:"Es el esquema de CU.",2:"No hay inducción con dosis baja.",3:"Es tofaciti
 p:"Reinducción con 45 mg recaptura respuesta en ~80% de quienes pierden respuesta tras bajar dosis (datos de vida real, retrospectivos).",
 r:"Loftus EV et al. NEJM 2023 (U-EXCEL/U-EXCEED/U-ENDURE)"},
 
-{id:"EC15",b:"EC",t:"Objetivos (STRIDE-II)",n:"R",
-q:"Según STRIDE-II, ¿cuál es la meta endoscópica en EC y qué lugar ocupa la histología?",
-o:["SES-CD <3 o ausencia de ulceraciones; la remisión histológica NO es meta en EC","CDEIS 0 y remisión histológica obligatoria","SES-CD <7; histología como meta intermedia","Curación transmural obligatoria como meta formal"],
+{id:"EC15",b:"EC",t:"Metas (STRIDE-III)",n:"R",
+q:"Según STRIDE-III, ¿cuál es la meta endoscópica en EC y qué lugar ocupan la histología y la remisión transmural?",
+o:["SES-CD ≤2 (completa ≤1) o Lewis <135 por cápsula; la histología no es meta en EC y la remisión transmural es meta adyuvante","CDEIS 0 y remisión histológica obligatoria","SES-CD <7; histología como meta intermedia","Remisión transmural como meta accionable que obliga a cambiar de clase"],
 c:0,
-e:"STRIDE-II en EC: curación endoscópica = <b>SES-CD <3 o ausencia de ulceraciones</b> (ileocolonoscopía; si no es factible, cápsula/enteroscopía). La <b>histología se descarta explícitamente</b> como meta en EC. La curación transmural (IUS/entero-RM) es adjunto, no meta formal.",
-w:{1:"CDEIS se usa en ensayos; la histología no es meta en EC.",2:"SES-CD 7–15 es actividad moderada.",3:"Es adjunto; su beneficio incremental aún no está demostrado."},
-p:"Remisión transmural por IUS: grosor de pared ≤3 mm + Doppler normal (definiciones aún no estandarizadas).",
-r:"STRIDE-II 2021 · St-Pierre J et al. Inflamm Bowel Dis 2026 (definiciones IUS)"},
+e:"STRIDE-III en EC: remisión endoscópica = <b>SES-CD ≤2</b> (completa ≤1) en ileocolonoscopía, o <b>Lewis &lt;135</b> por cápsula según la localización: meta <b>accionable</b> a 7–12 meses. La <b>histología no es meta</b> en EC. La <b>remisión transmural</b> (IUS: grosor ≤3 mm y Limberg o Doppler 0; sMaRIA &lt;1) es meta <b>adyuvante</b>: si falta, optimizar y estrechar el control, sin cambiar de clase por eso solo.",
+w:{1:"CDEIS se usa en ensayos; la histología no es meta en EC.",2:"SES-CD 7–15 es actividad moderada.",3:"Es adyuvante; VECTORS evalúa su beneficio y está en curso."},
+p:"Hay discordancia endoscópico-transmural en 25–30 % de los pacientes; la actividad endoscópica persistente se trata aunque la imagen esté en remisión.",
+nuevo:"STRIDE-III (oct 2026): SES-CD ≤2 (antes <3 o sin úlceras) y remisión transmural como meta adyuvante.",
+r:"Turner D et al. Lancet Gastroenterol Hepatol 2026 (STRIDE-III) · St-Pierre J et al. Inflamm Bowel Dis 2026 (definiciones IUS)"},
 
 {id:"EC16",b:"EC",t:"Imagen / IUS",n:"R",
 q:"En la ecografía intestinal (IUS) de un paciente con EC, ¿qué hallazgo define más consistentemente actividad inflamatoria?",
@@ -888,13 +891,14 @@ p:"En el oral: primero la jerarquía por evidencia, después el ajuste por acces
 r:"FONASA LRS · ACTECCU 2026 · Guía Estudio EII 2026 §8.3"},
 
 {id:"TR23",b:"TR",t:"Actualizaciones 2026",n:"S",
-q:"¿Cuál afirmación sobre el estado de STRIDE-III y el pipeline es correcta a septiembre de 2026?",
-o:["STRIDE-III está publicado y exige remisión histológica en CU","La IOIBD anunció (ago 2026) que presentará STRIDE-III dentro del año; obefazimod completó fase 3 en CU (ABTECT) y tulisokibart (anti-TL1A) fue positivo en inducción fase 3 (ATLAS-UC): ninguno es estándar de manejo","Los anti-TL1A están aprobados por FDA como antifibróticos","Obefazimod es un anti-TNF oral"],
+q:"¿Cuál afirmación sobre STRIDE-III y el pipeline es correcta a octubre de 2026?",
+o:["STRIDE-III exige la remisión histológica en CU como meta accionable","STRIDE-III (oct 2026) clasifica las metas en accionables, adyuvantes y centradas en el paciente; obefazimod completó fase 3 en CU (ABTECT) y tulisokibart (anti-TL1A) fue positivo en inducción fase 3 (ATLAS-UC): ninguno es estándar de manejo","Los anti-TL1A están aprobados por FDA como antifibróticos","Obefazimod es un anti-TNF oral"],
 c:1,
-e:"STRIDE-III: <b>anunciado, no publicado</b>; el marco citable sigue siendo STRIDE-II (se anticipa clasificar objetivos en formales, adyuvantes y situacionales). <b>Obefazimod</b> (potenciador de miR-124, oral): fase 3 ABTECT de mantención positiva, solicitud a FDA proyectada. <b>Tulisokibart</b> (anti-TL1A): fase 3 ATLAS-UC positiva en inducción; interés por potencial antifibrótico. Pipeline ≠ estándar.",
-w:{0:"No publicado; y la histología se anticipa como adyuvante.",2:"No aprobados; el efecto antifibrótico es hipótesis.",3:"Mecanismo miR-124, no anti-TNF."},
+e:"<b>STRIDE-III</b> se publicó el 19 de octubre de 2026 (Lancet Gastroenterol Hepatol): metas <b>accionables</b> (cambian el tratamiento tras optimizar), <b>adyuvantes</b> (histología en CU, transmural en EC, urgencia: optimizan) y <b>centradas en el paciente</b> (calidad de vida, discapacidad, fatiga). <b>Obefazimod</b> (potenciador de miR-124, oral): fase 3 ABTECT de mantención positiva, solicitud a FDA proyectada. <b>Tulisokibart</b> (anti-TL1A): fase 3 ATLAS-UC positiva en inducción. Pipeline ≠ estándar.",
+w:{0:"La histología en CU es adyuvante, no accionable.",2:"No aprobados; el efecto antifibrótico es hipótesis.",3:"Mecanismo miR-124, no anti-TNF."},
 p:"Terapia combinada avanzada (p. ej. VEGA: guselkumab + golimumab, fase 2): opción de centro experto, no estándar.",
-r:"IOIBD statement. Ther Adv Gastroenterol 2026 · Guía Simposio PANCCO–ACTECCU 2026 §22"},
+nuevo:"STRIDE-III publicado (oct 2026); reemplaza la versión que lo daba por anunciado.",
+r:"Turner D et al. Lancet Gastroenterol Hepatol 2026 (STRIDE-III) · Guía Simposio PANCCO–ACTECCU 2026 §22"},
 
 {id:"TR24",b:"TR",t:"Retiro de terapia",n:"S",
 q:"EC en remisión profunda (clínica, endoscópica y bioquímica) >2 años con infliximab + azatioprina. El paciente pregunta por desescalar. ¿Qué evidencia corresponde informar?",
@@ -933,7 +937,7 @@ o:["Es aditivo: se suman infiltrado agudo, crónico y ulceración (0–10)","Es 
 c:1,
 e:"Nancy es un índice <b>jerárquico</b> de 3 ítems (ulceración, infiltrado inflamatorio agudo, infiltrado crónico): se asigna el grado según el primer criterio presente de arriba abajo. Remisión histológica: <b>Nancy 0–1</b>. Robarts (0–33) y Geboes (grados 0–5 con subgrados) son alternativas; Geboes <2B.1 define remisión.",
 w:{0:"No se suman los ítems: es jerárquico.",2:"No incluye esos elementos.",3:"Es índice de CU."},
-p:"Ni Nancy ni Geboes son metas formales STRIDE-II; miden profundidad de remisión.",
+p:"STRIDE-III: la remisión histológica en CU (Nancy ≤1) es meta adyuvante; orienta la optimización sin obligar a cambiar de clase.",
 r:"Marchal-Bressenot A et al. Gut 2017 (Nancy) · Geboes K et al. Gut 2000"},
 
 {id:"CU31",b:"CU",t:"Clasificación",n:"R",
@@ -958,7 +962,7 @@ r:"Sandborn WJ et al. NEJM 2021 (TRUE NORTH) · Guía Simposio PANCCO–ACTECCU 
 q:"El SES-CD (Simple Endoscopic Score for Crohn's Disease) evalúa en 5 segmentos:",
 o:["Tamaño de úlceras, superficie ulcerada, superficie afectada y presencia/tipo de estenosis","Patrón vascular, sangrado y úlceras","Profundidad de úlcera, longitud, pseudopólipos y granulomas","Deposiciones, dolor, bienestar y masa"],
 c:0,
-e:"SES-CD: 4 variables (0–3 cada una) × 5 segmentos (íleon, colon derecho, transverso, izquierdo, recto) = 0–56. Úlceras: aftas 0,1–0,5 cm (1), 0,5–2 cm (2), >2 cm (3). Estenosis: única franqueable (1), múltiples franqueables (2), infranqueable (3). Remisión 0–2; leve 3–6; moderada 7–15; grave ≥16. Meta STRIDE-II: <3 o sin úlceras. Respuesta: caída ≥50%.",
+e:"SES-CD: 4 variables (0–3 cada una) × 5 segmentos (íleon, colon derecho, transverso, izquierdo, recto) = 0–56. Úlceras: aftas 0,1–0,5 cm (1), 0,5–2 cm (2), >2 cm (3). Estenosis: única franqueable (1), múltiples franqueables (2), infranqueable (3). Remisión 0–2; leve 3–6; moderada 7–15; grave ≥16. Meta STRIDE-III: ≤2 (completa ≤1). Respuesta: caída ≥50%.",
 w:{1:"Es el UCEIS.",2:"No corresponde.",3:"Es el HBI/CDAI."},
 p:"El CDEIS es más laborioso; correlación SES-CD/CDEIS r ≈0,92.",
 r:"Daperno M et al. Gastrointest Endosc 2004"},
@@ -1185,7 +1189,7 @@ CU11:"El 5-ASA actúa por contacto con la mucosa: activa PPAR-γ en el colonocit
 CU12:"Las formulaciones orales liberan 5-ASA según pH o tiempo en íleon terminal y colon, pero el colon distal recibe menos fármaco (tránsito rápido, diarrea). El enema cubre hasta el ángulo esplénico. Sumar ambas vías cubre toda la extensión con concentración mucosa alta.",
 CU13:"Cuando la terapia avanzada controla la inflamación, el efecto antiinflamatorio tópico del 5-ASA deja de aportar beneficio medible, y la carga de comprimidos reduce la adherencia al fármaco que sí importa. La señal de 'daño' en cohortes refleja que quien sigue con 5-ASA es quien tiene enfermedad más difícil (confusión por indicación).",
 CU14:"El corticoide no induce curación mucosa: suprime la inflamación mientras está presente. Si la actividad reaparece al bajar de 10 mg o al suspender, la biología inflamatoria no ha sido controlada y se acumula toxicidad (ósea, metabólica, infecciosa) sin modificar el curso.",
-CU16:"MES 0 significa mucosa con patrón vascular normal y sin friabilidad: ausencia de inflamación activa visible. El MES 1 conserva eritema y friabilidad leve, que se asocia a más recaída a 12 meses (~29% vs ~14%). Por eso STRIDE-II exige MES 0 y los ensayos, más laxos, usan MES ≤1.",
+CU16:"MES 0 significa mucosa con patrón vascular normal y sin friabilidad: ausencia de inflamación activa visible. El MES 1 conserva eritema y friabilidad leve, que se asocia a más recaída a 12 meses (~29% vs ~14%). Por eso STRIDE-III fija MES 0 (MES 1 solo como meta transitoria) y los ensayos, más laxos, usan MES ≤1.",
 CU17:"El UCEIS se desarrolló con metodología de validación formal (variabilidad inter e intraobservador) y excluyó la friabilidad, que es subjetiva. Puntúa los tres descriptores que mejor predicen la evaluación global de gravedad: patrón vascular, sangrado y ulceración.",
 CU19:"Vedolizumab bloquea α4β7 y reduce el reclutamiento de linfocitos al colon; en CU, enfermedad mucosa y continua, esta estrategia de 'cerrar la puerta' funciona bien. Adalimumab SC tiene dosis fija y mayor inmunogenicidad en CU que infliximab, lo que puede explicar su menor rendimiento en VARSITY.",
 CU21:"Los moduladores S1P internalizan el receptor S1P1 y secuestran linfocitos en los ganglios. Al suspender, el receptor se reexpresa cuando el fármaco y sus metabolitos se eliminan: ozanimod tiene metabolitos activos de vida media larga (recuperación ~3 meses); etrasimod no (7–14 días).",
@@ -1235,7 +1239,7 @@ q:"En los ensayos clásicos de CU con Mayo total, ¿cómo se define la <b>respue
 o:["Disminución del Mayo total ≥3 puntos y ≥30% respecto del basal, con descenso del subscore de sangrado ≥1 o sangrado ≤1","Mayo total ≤2 sin subscore >1","MES = 0","Descenso de calprotectina ≥50%"],
 c:0,
 e:"Respuesta (Mayo total, 0–12): caída <b>≥3 puntos y ≥30%</b> + caída del sangrado ≥1 o subscore de sangrado absoluto 0–1. <b>Remisión</b>: Mayo total ≤2 sin subscore individual >1. En ensayos recientes se usa el <b>Mayo modificado</b> (sin valoración médica global): remisión = frecuencia ≤1, sangrado 0, MES ≤1 sin friabilidad.",
-w:{1:"Es la definición de remisión, no de respuesta.",2:"Es curación endoscópica STRIDE-II.",3:"No es definición de respuesta clínica en ensayos."},
+w:{1:"Es la definición de remisión, no de respuesta.",2:"Es la remisión endoscópica (meta STRIDE-III).",3:"No es definición de respuesta clínica en ensayos."},
 p:"Mayo parcial (sin endoscopía, 0–9): útil para seguimiento ambulatorio y telefónico.",
 m:"El Mayo total mezcla síntomas (frecuencia, sangrado), juicio médico y endoscopía. Por eso la respuesta exige una caída absoluta y relativa, y además mejoría del sangrado, el síntoma más ligado a la inflamación mucosa.",
 r:"Schroeder KW et al. NEJM 1987 · FDA UC guidance 2022"},
@@ -1314,11 +1318,11 @@ r:"ECCO-ESP histopathology consensus · Guía Estudio EII 2026 §3"},
 q:"¿Cuál es la limitación más relevante de la calprotectina fecal?",
 o:["No se eleva en CU","Falsos positivos con AINE, infecciones entéricas, neoplasia, sangrado y posiblemente IBP; debe interpretarse en tendencia","Solo sirve para EC ileal","Tiene vida media de horas"],
 c:1,
-e:"La calprotectina es una proteína de neutrófilos: cualquier inflamación o neutrófilos en el lumen la eleva (AINE, infección, cáncer, pólipos, sangrado). <100–150 µg/g sugiere remisión endoscópica; >250 sugiere actividad; STRIDE-II: rango 100–250 como meta intermedia. Su ascenso precede meses a la recaída clínica.",
+e:"La calprotectina es una proteína de neutrófilos: cualquier inflamación o neutrófilos en el lumen la eleva (AINE, infección, cáncer, pólipos, sangrado). STRIDE-III: <200 µg/g como rango aceptable, <100 µg/g control profundo y 100–200 zona gris, siempre con mediciones repetidas y el mismo ensayo. Su ascenso precede meses a la recaída clínica.",
 w:{0:"Es especialmente sensible en colitis.",2:"Es más sensible en colon que en íleon aislado.",3:"Es estable días en heces a temperatura ambiente."},
 p:"En EC ileal aislada la correlación con actividad es menor; complementar con IUS o entero-RM.",
 m:"La calprotectina constituye ~60% de las proteínas citosólicas del neutrófilo; se libera al lumen por migración transepitelial de neutrófilos y resiste la degradación bacteriana, lo que la hace un marcador cuantitativo de inflamación mucosa.",
-r:"STRIDE-II 2021 · Guía Estudio EII 2026 §4.2"},
+r:"Turner D et al. Lancet Gastroenterol Hepatol 2026 (STRIDE-III) · Guía Estudio EII 2026 §4.2"},
 
 {id:"CU48",md:"E",b:"CU",t:"Complicaciones",n:"R",
 q:"Definición de megacolon tóxico:",
@@ -1391,14 +1395,14 @@ m:"El grosor refleja edema e infiltrado inflamatorio que regresan antes que la f
 r:"Ilvemark JFKF et al. J Crohns Colitis 2022 · Chavannes M et al. AGA CPU IUS 2024"},
 
 {id:"EC32",md:"E",b:"EC",t:"Imagen / IUS",n:"F",
-q:"Índice de entero-RM que STRIDE-II usa como referencia de curación transmural por segmento:",
+q:"Índice de entero-RM de referencia para la remisión transmural por segmento:",
 o:["MaRIA <7 (Clermont <8,4; London <4,1)","MaRIA <20","Lémann <4","Van Assche <10"],
 c:0,
-e:"MaRIA (Magnetic Resonance Index of Activity): por segmento, grosor de pared, realce relativo, edema y úlceras. <b>MaRIA <7</b> = inactivo; ≥11 = actividad grave. sMaRIA simplificado (≥1 por segmento = actividad) sin cuantificar el realce. Van Assche/MAGNIFI-CD son para fístula perianal.",
+e:"MaRIA (Magnetic Resonance Index of Activity): por segmento, grosor de pared, realce relativo, edema y úlceras. <b>MaRIA <7</b> = inactivo; ≥11 = actividad grave. sMaRIA simplificado (≥1 por segmento = actividad) sin cuantificar el realce. Van Assche/MAGNIFI-CD son para fístula perianal. STRIDE-III: remisión transmural = sMaRIA &lt;1 (MaRIA &lt;7); respuesta = caída ≥50 % del sMaRIA.",
 w:{1:"Umbral de actividad grave.",2:"Lémann mide daño acumulado.",3:"Índice perianal."},
 p:"RM sin gadolinio si se requiere en embarazo.",
 m:"El realce tras gadolinio refleja hiperemia y permeabilidad capilar inflamatoria; el edema (T2) actividad aguda; el grosor puede persistir por fibrosis, por eso el índice combina varios componentes.",
-r:"Rimola J et al. Gut 2009 · STRIDE-II 2021"},
+r:"Rimola J et al. Gut 2009 · Turner D et al. Lancet Gastroenterol Hepatol 2026 (STRIDE-III)"},
 
 {id:"EC33",md:"E",b:"EC",t:"Crohn perianal",n:"R",
 q:"Según la AGA, ¿cuál es una fístula perianal SIMPLE?",
@@ -1683,14 +1687,15 @@ m:"El TNF participa en la mielinización/remielinización y la función cardíac
 r:"ACG CD 2025 · Guía Simposio PANCCO–ACTECCU 2026 §5"},
 
 {id:"TR51",md:"E",b:"TR",t:"Guías: discrepancias",n:"S",
-q:"¿Cuál es la discrepancia entre ACG 2025 y STRIDE-II respecto de la meta endoscópica en CU?",
-o:["ACG 2025 adopta como objetivo la mejoría endoscópica (MES ≤1); STRIDE-II define curación endoscópica como MES 0 (o UCEIS ≤1)","No hay diferencias","ACG exige remisión histológica","STRIDE-II acepta MES 2"],
+q:"¿Cuál es la discrepancia entre ACG 2025 y STRIDE-III respecto de la meta endoscópica en CU?",
+o:["ACG 2025 adopta como objetivo la mejoría endoscópica (MES ≤1); STRIDE-III fija MES 0 y acepta MES 1 solo como meta transitoria con remisión clínica y bioquímica","No hay diferencias","ACG exige remisión histológica","STRIDE-III acepta MES 2"],
 c:0,
-e:"<b>ACG 2025</b>: objetivo terapéutico = <b>mejoría endoscópica (MES 0–1)</b>. <b>STRIDE-II</b>: curación endoscópica = <b>MES 0</b>. ECCO usa el marco STRIDE-II. En la práctica: MES 0 es más exigente y se asocia a menor recaída (≈14% vs 29% a 12 meses); MES 1 es aceptable si el costo/riesgo de escalar es alto. Ninguno exige histología.",
+e:"<b>ACG 2025</b>: objetivo terapéutico = <b>mejoría endoscópica (MES 0–1)</b>. <b>STRIDE-III</b> (oct 2026): remisión endoscópica = <b>MES 0</b>, con MES 1 aceptable como meta transitoria si hay remisión clínica y bioquímica, en decisión compartida. Las posturas se acercan: MES 0 se asocia a menor recaída (≈14% vs 29% a 12 meses) y MES 1 se tolera cuando el costo o riesgo de escalar es alto. La histología en CU es meta adyuvante en STRIDE-III; ACG no la exige.",
 w:{1:"Sí hay diferencia de umbral.",2:"ACG no la exige.",3:"Incorrecto."},
 p:"En un oral: mencionar ambas posturas, luego decidir según riesgo-beneficio individual.",
 m:"La friabilidad y el eritema residual del MES 1 reflejan inflamación mucosa persistente; la diferencia de umbral equilibra beneficio pronóstico vs sobretratamiento.",
-r:"Rubin DT et al. ACG UC 2025 · STRIDE-II 2021"},
+nuevo:"STRIDE-III (oct 2026): MES 1 como meta transitoria acerca la postura a ACG 2025.",
+r:"Rubin DT et al. ACG UC 2025 · Turner D et al. Lancet Gastroenterol Hepatol 2026 (STRIDE-III)"},
 
 {id:"TR52",md:"E",b:"TR",t:"Actualizaciones 2026",n:"F",
 q:"Mecanismo de los anti-TL1A (tulisokibart, duvakitug, afimkibart) y su estado a 2026:",
@@ -1733,14 +1738,15 @@ m:"La inflamación mucosa linfocitaria y la banda de colágeno alteran la absorc
 r:"Miehlke S et al. UEG/EMCG guideline 2021"},
 
 {id:"TR56",md:"E",b:"TR",t:"Monitorización",n:"R",
-q:"Según STRIDE-II, ¿cuándo corresponde la endoscopía de control tras iniciar una terapia?",
-o:["CU: 3–6 meses; EC: 6–9 meses","Solo cuando hay síntomas","A las 2 semanas","Anual siempre"],
+q:"Según STRIDE-III, ¿cuándo corresponde la endoscopía de control tras iniciar una terapia?",
+o:["En la etapa de largo plazo (7–12 meses), antes si los síntomas y los biomarcadores no concuerdan; en CU suele hacerse antes y basta la rectosigmoidoscopía","Solo cuando hay síntomas","A las 2 semanas","Anual siempre"],
 c:0,
-e:"STRIDE-II: clínica y PCR c/3 meses con actividad; calprotectina c/3 meses con actividad y c/6–12 meses en remisión; endoscopía de reevaluación a los <b>3–6 meses en CU</b> y <b>6–9 meses en EC</b> tras iniciar terapia. En la práctica la IUS puede anticipar la respuesta.",
+e:"STRIDE-III: la remisión endoscópica es meta de <b>largo plazo (7–12 meses)</b>; la endoscopía puede <b>adelantarse</b> cuando la respuesta no es clara o hay discordancia entre síntomas y biomarcadores. En CU la evaluación precoz es más frecuente (remisión endoscópica más temprana) y la <b>rectosigmoidoscopía basta</b>. Una respuesta endoscópica intermedia (SES-CD ↓&gt;50 % o MES ↓1) predice buena evolución a 1 año. Seguimiento: síntomas, CF y PCR c/3–4 meses en la etapa de largo plazo, luego c/6–12 meses según la profundidad de la remisión; la IUS seriada desde la etapa intermedia orienta el momento de la endoscopía.",
 w:{1:"Contrario al treat-to-target.",2:"Demasiado precoz.",3:"No es el calendario."},
 p:"Normalización de PCR esperable en 5–15 semanas; de calprotectina en 12–19 semanas.",
 m:"La curación mucosa requiere semanas a meses según el mecanismo; evaluar antes subestima la respuesta, evaluar después prolonga inflamación no controlada.",
-r:"STRIDE-II 2021 · STRIDE I-II-III consulta rápida"},
+fix:"v6.1 usaba el calendario de STRIDE-II (endoscopía a 3–6 meses en CU y 6–9 en EC).",
+r:"Turner D et al. Lancet Gastroenterol Hepatol 2026 (STRIDE-III)"},
 
 {id:"CU53",md:"E",b:"CU",t:"CU aguda grave",n:"F",
 q:"Hidrocortisona vs metilprednisolona en CUAG: equivalencia de dosis correcta:",
@@ -1772,15 +1778,15 @@ p:"Vedolizumab previene recurrencia posquirúrgica (REPREVIO).",
 m:"Al bloquear el reclutamiento de nuevos linfocitos, el efecto depende de la salida natural del infiltrado ya presente en la mucosa, que toma semanas.",
 r:"Sands BE et al. Gastroenterology 2014 (GEMINI 3) · Sandborn WJ et al. NEJM 2013 (GEMINI 2)"},
 
-{id:"EC48",md:"E",b:"EC",t:"Objetivos (STRIDE-II)",n:"R",
-q:"Definición STRIDE-II de remisión clínica en EC con PRO2:",
+{id:"EC48",md:"E",b:"EC",t:"Metas (STRIDE-III)",n:"R",
+q:"Definición STRIDE-III de remisión clínica en EC con PRO2:",
 o:["Dolor abdominal ≤1 y frecuencia de deposiciones líquidas/muy blandas ≤3 (o HBI <5)","CDAI <220","Ausencia de fístulas","SES-CD <7"],
 c:0,
-e:"STRIDE-II EC: respuesta clínica = reducción ≥50% del PRO2 (corto plazo); remisión clínica = PRO2 con dolor ≤1 y frecuencia ≤3 (o HBI <5) + PCR normal (corto-intermedio); calprotectina 100–250 (intermedio); SES-CD <3 o sin ulceraciones (largo plazo).",
+e:"STRIDE-III EC: respuesta clínica = reducción ≥50% del PRO2 o del HBI (inmediata, &lt;1–2 meses); remisión clínica = PRO2 con dolor ≤1 y frecuencia ≤3 (o HBI &lt;5) a los 2–3 meses; PCR normal y calprotectina &lt;200 µg/g (intermedio, 4–6 meses); SES-CD ≤2 (largo plazo). La remisión clínica sola no basta como meta de largo plazo.",
 w:{1:"Umbral de actividad leve-moderada del CDAI.",2:"No es la definición.",3:"Umbral endoscópico incorrecto."},
 p:"PRO2 = dolor abdominal + frecuencia de deposiciones (EC) / sangrado + frecuencia (CU).",
 m:"Los PRO capturan lo que el paciente siente sin la carga de variables no inflamatorias del CDAI; por eso se usan como metas de corto plazo, siempre confirmadas con biomarcadores.",
-r:"STRIDE-II 2021"},
+r:"Turner D et al. Lancet Gastroenterol Hepatol 2026 (STRIDE-III)"},
 
 {id:"EC49",md:"E",b:"EC",t:"Complicaciones",n:"F",
 q:"EC con fístula enterovesical (neumaturia, infecciones urinarias recurrentes). ¿Estudio y manejo?",
@@ -2050,10 +2056,10 @@ r:"Guía Simposio PANCCO–ACTECCU 2026 §7 · ECCO EIM"},
 q:"Adolescente de 15 años con EC, talla bajo su carril genético y retraso puberal. ¿Qué debe priorizar el manejo?",
 o:["Evitar corticoides repetidos y privilegiar nutrición enteral exclusiva o anti-TNF precoz para lograr remisión y recuperar crecimiento; clasificar con París","Ciclos de prednisona","Mesalazina","Esperar a la adultez"],
 c:0,
-e:"En EC pediátrica el crecimiento es un objetivo (STRIDE-II: crecimiento normal en niños). NEE como primera línea de inducción, anti-TNF precoz en alto riesgo, evitar corticoides repetidos. París registra G1 (retraso de crecimiento).",
+e:"En EC pediátrica la velocidad de crecimiento normal es una meta adyuvante de mediano plazo (STRIDE-III); la remisión endoscópica precoz predice su recuperación. NEE como primera línea de inducción, anti-TNF precoz en alto riesgo, evitar corticoides repetidos. París registra G1 (retraso de crecimiento).",
 w:{1:"Deterioran crecimiento.",2:"Sin eficacia en EC.",3:"Pierde la ventana de crecimiento."},
 p:"Transición estructurada al llegar a la adultez: consulta conjunta y resumen terapéutico con niveles.",
-r:"STRIDE-II 2021 · ECCO-ESPGHAN pediatric CD"},
+r:"Turner D et al. Lancet Gastroenterol Hepatol 2026 (STRIDE-III) · ECCO-ESPGHAN pediatric CD"},
 
 {id:"EC63",md:"X",b:"EC",t:"Crohn alto",n:"S",
 q:"EC con compromiso duodenal: estenosis bulbar corta con síntomas de vaciamiento gástrico lento; inflamación activa en biopsias. Ileocolon en remisión con ustekinumab. ¿Conducta?",
@@ -2350,13 +2356,114 @@ p:"FIV es opción eficaz si hay infertilidad.",
 r:"ECCO UC Surgical 2026 · ECCO Pregnancy 2023"}
 ];
 
+// ═══ EXTENSIÓN v6.2 — STRIDE-III (octubre 2026) ═══
+const Q_S3 = [
+{id:"TR83",md:"E",b:"TR",t:"Metas (STRIDE-III)",n:"R",
+q:"¿Qué distingue una meta <b>accionable</b> de una <b>adyuvante</b> en STRIDE-III?",
+o:["La accionable se mide con endoscopía y la adyuvante con biomarcadores","La accionable está respaldada por ensayos treat-to-target (o es prioridad del paciente) y, si no se logra tras optimizar, justifica cambiar o agregar un mecanismo; la adyuvante se asocia a mejor evolución sin ensayo que lo demuestre y solo justifica optimizar y estrechar el monitoreo","La adyuvante es más exigente y por eso obliga a cambiar de clase","No hay diferencia práctica: ambas obligan a cambiar de tratamiento"],
+c:1,
+e:"STRIDE-III separa tres categorías. <b>Accionables</b>: respuesta y remisión clínica, PCR normal, CF &lt;200 µg/g y remisión endoscópica (CALM, CURE-CD, VERDICT); si fallan tras optimizar y pasada la ventana del fármaco, se cambia o agrega un mecanismo. <b>Adyuvantes</b>: urgencia, caída de CF y PCR, histología en CU, transmural en EC y crecimiento; guían la optimización y el control, sin cambiar de clase por sí solas. <b>Centradas en el paciente</b>: calidad de vida, discapacidad y fatiga, con decisión compartida.",
+w:{0:"La categoría depende de la evidencia que respalda la meta, no del instrumento.",2:"Es al revés: la adyuvante no obliga a cambiar.",3:"La diferencia es justamente qué conducta gatilla."},
+p:"Regla para el oral: la accionable cambia el fármaco, la adyuvante lo ajusta, la del paciente se conversa.",
+m:"Una asociación observacional entre una remisión más profunda y mejor evolución no prueba que escalar para alcanzarla mejore el desenlace: puede marcar una enfermedad intrínsecamente más benigna. Por eso STRIDE-III exige ensayos de intervención antes de llamar 'accionable' a una meta.",
+nuevo:"STRIDE-III (oct 2026): clasificación de metas en accionables, adyuvantes y centradas en el paciente.",
+r:"Turner D et al. Lancet Gastroenterol Hepatol 2026 (STRIDE-III), tabla 1 y figura 2"},
+
+{id:"CU72",md:"E",b:"CU",t:"Metas (STRIDE-III)",n:"F",
+q:"CU extensa con vedolizumab, semana 40. Sin sangrado, 1 deposición diaria, PCR normal, calprotectina 90 µg/g. Rectosigmoidoscopía: Mayo endoscópico 1 en un segmento corto del sigma. ¿Conducta según STRIDE-III?",
+o:["Cambiar de mecanismo: no alcanzó MES 0","MES 1 con remisión clínica y bioquímica es aceptable como meta transitoria: mantener vedolizumab con control estrecho, decidido con el paciente, y reevaluar","Tomar biopsias y cambiar de tratamiento si Nancy >1","Dar de alta del seguimiento endoscópico: ya cumplió la meta definitiva"],
+c:1,
+e:"STRIDE-III fija MES 0 como meta accionable a largo plazo, pero acepta <b>MES ≤1 como meta transitoria</b> cuando la remisión clínica y bioquímica lo respaldan. Con actividad residual limitada, buen control y un fármaco eficaz, mantener con control estrecho tras decisión compartida es razonable. Si la actividad es extensa, progresa o no hay remisión bioquímica, se reevalúa la estrategia.",
+w:{0:"STRIDE-III no exige cambiar ante actividad residual limitada con clínica y biomarcadores en meta.",2:"La histología en CU es adyuvante: no justifica cambiar de clase por sí sola.",3:"MES 1 no es la meta definitiva; sigue en control."},
+p:"Optimizar antes de cambiar: acortar el intervalo de vedolizumab (c/4 semanas) es una alternativa intermedia razonable.",
+m:"MES 1 conserva eritema y pérdida parcial del patrón vascular; el riesgo de recaída es mayor que con MES 0, pero cambiar un fármaco eficaz expone a perder una remisión libre de corticoides. STRIDE-III pondera ambos riesgos en lugar de fijar un corte automático.",
+nuevo:"STRIDE-III (oct 2026): MES 1 como meta transitoria con remisión clínica y bioquímica.",
+r:"Turner D et al. Lancet Gastroenterol Hepatol 2026 (STRIDE-III), tabla 3"},
+
+{id:"CU73",md:"X",b:"CU",t:"Metas (STRIDE-III)",n:"F",
+q:"CU con tofacitinib desde hace 20 semanas, en remisión clínica por PRO2 y con PCR normal. Calprotectina 165 µg/g y, repetida a las 3 semanas con el mismo ensayo, 170 µg/g. ¿Qué indica STRIDE-III?",
+o:["Falla de la meta bioquímica: cambiar a otro mecanismo","Está bajo 200 µg/g, en la zona gris (100–200): integrar con síntomas, tendencia y extensión; si persiste o hay discordancia, rectosigmoidoscopía o ecografía intestinal antes de decidir","Es normal: no requiere ningún control adicional hasta el año","Aumentar a 10 mg c/12 h de forma indefinida sin más estudio"],
+c:1,
+e:"STRIDE-III fija <b>&lt;200 µg/g</b> como rango aceptable en CU y EC; <b>&lt;100 µg/g</b> se asocia a remisión histológica en CU. Los valores de <b>100–200</b> son zona gris: se interpretan en tendencia, con el mismo ensayo y según el contexto. Persistencia o discordancia con la clínica justifica evaluación endoscópica o con IUS. CF &gt;200 persistente tras optimizar sí indica que la meta no se logró.",
+w:{0:"Está bajo 200 µg/g: no cumple criterio de falla.",2:"La zona gris requiere seguimiento e integración, no alta.",3:"Escalar sin evidencia objetiva de inflamación no es la conducta."},
+p:"La IOIBD votó 150 vs 200 µg/g para CU con puntajes casi idénticos (8,2 vs 8,1); el comité eligió 200 reconociendo que es un umbral conservador.",
+m:"La calprotectina tiene variabilidad intraindividual relevante y ensayos de distintas marcas no son intercambiables; por eso un valor aislado cerca del corte no debe decidir un cambio terapéutico.",
+nuevo:"STRIDE-III (oct 2026): CF <200 µg/g como meta en CU; 100–200 µg/g zona gris.",
+r:"Turner D et al. Lancet Gastroenterol Hepatol 2026 (STRIDE-III), tabla 2"},
+
+{id:"CU74",md:"E",b:"CU",t:"Metas (STRIDE-III)",n:"R",
+q:"CU izquierda con ustekinumab: Mayo endoscópico 0, calprotectina 40 µg/g y PCR normal, pero refiere urgencia defecatoria 6/10 que limita su trabajo. ¿Cómo se interpreta según STRIDE-III?",
+o:["Es una meta accionable no lograda: cambiar de mecanismo","La urgencia es una meta adyuvante; con remisión endoscópica y biomarcadores normales, buscar trastorno funcional y compliance rectal (evaluación de piso pélvico) antes que modificar la terapia","La urgencia no se considera en STRIDE-III","Agregar corticoide oral por 8 semanas"],
+c:1,
+e:"STRIDE-III incorporó la <b>urgencia</b> (escala numérica 0–10; meta ≤2) como meta <b>adyuvante</b> de corto plazo. Si persiste pese a remisión endoscópica y biomarcadores normales, puede reflejar disfunción funcional o menor compliance rectal y amerita <b>evaluación de piso pélvico</b>. Con inflamación activa, primero se optimiza el tratamiento.",
+w:{0:"La urgencia es adyuvante, no accionable.",2:"Es una de las novedades de STRIDE-III.",3:"No hay inflamación que tratar con corticoides."},
+p:"La urgencia se asocia a peor calidad de vida y mayor deterioro laboral, aun en remisión.",
+m:"La inflamación crónica reduce la distensibilidad del recto y deja hipersensibilidad visceral; ambas pueden persistir después de la cicatrización mucosa y mantener la urgencia sin actividad inflamatoria.",
+nuevo:"STRIDE-III (oct 2026): urgencia como meta adyuvante de corto plazo.",
+r:"Turner D et al. Lancet Gastroenterol Hepatol 2026 (STRIDE-III)"},
+
+{id:"EC68",md:"E",b:"EC",t:"Metas (STRIDE-III)",n:"R",
+q:"EC ileocolónica con vedolizumab (inducción 0-2-6). En la semana 10 tiene respuesta clínica parcial (HBI de 11 a 7), PCR en descenso y aún no logra remisión. ¿Conducta según los tiempos de STRIDE-III?",
+o:["Falla primaria: cambiar a otro mecanismo","Está dentro de la ventana esperada para vedolizumab (remisión 9–17,5 semanas): continuar, considerar la dosis extra de la semana 10 y reevaluar hacia la semana 18","Agregar azatioprina e iniciar anti-TNF en paralelo","Suspender vedolizumab y observar"],
+c:1,
+e:"STRIDE-III estima ventanas por mecanismo: con <b>vedolizumab</b>, respuesta en 2–11,5 semanas, remisión en <b>9–17,5</b> y biomarcadores en 10–17,5. Las ventanas son de reevaluación, no umbrales rígidos de falla. Con respuesta parcial en la semana 10 no corresponde declarar falla: se optimiza (dosis en la semana 10) y se reevalúa al cerrar la ventana.",
+w:{0:"Aún no termina la ventana esperada para remisión.",2:"No hay indicación de combinar dos terapias avanzadas.",3:"Hay respuesta parcial: suspender pierde un fármaco que funciona."},
+p:"Comparar: anti-TNF remisión 4–12 semanas; JAK 3–8; anti-IL-12/23 y anti-IL-23 6–16.",
+m:"Vedolizumab bloquea la llegada de nuevos linfocitos al intestino, pero no elimina los que ya están en la mucosa; el efecto depende del recambio linfocitario, lo que explica su inicio más lento.",
+nuevo:"STRIDE-III (oct 2026): tiempos hasta la meta por mecanismo (figura 4).",
+r:"Turner D et al. Lancet Gastroenterol Hepatol 2026 (STRIDE-III), figura 4 · GEMINI 2"},
+
+{id:"EC69",md:"X",b:"EC",t:"Metas (STRIDE-III)",n:"F",
+q:"EC ileal con risankizumab, semana 44. Remisión clínica, PCR normal, calprotectina 70 µg/g, ileocolonoscopía con SES-CD 1. Ecografía intestinal: grosor del íleon terminal 4,5 mm con Limberg 1. ¿Conducta según STRIDE-III?",
+o:["Cambiar de mecanismo: no logró la remisión transmural","Logró todas las metas accionables; la remisión transmural es adyuvante: optimizar o estrechar el control (p. ej. nueva IUS en 3–6 meses, considerar dosis de mantención mayor) sin cambiar de clase por esto solo","Ignorar la ecografía: solo importa la endoscopía","Indicar resección ileocecal"],
+c:1,
+e:"En EC la <b>remisión transmural</b> (IUS: grosor ≤3 mm y Limberg o Doppler 0; sMaRIA &lt;1) es meta <b>adyuvante</b>: se asocia a mejor evolución, sin ensayo que demuestre beneficio de escalar para lograrla (VECTORS en curso). Si falta con las accionables logradas, se optimiza y se acorta el control, sin cambiar de clase por eso solo. Al revés, la actividad endoscópica persistente es accionable y se trata aunque la imagen esté en remisión.",
+w:{0:"La transmural es adyuvante; no gatilla cambio de clase por sí sola.",2:"La IUS aporta información pronóstica y guía la optimización.",3:"No hay complicación que indique cirugía."},
+p:"Discordancia endoscópico-transmural: 25–30 % de los pacientes, adultos y niños.",
+m:"La endoscopía ve la mucosa; el grosor de pared y el Doppler reflejan inflamación de toda la pared, que puede persistir en la submucosa y la muscular tras la cicatrización mucosa, o corresponder a fibrosis.",
+nuevo:"STRIDE-III (oct 2026): remisión transmural en EC como meta adyuvante.",
+r:"Turner D et al. Lancet Gastroenterol Hepatol 2026 (STRIDE-III) · Jairath V et al. BMJ Open Gastroenterol 2026 (VECTORS)"},
+
+{id:"EC70",md:"E",b:"EC",t:"Metas (STRIDE-III)",n:"R",
+q:"¿Qué umbral define la remisión endoscópica en EC según STRIDE-III?",
+o:["SES-CD <3 o ausencia de úlceras","SES-CD ≤2, con remisión completa ≤1; por cápsula, Lewis <135","CDEIS <6","SES-CD ≤4"],
+c:1,
+e:"STRIDE-III: remisión endoscópica en EC = <b>SES-CD ≤2</b> (completa <b>≤1</b>) en ileocolonoscopía, o <b>Lewis &lt;135</b> por cápsula (pan-entérica si hay compromiso colónico o de intestino delgado; de intestino delgado si está limitada a él). Respuesta endoscópica: caída ≥50 % del SES-CD. La meta es accionable a 7–12 meses.",
+w:{0:"Era la definición de STRIDE-II.",2:"CDEIS es un índice de ensayos, no la meta de STRIDE-III.",3:"SES-CD 3–6 es actividad leve."},
+p:"La endoscopía puede adelantarse si los síntomas y los biomarcadores no concuerdan.",
+m:"El SES-CD suma tamaño de úlceras, superficie ulcerada, superficie afectada y estenosis por segmento; un valor ≤2 deja margen para cambios residuales mínimos sin úlceras francas.",
+nuevo:"STRIDE-III (oct 2026): SES-CD ≤2 y Lewis <135 por cápsula.",
+r:"Turner D et al. Lancet Gastroenterol Hepatol 2026 (STRIDE-III), tablas 2 y 3"},
+
+{id:"TR84",md:"X",b:"TR",t:"Metas (STRIDE-III)",n:"F",
+q:"EC en remisión profunda (clínica, CF 30 µg/g, SES-CD 0) con adalimumab. Refiere fatiga intensa que le impide trabajar (IBD-F sección 1 = 14). Hemoglobina normal. ¿Qué recomienda STRIDE-III?",
+o:["Cambiar de anti-TNF: la fatiga es una meta accionable","Evaluar causas no inflamatorias (ferropenia sin anemia, déficit de B12 o vitamina D, sueño, ánimo, efectos adversos) con manejo multidisciplinario; el cambio de tratamiento se decide con el paciente","La fatiga no forma parte de las metas","Agregar prednisona a dosis bajas"],
+c:1,
+e:"STRIDE-III agrega la <b>fatiga</b> a la discapacidad y la calidad de vida como metas <b>centradas en el paciente</b>. Persistente pese a remisión profunda, obliga a evaluar factores psicológicos, sueño y déficits nutricionales, con apoyo multidisciplinario (100 % de acuerdo en la votación). Optimizar el antiinflamatorio solo aplica si hay inflamación residual; cambiar de tratamiento es una decisión compartida (p. ej. por efectos adversos).",
+w:{0:"Es centrada en el paciente, no accionable.",2:"Es una de las metas nuevas.",3:"No hay inflamación que tratar."},
+p:"Ensayos aleatorizados apoyan intervenciones de ejercicio y estilo de vida para la fatiga en EII quiescente.",
+m:"La fatiga en EII es multifactorial: citoquinas inflamatorias, anemia y ferropenia, malabsorción, alteración del sueño, depresión y efectos de los fármacos; con la inflamación controlada, pesan más los factores no inflamatorios.",
+nuevo:"STRIDE-III (oct 2026): fatiga como meta centrada en el paciente.",
+r:"Turner D et al. Lancet Gastroenterol Hepatol 2026 (STRIDE-III), tabla 3"},
+
+{id:"TR85",md:"X",b:"TR",t:"Metas (STRIDE-III)",n:"S",
+q:"Hospital regional sin calprotectina fecal ni ecografía intestinal. Paciente con CU en infliximab. ¿Cómo aplicar STRIDE-III?",
+o:["Bajar las metas a la remisión clínica","Mantener las mismas metas y adaptar cómo se miden: PRO2 en cada control, PCR seriada (mejor que solo síntomas), rectosigmoidoscopía flexible o incluso rectoscopía rígida para la remisión endoscópica","Derivar a todos los pacientes para colonoscopía trimestral","No es posible hacer treat-to-target sin calprotectina"],
+c:1,
+e:"STRIDE-III incluye una adaptación para recursos limitados: <b>las metas no bajan</b>, cambia la forma de medirlas. Sin CF, la <b>PCR seriada</b> es preferible al seguimiento solo por síntomas; en CU, PRO2 con PCR normal (y CF baja cuando exista) suele bastar entre endoscopías, y la <b>rectosigmoidoscopía flexible o rígida</b> sirve para el control. La IUS se usa donde haya experiencia y la enteroRM o enteroTC en casos seleccionados.",
+w:{0:"STRIDE-III rechaza explícitamente bajar las metas.",2:"No es necesario ni factible; la sigmoidoscopía basta en la mayoría.",3:"Se puede con PCR seriada y endoscopía."},
+p:"Encuesta IOIBD en 85 países y consorcio BRICS: el treat-to-target se acepta, pero su aplicación es desigual en escenarios de bajos recursos.",
+m:"En CU la remisión clínica se correlaciona mejor con la inflamación mucosa que en EC, por lo que los síntomas y la PCR rinden más como sustitutos cuando faltan herramientas.",
+nuevo:"STRIDE-III (oct 2026): adaptación para escenarios de recursos limitados (tabla 4).",
+r:"Turner D et al. Lancet Gastroenterol Hepatol 2026 (STRIDE-III), tabla 4"}
+];
 </script>
 <script>
 (function(){
 "use strict";
 const SNAP="<!doctype html>\n"+document.documentElement.outerHTML;
 const STUDY=new Set(STUDY_IDS);
-const ALL=[...Q_CU,...Q_EC,...Q_TR,...Q_NEW,...Q_X1,...Q_X2,...Q_X3,...Q_X4].map(q=>({...q,mode:q.md||(STUDY.has(q.id)?"E":"X"),m:q.m||MECH[q.id]||""}));
+const ALL=[...Q_CU,...Q_EC,...Q_TR,...Q_NEW,...Q_X1,...Q_X2,...Q_X3,...Q_X4,...Q_S3].map(q=>({...q,mode:q.md||(STUDY.has(q.id)?"E":"X"),m:q.m||MECH[q.id]||""}));
 const byId=Object.fromEntries(ALL.map(q=>[q.id,q]));
 const BL={CU:"Colitis ulcerosa",EC:"Enfermedad de Crohn",TR:"Transversal"};
 const NV={R:"Residente",F:"Fellow",S:"Staff"};
@@ -2677,7 +2784,7 @@ function renderChanges(){
     <h2>Actualizaciones incorporadas 2025–2026</h2>
     <div class="tbl"><table><thead><tr><th>Caso</th><th>Cambio</th></tr></thead><tbody>
     ${nw.map(q=>`<tr><td class="id">${q.id}</td><td>${q.nuevo}</td></tr>`).join("")}</tbody></table></div>
-    <p class="refs" style="margin:0">Marco de referencia: ECCO CU tratamiento médico y quirúrgico 2026 · ECCO Infecciones 2026 · ACG CU y EC 2025 · AGA CPU hospitalizado y <i>C. difficile</i> 2026 · ACTECCU 2026 · STRIDE-II · Consenso Global Embarazo · VII Simposio PANCCO–ACTECCU 2026. Verificar ficha técnica y cobertura vigente antes de prescribir.</p>
+    <p class="refs" style="margin:0">Marco de referencia: ECCO CU tratamiento médico y quirúrgico 2026 · ECCO Infecciones 2026 · ACG CU y EC 2025 · AGA CPU hospitalizado y <i>C. difficile</i> 2026 · ACTECCU 2026 · STRIDE-III · Consenso Global Embarazo · VII Simposio PANCCO–ACTECCU 2026. Verificar ficha técnica y cobertura vigente antes de prescribir.</p>
   </div>`;
 }
 
@@ -2718,7 +2825,7 @@ function printBank(){
   const list=expList();const area=$("#printArea");
   const qs=list.map((q,k)=>{const or=seededOrder(q);return `<div class="pq"><h4>${k+1}. ${q.id} · ${BL[q.b]} · ${NV[q.n]} · ${esc(q.t)}</h4><p>${q.q}</p>${or.map((oi,i)=>`<p>${LET[i]}) ${q.o[oi]}</p>`).join("")}</div>`}).join("");
   const key=list.map((q,k)=>{const or=seededOrder(q);return `<div class="pq"><h4>${k+1}. ${q.id} — Respuesta ${LET[or.indexOf(q.c)]}</h4><p>${q.e}</p><p><i>Por qué no las otras:</i> ${Object.keys(q.w).sort((x,y)=>or.indexOf(+x)-or.indexOf(+y)).map(i=>LET[or.indexOf(+i)]+": "+q.w[i]).join(" · ")}</p>${q.m?`<p><i>Mecanismo:</i> ${q.m}</p>`:""}<p><i>Perla:</i> ${q.p}</p><p style="font-size:9pt">${q.r}</p></div>`}).join("");
-  area.innerHTML=`<h1 style="font:700 18pt Georgia,serif">Quiz EII v6.1 — ${EXP.set==="E"?"Estudio":EXP.set==="X"?"Examen":"Banco completo"} (${list.length} casos)</h1>${qs}<div class="pb"><h2 style="font:700 15pt Georgia,serif">Respuestas y explicaciones</h2>${key}</div>`;
+  area.innerHTML=`<h1 style="font:700 18pt Georgia,serif">Quiz EII v6.2 — ${EXP.set==="E"?"Estudio":EXP.set==="X"?"Examen":"Banco completo"} (${list.length} casos)</h1>${qs}<div class="pb"><h2 style="font:700 15pt Georgia,serif">Respuestas y explicaciones</h2>${key}</div>`;
   document.body.classList.add("printing");
   const done=()=>{document.body.classList.remove("printing");window.removeEventListener("afterprint",done)};
   window.addEventListener("afterprint",done);window.print();setTimeout(done,1500);
@@ -2728,7 +2835,7 @@ function renderExport(){
   $("#tab-export").innerHTML=`<div class="filters"><span><span class="flabel">Qué exportar</span>${segHTML("set",[["all",`Todo (${ALL.length})`],["E",`Estudio (${nE})`],["X",`Examen (${nX})`]],EXP.set)}</span></div>
   ${EMBED?`<div class="card panel" style="margin-bottom:14px"><p style="margin:0">Para imprimir o guardar como PDF, descarga el quiz como HTML y ábrelo en tu computador (funciona sin conexión).</p></div>`:""}
   <div class="expgrid">
-    <div class="card"><h3>Quiz completo (HTML sin conexión)</h3><p>Un solo archivo con los 220 casos y todas las funciones. Ábrelo en cualquier navegador, también sin internet.</p><button class="btn primary" type="button" data-exp="html">Descargar HTML</button></div>
+    <div class="card"><h3>Quiz completo (HTML sin conexión)</h3><p>Un solo archivo con los 229 casos y todas las funciones. Ábrelo en cualquier navegador, también sin internet.</p><button class="btn primary" type="button" data-exp="html">Descargar HTML</button></div>
     <div class="card"><h3>CSV para Excel / Sheets</h3><p>Una fila por caso: pregunta, opciones, respuesta, explicación, mecanismo, perla y referencias. Separador punto y coma, UTF-8.</p><button class="btn" type="button" data-exp="csv">${EMBED&&!DL?"Ver para copiar":"Descargar CSV"}</button></div>
     <div class="card"><h3>Anki (texto separado por tabulaciones)</h3><p>Frente: caso y opciones. Reverso: respuesta, explicación, perla y referencia. Etiquetas por bloque, nivel, modo y tema.</p><button class="btn" type="button" data-exp="anki">${EMBED&&!DL?"Ver para copiar":"Descargar .txt"}</button></div>
     <div class="card"><h3>JSON</h3><p>Banco completo estructurado, para reutilizar en otra herramienta.</p><button class="btn" type="button" data-exp="json">${EMBED&&!DL?"Ver para copiar":"Descargar JSON"}</button></div>
