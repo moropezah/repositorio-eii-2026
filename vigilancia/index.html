@@ -164,6 +164,19 @@ textarea{width:100%;min-height:120px;resize:vertical;line-height:1.5}
 
 /* mi lectura */
 .ml-tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.ml-bar{padding:12px 14px;margin-bottom:14px;display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center}
+.ml-bar input[type=search]{flex:1 1 260px;min-width:0}
+.ml-bar .sep{width:1px;align-self:stretch;background:var(--line)}
+.card .chips{align-items:center}
+.card .mk{margin-left:auto;display:flex;gap:6px;font-size:.9rem;align-items:center}
+.card.selc{outline:2px solid var(--marino);outline-offset:-2px}
+.fund-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.fund-tools input[type=search]{min-width:240px;flex:1 1 240px}
+.bulk{position:sticky;bottom:12px;z-index:50;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 12px;margin-top:16px;box-shadow:var(--sh-2);border-color:var(--marino)}
+.bulk .n{font-size:.85rem;color:var(--fg-2)} .bulk .n b{color:var(--fg)}
+.bulk .sp{flex:1}
+body:has(#bulk) .toast{bottom:auto;top:76px}
+@media (max-width:560px){.bulk{gap:5px;padding:8px;bottom:8px}.bulk .btn{padding:4px 8px;min-height:28px}.bulk .sp{display:none}.bulk .n{flex-basis:100%}.ml-bar .sep{display:none}}
 
 /* tendencias */
 .charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:16px}
@@ -289,7 +302,7 @@ dialog input{width:100%}
    Mientras esté vacía, la app muestra los datos de respaldo (datos-respaldo.json). */
 const API = "https://script.google.com/macros/s/AKfycbxIf8v1l_ABxiwW4VVOrGl7325pKchw59IEd_6qTPlcuVfbXmRDm0A0FgvNj5hWqm8C/exec";
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/1IeZIVXbMe8RHzewzeOJ9BosDqZ55aJB94OWxcdLquH0/edit";
-const LS = {cache:"vig-eii-cache-v1", key:"vig-eii-clave", api:"vig-eii-api", pend:"vig-eii-pendientes", tema:"vig-eii-tema"};
+const LS = {cache:"vig-eii-cache-v1", key:"vig-eii-clave", api:"vig-eii-api", pend:"vig-eii-pendientes", tema:"vig-eii-tema", loc:"vig-eii-marcas-locales", avisoLoc:"vig-eii-aviso-local"};
 
 const PTS_NIVEL = {"1":4,"2":3,"3":1};
 const PTS_TIPO = {"Guía/consenso":5,"ECA":4,"Metaanálisis/RS":4,"ECA – análisis secundario":3,"Cohorte/clínico":2,"Revisión":1};
@@ -308,9 +321,11 @@ const apiURL = () => new URLSearchParams(location.search).get("api") || ls.get(L
 let DATA = null;          // {registro, lectura, bitacora, marcas, actualizado, respaldo}
 let CLAVE = ls.get(LS.key, "");
 let PEND = ls.get(LS.pend, {});   // cambios por PMID aún no guardados en el Sheet
+let LOCAL = ls.get(LS.loc, {});   // marcas guardadas solo en este dispositivo (sin clave, o artículos aún sin PMID)
 let fuente = "";
 
 const $ = s => document.querySelector(s);
+const norm = s => String(s ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
 /* ───────── Tema ───────── */
@@ -383,16 +398,31 @@ function estadoFuente(){
 }
 
 /* ───────── Marcas (Mi lectura) ───────── */
-function marca(pmid){ return Object.assign({estado:"",destacado:false,nota:""}, DATA.marcas[pmid]||{}, PEND[pmid]||{}); }
+/* Con clave: las marcas de artículos con PMID se guardan en el Sheet. Sin clave (o artículos aún sin PMID): en este dispositivo. */
 const editor = () => !!CLAVE && !!apiURL();
-let envioTimer = null;
-function cambiar(pmid, cambio){
-  if (!editor()){ abrirClave(); return; }
-  PEND[pmid] = Object.assign({}, PEND[pmid]||{}, cambio);
-  ls.set(LS.pend, PEND);
-  render(); estadoFuente();
-  clearTimeout(envioTimer); envioTimer = setTimeout(enviar, 800);
+const esPmid = k => /^\d+$/.test(String(k||""));
+const vacia = m => !m.estado && !m.destacado && !m.nota;
+function marca(k){
+  const base = editor() ? Object.assign({}, DATA.marcas[k]||{}, PEND[k]||{}) : {};
+  return Object.assign({estado:"",destacado:false,nota:""}, base, LOCAL[k]||{});
 }
+function clavesMarcadas(){ return Object.keys(Object.assign({}, editor()?DATA.marcas:{}, editor()?PEND:{}, LOCAL)).filter(k => !vacia(marca(k))); }
+let envioTimer = null;
+function aplicar(k, cambio){
+  if (editor() && esPmid(k)){ PEND[k] = Object.assign({}, PEND[k]||{}, cambio); return true; }
+  const m = Object.assign({estado:"",destacado:false,nota:""}, LOCAL[k]||{}, cambio);
+  if (vacia(m)) delete LOCAL[k]; else LOCAL[k] = m;
+  return false;
+}
+function cambiarVarios(keys, cambio){
+  let sheet = false;
+  keys.forEach(k => { if (aplicar(k, cambio)) sheet = true; });
+  ls.set(LS.loc, LOCAL);
+  if (sheet){ ls.set(LS.pend, PEND); clearTimeout(envioTimer); envioTimer = setTimeout(enviar, 800); }
+  else if (!editor() && !ls.get(LS.avisoLoc, false)){ ls.set(LS.avisoLoc, true); toast("Tus marcas se guardan en este dispositivo. Las encuentras en «Mi lectura»."); }
+  render(); estadoFuente();
+}
+function cambiar(k, cambio){ cambiarVarios([k], cambio); }
 async function enviar(){
   const pm = Object.keys(PEND); if (!pm.length || !editor()) return;
   const lote = pm.map(p => Object.assign({pmid:p}, PEND[p]));
@@ -426,7 +456,12 @@ $("#claveOk").onclick = async () => {
   $("#claveMsg").textContent = "Comprobando…";
   try{
     const d = await fetchJSON(apiURL() + (apiURL().includes("?")?"&":"?") + "action=check&key=" + encodeURIComponent(k));
-    if (d.ok && d.editor){ CLAVE=k; ls.set(LS.key,k); actualizarBtnClave(); $("#dlgClave").close(); render(); toast("Modo edición activo: tus marcas y notas se guardan en el Sheet."); enviar(); }
+    if (d.ok && d.editor){ CLAVE=k; ls.set(LS.key,k);
+      const mig = Object.keys(LOCAL).filter(esPmid);
+      mig.forEach(p => { PEND[p] = Object.assign({}, PEND[p]||{}, LOCAL[p]); delete LOCAL[p]; });
+      ls.set(LS.loc, LOCAL); ls.set(LS.pend, PEND);
+      actualizarBtnClave(); $("#dlgClave").close(); render(); estadoFuente();
+      toast(mig.length ? `Modo edición activo: ${mig.length} ${mig.length===1?"marca de este dispositivo pasa":"marcas de este dispositivo pasan"} al Sheet.` : "Modo edición activo: tus marcas y notas se guardan en el Sheet."); enviar(); }
     else $("#claveMsg").textContent = "Clave incorrecta.";
   }catch(e){ $("#claveMsg").textContent = "No se pudo comprobar: " + e.message; }
 };
@@ -475,8 +510,12 @@ function chipsDe(r, extra=true){
   }
   return h;
 }
+function indicadorMarca(k){
+  const m = marca(k);
+  return `${m.destacado?`<span title="Destacado" style="color:var(--ambar)">★</span>`:""}${m.estado==="Leído"?`<span title="Leído" style="color:var(--verde)">✓</span>`:m.estado==="Por leer"?`<span title="Por leer" style="color:var(--marino-2)">●</span>`:""}${m.nota?`<span title="Tiene nota">✎</span>`:""}`;
+}
 function botonesMarca(pmid){
-  if (!pmid || !editor()) return "";
+  if (!pmid) return "";
   const m = marca(pmid), dis = "";
   return `<button class="btn ${m.estado==="Leído"?"sel":""}" data-act="leido" data-pmid="${pmid}"${dis}>${m.estado==="Leído"?"✓ Leído":"Marcar leído"}</button>
     <button class="btn ${m.estado==="Por leer"?"sel":""}" data-act="porleer" data-pmid="${pmid}"${dis}>${m.estado==="Por leer"?"● Por leer":"Por leer"}</button>
@@ -489,7 +528,8 @@ function notaDe(pmid){ const n = pmid && marca(pmid).nota; return n ? `<div clas
 let VISTA = "semana", SEMANA = null;
 const F = {q:"", areas:new Set(), tipos:new Set(), niveles:new Set(), ingreso:"", ped:"", pipe:false, min:0, estado:"", orden:"puntaje", n:40};
 const SEL = new Set();
-let ML = "Destacados";
+let ML = "Todos";
+const MLF = {q:"", origen:"", areas:new Set()};
 
 function render(){
   if (!DATA) return;
@@ -583,7 +623,6 @@ function filtrar(){
 }
 
 function itemHTML(r, conCheck){
-  const m = marca(r.pmid);
   return `<div class="panel item" data-act="detalle" data-pmid="${r.pmid}">
     <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
       <div class="pt num ${r.puntaje>=8?"hi":""}" title="Puntaje ${r.puntaje}">${r.puntaje}</div>
@@ -591,7 +630,7 @@ function itemHTML(r, conCheck){
     </div>
     <div><div class="t">${esc(r.titulo)}</div>
       <div class="m">${esc(r.revista)} · ${esc(r.fecha||r.anio)} · ${esc(r.autores)}</div>
-      <div class="row">${chipsDe(r)}<span class="mk">${m.destacado?`<span title="Destacado" style="color:var(--ambar)">★</span>`:""}${m.estado==="Leído"?`<span title="Leído" style="color:var(--verde)">✓</span>`:m.estado==="Por leer"?`<span title="Por leer" style="color:var(--marino-2)">●</span>`:""}${m.nota?`<span title="Tiene nota">✎</span>`:""}</span></div>
+      <div class="row">${chipsDe(r)}<span class="mk">${indicadorMarca(r.pmid)}</span></div>
     </div></div>`;
 }
 
@@ -626,9 +665,10 @@ function vExplorar(){
 /* ───────── Fundamentales (artículos de consulta obligatoria) ───────── */
 let FUND = [];
 const FF = {q:"", cats:new Set(), areas:new Set()};
+let FSELMODO = false; const FSEL = new Set();
 const CAT_ORDEN = ["Historia","Scores y clasificaciones","CU aguda grave","Anti-TNF","Anti-integrinas","Anti-IL-12/23","Anti-IL-23","Inhibidores JAK","Moduladores S1P","Head-to-head","Estrategia y treat-to-target","Cirugía y posoperatorio","Embarazo y seguridad","Guías y consensos"];
 const KF = f => f.pmid || f.id;
-function fundComoReg(f){ return {pmid:f.pmid, titulo:`${f.estudio}: ${f.titulo}`, revista:f.revista, fecha:f.anio, anio:f.anio, autores:f.autores, area:f.area, tipo:f.categoria, nivel:"", fase:"", ped:"", puntaje:"F", fund:f}; }
+function fundComoReg(f){ return {pmid:KF(f), doi:f.doi, titulo: norm(f.titulo).startsWith(norm(f.estudio)) ? f.titulo : `${f.estudio}: ${f.titulo}`, revista:f.revista, fecha:f.anio, anio:f.anio, autores:f.autores, area:f.area, tipo:f.categoria, nivel:"", fase:"", ped:"", puntaje:"F", fund:f}; }
 function itemPorPmid(p){ return DATA.registro.find(r=>r.pmid===p) || (FUND.find(f=>KF(f)===p) ? fundComoReg(FUND.find(f=>KF(f)===p)) : null); }
 function citaPorPmid(p){ const f = FUND.find(x=>KF(x)===p); if (f && !DATA.registro.find(r=>r.pmid===p)) return vancouverFund(f); return vancouver(DATA.registro.find(r=>r.pmid===p)); }
 function vancouverFund(f){
@@ -638,11 +678,11 @@ function vancouverFund(f){
   return `${a ? a+". " : ""}${t} ${f.revista}. ${vp}.${f.doi?` doi:${f.doi}.`:""}${f.pmid?` PMID: ${f.pmid}.`:""}`;
 }
 function filtrarFund(){
-  const q = FF.q.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+  const q = norm(FF.q);
   return FUND.filter(f => {
     if (FF.cats.size && !FF.cats.has(f.categoria)) return false;
     if (FF.areas.size && !FF.areas.has(f.area)) return false;
-    if (q){ const t = (f.estudio+" "+f.farmaco+" "+f.titulo+" "+f.revista+" "+f.autores+" "+f.hallazgo+" "+f.pmid).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+    if (q){ const t = norm([f.estudio,f.farmaco,f.titulo,f.revista,f.autores,f.hallazgo,f.categoria,f.pmid,marca(KF(f)).nota].join(" "));
       if (!q.split(/\s+/).every(w => t.includes(w))) return false; }
     return true;
   });
@@ -654,36 +694,48 @@ function vFundamentales(){
   const cats = CAT_ORDEN.filter(c => FUND.some(f=>f.categoria===c));
   let h = `<div class="view-h"><div class="grow"><div class="eyebrow">Consulta obligatoria</div><h1>Artículos fundamentales</h1>
     <p>${FUND.length} artículos que definieron el manejo de la EII: desde Truelove y Witts hasta los pivotales de cada fármaco en uso, los head-to-head, los ensayos de estrategia y las guías vigentes (ECCO, ACG, AGA, PANCCO, ACTECCU, STRIDE-III). Cada cita está verificada en PubMed o, si aún no está indexada, en la publicación original.</p></div>
-    <input type="search" id="fq" placeholder="Buscar: VARSITY, upadacitinib, Oxford…" value="${esc(FF.q)}" style="min-width:260px"></div>
+    <div class="fund-tools"><input type="search" id="fq" placeholder="Buscar: VARSITY, upadacitinib, Oxford…" value="${esc(FF.q)}">
+      <button class="btn ${FSELMODO?"sel":""}" id="fSelModo" aria-pressed="${FSELMODO}">${FSELMODO?"☑ Seleccionando":"☐ Seleccionar"}</button></div></div>
     <div class="panel" style="padding:12px 14px;margin-bottom:16px">
       <div class="toggles" style="margin-bottom:8px">${cats.map(c=>tg("cats",c,c,FUND.filter(f=>f.categoria===c).length)).join("")}</div>
       <div class="toggles">${["CU","EC","EII"].map(a=>tg("areas",a,a==="EII"?"EII (ambas)":a)).join("")}${FF.cats.size||FF.areas.size||FF.q?`<button class="lim" id="flim" style="margin:0 0 0 8px">Limpiar</button>`:""}</div>
     </div>`;
-  if (!res.length) return h + `<div class="panel vacio">Ningún artículo cumple estos filtros.</div>`;
+  if (!res.length) return h + `<div class="panel vacio">Ningún artículo cumple estos filtros.</div>` + (FSELMODO ? bulkHTML(res) : "");
   for (const c of cats){
     const grupo = res.filter(f=>f.categoria===c).sort((a,b)=> c==="Guías y consensos" ? (b.anio-a.anio)||(a.orden-b.orden) : (a.anio-b.anio)||(a.orden-b.orden));
     if (!grupo.length) continue;
     h += `<div class="grupo"><h2>${esc(c)}</h2><span class="c">${grupo.length}</span></div><div class="cards">`;
     for (const f of grupo){
-      h += `<article class="panel card a-${esc(f.area)}">
-        <div class="chips"><span class="chip a-${esc(f.area)}">${esc(f.area)}</span><span class="chip">${esc(f.diseno)}</span></div>
+      const k = KF(f), sel = FSEL.has(k);
+      h += `<article class="panel card a-${esc(f.area)}${FSELMODO&&sel?" selc":""}" data-fcard="${esc(k)}">
+        <div class="chips"><span class="chip a-${esc(f.area)}">${esc(f.area)}</span><span class="chip">${esc(f.diseno)}</span><span class="mk">${indicadorMarca(k)}${FSELMODO?`<input type="checkbox" class="ck" data-fsel="${esc(k)}" ${sel?"checked":""} aria-label="Seleccionar ${esc(f.estudio)}">`:""}</span></div>
         <h3>${esc(f.estudio)}</h3>
         <div class="meta">${esc(f.farmaco)} · ${esc(f.revista)} ${esc(f.anio)} · ${esc(f.autores)}</div>
         <p class="hall">${esc(f.hallazgo)}</p>
         <div class="cambia si" style="border-left-color:var(--marino)"><b style="color:var(--marino)">Por qué importa</b><span>${esc(f.importa)}</span></div>
-        ${notaDe(f.pmid)}
+        ${notaDe(k)}
         <div class="acts">
           <a class="btn prim" href="${f.doi?`https://doi.org/${esc(f.doi)}`:`https://pubmed.ncbi.nlm.nih.gov/${esc(f.pmid)}/`}" target="_blank" rel="noopener">Abrir artículo ↗</a>
           <button class="btn" data-act="detalle" data-pmid="${esc(KF(f))}">Ficha</button>
           <button class="btn" data-act="copiarCita" data-pmid="${esc(KF(f))}">Copiar cita</button>
-          ${botonesMarca(f.pmid)}
+          ${botonesMarca(k)}
         </div></article>`;
     }
     h += `</div>`;
   }
   h += `<p style="margin-top:18px"><button class="btn" id="citarFund">Copiar las ${res.length} citas visibles (Vancouver)</button></p>`;
+  if (FSELMODO) h += bulkHTML(res);
   return h;
 }
+function bulkHTML(res){
+  const n = FSEL.size, d = n ? "" : " disabled";
+  return `<div class="panel bulk" id="bulk"><span class="n"><b class="num">${n}</b> ${n===1?"seleccionado":"seleccionados"}</span>
+    <button class="btn" id="fSelVis">Todos (${res.length})</button><button class="btn" id="fSelNada"${n?"":" disabled"}>Ninguno</button><span class="sp"></span>
+    <button class="btn" data-bulk="porleer"${d}>● Por leer</button><button class="btn" data-bulk="star"${d}>★ Destacar</button><button class="btn" data-bulk="leido"${d}>✓ Leído</button>
+    <button class="btn" data-bulk="quitar" title="Quitar de Mi lectura (las notas se conservan)"${d}>Quitar</button><button class="btn prim" data-bulk="citar"${d}>Copiar ${n||""} ${n===1?"cita":"citas"}</button>
+    <button class="btn" id="fSelFin">Listo</button></div>`;
+}
+function refrescarBulk(){ const b=$("#bulk"); if (b) b.outerHTML = bulkHTML(filtrarFund()); }
 function abrirFichaFund(f){
   $("#dChips").innerHTML = `<span class="chip a-${esc(f.area)}">${esc(f.area)}</span><span class="chip">${esc(f.categoria)}</span>`;
   $("#dBody").innerHTML = `<div class="eyebrow">${esc(f.estudio)}</div><h2 id="dTitulo">${esc(f.titulo)}</h2>
@@ -692,22 +744,38 @@ function abrirFichaFund(f){
     <div><div class="eyebrow">Hallazgo clave</div><p style="margin:0">${esc(f.hallazgo)}</p></div>
     <div class="cambia si" style="border-left-color:var(--marino)"><b style="color:var(--marino)">Por qué importa</b><span>${esc(f.importa)}</span></div>
     <div class="acts">${f.doi?`<a class="btn prim" href="https://doi.org/${esc(f.doi)}" target="_blank" rel="noopener">Abrir artículo ↗</a>`:""}${f.pmid?`<a class="btn" href="https://pubmed.ncbi.nlm.nih.gov/${esc(f.pmid)}/" target="_blank" rel="noopener">PubMed ↗</a>`:""}</div>
-    ${f.pmid?`<div><div class="eyebrow">Mi lectura</div><div class="acts">${botonesMarca(f.pmid)}</div>${notaDe(f.pmid)}</div>`:""}
+    <div><div class="eyebrow">Mi lectura</div><div class="acts">${botonesMarca(KF(f))}</div>${notaDe(KF(f))}${f.pmid?"":`<p style="font-size:.76rem;color:var(--fg-3);margin:6px 0 0">Aún sin PMID: las marcas de este artículo quedan en este dispositivo.</p>`}</div>
     <div><div class="eyebrow">Cita (Vancouver)</div><div class="cita">${esc(vancouverFund(f))}</div>
       <div class="acts" style="margin-top:8px"><button class="btn" data-act="copiarCita" data-pmid="${esc(KF(f))}">Copiar cita</button></div></div>`;
   $("#drawerWrap").hidden = false; $("#drawerWrap").dataset.pmid = KF(f); document.body.style.overflow="hidden";
 }
 
 function vLectura(){
-  const pms = Object.keys(Object.assign({}, DATA.marcas, PEND));
-  const regs = pms.map(p => itemPorPmid(p)).filter(Boolean);
-  const cats = {"Destacados": regs.filter(r=>marca(r.pmid).destacado), "Por leer": regs.filter(r=>marca(r.pmid).estado==="Por leer"),
+  const esFund = k => FUND.some(f=>KF(f)===k);
+  const todos = clavesMarcadas().map(k => itemPorPmid(k)).filter(Boolean);
+  const q = norm(MLF.q);
+  const regs = todos.filter(r => {
+    if (MLF.origen==="fund" && !esFund(r.pmid)) return false;
+    if (MLF.origen==="sem" && esFund(r.pmid)) return false;
+    if (MLF.areas.size && !MLF.areas.has(r.area==="CU"||r.area==="EC" ? r.area : "EII")) return false;
+    if (q){ const f = FUND.find(x=>KF(x)===r.pmid);
+      const t = norm([r.titulo,r.revista,r.autores,r.tipo,r.pmid,r.doi,marca(r.pmid).nota, f?[f.estudio,f.farmaco,f.categoria,f.hallazgo].join(" "):""].join(" "));
+      if (!q.split(/\s+/).every(w => t.includes(w))) return false; }
+    return true;
+  });
+  const cats = {"Todos": regs, "Destacados": regs.filter(r=>marca(r.pmid).destacado), "Por leer": regs.filter(r=>marca(r.pmid).estado==="Por leer"),
                 "Leídos": regs.filter(r=>marca(r.pmid).estado==="Leído"), "Con nota": regs.filter(r=>marca(r.pmid).nota)};
   const lista = cats[ML] || [];
+  const tgo = (v, lab) => `<button class="tg" data-mlo="${v}" aria-pressed="${MLF.origen===v}">${lab}</button>`;
+  const tga = a => `<button class="tg" data-mla="${a}" aria-pressed="${MLF.areas.has(a)}">${a==="EII"?"EII (ambas)":a}</button>`;
+  const filtrando = MLF.q || MLF.origen || MLF.areas.size;
   let h = avisoRespaldo() + `<div class="view-h"><div class="grow"><div class="eyebrow">Seguimiento personal</div><h1>Mi lectura</h1>
-    <p>${editor() ? "Tus marcas y notas se guardan en la pestaña «Mi lectura» del Sheet y se ven en todos tus dispositivos." : "Marcas y notas del Dr. Oropeza. Para marcar o anotar se necesita el modo edición (🔒)."}</p></div></div>
+    <p>${editor() ? "Tus marcas y notas se guardan en la pestaña «Mi lectura» del Sheet y se ven en todos tus dispositivos." : "Tus marcas y notas se guardan en este dispositivo. Marca artículos desde Semana, Explorar o Fundamentales para tenerlos a mano aquí."}</p></div></div>
+    <div class="panel ml-bar"><input type="search" id="mlq" placeholder="Buscar en Mi lectura: título, fármaco, estudio, revista, nota…" value="${esc(MLF.q)}">
+      <div class="toggles">${tgo("","Todos")}${tgo("fund","Fundamentales")}${tgo("sem","Semanales")}</div><span class="sep" aria-hidden="true"></span>
+      <div class="toggles">${["CU","EC","EII"].map(tga).join("")}</div>${filtrando?`<button class="lim" id="mllim" style="margin:0">Limpiar</button>`:""}</div>
     <div class="ml-tabs">${Object.keys(cats).map(k=>`<button class="tg" data-ml="${k}" aria-pressed="${ML===k}">${k} · ${cats[k].length}</button>`).join("")}</div>`;
-  if (!lista.length) h += `<div class="panel vacio">${regs.length ? "Nada en esta categoría todavía." : "Aún no hay artículos marcados. Usa «Marcar leído», «Por leer», ☆ o «Nota» en la semana o en Explorar."}</div>`;
+  if (!lista.length) h += `<div class="panel vacio">${todos.length ? (filtrando ? "Ningún artículo marcado cumple esta búsqueda." : "Nada en esta categoría todavía.") : "Aún no hay artículos marcados. Usa «Marcar leído», «Por leer», ☆ o «Nota» en Semana, Explorar o Fundamentales."}</div>`;
   else h += `<div class="lista">${lista.map(r => itemHTML(r).replace(/<\/div><\/div>$/, `${notaDe(r.pmid)}</div></div>`)).join("")}</div>`;
   if (lista.length) h += `<p style="margin-top:14px"><button class="btn" id="citarML">Copiar las ${lista.length} citas de «${ML}»</button></p>`;
   return h;
@@ -793,13 +861,14 @@ function vAcerca(){
       <li><b>Puntaje</b> = nivel de revista (1 → 4, 2 → 3, 3 → 1) + tipo (guía/consenso 5, ECA 4, MA/RS 4, ECA secundario 3, cohorte 2, revisión 1) + ajuste (−3 preclínico; +1 fase 3, multicéntrico o doble ciego; +1 guía de sociedad; +1 cohorte multicéntrica o poblacional). Entra al registro con ≥5.</li>
       <li><b>Lectura obligatoria</b>: hasta 5 por semana, con el hallazgo tomado del resumen y si cambia la práctica (Sí / No / Aún no / Por evaluar).</li>
       <li>El <b>pipeline</b> (fármacos no aprobados) se marca aparte y nunca se presenta como estándar de manejo.</li>
-      <li><b>Fundamentales</b>: colección curada fija (no la toca la búsqueda semanal) con los artículos históricos, pivotales, head-to-head, de estrategia y las guías vigentes. Citas verificadas en PubMed; vive en <code>vigilancia/fundamentales.json</code>.</li></ul></div>
+      <li><b>Fundamentales</b>: colección curada fija (no la toca la búsqueda semanal) con los artículos históricos, pivotales, head-to-head, de estrategia y las guías vigentes. Citas verificadas en PubMed; vive en <code>vigilancia/fundamentales.json</code>. Se marcan igual que los semanales y con «☐ Seleccionar» se marcan o citan varios a la vez.</li>
+      <li><b>Mi lectura</b>: sin clave, las marcas y notas quedan en este dispositivo; con la clave del autor se guardan en el Sheet (los artículos aún sin PMID quedan siempre en el dispositivo).</li></ul></div>
     <div class="panel"><h2>Estado de los datos</h2>
       <dl class="dl"><dt>Fuente</dt><dd>${fuente==="sheet"?"Sheet en vivo (Apps Script)":fuente==="cache"?"Copia guardada en este dispositivo":"Datos de respaldo del 16 oct 2026"}</dd>
       <dt>Leído</dt><dd>${esc(fmtFechaHora(DATA.actualizado))}</dd>
       <dt>Registro</dt><dd>${DATA.registro.length} artículos · ${DATA.lectura.length} de lectura obligatoria</dd>
       ${b?`<dt>Última búsqueda</dt><dd>${esc(b.fecha)} · ${esc(b.ventana)} · ${esc(b.agregados)} agregados</dd>`:""}
-      <dt>Modo</dt><dd>${editor()?"Edición (marcas y notas se guardan en el Sheet)":"Solo lectura"}</dd></dl>
+      <dt>Mis marcas</dt><dd>${editor()?"Modo edición: se guardan en el Sheet":"Se guardan en este dispositivo"}</dd></dl>
       <p style="margin-top:12px"><a class="btn" href="${SHEET_URL}" target="_blank" rel="noopener">Abrir el Sheet ↗</a> <span style="font-size:.78rem;color:var(--fg-3)">(solo con permiso del autor)</span></p></div>
     <div class="panel"><h2>Conexión con el Sheet</h2>
       <p>${api?"La app está conectada a una aplicación web de Apps Script.":"Todavía no hay conexión: la app muestra los datos de respaldo."} Para conectarla, el autor implementa el script de <code>fuentes/vigilancia/Code.gs</code> como aplicación web y la URL se escribe en la constante <code>API</code> de este archivo.</p>
@@ -826,7 +895,7 @@ function abrirFicha(pmid){
     ${l?`<div><div class="eyebrow">Lectura obligatoria</div><p style="margin:0 0 8px">${esc(l.hallazgo)}</p><div class="cambia ${claseCambia(l.cambia)}"><b>${esc(partirCambia(l.cambia)[0])}</b><span>${esc(partirCambia(l.cambia)[1])}</span></div></div>`:
       (r.cambia?`<div class="cambia ${claseCambia(r.cambia)}"><b>${esc(partirCambia(r.cambia)[0])}</b><span>${esc(partirCambia(r.cambia)[1])}</span></div>`:"")}
     <div class="acts">${r.doi?`<a class="btn prim" href="https://doi.org/${esc(r.doi)}" target="_blank" rel="noopener">Abrir artículo ↗</a>`:""}<a class="btn" href="https://pubmed.ncbi.nlm.nih.gov/${esc(r.pmid)}/" target="_blank" rel="noopener">PubMed ↗</a></div>
-    <div><div class="eyebrow">Mi lectura</div><div class="acts">${botonesMarca(pmid)}</div>${notaDe(pmid)||(editor()?"":`<p style="font-size:.8rem;color:var(--fg-3);margin:6px 0 0">Sin nota.</p>`)}</div>
+    <div><div class="eyebrow">Mi lectura</div><div class="acts">${botonesMarca(pmid)}</div>${notaDe(pmid)}</div>
     <div><div class="eyebrow">Cita (Vancouver)</div><div class="cita" id="citaTxt">${esc(vancouver(r))}</div>
       <div class="acts" style="margin-top:8px"><button class="btn" data-act="copiarCita" data-pmid="${pmid}">Copiar cita</button></div>
       <p style="font-size:.74rem;color:var(--fg-3);margin:6px 0 0">Volumen y páginas no vienen en el registro; complétalos desde PubMed si la cita es para publicación.</p></div>`;
@@ -840,8 +909,7 @@ addEventListener("keydown", e => { if (e.key==="Escape" && !$("#drawerWrap").hid
 /* ───────── Nota ───────── */
 let notaPM = null;
 function abrirNota(pmid){
-  if (!editor()){ abrirClave(); return; }
-  const r = DATA.registro.find(x=>x.pmid===pmid); notaPM = pmid;
+  const r = itemPorPmid(pmid); notaPM = pmid;
   $("#notaTit").textContent = r ? (r.titulo.length>80 ? r.titulo.slice(0,78)+"…" : r.titulo) : "Nota";
   $("#inNota").value = marca(pmid).nota || ""; $("#dlgNota").showModal(); setTimeout(()=>$("#inNota").focus(),50);
 }
@@ -881,6 +949,19 @@ document.addEventListener("click", e => {
   const tg = e.target.closest("[data-tg]");
   if (tg){ const s=F[tg.dataset.tg], v=tg.dataset.val; s.has(v)?s.delete(v):s.add(v); F.n=40; render(); return; }
   const ml = e.target.closest("[data-ml]"); if (ml){ ML=ml.dataset.ml; render(); return; }
+  const mlo = e.target.closest("[data-mlo]"); if (mlo){ MLF.origen=mlo.dataset.mlo; render(); return; }
+  const mla = e.target.closest("[data-mla]"); if (mla){ const v=mla.dataset.mla; MLF.areas.has(v)?MLF.areas.delete(v):MLF.areas.add(v); render(); return; }
+  const fs = e.target.closest("[data-fsel]");
+  if (fs){ const k=fs.dataset.fsel; fs.checked ? FSEL.add(k) : FSEL.delete(k); const c=fs.closest("[data-fcard]"); if (c) c.classList.toggle("selc", fs.checked); refrescarBulk(); return; }
+  const bk = e.target.closest("[data-bulk]");
+  if (bk && FSEL.size){ const ks=[...FSEL], n=ks.length, a=bk.dataset.bulk;
+    if (a==="citar"){ const fs2=FUND.filter(f=>FSEL.has(KF(f))); copiar(fs2.map((f,i)=>`${i+1}. ${vancouverFund(f)}`).join("\n"), `${n} ${n===1?"cita copiada":"citas copiadas"}`); return; }
+    const cambio = {porleer:{estado:"Por leer"}, leido:{estado:"Leído"}, star:{destacado:true}, quitar:{estado:"",destacado:false}}[a];
+    const conNota = a==="quitar" ? ks.filter(k=>marca(k).nota).length : 0;
+    FSEL.clear(); cambiarVarios(ks, cambio);
+    const pl = n===1 ? "" : "s";
+    toast(a==="quitar" ? `${n} quitado${pl} de Mi lectura${conNota?` (se conserva${conNota===1?" la nota":"n las notas"})`:""}` : `${n} ${a==="porleer"?`marcado${pl} «Por leer»`:a==="leido"?`marcado${pl} como leído${pl}`:`destacado${pl}`} · ver en Mi lectura`);
+    return; }
   const id = e.target.id;
   if (id==="limpiar"){ Object.assign(F,{q:"",ingreso:"",ped:"",pipe:false,min:0,estado:"",n:40}); F.areas.clear(); F.tipos.clear(); F.niveles.clear(); render(); }
   else if (id==="verMas"){ F.n+=40; render(); }
@@ -890,6 +971,11 @@ document.addEventListener("click", e => {
     copiar(u.map((p,i)=>`${i+1}. ${citaPorPmid(p)}`).join("\n"), `${u.length} citas copiadas`); }
   else if (id==="citarFund"){ copiar(filtrarFund().map((f,i)=>`${i+1}. ${vancouverFund(f)}`).join("\n"), `${filtrarFund().length} citas copiadas`); }
   else if (id==="flim"){ FF.q=""; FF.cats.clear(); FF.areas.clear(); render(); }
+  else if (id==="fSelModo"){ FSELMODO=!FSELMODO; if (!FSELMODO) FSEL.clear(); render(); }
+  else if (id==="fSelFin"){ FSELMODO=false; FSEL.clear(); render(); }
+  else if (id==="fSelVis"){ filtrarFund().forEach(f=>FSEL.add(KF(f))); render(); }
+  else if (id==="fSelNada"){ FSEL.clear(); render(); }
+  else if (id==="mllim"){ MLF.q=""; MLF.origen=""; MLF.areas.clear(); render(); }
   else if (id==="btnFiltros"){ $("#panelFiltros").classList.toggle("open"); }
   else if (id==="apiOk"){ const v=$("#inApi").value.trim(); if(v){ ls.set(LS.api,v); ls.del(LS.cache); location.reload(); } }
   else if (id==="apiDel"){ ls.del(LS.api); ls.del(LS.cache); location.reload(); }
@@ -902,6 +988,7 @@ document.addEventListener("click", e => {
 });
 document.addEventListener("input", e => {
   if (e.target.id==="fq"){ FF.q=e.target.value; const pos=e.target.selectionStart; render(); const q=$("#fq"); if(q){ q.focus(); q.setSelectionRange(pos,pos); } }
+  if (e.target.id==="mlq"){ MLF.q=e.target.value; const pos=e.target.selectionStart; render(); const q=$("#mlq"); if(q){ q.focus(); q.setSelectionRange(pos,pos); } }
 });
 fetch("fundamentales.json").then(r=>r.json()).then(d=>{ FUND=d; if (VISTA==="fundamentales"||VISTA==="lectura") render(); }).catch(()=>{});
 addEventListener("hashchange", ruta);
