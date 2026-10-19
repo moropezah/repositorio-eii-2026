@@ -98,7 +98,8 @@ const INFO={
   <li class="n"><b>Mayo parcial</b> (0–9): frecuencia + sangrado + valoración global, sin endoscopía. Sirve para seguimiento clínico y para clasificar en la consulta.</li>
   <li class="n"><b>Mayo total</b> (0–12): suma la endoscopía. Remisión ≤2 sin subpuntaje &gt;1. Respuesta: descenso ≥3 puntos y ≥30 %, con sangrado que baja ≥1 o queda en 0–1.</li>
   <li class="n"><b>Mayo modificado</b> (0–9: frecuencia + sangrado + endoscopía), usado en ensayos recientes y por la FDA. Remisión: frecuencia ≤1, sangrado 0 y endoscópico ≤1.</li>
-  <li class="n"><b>Objetivo STRIDE-II</b>: Mayo endoscópico 0–1 (ideal 0) a los 6–12 meses.</li></ul>
+  <li class="n"><b>Meta STRIDE-III</b> (accionable, 7–12 meses): Mayo endoscópico 0. Mayo 1 solo como meta transitoria si hay remisión clínica y bioquímica. STRIDE-II aceptaba 0–1.</li>
+  <li class="n"><b>Remisión clínica STRIDE-III</b>: Mayo parcial ≤1 con sangrado 0. Respuesta: descenso ≥30 % y ≥2 puntos.</li></ul>
   <p class="note" style="margin-top:8px">Schroeder KW, Tremaine WJ, Ilstrup DM. N Engl J Med. 1987;317:1625-9. doi:10.1056/NEJM198712243172603 · Lewis JD et al. Inflamm Bowel Dis. 2008;14:1660-6. doi:10.1002/ibd.20520</p>`,
  uceis:`<h4>Cómo se usa</h4><ul class="why">
   <li class="n">Tres descriptores con definición precisa; total 0–8. Menor variabilidad entre observadores que el Mayo endoscópico y no satura en la enfermedad grave.</li>
@@ -135,7 +136,7 @@ const INFO={
   <p class="note" style="margin-top:8px">Sandborn WJ, Tremaine WJ, Batts KP, et al. Mayo Clin Proc. 1994;69(5):409-15. doi:10.1016/s0025-6196(12)61634-6 · Travis S et al. N Engl J Med. 2023;388:1191-200. doi:10.1056/NEJMoa2208450</p>`,
  ses:`<h4>Cómo se usa</h4><ul class="why">
   <li class="n">Puntaje endoscópico: 4 variables (0–3) en 5 segmentos; total 0–56. La estenosis no se mueve con el tratamiento médico.</li>
-  <li class="n"><b>Objetivo STRIDE-II</b>: SES-CD &lt;3 o ausencia de úlceras a los 6–12 meses.</li>
+  <li class="n"><b>Meta STRIDE-III</b> (accionable, 7–12 meses): SES-CD ≤2; remisión completa ≤1. Por cápsula, Lewis &lt;135. STRIDE-II pedía SES-CD &lt;3 o ausencia de úlceras.</li>
   <li class="n"><b>Respuesta endoscópica</b>: descenso ≥50 % respecto del basal.</li>
   <li class="n">En enfermedad ileal aislada el máximo es bajo: un mismo número pesa más que en colitis extensa.</li></ul>
   <p class="note" style="margin-top:8px">Daperno M, D'Haens G, Van Assche G, et al. Development and validation of a new, simplified endoscopic activity score for Crohn's disease: the SES-CD. Gastrointest Endosc. 2004;60(4):505-12. doi:10.1016/s0016-5107(04)01878-4</p>`
@@ -161,7 +162,7 @@ function scRender(){
     const extra=[];
     if(partial!==null&&total!==null)extra.push(`Mayo parcial: <b>${partial}/9</b>`);
     if(mms!==null)extra.push(`Mayo modificado: <b>${mms}/9</b>${v.sf<=1&&v.rb===0&&v.es<=1?" · remisión":""}`);
-    if(v.es!==null)extra.push(`Endoscópico: <b>${v.es}</b> · ${v.es===0?"remisión endoscópica":v.es===1?"mejoría endoscópica (objetivo STRIDE-II cumplido)":"actividad endoscópica"}`);
+    if(v.es!==null)extra.push(`Endoscópico: <b>${v.es}</b> · ${v.es===0?"remisión endoscópica":v.es===1?"mejoría endoscópica (meta STRIDE-III solo transitoria, si hay remisión clínica y bioquímica)":"actividad endoscópica"}`);
     if(extra.length)h+=`<ul class="why" style="margin-top:8px">${extra.map(x=>`<li class="n">${x}</li>`).join("")}</ul>`;
     if(scApply){btn.hidden=false;btn.textContent=`Usar en la decisión: CU ${scApply}`}
   }else if(tool==="hbi"){
@@ -179,7 +180,7 @@ function scRender(){
     else{const t=v.vp+v.bl+v.eu,lab=t<=1?"Remisión endoscópica":t<=4?"Leve":t<=6?"Moderada":"Grave",st=t<=1?"r":t<=4?"p":"f";
       h=`<div class="k">UCEIS</div><div class="score"><b class="st-${st}">${t}<small>/8</small></b><span class="st-${st}">${lab}</span></div>${band([[0,1,"Remisión","0–1"],[2,4,"Leve","2–4"],[5,6,"Moderada","5–6"],[7,8,"Grave","7–8"]],t)}
       <ul class="why" style="margin-top:8px"><li class="n">Patrón vascular ${v.vp} · sangrado ${v.bl} · erosiones y úlceras ${v.eu}</li>
-      ${t===0?`<li class="p">Remisión endoscópica completa (objetivo ideal STRIDE-II).</li>`:""}
+      ${t===0?`<li class="p">Remisión endoscópica completa. La meta STRIDE-III se expresa como Mayo endoscópico 0.</li>`:""}
       ${v.eu===3?`<li class="w">Úlceras profundas: factor de mal pronóstico (ACG 2025); márcalo en la Decisión («Mayo endoscópico 3 / úlceras profundas»).</li>`:""}
       ${t>=7?`<li class="w">En colitis aguda grave, UCEIS ≥7 al ingreso: casi todos requieren rescate; planificar infliximab o ciclosporina desde el inicio (Corte 2015).</li>`:t>=5?`<li class="w">En colitis aguda grave, UCEIS ≥5 duplica la necesidad de rescate (50 % vs 27 %).</li>`:""}</ul>`;}
   }else if(tool==="rut"){
@@ -239,7 +240,7 @@ function scRender(){
     if(!seen)h=`<div class="k">SES-CD</div><h3>Puntúa al menos un segmento</h3><p class="note">Abre cada segmento y marca sus 4 variables.</p>`;
     else{const lab=tot<=2?"Remisión endoscópica":tot<=6?"Leve":tot<=15?"Moderada":"Grave",st=tot<=2?"r":tot<=6?"p":"f";
       h=`<div class="k">SES-CD · ${seen} segmento(s) puntuado(s)</div><div class="score"><b class="st-${st}">${tot}<small>/56</small></b><span class="st-${st}">${lab}</span></div>${band([[0,2,"Remisión endoscópica","0–2"],[3,6,"Leve","3–6"],[7,15,"Moderada","7–15"],[16,56,"Grave","≥16"]],tot)}
-      <ul class="why" style="margin-top:8px"><li class="${ulc?"w":"p"}">${ulc?"Hay úlceras: no cumple el objetivo STRIDE-II":"Sin úlceras: objetivo endoscópico STRIDE-II cumplido"}${tot<3&&ulc?" (aunque el puntaje sea <3, revisar)":""}</li>${stn?`<li class="w">Estenosis presente: caracterizar con imagen (componente inflamatorio vs fibrótico)</li>`:""}</ul>`;
+      <ul class="why" style="margin-top:8px"><li class="${tot<=2?"p":"w"}">${tot<=1?"SES-CD ≤1: remisión endoscópica completa (meta STRIDE-III)":tot<=2?"SES-CD ≤2: meta endoscópica STRIDE-III cumplida":"SES-CD >2: no cumple la meta STRIDE-III (≤2)"}${tot<=2&&ulc?". Hay úlcera puntuada: revisar el segmento":""}</li>${stn?`<li class="w">Estenosis presente: caracterizar con imagen (componente inflamatorio vs fibrótico)</li>`:""}</ul>`;
     }
   }
   $("#sc-resb").innerHTML=h;

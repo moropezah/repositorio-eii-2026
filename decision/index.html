@@ -62,6 +62,55 @@ button{font:inherit;color:inherit}
 .num,table{font-variant-numeric:tabular-nums}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
+/* ---- Metas STRIDE-III ---- */
+.cat3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:4px 0 18px}
+.c3{background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--c);border-radius:var(--r);padding:13px 15px;min-width:0;display:flex;flex-direction:column;gap:6px}
+.c3 h4{font-family:var(--ff-b);font-size:.74rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--c)}
+.c3 p{margin:0;font-size:.84rem;color:var(--fg-2)}
+.c3 p b{color:var(--fg)}
+.c3 .lst{font-size:.8rem;color:var(--fg);border-top:1px dashed var(--line);padding-top:6px;margin-top:auto}
+.c3.acc{--c:var(--marino)} .c3.adj{--c:var(--ambar)} .c3.pac{--c:var(--inv)}
+.cat{display:inline-block;font-size:.64rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:4px;padding:1px 6px;white-space:nowrap}
+.cat.acc{background:color-mix(in srgb,var(--marino) 15%,transparent);color:var(--marino)}
+.cat.adj{background:color-mix(in srgb,var(--ambar) 18%,transparent);color:var(--ambar)}
+.cat.pac{background:color-mix(in srgb,var(--inv) 16%,transparent);color:var(--inv)}
+.cat.no{background:color-mix(in srgb,var(--fg-3) 14%,transparent);color:var(--fg-2)}
+.mst{display:inline-flex;align-items:center;gap:5px;font-size:.76rem;font-weight:600;white-space:nowrap}
+.mst::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--k);flex:none}
+.mst.ok{--k:var(--verde);color:var(--verde)} .mst.wait{--k:var(--gris);color:var(--fg-3)}
+.mst.due{--k:var(--marino-2);color:var(--marino-2)} .mst.gray{--k:var(--ambar);color:var(--ambar)} .mst.fail{--k:var(--rojo);color:var(--rojo)}
+table.t td .sub2{display:block;font-size:.74rem;color:var(--fg-3);white-space:normal;margin-top:2px}
+.verdict{border-radius:var(--r);border:1px solid var(--line);background:var(--panel);padding:15px 17px;border-left:5px solid var(--k);box-shadow:var(--sh)}
+.verdict .k{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--k)}
+.verdict h3{font-size:1.22rem;margin:4px 0 6px}
+.verdict p{margin:0;font-size:.86rem;color:var(--fg-2)}
+.verdict.ok{--k:var(--verde)} .verdict.due{--k:var(--marino-2)} .verdict.gray{--k:var(--ambar)} .verdict.fail{--k:var(--rojo)}
+.ttt{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px 10px;margin:12px 0;min-width:0}
+.ttt .row{display:grid;grid-template-columns:190px minmax(0,1fr);gap:10px;align-items:center;padding:4px 0;border-bottom:1px solid var(--line)}
+.ttt .row:last-of-type{border-bottom:0}
+.ttt .row .nm{font-family:var(--ff-s);font-weight:700;font-size:.9rem;line-height:1.25}
+.ttt .row .nm small{display:block;font-family:var(--ff-b);font-weight:500;font-size:.7rem;color:var(--fg-3)}
+.ttt .bars{position:relative;height:40px;background:repeating-linear-gradient(90deg,transparent 0,transparent calc(11.111% - 1px),var(--line) calc(11.111% - 1px),var(--line) 11.111%)}
+.ttt .b{position:absolute;height:7px;border-radius:4px}
+.ttt .b.r{top:4px;background:var(--marino-2)} .ttt .b.m{top:16px;background:var(--acento)} .ttt .b.c{top:28px;background:var(--verde)}
+.ttt .lb{position:absolute;font-family:var(--ff-m);font-size:.6rem;line-height:1;color:var(--fg-2);white-space:nowrap}
+.ttt .lb.r{top:3px} .ttt .lb.m{top:15px} .ttt .lb.c{top:27px}
+.ttt .axis{display:grid;grid-template-columns:190px minmax(0,1fr);gap:10px;margin-top:2px}
+.ttt .ticks{position:relative;height:16px}
+.ttt .ticks span{position:absolute;transform:translateX(-50%);font-family:var(--ff-m);font-size:.62rem;color:var(--fg-3)}
+.ttt .leg{display:flex;flex-wrap:wrap;gap:14px;font-size:.74rem;color:var(--fg-2);margin:0 0 8px}
+.ttt .leg i{display:inline-block;width:16px;height:7px;border-radius:4px;vertical-align:middle;margin-right:5px}
+@media (max-width:620px){.ttt .row,.ttt .axis{grid-template-columns:1fr;gap:4px}.ttt .axis>div:first-child{display:none}}
+.chgl{margin:0;padding:0;list-style:none;display:flex;flex-direction:column}
+.chgl li{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px 16px;padding:9px 15px;border-bottom:1px solid var(--line);font-size:.83rem}
+.chgl li:last-child{border-bottom:0}
+.chgl li b{grid-column:1/-1;font-size:.8rem;color:var(--fg)}
+.chgl li span{color:var(--fg-3)} .chgl li span:last-child{color:var(--fg)}
+.chgl li span::before{display:block;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1px}
+.chgl li span:first-of-type::before{content:"STRIDE-II 2021";color:var(--fg-3)}
+.chgl li span:last-child::before{content:"STRIDE-III 2026";color:var(--acento)}
+@media (max-width:560px){.chgl li{grid-template-columns:1fr}}
+
 /* barra */
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:60;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line)}
 .top-in{max-width:var(--maxw);margin:0 auto;padding:9px 20px;display:flex;align-items:center;gap:14px}
@@ -444,6 +493,7 @@ fieldset.blk{box-shadow:var(--sh)}
     <a class="brand" href="#decision"><span class="dot">EII</span><span class="nmb">Decisión Terapéutica EII</span></a>
     <nav class="tabs" id="tabs" aria-label="Secciones">
       <a href="#decision">Decisión</a>
+      <a href="#metas">Metas STRIDE-III</a>
       <a href="#scores">Scores</a>
       <a href="#farmacos">Fármacos</a>
       <a href="#cinetica">Cinética y niveles</a>
@@ -728,17 +778,122 @@ fieldset.blk{box-shadow:var(--sh)}
       <tr><td><b>Corticodependiente</b></td><td>Imposibilidad de bajar de 10 mg/d de prednisona (3 mg budesonida) en 3 meses, o recaída antes de 3 meses tras suspender.</td><td>Terapia avanzada; tiopurina solo en CU &lt;65 años (ECCO 2026).</td></tr>
       <tr><td><b>Refractariedad multimecanismo</b></td><td>Falla a ≥2 mecanismos distintos (Parigi 2023). Dos anti-TNF cuentan como uno.</td><td>Descartar C. difficile, CMV, estenosis, SII superpuesto; considerar cirugía, terapia combinada avanzada o ensayo clínico.</td></tr>
     </tbody></table></div>
-    <h4 style="margin-top:16px">Objetivos STRIDE-II y momento de verificarlos</h4>
+    <h4 style="margin-top:16px">Metas STRIDE-III y momento de verificarlas</h4>
     <div class="tw" style="margin:0"><table class="t"><thead><tr><th>Horizonte</th><th>Colitis ulcerosa</th><th>Enfermedad de Crohn</th></tr></thead><tbody>
-      <tr><td><b>Corto plazo</b></td><td>Respuesta clínica (↓ ≥50 % Mayo parcial): días con JAK y corticoides; 2–8 semanas con el resto.</td><td>Respuesta clínica (↓ ≥50 % HBI/PRO2): 2–12 semanas según fármaco.</td></tr>
-      <tr><td><b>Intermedio</b></td><td>Remisión clínica, PCR normal y calprotectina &lt;100–250 µg/g a los 3–6 meses.</td><td>Remisión clínica y normalización de biomarcadores a los 3–6 meses.</td></tr>
-      <tr><td><b>Largo plazo</b></td><td>Cicatrización endoscópica (Mayo 0–1, ideal 0) a los 6–12 meses; calidad de vida normal.</td><td>Cicatrización endoscópica (SES-CD &lt;3 o sin úlceras) a los 6–12 meses; ausencia de discapacidad.</td></tr>
-      <tr><td><b>Adicionales</b></td><td>Remisión histológica (Nancy, Robarts, Geboes).</td><td>Remisión transmural por ecografía intestinal o enteroRM.</td></tr>
+      <tr><td><b>Inmediato</b> <span class="cls">&lt;1–2 meses</span></td><td>Respuesta clínica: PRO2 ↓≥50 % o Mayo parcial ↓≥30 % <span class="cat acc">accionable</span></td><td>Respuesta clínica: PRO2 o HBI ↓≥50 % <span class="cat acc">accionable</span></td></tr>
+      <tr><td><b>Corto plazo</b> <span class="cls">2–3 meses</span></td><td>Remisión clínica <span class="cat acc">accionable</span> · urgencia ≤2 <span class="cat adj">adyuvante</span></td><td>Remisión clínica <span class="cat acc">accionable</span> · urgencia ≤2 <span class="cat adj">adyuvante</span></td></tr>
+      <tr><td><b>Intermedio</b> <span class="cls">4–6 meses</span></td><td>PCR normal y CF &lt;200 µg/g, seriada <span class="cat acc">accionable</span></td><td>PCR normal y CF &lt;200 µg/g, seriada <span class="cat acc">accionable</span></td></tr>
+      <tr><td><b>Largo plazo</b> <span class="cls">7–12 meses</span></td><td>Mayo endoscópico 0 <span class="cat acc">accionable</span> · histología <span class="cat adj">adyuvante</span></td><td>SES-CD ≤2 <span class="cat acc">accionable</span> · transmural <span class="cat adj">adyuvante</span></td></tr>
+      <tr><td><b>Paciente</b></td><td colspan="2">Calidad de vida, discapacidad y fatiga normales <span class="cat pac">centradas en el paciente</span></td></tr>
     </tbody></table></div>
+    <p class="note" style="margin-top:8px">Tiempos por mecanismo y evaluador de un paciente en la pestaña <a href="#metas">Metas STRIDE-III</a>.</p>
   </div>
 </section>
 
 
+
+<!-- ================= METAS STRIDE-III ================= -->
+<section class="vista" id="v-metas">
+  <div class="intro">
+    <div class="t">
+      <p class="eyebrow">STRIDE-III · IOIBD · Lancet Gastroenterol Hepatol, octubre 2026</p>
+      <h2 class="sec">Metas de tratamiento</h2>
+      <p class="lead">Cada meta tiene una categoría, y la categoría dice qué hacer si no se logra. Solo las accionables justifican cambiar de mecanismo, y siempre después de optimizar y de dar el tiempo que el fármaco necesita.</p>
+    </div>
+    <div class="presets" id="mt-pre"><span class="lbl">Casos tipo</span></div>
+  </div>
+
+  <div class="cat3">
+    <div class="c3 acc"><h4>Accionables</h4><p>Respaldadas por ensayos <i>treat-to-target</i> (CALM, CURE-CD, VERDICT) o por ser prioridad del paciente.</p><p><b>Si no se logran:</b> optimizar y, si persiste, cambiar o agregar un mecanismo distinto.</p><div class="lst">Respuesta y remisión clínica · PCR normal · CF &lt;200 µg/g · remisión endoscópica</div></div>
+    <div class="c3 adj"><h4>Adyuvantes</h4><p>Asociación consistente con mejor evolución, sin ensayo que demuestre beneficio de perseguirlas.</p><p><b>Si no se logran:</b> optimizar y estrechar el monitoreo. Por sí solas no justifican cambiar de clase.</p><div class="lst">Urgencia · caída de CF y PCR · histología en CU · transmural en EC · crecimiento</div></div>
+    <div class="c3 pac"><h4>Centradas en el paciente</h4><p>Reflejan el bienestar y están alteradas en una proporción importante de pacientes.</p><p><b>Si no se logran:</b> buscar inflamación y causas alternativas; decidir con el paciente.</p><div class="lst">Calidad de vida · discapacidad · fatiga</div></div>
+  </div>
+
+  <h3 style="font-size:1.25rem;margin:6px 0 10px">Evaluar a un paciente</h3>
+  <div class="grid">
+    
+<form class="form" id="mt-f" autocomplete="off">
+  <fieldset class="blk">
+    <legend>1 · Paciente y tratamiento</legend>
+    <div class="q"><span class="ql">Enfermedad</span><div class="seg" role="radiogroup"><input type="radio" name="mt-dz" id="mt-dz-cu" value="cu"><label for="mt-dz-cu">Colitis ulcerosa</label><input type="radio" name="mt-dz" id="mt-dz-ec" value="ec"><label for="mt-dz-ec">Enfermedad de Crohn</label></div></div>
+    <div class="q"><label class="ql" for="mt-cls">Tratamiento en curso</label><select class="sel" id="mt-cls" style="width:100%"></select></div>
+    <div class="row2">
+      <div class="q"><label class="ql" for="mt-sem">Semanas desde el inicio</label><div class="inp"><input type="number" id="mt-sem" min="0" max="104" step="1" inputmode="numeric"><span>sem</span></div></div>
+      <div class="q"><span class="ql">Optimización hecha <small>adherencia, dosis, TDM</small></span><div class="seg" role="radiogroup"><input type="radio" name="mt-opt" id="mt-opt-si" value="si"><label for="mt-opt-si">Sí</label><input type="radio" name="mt-opt" id="mt-opt-no" value="no"><label for="mt-opt-no">No</label></div></div>
+    </div>
+  </fieldset>
+  <fieldset class="blk">
+    <legend>2 · Clínica</legend>
+    <div class="q"><span class="ql">Respuesta clínica <small>PRO2 o HBI ↓≥50 %; Mayo parcial ↓≥30 %</small></span><div class="seg" role="radiogroup"><input type="radio" name="mt-resp" id="mt-resp-si" value="si"><label for="mt-resp-si">Sí</label><input type="radio" name="mt-resp" id="mt-resp-no" value="no"><label for="mt-resp-no">No</label><input type="radio" name="mt-resp" id="mt-resp-nd" value="nd"><label for="mt-resp-nd">Sin dato</label></div></div>
+    <div class="q"><span class="ql">Remisión clínica <small>EC: PRO2 dolor ≤1 y deposiciones ≤3, o HBI &lt;5 · CU: sangrado 0 y frecuencia ≤1</small></span><div class="seg" role="radiogroup"><input type="radio" name="mt-rem" id="mt-rem-si" value="si"><label for="mt-rem-si">Sí</label><input type="radio" name="mt-rem" id="mt-rem-no" value="no"><label for="mt-rem-no">No</label><input type="radio" name="mt-rem" id="mt-rem-nd" value="nd"><label for="mt-rem-nd">Sin dato</label></div></div>
+    <div class="q"><span class="ql">Urgencia resuelta <small>escala numérica 0–10 ≤2</small></span><div class="seg" role="radiogroup"><input type="radio" name="mt-urg" id="mt-urg-si" value="si"><label for="mt-urg-si">Sí</label><input type="radio" name="mt-urg" id="mt-urg-no" value="no"><label for="mt-urg-no">No</label><input type="radio" name="mt-urg" id="mt-urg-nd" value="nd"><label for="mt-urg-nd">Sin dato</label></div></div>
+  </fieldset>
+  <fieldset class="blk">
+    <legend>3 · Biomarcadores</legend>
+    <div class="q"><span class="ql">PCR</span><div class="seg" role="radiogroup"><input type="radio" name="mt-pcr" id="mt-pcr-n" value="n"><label for="mt-pcr-n">Normal</label><input type="radio" name="mt-pcr" id="mt-pcr-l" value="l"><label for="mt-pcr-l">&lt;2× LSN</label><input type="radio" name="mt-pcr" id="mt-pcr-a" value="a"><label for="mt-pcr-a">≥2× LSN</label><input type="radio" name="mt-pcr" id="mt-pcr-nd" value="nd"><label for="mt-pcr-nd">Sin dato</label></div></div>
+    <div class="q"><span class="ql">Calprotectina fecal</span><div class="seg" role="radiogroup"><input type="radio" name="mt-cf" id="mt-cf-a" value="a"><label for="mt-cf-a">&lt;100<small>µg/g</small></label><input type="radio" name="mt-cf" id="mt-cf-g" value="g"><label for="mt-cf-g">100–200<small>zona gris</small></label><input type="radio" name="mt-cf" id="mt-cf-h" value="h"><label for="mt-cf-h">&gt;200<small>µg/g</small></label><input type="radio" name="mt-cf" id="mt-cf-nd" value="nd"><label for="mt-cf-nd">Sin dato</label></div><p class="hint">Una sola medición no basta: confirmar con una repetida y con el mismo ensayo.</p></div>
+    <div class="q"><span class="ql">Caída ≥50 % de CF o PCR desde el basal</span><div class="seg" role="radiogroup"><input type="radio" name="mt-cfd" id="mt-cfd-si" value="si"><label for="mt-cfd-si">Sí</label><input type="radio" name="mt-cfd" id="mt-cfd-no" value="no"><label for="mt-cfd-no">No</label><input type="radio" name="mt-cfd" id="mt-cfd-nd" value="nd"><label for="mt-cfd-nd">Sin dato</label></div></div>
+  </fieldset>
+  <fieldset class="blk">
+    <legend>4 · Endoscopía, imagen e histología</legend>
+    <div class="q" id="mt-q-endo-cu"><span class="ql">Endoscopía</span><div class="seg cu" role="radiogroup"><input type="radio" name="mt-endo" id="mt-endo-m0" value="m0"><label for="mt-endo-m0">Mayo 0</label><input type="radio" name="mt-endo" id="mt-endo-m1" value="m1"><label for="mt-endo-m1">Mayo 1</label><input type="radio" name="mt-endo" id="mt-endo-m2" value="m2"><label for="mt-endo-m2">Mayo 2–3</label><input type="radio" name="mt-endo" id="mt-endo-nd" value="nd"><label for="mt-endo-nd">Sin dato</label></div></div>
+    <div class="q" id="mt-q-endo-ec"><span class="ql">Endoscopía</span><div class="seg ec" role="radiogroup"><input type="radio" name="mt-endoe" id="mt-endoe-s0" value="s0"><label for="mt-endoe-s0">SES-CD ≤2<small>o Lewis &lt;135</small></label><input type="radio" name="mt-endoe" id="mt-endoe-sr" value="sr"><label for="mt-endoe-sr">SES-CD &gt;2<small>con ↓≥50 %</small></label><input type="radio" name="mt-endoe" id="mt-endoe-sn" value="sn"><label for="mt-endoe-sn">SES-CD &gt;2<small>sin respuesta</small></label><input type="radio" name="mt-endoe" id="mt-endoe-nd" value="nd"><label for="mt-endoe-nd">Sin dato</label></div></div>
+    <div class="q" id="mt-q-tm"><span class="ql">Remisión transmural <small>IUS: grosor ≤3 mm y Limberg/Doppler 0 · enteroRM: sMaRIA &lt;1</small></span><div class="seg" role="radiogroup"><input type="radio" name="mt-tm" id="mt-tm-rem" value="rem"><label for="mt-tm-rem">Remisión</label><input type="radio" name="mt-tm" id="mt-tm-resp" value="resp"><label for="mt-tm-resp">Respuesta<small>grosor ↓≥25 %</small></label><input type="radio" name="mt-tm" id="mt-tm-no" value="no"><label for="mt-tm-no">Sin respuesta</label><input type="radio" name="mt-tm" id="mt-tm-nd" value="nd"><label for="mt-tm-nd">Sin dato</label></div></div>
+    <div class="q" id="mt-q-hist"><span class="ql">Histología <small>sin neutrófilos, erosiones ni úlceras; Nancy ≤1</small></span><div class="seg" role="radiogroup"><input type="radio" name="mt-hist" id="mt-hist-rem" value="rem"><label for="mt-hist-rem">Remisión</label><input type="radio" name="mt-hist" id="mt-hist-act" value="act"><label for="mt-hist-act">Actividad</label><input type="radio" name="mt-hist" id="mt-hist-nd" value="nd"><label for="mt-hist-nd">Sin dato</label></div></div>
+  </fieldset>
+  <fieldset class="blk">
+    <legend>5 · Centradas en el paciente</legend>
+    <div class="q"><span class="ql">Calidad de vida, discapacidad o fatiga <small>SIBDQ ≥50 · IBD-DI 0–20 · IBD-F sección 1 &lt;7,5</small></span><div class="seg" role="radiogroup"><input type="radio" name="mt-pc" id="mt-pc-ok" value="ok"><label for="mt-pc-ok">Normales</label><input type="radio" name="mt-pc" id="mt-pc-alt" value="alt"><label for="mt-pc-alt">Alteradas</label><input type="radio" name="mt-pc" id="mt-pc-nd" value="nd"><label for="mt-pc-nd">Sin dato</label></div></div>
+  </fieldset>
+</form>
+    <div class="res" id="mt-res"></div>
+  </div>
+
+  <h3 style="font-size:1.25rem;margin:30px 0 4px">Tiempo esperado hasta cada meta</h3>
+  <p class="lead">Ventanas mínima y máxima en semanas (STRIDE-III, figura 4). Son ventanas de reevaluación, no umbrales rígidos de falla. La endoscopía, la imagen y la histología quedan fuera porque su momento depende del calendario de control.</p>
+  <div class="ttt" id="mt-ttt"></div>
+
+  <div style="display:flex;flex-direction:column;gap:10px;margin-top:18px">
+  <details class="more"><summary>Instrumentos y umbrales <small>tabla 2 · adultos</small></summary><div class="box">
+    <div class="tw" style="margin:0"><table class="t"><thead><tr><th>Dominio</th><th>Enfermedad de Crohn</th><th>Colitis ulcerosa</th></tr></thead><tbody>
+      <tr><td><b>Actividad clínica</b></td><td>HBI: remisión &lt;5; respuesta ↓≥3 y ≥50 %</td><td>Mayo parcial: remisión ≤1 con sangrado 0; respuesta ↓≥30 % y ≥2, con sangrado ↓≥1 o ≤1</td></tr>
+      <tr><td><b>PRO2</b></td><td>Remisión: dolor ≤1 y deposiciones ≤3 (o ambos 0); respuesta ↓≥50 %</td><td>Remisión: sangrado 0 y frecuencia ≤1; respuesta ↓≥50 %. Urgencia: escala numérica ≤2</td></tr>
+      <tr><td><b>Calprotectina</b></td><td>&lt;200 rango aceptable; &lt;100 se asocia a remisión transmural; 100–200 zona gris; respuesta ↓≥50 %</td><td>&lt;200 rango aceptable; &lt;100 se asocia a remisión histológica; 100–200 zona gris; respuesta ↓≥50 %</td></tr>
+      <tr><td><b>Biológica compuesta</b></td><td>PCR normal y CF &lt;200 µg/g</td><td>PCR normal y CF &lt;200 µg/g</td></tr>
+      <tr><td><b>Endoscopía</b></td><td>SES-CD ≤2 (completa ≤1); respuesta ↓≥50 %. Cápsula: Lewis &lt;135</td><td>Mayo endoscópico 0; respuesta ↓≥1 punto. La rectosigmoidoscopía basta para el control</td></tr>
+      <tr><td><b>Transmural</b></td><td>EnteroRM: MaRIA &lt;7 o sMaRIA &lt;1. IUS: grosor ≤3 mm y Limberg o Doppler 0; respuesta: grosor ↓≥25 % y Limberg ↓≥1</td><td>IUS: grosor ≤3 mm y Doppler 0 en todos los segmentos (herramienta de monitoreo, no meta)</td></tr>
+      <tr><td><b>Histología</b></td><td>No es meta</td><td>Sin neutrófilos en epitelio ni lámina propia, sin erosiones ni úlceras; Nancy ≤1</td></tr>
+      <tr><td><b>Calidad de vida</b></td><td colspan="2">SIBDQ: remisión ≥50; respuesta ↑≥9 puntos</td></tr>
+      <tr><td><b>Fatiga</b></td><td colspan="2">IBD-F: sin fatiga si sección 1 &lt;7,5</td></tr>
+      <tr><td><b>Discapacidad</b></td><td colspan="2">IBD-DI: sin discapacidad 0–20</td></tr>
+    </tbody></table></div>
+    <p class="note" style="margin-top:8px">PCR levemente elevada (&lt;2× el límite superior normal) se interpreta caso a caso: obesidad, infección intercurrente y comorbilidad la mueven. Falsos positivos de CF: infección transitoria, AINE, diverticulitis, pseudopólipos, cáncer colorrectal y enfermedad celíaca.</p>
+  </div></details>
+
+  <details class="more"><summary>Qué cambió respecto de STRIDE-II <small>8 cambios</small></summary><div class="box" style="padding:0"><ul class="chgl">
+    <li><b>Estructura</b><span>Metas ordenadas por horizonte de tiempo.</span><span>Además del horizonte, tres categorías (accionable, adyuvante, centrada en el paciente) que definen la conducta si no se logran.</span></li>
+    <li><b>Calprotectina</b><span>Rango 100–250 µg/g.</span><span>&lt;200 µg/g aceptable en EC y CU; &lt;100 indica control profundo; 100–200 zona gris; siempre seriada.</span></li>
+    <li><b>Endoscopía en EC</b><span>SES-CD &lt;3 o ausencia de úlceras.</span><span>SES-CD ≤2, completa ≤1; Lewis &lt;135 por cápsula.</span></li>
+    <li><b>Endoscopía en CU</b><span>Mayo 0–1 (UCEIS ≤1).</span><span>Mayo 0. Mayo ≤1 solo como meta transitoria con remisión clínica y bioquímica.</span></li>
+    <li><b>Histología y transmural</b><span>Mediciones complementarias, no metas.</span><span>Metas adyuvantes de largo plazo: histología en CU, transmural en EC. Histología en EC y transmural en CU no son metas.</span></li>
+    <li><b>Síntomas</b><span>Sin urgencia ni fatiga.</span><span>Urgencia (escala ≤2) como meta adyuvante de corto plazo; fatiga junto a discapacidad y calidad de vida.</span></li>
+    <li><b>Tiempos</b><span>Tiempo hasta la meta para fármacos de 2021.</span><span>Ventanas actualizadas para JAK, S1P, anti-IL-23 y nutrición enteral.</span></li>
+    <li><b>Contexto</b><span>Sin adaptación local.</span><span>Recursos limitados: mismas metas, otras herramientas (PCR seriada si no hay CF; rectoscopía rígida en CU).</span></li>
+  </ul></div></details>
+
+  <details class="more"><summary>Con recursos limitados <small>tabla 4</small></summary><div class="box">
+    <div class="tw" style="margin:0"><table class="t"><thead><tr><th>Aspecto</th><th>Conducta pragmática</th></tr></thead><tbody>
+      <tr><td><b>Metas</b></td><td>Las mismas. Se adapta cómo se miden, no a qué se apunta.</td></tr>
+      <tr><td><b>Seguimiento</b></td><td>Control regular con la herramienta objetiva más accesible, no solo con síntomas.</td></tr>
+      <tr><td><b>Biomarcadores</b></td><td>PCR y CF cuando haya. Sin CF, la PCR seriada es mejor que seguir solo síntomas. En CU, PRO2 con CF baja y PCR normal suele bastar.</td></tr>
+      <tr><td><b>Endoscopía</b></td><td>Cuando sea factible; en CU, rectosigmoidoscopía flexible o incluso rectoscopía rígida.</td></tr>
+      <tr><td><b>Transmural</b></td><td>IUS donde haya experiencia; enteroRM o enteroTC en indicaciones seleccionadas.</td></tr>
+    </tbody></table></div>
+  </div></details>
+  </div>
+
+  <p class="note" style="margin-top:14px">Alcance: EII luminal en tratamiento médico. No se aplica directamente a enfermedad perianal, reservorio ileal, manifestaciones extraintestinales ni posoperatorio. El monitoreo de niveles (TDM) es una herramienta de optimización, no una meta. Turner D, Ricciuto A, Dignass A, et al. Lancet Gastroenterol Hepatol. 2026. doi:<a href="https://doi.org/10.1016/S2468-1253(26)00292-X" target="_blank" rel="noopener">10.1016/S2468-1253(26)00292-X</a></p>
+</section>
 
 <!-- ================= SCORES ================= -->
 <section class="vista" id="v-scores">
@@ -1270,6 +1425,7 @@ const GTL=[
  {h:"ACG EC 2025 (vs 2018)",li:["No exige falla a terapia convencional antes de terapia avanzada (R3).","Risankizumab sobre ustekinumab tras anti-TNF (R19, SEQUENCE).","Infliximab y vedolizumab SC como mantención equivalente.","Vedolizumab en prevención posquirúrgica de alto riesgo (R34, REPREVIO)."]},
  {h:"AGA EC 2025 (guía viva, vs 2021)",li:["Clasifica por eficacia relativa en naïve y en expuestos.","Sugiere terapia avanzada precoz sobre escalonada (R15).","Retirar el inmunomodulador tras ≥6 meses de remisión en combinación (R13), no el anti-TNF (R14)."]},
  {h:"AGA CU 2024 (guía viva, vs 2020)",li:["Clasificación por eficacia relativa; adalimumab en el grupo de menor eficacia.","Terapia avanzada tras falla a 5-ASA, sin escalamiento gradual."]},
+ {h:"STRIDE-III 2026 (vs STRIDE-II 2021)",li:["Tres categorías: accionables (cambian el tratamiento tras optimizar), adyuvantes (optimizan y estrechan el monitoreo) y centradas en el paciente (decisión compartida).","Calprotectina <200 µg/g como rango aceptable en EC y CU; <100 indica control profundo.","Mayo endoscópico 0 en CU (Mayo 1 solo transitorio); SES-CD ≤2 en EC.","Histología en CU y remisión transmural en EC pasan a metas adyuvantes; histología en EC no es meta.","Urgencia y fatiga se incorporan; tiempos hasta la meta actualizados por mecanismo."]},
  {h:"Guía chilena 2026 (Rev Med Chile)",li:["Primera guía nacional GRADE para CU y EC en adultos (Núñez et al.).","JAK recomendados en CU moderada y en brote grave.","Recomendaciones de buena práctica adaptadas a la disponibilidad local."]}
 ];
 
@@ -1296,6 +1452,7 @@ const REFS=[
  "Singh S, Loftus EV Jr, Limketkai BN, Haydek JP, Agrawal M, et al. AGA Living Clinical Practice Guideline on Pharmacological Management of Moderate-to-Severe Ulcerative Colitis. Gastroenterology. 2024;167(7):1307-43.",
  "AGA Clinical Practice Update on Inpatient Management of Adults With Inflammatory Bowel Disease: Expert Review. Gastroenterology. 2026;170:408-17. doi:10.1053/j.gastro.2025.08.039",
  "Núñez P, et al. Guía de recomendaciones para el tratamiento de la colitis ulcerosa y la enfermedad de Crohn en pacientes adultos. Rev Med Chile. 2026;154(1):105-31. doi:10.4067/s0034-98872026000100105",
+ "Turner D, Ricciuto A, Yuval Bar-Asher S, Vuyyuru SK, Solitano V, et al. Updated treatment targets in inflammatory bowel disease (STRIDE-III): an initiative of the International Organization for the Study of IBD. Lancet Gastroenterol Hepatol. 2026. doi:10.1016/S2468-1253(26)00292-X",
  "Turner D, Ricciuto A, Lewis A, D'Amico F, Dhaliwal J, et al. STRIDE-II: an update on the Selecting Therapeutic Targets in Inflammatory Bowel Disease initiative. Gastroenterology. 2021;160(5):1570-83. doi:10.1053/j.gastro.2020.12.031",
  "Torres J, Chaparro M, Julsgaard M, Katsanos K, Zelinkova Z, et al. European Crohn's and Colitis Guidelines on Sexuality, Fertility, Pregnancy, and Lactation. J Crohns Colitis. 2023;17(1):1-27. doi:10.1093/ecco-jcc/jjac115",
  "Mañosa M, Calafat M, Francia E, et al. Documento de posicionamiento de GETECCU sobre fragilidad, edad avanzada y enfermedad inflamatoria intestinal. Gastroenterol Hepatol. 2025;48:502529. doi:10.1016/j.gastrohep.2025.502529",
@@ -1997,8 +2154,8 @@ function render(){
 
   const top=R.items.filter(i=>i.tier==="pref"&&D[i.id].kin&&D[i.id].kin[c.dz]);
   if(top.length){
-    h+=`<div class="box"><h4>Cuándo reevaluar</h4><div class="tw" style="margin:0"><table class="t" style="min-width:480px"><thead><tr><th>Fármaco</th><th>Inicio</th><th>Fin de inducción</th><th>Niveles</th></tr></thead><tbody>${top.map(i=>{const d=D[i.id],k=d.kin[c.dz];return `<tr><td class="nm">${esc(d.n)}</td><td>${esc(d.kinTx||"")}</td><td>${wk(k.ev)}${k.ext?` · extendida ${wk(k.ext)}`:""}</td><td>${esc(d.tdm.split(".")[0])}</td></tr>`}).join("")}</tbody></table></div>
-    <p class="note" style="margin-top:8px">Objetivos STRIDE-II: respuesta clínica a corto plazo; calprotectina y PCR normales a los 3–6 meses; cicatrización endoscópica a los 6–12 meses.</p></div>`;
+    h+=`<div class="box"><h4>Cuándo reevaluar</h4><div class="tw" style="margin:0"><table class="t" style="min-width:480px"><thead><tr><th>Fármaco</th><th>Inicio</th><th>Fin de inducción</th><th>Metas STRIDE-III (sem)</th><th>Niveles</th></tr></thead><tbody>${top.map(i=>{const d=D[i.id],k=d.kin[c.dz],tt=ttFor(i.id,c.dz);return `<tr><td class="nm">${esc(d.n)}</td><td>${esc(d.kinTx||"")}</td><td>${wk(k.ev)}${k.ext?` · extendida ${wk(k.ext)}`:""}</td><td style="white-space:nowrap">${tt?`Respuesta ${ttR(tt.r)}<br>Remisión ${ttR(tt.m)}<br>PCR y CF ${ttR(tt.b)}`:"—"}</td><td>${esc(d.tdm.split(".")[0])}</td></tr>`}).join("")}</tbody></table></div>
+    <p class="note" style="margin-top:8px">STRIDE-III: respuesta clínica en 1–2 meses, remisión en 2–3, PCR normal y calprotectina &lt;200 µg/g en 4–6, remisión endoscópica en 7–12. Si una meta accionable no se logra tras la ventana del fármaco y tras optimizar, cambiar de mecanismo. <a href="#metas">Evaluar metas</a></p></div>`;
   }
   const gl=relGuides(R,c);
   if(gl.length){h+=`<details class="more gd"><summary>Dónde discrepan las guías <small>${gl.length} tema(s) · ${esc(gl.map(g=>GDRUG[g]).join(", "))}</small></summary><div class="box">${gl.map(g=>gTable(g)).join("")}</div></details>`}
@@ -2073,7 +2230,7 @@ function summary(){
   ["pref","alt"].forEach(t=>{const its=R.items.filter(i=>i.tier===t);if(its.length)s+=`\n${TIERTX[t][0]}:\n`+its.map(i=>`- ${D[i.id].n} (${i.ph}; ${CHILE[D[i.id].chile][0]}): ${doseLine(i,c.dz)}`).join("\n")+"\n"});
   const ev=R.items.filter(i=>i.tier==="evit"||i.tier==="prec");if(ev.length)s+="\nEvitar / precaución:\n"+ev.map(i=>`- ${D[i.id].n}: ${i.why.filter(w=>w.c!=="n"&&w.c!=="p").map(w=>(w.ci?"CONTRAINDICADO: ":"")+w.t).join("; ")||i.why.map(w=>w.t).join("; ")}`).join("\n")+"\n";
   if(R.fail.length)s+="\nSi falla:\n"+R.fail.map(x=>"- "+x).join("\n")+"\n";
-  s+="\nFuente: Decisión Terapéutica EII, Dr. Moisés Oropeza Hernández (ECCO 2026/2024, ACG 2025, AGA 2024–2025, Guía chilena 2026). Apoyo a la decisión; no reemplaza el juicio clínico.";
+  s+="\nFuente: Decisión Terapéutica EII, Dr. Moisés Oropeza Hernández (ECCO 2026/2024, ACG 2025, AGA 2024–2025, Guía chilena 2026, STRIDE-III 2026). Apoyo a la decisión; no reemplaza el juicio clínico.";
   return s;
 }
 
@@ -2095,8 +2252,158 @@ function renderGuias(){
   $("#refs").innerHTML=REFS.map(r=>`<li>${esc(r).replace(/doi:(\S+)/,(m,x)=>`doi:<a href="https://doi.org/${x}" target="_blank" rel="noopener">${x}</a>`)}</li>`).join("");
 }
 
+/* ---------- Metas STRIDE-III ---------- */
+/* Ventanas en semanas: respuesta (r), remisión (m), PCR normal / CF en descenso (b). STRIDE-III, figura 4. */
+const TT={
+ cort:{n:"Corticoide sistémico o nutrición enteral exclusiva",dz:"ec",r:[1,6],m:[3,8],b:[4,8]},
+ asa:{n:"5-ASA oral",dz:"cu",r:[2,6],m:[4,8],b:[5.5,10]},
+ tio:{n:"Tiopurina",r:[7.5,12],m:[12,18],b:[12,18]},
+ mtx:{n:"Metotrexato",dz:"ec",r:[4,12],m:[8,16],b:[12,16]},
+ tnf:{n:"Anti-TNF",r:[2,4],m:[4,12],b:[6,12]},
+ vdz:{n:"Vedolizumab",r:[2,11.5],m:[9,17.5],b:[10,17.5]},
+ il:{n:"Anti-IL-12/23 o anti-IL-23",r:[2,8],m:[6,16],b:[8,16],nt:"Anti-IL-23 podría actuar algo antes que anti-IL-12/23"},
+ jak:{n:"Inhibidor JAK",r:[0,4],m:[3,8],b:[4,10]},
+ s1p:{n:"Modulador S1P",dz:"cu",r:[2,6],m:[5.5,12],b:[6.8,12]}
+};
+const LT=[28,52]; /* largo plazo: 7–12 meses */
+function ttKey(id){const d=D[id];if(!d)return null;if(id==="mtx")return"mtx";return {tnf:"tnf",int:"vdz",p40:"il",p19:"il",jak:"jak",s1p:"s1p",imm:"tio",asa:"asa",cort:"cort"}[d.cl]||null}
+function ttFor(id,dz){const k=ttKey(id);if(!k)return null;const t=TT[k];if(t.dz&&t.dz!==dz)return null;if(k==="cort"&&!["pred","mpred","hc"].includes(id))return null;return t}
+const nf=x=>String(x).replace(".",",");
+function ttR(a){return `${nf(a[0])}–${nf(a[1])}`}
+
+const MT_PRE=[
+ {l:"EC · anti-IL-23 · sem 20 · CF en zona gris",v:{dz:"ec",cls:"il",sem:20,opt:"no",resp:"si",rem:"si",urg:"si",pcr:"n",cf:"g",cfd:"si",endoe:"nd",tm:"nd",pc:"nd"}},
+ {l:"EC · anti-TNF · sem 16 · sin remisión",v:{dz:"ec",cls:"tnf",sem:16,opt:"no",resp:"si",rem:"no",urg:"no",pcr:"a",cf:"h",cfd:"no",endoe:"nd",tm:"nd",pc:"alt"}},
+ {l:"CU · vedolizumab · sem 40 · Mayo 1",v:{dz:"cu",cls:"vdz",sem:40,opt:"si",resp:"si",rem:"si",urg:"si",pcr:"n",cf:"a",cfd:"si",endo:"m1",hist:"act",pc:"ok"}},
+ {l:"EC · síntomas sin inflamación",v:{dz:"ec",cls:"tnf",sem:34,opt:"si",resp:"si",rem:"no",urg:"no",pcr:"n",cf:"a",cfd:"si",endoe:"s0",tm:"rem",pc:"alt"}}
+];
+const mv=n=>{const e=document.querySelector(`input[name="mt-${n}"]:checked`);return e?e.value:"nd"};
+function mtSet(v){
+  const set=(n,x)=>{const e=document.getElementById(`mt-${n}-${x}`);if(e)e.checked=true};
+  set("dz",v.dz);mtFillCls(v.dz);$("#mt-cls").value=v.cls;$("#mt-sem").value=v.sem;
+  ["opt","resp","rem","urg","pcr","cf","cfd","endo","endoe","tm","hist","pc"].forEach(k=>set(k,v[k]||"nd"));
+}
+function mtFillCls(dz){
+  const cur=$("#mt-cls").value;
+  $("#mt-cls").innerHTML=Object.entries(TT).filter(([k,t])=>!t.dz||t.dz===dz).map(([k,t])=>`<option value="${k}">${esc(t.n)}</option>`).join("");
+  if(TT[cur]&&(!TT[cur].dz||TT[cur].dz===dz))$("#mt-cls").value=cur;
+}
+/* estado de una meta: ok · gray (parcial/intermedio) · wait · due · fail */
+function mtStatus(state,win,sem){
+  if(state==="ok")return{s:"ok",t:"Lograda"};
+  if(state==="nd"){if(sem<win[0])return{s:"wait",t:"Aún no corresponde"};if(sem<=win[1])return{s:"due",t:"Medir en esta ventana"};return{s:"due",t:"Medir ya: ventana cumplida"}}
+  if(state==="gray")return{s:"gray",t:"Intermedio"};
+  if(sem<win[0])return{s:"wait",t:"Precoz para juzgar"};
+  if(sem<=win[1])return{s:"due",t:`En ventana: reevaluar hacia la sem ${nf(Math.ceil(win[1]))}`};
+  return{s:"fail",t:"No lograda tras la ventana"};
+}
+const CATL={acc:"accionable",adj:"adyuvante",pc:"paciente",no:"no es meta"};
+function mtEval(){
+  const dz=mv("dz")==="ec"?"ec":"cu",k=$("#mt-cls").value,t=TT[k],sem=Math.max(0,parseFloat($("#mt-sem").value)||0),opt=mv("opt");
+  const yn=x=>x==="si"?"ok":x==="no"?"bad":"nd";
+  const rows=[];
+  const add=(n,cat,win,state,note,hor)=>{const st=mtStatus(state,win,sem);rows.push({n,cat,win,st,note,hor})};
+  const resp=mv("resp"),rem=mv("rem"),urg=mv("urg"),pcr=mv("pcr"),cf=mv("cf"),cfd=mv("cfd"),pc=mv("pc");
+  add("Respuesta clínica","acc",t.r,yn(resp),"","Inmediato");
+  add("Remisión clínica","acc",t.m,yn(rem),"","Corto plazo");
+  add("Urgencia ≤2","adj",t.m,yn(urg),urg==="no"&&sem>t.m[1]&&rem==="si"?"Persistente pese a remisión: evaluar compliance rectal y piso pélvico":"","Corto plazo");
+  add("Caída ≥50 % de CF o PCR","adj",t.m,yn(cfd),"","Inmediato–corto");
+  add("PCR normal","acc",t.b,pcr==="n"?"ok":pcr==="l"?"gray":pcr==="a"?"bad":"nd",pcr==="l"?"&lt;2× LSN: interpretar caso a caso":"","Intermedio");
+  add("Calprotectina &lt;200 µg/g","acc",t.b,cf==="a"?"ok":cf==="g"?"gray":cf==="h"?"bad":"nd",cf==="a"?"&lt;100: control inflamatorio profundo":cf==="g"?"100–200: zona gris; repetir y correlacionar":"","Intermedio");
+  let endoNote="",endoState="nd",limited=false;
+  const bioOk=(pcr==="n"||pcr==="l")&&(cf==="a"||cf==="g");
+  if(dz==="cu"){
+    const e=mv("endo");
+    if(e==="m0")endoState="ok";
+    else if(e==="m1"){if(rem==="si"&&bioOk){endoState="gray";endoNote="Mayo 1 aceptable como meta transitoria: hay remisión clínica y bioquímica";limited=true}else{endoState="bad";endoNote="Mayo 1 sin remisión clínica y bioquímica: no cumple"}}
+    else if(e==="m2")endoState="bad";
+  }else{
+    const e=mv("endoe");
+    if(e==="s0")endoState="ok";
+    else if(e==="sr"){if(sem<LT[0]){endoState="gray";endoNote="Respuesta endoscópica precoz: predice buena evolución a 1 año"}else{endoState="bad";limited=true;endoNote="Mejoría sustancial con actividad residual"}}
+    else if(e==="sn")endoState="bad";
+  }
+  add("Remisión endoscópica","acc",LT,endoState,endoNote,"Largo plazo");
+  if(dz==="ec"){const tm=mv("tm");add("Remisión transmural","adj",LT,tm==="rem"?"ok":tm==="resp"?"gray":tm==="no"?"bad":"nd",tm==="resp"?"Respuesta transmural; seguir con IUS":"","Largo plazo")}
+  else{const h=mv("hist");add("Remisión histológica","adj",LT,h==="rem"?"ok":h==="act"?"bad":"nd",h==="act"&&mv("endo")==="m0"?"Con Mayo 0 y remisión clínica: no cambiar solo por histología":"","Largo plazo")}
+  add("Calidad de vida, discapacidad, fatiga","pc",[16,52],pc==="ok"?"ok":pc==="alt"?"bad":"nd","","Intermedio–largo");
+  /* histología con actividad se informa aunque no haya llegado la ventana */
+  rows.forEach(r=>{if(r.n==="Remisión histológica"&&mv("hist")==="act")r.st={s:"fail",t:"Actividad histológica"}});
+
+  const fail=c=>rows.filter(r=>r.cat===c&&r.st.s==="fail");
+  const inflam=pcr==="a"||cf==="h"||endoState==="bad"||(dz==="ec"&&mv("tm")==="no");
+  const objQuiet=pcr==="n"&&cf==="a"&&endoState!=="bad";
+  const symFail=(rem==="no"&&sem>t.m[1])||(resp==="no"&&sem>t.r[1]);
+  const discord=symFail&&objQuiet;
+  const accF=fail("acc").filter(r=>!(discord&&/clínica/.test(r.n)));
+  const onlyLimitedEndo=accF.length===1&&accF[0].n==="Remisión endoscópica"&&limited&&rem==="si"&&bioOk;
+  const grayAcc=rows.filter(r=>r.cat==="acc"&&r.st.s==="gray"&&sem>r.win[1]&&r.n!=="Remisión endoscópica");
+  const adjF=fail("adj"),pcF=fail("pc"),due=rows.filter(r=>r.st.s==="due");
+  let V;
+  if(accF.length&&opt!=="si")V={c:"gray",k:"Meta accionable no lograda",h:"Optimizar antes de cambiar",p:`No se logró: ${accF.map(r=>r.n.replace(/&lt;/g,"<")).join(", ")}. STRIDE-III pide optimizar el esquema actual antes de cambiar de mecanismo.`};
+  else if(onlyLimitedEndo)V={c:"gray",k:"Actividad endoscópica residual limitada",h:"Cambiar o mantener, en decisión compartida",p:"Con remisión clínica y bioquímica, actividad residual limitada y un fármaco que funciona, mantener con control estrecho es razonable si el paciente lo prefiere. Si la actividad es extensa o progresa, cambiar."};
+  else if(accF.length)V={c:"fail",k:"Meta accionable no lograda tras optimizar",h:"Cambiar o agregar un mecanismo distinto",p:`No se logró: ${accF.map(r=>r.n.replace(/&lt;/g,"<")).join(", ")}, pese a optimizar y tras la ventana del fármaco. Antes de cambiar, considerar la magnitud de la respuesta, la extensión de la inflamación residual y las alternativas disponibles.`};
+  else if(discord)V={c:"gray",k:"Síntomas sin inflamación objetiva",h:"Buscar causas alternativas antes de cambiar",p:"Clínica sin remisión con PCR normal, CF <100 µg/g y sin actividad endoscópica: la correlación entre síntomas e inflamación es modesta, sobre todo en EC."};
+  else if(grayAcc.length)V={c:"gray",k:"Meta accionable en zona gris",h:"Confirmar antes de decidir",p:`${grayAcc.map(r=>r.n.split(" ")[0]).join(" y ")} en rango intermedio tras la ventana del fármaco. Repetir la medición e integrar con síntomas, localización y tendencia; si persiste, IUS o endoscopía.`};
+  else if(adjF.length)V={c:"gray",k:"Meta adyuvante no lograda",h:"Optimizar y estrechar el monitoreo",p:`No se logró: ${adjF.map(r=>r.n.replace(/&lt;/g,"<")).join(", ")}. Por sí sola no justifica cambiar de clase.`};
+  else if(due.length)V={c:"due",k:"Evaluación incompleta",h:"Completar la evaluación de esta etapa",p:`Falta medir: ${due.map(r=>r.n.replace(/&lt;/g,"<")).join(", ")}.`};
+  else V={c:"ok",k:"En meta para este momento",h:"Mantener y seguir según el calendario",p:"Las metas que corresponden a esta etapa están logradas o aún dentro de su ventana."};
+
+  const steps=[];
+  if(accF.length&&opt!=="si"&&!onlyLimitedEndo){
+    steps.push("<b>Adherencia</b>: confirmarla antes de cualquier otra decisión.");
+    steps.push(`<b>Dosis o intervalo</b>: intensificar dentro de la ficha${k==="tnf"?"; <b>TDM</b> reactivo para separar falla farmacocinética de mecanística":k==="vdz"||k==="il"?"; el TDM tiene menos respaldo que con anti-TNF":""}.`);
+    steps.push("<b>Diagnóstico</b>: descartar <i>C. difficile</i>, CMV, AINE, enfermedad celíaca, estenosis y síntomas funcionales.");
+    steps.push("<b>Concomitante</b>: nutrición enteral u otra terapia agregada si corresponde.");
+    steps.push("Reevaluar en un plazo corto con la misma herramienta objetiva.");
+  }
+  if(discord)steps.push("Evaluar sobrecrecimiento bacteriano, malabsorción de sales biliares, estenosis, SII superpuesto e infección; confirmar con IUS o endoscopía si hay duda.");
+  if(rem==="si"&&(pcr==="a"||cf==="h"))steps.push("Remisión clínica con inflamación objetiva: la clínica sola no basta como meta.");
+  if(cf==="g")steps.push("CF en zona gris: repetir con el mismo ensayo; si persiste, IUS o endoscopía según localización.");
+  if(cf==="h"&&sem<=t.b[1])steps.push(`CF >200 µg/g aún dentro de la ventana (${ttR(t.b)} sem): repetir al cerrarla antes de declarar falla.`);
+  if(dz==="ec"&&mv("tm")==="nd"&&sem>=12)steps.push("Ecografía intestinal desde la etapa intermedia: la mejoría transmural orienta la optimización y el momento de la endoscopía.");
+  if(dz==="cu"&&mv("hist")==="act"&&mv("endo")==="m0")steps.push("Histología activa con Mayo 0: optimizar o acortar el control, sin cambiar de clase (VERDICT no mostró beneficio sobre la remisión endoscópica).");
+  if(pc==="alt"){
+    if(inflam)steps.push("Calidad de vida o fatiga alteradas con inflamación activa: tratar primero la inflamación.");
+    else steps.push("Calidad de vida, discapacidad o fatiga alteradas sin inflamación: anemia y ferropenia, déficit de B12 o vitamina D, sueño, ánimo y efectos adversos; manejo multidisciplinario y decisión compartida.");
+  }
+  if(sem>=LT[0])steps.push("Largo plazo: síntomas, CF y PCR cada 3–4 meses; luego cada 6–12 meses según la profundidad de la remisión.");
+  else if(endoState==="nd")steps.push(`Endoscopía de control en la etapa de largo plazo (7–12 meses)${dz==="cu"?"; la rectosigmoidoscopía basta":""}. Puede adelantarse si la clínica y los biomarcadores no concuerdan.`);
+
+  const winTx=r=>r.win===LT?"7–12 meses":r.cat==="pc"?"4–12 meses":`${ttR(r.win)} sem`;
+  return `<div class="verdict ${V.c}"><div class="k">${esc(V.k)}</div><h3>${esc(V.h)}</h3><p>${esc(V.p)}</p></div>
+  <div class="box"><h4>${esc(t.n)} · semana ${nf(sem)}</h4><div class="tw" style="margin:0"><table class="t" style="min-width:560px"><thead><tr><th>Meta</th><th>Categoría</th><th>Ventana</th><th>Estado</th></tr></thead><tbody>
+  ${rows.map(r=>`<tr><td><b>${r.n}</b><span class="sub2">${r.hor}</span></td><td><span class="cat ${r.cat==="pc"?"pac":r.cat}">${CATL[r.cat]}</span></td><td style="white-space:nowrap">${winTx(r)}</td><td><span class="mst ${r.st.s}">${r.st.t}</span>${r.note?`<span class="sub2">${r.note}</span>`:""}</td></tr>`).join("")}
+  ${dz==="ec"?`<tr><td><b>Remisión histológica</b><span class="sub2">Enfermedad de Crohn</span></td><td><span class="cat no">no es meta</span></td><td>—</td><td><span class="sub2" style="margin:0">Evidencia contradictoria; no guía decisiones</span></td></tr>`:`<tr><td><b>Remisión transmural</b><span class="sub2">Colitis ulcerosa</span></td><td><span class="cat no">no es meta</span></td><td>—</td><td><span class="sub2" style="margin:0">La IUS sirve para monitorear, no como meta</span></td></tr>`}
+  </tbody></table></div>${t.nt?`<p class="note" style="margin-top:8px">${esc(t.nt)}.</p>`:""}</div>
+  ${steps.length?`<div class="box"><h4>Qué hacer ahora</h4><ul class="why">${steps.map(x=>`<li class="n">${x}</li>`).join("")}</ul></div>`:""}`;
+}
+function mtRender(){
+  const dz=mv("dz");
+  $("#mt-q-endo-cu").hidden=dz!=="cu";$("#mt-q-hist").hidden=dz!=="cu";
+  $("#mt-q-endo-ec").hidden=dz!=="ec";$("#mt-q-tm").hidden=dz!=="ec";
+  $("#mt-res").innerHTML=mtEval();
+}
+function mtChart(){
+  const W=18,pct=x=>(x/W*100).toFixed(2)+"%";
+  const lab=(cls,a)=>{const end=a[1]/W*100,st=a[0]/W*100;return end>80?`<span class="lb ${cls}" style="right:calc(${(100-st).toFixed(2)}% + 4px)">${ttR(a)}</span>`:`<span class="lb ${cls}" style="left:calc(${end.toFixed(2)}% + 4px)">${ttR(a)}</span>`};
+  const bar=(cls,a)=>`<i class="b ${cls}" style="left:${pct(a[0])};width:${pct(a[1]-a[0])}" title="${ttR(a)} semanas"></i>${lab(cls,a)}`;
+  $("#mt-ttt").innerHTML=`<div class="leg"><span><i style="background:var(--marino-2)"></i>Respuesta clínica</span><span><i style="background:var(--acento)"></i>Remisión clínica</span><span><i style="background:var(--verde)"></i>PCR normal y CF en descenso</span></div>`+
+  Object.values(TT).map(t=>`<div class="row"><div class="nm">${esc(t.n)}${t.dz?`<small>Solo ${t.dz==="cu"?"colitis ulcerosa":"enfermedad de Crohn"}</small>`:""}</div><div class="bars" role="img" aria-label="${esc(t.n)}: respuesta ${ttR(t.r)}, remisión ${ttR(t.m)}, biomarcadores ${ttR(t.b)} semanas">${bar("r",t.r)}${bar("m",t.m)}${bar("c",t.b)}</div></div>`).join("")+
+  `<div class="axis"><div></div><div class="ticks">${[0,2,4,6,8,10,12,14,16,18].map(x=>`<span style="left:${pct(x)}">${x}</span>`).join("")}</div></div><p class="note" style="margin:6px 0 0">Semanas desde el inicio del tratamiento. Estimaciones aproximadas de la revisión sistemática y la encuesta IOIBD.</p>`;
+}
+function mtInit(){
+  $("#mt-pre").insertAdjacentHTML("beforeend",MT_PRE.map((p,i)=>`<button type="button" class="chipbtn" data-mtp="${i}" aria-pressed="${i===0}">${esc(p.l)}</button>`).join(""));
+  $("#mt-pre").addEventListener("click",e=>{const b=e.target.closest("[data-mtp]");if(!b)return;$$("#mt-pre [data-mtp]").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));mtSet(MT_PRE[+b.dataset.mtp].v);mtRender()});
+  const clr=()=>$$("#mt-pre [data-mtp]").forEach(x=>x.setAttribute("aria-pressed","false"));
+  $("#mt-f").addEventListener("change",e=>{if(e.target.name==="mt-dz")mtFillCls(mv("dz"));clr();mtRender()});
+  $("#mt-f").addEventListener("input",e=>{if(e.target.id==="mt-sem"){clr();mtRender()}});
+  $("#mt-f").addEventListener("submit",e=>e.preventDefault());
+  mtSet(MT_PRE[0].v);mtRender();mtChart();
+}
+
 /* ---------- navegación y tema ---------- */
-const VIEWS=["decision","scores","farmacos","cinetica","fragilidad","pipeline","guias","fuentes"];
+const VIEWS=["decision","metas","scores","farmacos","cinetica","fragilidad","pipeline","guias","fuentes"];
 function show(v){if(!VIEWS.includes(v))v="decision";VIEWS.forEach(x=>{$("#v-"+x).classList.toggle("on",x===v)});$$("#tabs a").forEach(a=>a.setAttribute("aria-current",a.getAttribute("href")==="#"+v?"true":"false"))}
 window.addEventListener("hashchange",()=>{closeFicha();show(location.hash.slice(1));window.scrollTo(0,0)});
 $("#tema").addEventListener("click",()=>{const r=document.documentElement;const cur=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");const n=cur==="dark"?"light":"dark";r.setAttribute("data-theme",n);try{localStorage.setItem("eii-tema",n)}catch(e){}});
@@ -2120,7 +2427,7 @@ $("#dclose").addEventListener("click",closeFicha);$("#scrim").addEventListener("
 $("#fq").addEventListener("input",renderFarmacos);
 
 /* ---------- inicio ---------- */
-render();renderFarmacos();renderKin();renderPipe();renderGuias();
+render();renderFarmacos();renderKin();renderPipe();renderGuias();mtInit();
 show(location.hash.slice(1)||"decision");
 /* ============ FRAGILIDAD ============ */
 const CFS=[
@@ -2282,7 +2589,8 @@ const INFO={
   <li class="n"><b>Mayo parcial</b> (0–9): frecuencia + sangrado + valoración global, sin endoscopía. Sirve para seguimiento clínico y para clasificar en la consulta.</li>
   <li class="n"><b>Mayo total</b> (0–12): suma la endoscopía. Remisión ≤2 sin subpuntaje &gt;1. Respuesta: descenso ≥3 puntos y ≥30 %, con sangrado que baja ≥1 o queda en 0–1.</li>
   <li class="n"><b>Mayo modificado</b> (0–9: frecuencia + sangrado + endoscopía), usado en ensayos recientes y por la FDA. Remisión: frecuencia ≤1, sangrado 0 y endoscópico ≤1.</li>
-  <li class="n"><b>Objetivo STRIDE-II</b>: Mayo endoscópico 0–1 (ideal 0) a los 6–12 meses.</li></ul>
+  <li class="n"><b>Meta STRIDE-III</b> (accionable, 7–12 meses): Mayo endoscópico 0. Mayo 1 solo como meta transitoria si hay remisión clínica y bioquímica. STRIDE-II aceptaba 0–1.</li>
+  <li class="n"><b>Remisión clínica STRIDE-III</b>: Mayo parcial ≤1 con sangrado 0. Respuesta: descenso ≥30 % y ≥2 puntos.</li></ul>
   <p class="note" style="margin-top:8px">Schroeder KW, Tremaine WJ, Ilstrup DM. N Engl J Med. 1987;317:1625-9. doi:10.1056/NEJM198712243172603 · Lewis JD et al. Inflamm Bowel Dis. 2008;14:1660-6. doi:10.1002/ibd.20520</p>`,
  uceis:`<h4>Cómo se usa</h4><ul class="why">
   <li class="n">Tres descriptores con definición precisa; total 0–8. Menor variabilidad entre observadores que el Mayo endoscópico y no satura en la enfermedad grave.</li>
@@ -2319,7 +2627,7 @@ const INFO={
   <p class="note" style="margin-top:8px">Sandborn WJ, Tremaine WJ, Batts KP, et al. Mayo Clin Proc. 1994;69(5):409-15. doi:10.1016/s0025-6196(12)61634-6 · Travis S et al. N Engl J Med. 2023;388:1191-200. doi:10.1056/NEJMoa2208450</p>`,
  ses:`<h4>Cómo se usa</h4><ul class="why">
   <li class="n">Puntaje endoscópico: 4 variables (0–3) en 5 segmentos; total 0–56. La estenosis no se mueve con el tratamiento médico.</li>
-  <li class="n"><b>Objetivo STRIDE-II</b>: SES-CD &lt;3 o ausencia de úlceras a los 6–12 meses.</li>
+  <li class="n"><b>Meta STRIDE-III</b> (accionable, 7–12 meses): SES-CD ≤2; remisión completa ≤1. Por cápsula, Lewis &lt;135. STRIDE-II pedía SES-CD &lt;3 o ausencia de úlceras.</li>
   <li class="n"><b>Respuesta endoscópica</b>: descenso ≥50 % respecto del basal.</li>
   <li class="n">En enfermedad ileal aislada el máximo es bajo: un mismo número pesa más que en colitis extensa.</li></ul>
   <p class="note" style="margin-top:8px">Daperno M, D'Haens G, Van Assche G, et al. Development and validation of a new, simplified endoscopic activity score for Crohn's disease: the SES-CD. Gastrointest Endosc. 2004;60(4):505-12. doi:10.1016/s0016-5107(04)01878-4</p>`
@@ -2345,7 +2653,7 @@ function scRender(){
     const extra=[];
     if(partial!==null&&total!==null)extra.push(`Mayo parcial: <b>${partial}/9</b>`);
     if(mms!==null)extra.push(`Mayo modificado: <b>${mms}/9</b>${v.sf<=1&&v.rb===0&&v.es<=1?" · remisión":""}`);
-    if(v.es!==null)extra.push(`Endoscópico: <b>${v.es}</b> · ${v.es===0?"remisión endoscópica":v.es===1?"mejoría endoscópica (objetivo STRIDE-II cumplido)":"actividad endoscópica"}`);
+    if(v.es!==null)extra.push(`Endoscópico: <b>${v.es}</b> · ${v.es===0?"remisión endoscópica":v.es===1?"mejoría endoscópica (meta STRIDE-III solo transitoria, si hay remisión clínica y bioquímica)":"actividad endoscópica"}`);
     if(extra.length)h+=`<ul class="why" style="margin-top:8px">${extra.map(x=>`<li class="n">${x}</li>`).join("")}</ul>`;
     if(scApply){btn.hidden=false;btn.textContent=`Usar en la decisión: CU ${scApply}`}
   }else if(tool==="hbi"){
@@ -2363,7 +2671,7 @@ function scRender(){
     else{const t=v.vp+v.bl+v.eu,lab=t<=1?"Remisión endoscópica":t<=4?"Leve":t<=6?"Moderada":"Grave",st=t<=1?"r":t<=4?"p":"f";
       h=`<div class="k">UCEIS</div><div class="score"><b class="st-${st}">${t}<small>/8</small></b><span class="st-${st}">${lab}</span></div>${band([[0,1,"Remisión","0–1"],[2,4,"Leve","2–4"],[5,6,"Moderada","5–6"],[7,8,"Grave","7–8"]],t)}
       <ul class="why" style="margin-top:8px"><li class="n">Patrón vascular ${v.vp} · sangrado ${v.bl} · erosiones y úlceras ${v.eu}</li>
-      ${t===0?`<li class="p">Remisión endoscópica completa (objetivo ideal STRIDE-II).</li>`:""}
+      ${t===0?`<li class="p">Remisión endoscópica completa. La meta STRIDE-III se expresa como Mayo endoscópico 0.</li>`:""}
       ${v.eu===3?`<li class="w">Úlceras profundas: factor de mal pronóstico (ACG 2025); márcalo en la Decisión («Mayo endoscópico 3 / úlceras profundas»).</li>`:""}
       ${t>=7?`<li class="w">En colitis aguda grave, UCEIS ≥7 al ingreso: casi todos requieren rescate; planificar infliximab o ciclosporina desde el inicio (Corte 2015).</li>`:t>=5?`<li class="w">En colitis aguda grave, UCEIS ≥5 duplica la necesidad de rescate (50 % vs 27 %).</li>`:""}</ul>`;}
   }else if(tool==="rut"){
@@ -2423,7 +2731,7 @@ function scRender(){
     if(!seen)h=`<div class="k">SES-CD</div><h3>Puntúa al menos un segmento</h3><p class="note">Abre cada segmento y marca sus 4 variables.</p>`;
     else{const lab=tot<=2?"Remisión endoscópica":tot<=6?"Leve":tot<=15?"Moderada":"Grave",st=tot<=2?"r":tot<=6?"p":"f";
       h=`<div class="k">SES-CD · ${seen} segmento(s) puntuado(s)</div><div class="score"><b class="st-${st}">${tot}<small>/56</small></b><span class="st-${st}">${lab}</span></div>${band([[0,2,"Remisión endoscópica","0–2"],[3,6,"Leve","3–6"],[7,15,"Moderada","7–15"],[16,56,"Grave","≥16"]],tot)}
-      <ul class="why" style="margin-top:8px"><li class="${ulc?"w":"p"}">${ulc?"Hay úlceras: no cumple el objetivo STRIDE-II":"Sin úlceras: objetivo endoscópico STRIDE-II cumplido"}${tot<3&&ulc?" (aunque el puntaje sea <3, revisar)":""}</li>${stn?`<li class="w">Estenosis presente: caracterizar con imagen (componente inflamatorio vs fibrótico)</li>`:""}</ul>`;
+      <ul class="why" style="margin-top:8px"><li class="${tot<=2?"p":"w"}">${tot<=1?"SES-CD ≤1: remisión endoscópica completa (meta STRIDE-III)":tot<=2?"SES-CD ≤2: meta endoscópica STRIDE-III cumplida":"SES-CD >2: no cumple la meta STRIDE-III (≤2)"}${tot<=2&&ulc?". Hay úlcera puntuada: revisar el segmento":""}</li>${stn?`<li class="w">Estenosis presente: caracterizar con imagen (componente inflamatorio vs fibrótico)</li>`:""}</ul>`;
     }
   }
   $("#sc-resb").innerHTML=h;

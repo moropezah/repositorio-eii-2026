@@ -136,8 +136,8 @@ function render(){
 
   const top=R.items.filter(i=>i.tier==="pref"&&D[i.id].kin&&D[i.id].kin[c.dz]);
   if(top.length){
-    h+=`<div class="box"><h4>Cuándo reevaluar</h4><div class="tw" style="margin:0"><table class="t" style="min-width:480px"><thead><tr><th>Fármaco</th><th>Inicio</th><th>Fin de inducción</th><th>Niveles</th></tr></thead><tbody>${top.map(i=>{const d=D[i.id],k=d.kin[c.dz];return `<tr><td class="nm">${esc(d.n)}</td><td>${esc(d.kinTx||"")}</td><td>${wk(k.ev)}${k.ext?` · extendida ${wk(k.ext)}`:""}</td><td>${esc(d.tdm.split(".")[0])}</td></tr>`}).join("")}</tbody></table></div>
-    <p class="note" style="margin-top:8px">Objetivos STRIDE-II: respuesta clínica a corto plazo; calprotectina y PCR normales a los 3–6 meses; cicatrización endoscópica a los 6–12 meses.</p></div>`;
+    h+=`<div class="box"><h4>Cuándo reevaluar</h4><div class="tw" style="margin:0"><table class="t" style="min-width:480px"><thead><tr><th>Fármaco</th><th>Inicio</th><th>Fin de inducción</th><th>Metas STRIDE-III (sem)</th><th>Niveles</th></tr></thead><tbody>${top.map(i=>{const d=D[i.id],k=d.kin[c.dz],tt=ttFor(i.id,c.dz);return `<tr><td class="nm">${esc(d.n)}</td><td>${esc(d.kinTx||"")}</td><td>${wk(k.ev)}${k.ext?` · extendida ${wk(k.ext)}`:""}</td><td style="white-space:nowrap">${tt?`Respuesta ${ttR(tt.r)}<br>Remisión ${ttR(tt.m)}<br>PCR y CF ${ttR(tt.b)}`:"—"}</td><td>${esc(d.tdm.split(".")[0])}</td></tr>`}).join("")}</tbody></table></div>
+    <p class="note" style="margin-top:8px">STRIDE-III: respuesta clínica en 1–2 meses, remisión en 2–3, PCR normal y calprotectina &lt;200 µg/g en 4–6, remisión endoscópica en 7–12. Si una meta accionable no se logra tras la ventana del fármaco y tras optimizar, cambiar de mecanismo. <a href="#metas">Evaluar metas</a></p></div>`;
   }
   const gl=relGuides(R,c);
   if(gl.length){h+=`<details class="more gd"><summary>Dónde discrepan las guías <small>${gl.length} tema(s) · ${esc(gl.map(g=>GDRUG[g]).join(", "))}</small></summary><div class="box">${gl.map(g=>gTable(g)).join("")}</div></details>`}
@@ -212,7 +212,7 @@ function summary(){
   ["pref","alt"].forEach(t=>{const its=R.items.filter(i=>i.tier===t);if(its.length)s+=`\n${TIERTX[t][0]}:\n`+its.map(i=>`- ${D[i.id].n} (${i.ph}; ${CHILE[D[i.id].chile][0]}): ${doseLine(i,c.dz)}`).join("\n")+"\n"});
   const ev=R.items.filter(i=>i.tier==="evit"||i.tier==="prec");if(ev.length)s+="\nEvitar / precaución:\n"+ev.map(i=>`- ${D[i.id].n}: ${i.why.filter(w=>w.c!=="n"&&w.c!=="p").map(w=>(w.ci?"CONTRAINDICADO: ":"")+w.t).join("; ")||i.why.map(w=>w.t).join("; ")}`).join("\n")+"\n";
   if(R.fail.length)s+="\nSi falla:\n"+R.fail.map(x=>"- "+x).join("\n")+"\n";
-  s+="\nFuente: Decisión Terapéutica EII, Dr. Moisés Oropeza Hernández (ECCO 2026/2024, ACG 2025, AGA 2024–2025, Guía chilena 2026). Apoyo a la decisión; no reemplaza el juicio clínico.";
+  s+="\nFuente: Decisión Terapéutica EII, Dr. Moisés Oropeza Hernández (ECCO 2026/2024, ACG 2025, AGA 2024–2025, Guía chilena 2026, STRIDE-III 2026). Apoyo a la decisión; no reemplaza el juicio clínico.";
   return s;
 }
 
@@ -234,8 +234,158 @@ function renderGuias(){
   $("#refs").innerHTML=REFS.map(r=>`<li>${esc(r).replace(/doi:(\S+)/,(m,x)=>`doi:<a href="https://doi.org/${x}" target="_blank" rel="noopener">${x}</a>`)}</li>`).join("");
 }
 
+/* ---------- Metas STRIDE-III ---------- */
+/* Ventanas en semanas: respuesta (r), remisión (m), PCR normal / CF en descenso (b). STRIDE-III, figura 4. */
+const TT={
+ cort:{n:"Corticoide sistémico o nutrición enteral exclusiva",dz:"ec",r:[1,6],m:[3,8],b:[4,8]},
+ asa:{n:"5-ASA oral",dz:"cu",r:[2,6],m:[4,8],b:[5.5,10]},
+ tio:{n:"Tiopurina",r:[7.5,12],m:[12,18],b:[12,18]},
+ mtx:{n:"Metotrexato",dz:"ec",r:[4,12],m:[8,16],b:[12,16]},
+ tnf:{n:"Anti-TNF",r:[2,4],m:[4,12],b:[6,12]},
+ vdz:{n:"Vedolizumab",r:[2,11.5],m:[9,17.5],b:[10,17.5]},
+ il:{n:"Anti-IL-12/23 o anti-IL-23",r:[2,8],m:[6,16],b:[8,16],nt:"Anti-IL-23 podría actuar algo antes que anti-IL-12/23"},
+ jak:{n:"Inhibidor JAK",r:[0,4],m:[3,8],b:[4,10]},
+ s1p:{n:"Modulador S1P",dz:"cu",r:[2,6],m:[5.5,12],b:[6.8,12]}
+};
+const LT=[28,52]; /* largo plazo: 7–12 meses */
+function ttKey(id){const d=D[id];if(!d)return null;if(id==="mtx")return"mtx";return {tnf:"tnf",int:"vdz",p40:"il",p19:"il",jak:"jak",s1p:"s1p",imm:"tio",asa:"asa",cort:"cort"}[d.cl]||null}
+function ttFor(id,dz){const k=ttKey(id);if(!k)return null;const t=TT[k];if(t.dz&&t.dz!==dz)return null;if(k==="cort"&&!["pred","mpred","hc"].includes(id))return null;return t}
+const nf=x=>String(x).replace(".",",");
+function ttR(a){return `${nf(a[0])}–${nf(a[1])}`}
+
+const MT_PRE=[
+ {l:"EC · anti-IL-23 · sem 20 · CF en zona gris",v:{dz:"ec",cls:"il",sem:20,opt:"no",resp:"si",rem:"si",urg:"si",pcr:"n",cf:"g",cfd:"si",endoe:"nd",tm:"nd",pc:"nd"}},
+ {l:"EC · anti-TNF · sem 16 · sin remisión",v:{dz:"ec",cls:"tnf",sem:16,opt:"no",resp:"si",rem:"no",urg:"no",pcr:"a",cf:"h",cfd:"no",endoe:"nd",tm:"nd",pc:"alt"}},
+ {l:"CU · vedolizumab · sem 40 · Mayo 1",v:{dz:"cu",cls:"vdz",sem:40,opt:"si",resp:"si",rem:"si",urg:"si",pcr:"n",cf:"a",cfd:"si",endo:"m1",hist:"act",pc:"ok"}},
+ {l:"EC · síntomas sin inflamación",v:{dz:"ec",cls:"tnf",sem:34,opt:"si",resp:"si",rem:"no",urg:"no",pcr:"n",cf:"a",cfd:"si",endoe:"s0",tm:"rem",pc:"alt"}}
+];
+const mv=n=>{const e=document.querySelector(`input[name="mt-${n}"]:checked`);return e?e.value:"nd"};
+function mtSet(v){
+  const set=(n,x)=>{const e=document.getElementById(`mt-${n}-${x}`);if(e)e.checked=true};
+  set("dz",v.dz);mtFillCls(v.dz);$("#mt-cls").value=v.cls;$("#mt-sem").value=v.sem;
+  ["opt","resp","rem","urg","pcr","cf","cfd","endo","endoe","tm","hist","pc"].forEach(k=>set(k,v[k]||"nd"));
+}
+function mtFillCls(dz){
+  const cur=$("#mt-cls").value;
+  $("#mt-cls").innerHTML=Object.entries(TT).filter(([k,t])=>!t.dz||t.dz===dz).map(([k,t])=>`<option value="${k}">${esc(t.n)}</option>`).join("");
+  if(TT[cur]&&(!TT[cur].dz||TT[cur].dz===dz))$("#mt-cls").value=cur;
+}
+/* estado de una meta: ok · gray (parcial/intermedio) · wait · due · fail */
+function mtStatus(state,win,sem){
+  if(state==="ok")return{s:"ok",t:"Lograda"};
+  if(state==="nd"){if(sem<win[0])return{s:"wait",t:"Aún no corresponde"};if(sem<=win[1])return{s:"due",t:"Medir en esta ventana"};return{s:"due",t:"Medir ya: ventana cumplida"}}
+  if(state==="gray")return{s:"gray",t:"Intermedio"};
+  if(sem<win[0])return{s:"wait",t:"Precoz para juzgar"};
+  if(sem<=win[1])return{s:"due",t:`En ventana: reevaluar hacia la sem ${nf(Math.ceil(win[1]))}`};
+  return{s:"fail",t:"No lograda tras la ventana"};
+}
+const CATL={acc:"accionable",adj:"adyuvante",pc:"paciente",no:"no es meta"};
+function mtEval(){
+  const dz=mv("dz")==="ec"?"ec":"cu",k=$("#mt-cls").value,t=TT[k],sem=Math.max(0,parseFloat($("#mt-sem").value)||0),opt=mv("opt");
+  const yn=x=>x==="si"?"ok":x==="no"?"bad":"nd";
+  const rows=[];
+  const add=(n,cat,win,state,note,hor)=>{const st=mtStatus(state,win,sem);rows.push({n,cat,win,st,note,hor})};
+  const resp=mv("resp"),rem=mv("rem"),urg=mv("urg"),pcr=mv("pcr"),cf=mv("cf"),cfd=mv("cfd"),pc=mv("pc");
+  add("Respuesta clínica","acc",t.r,yn(resp),"","Inmediato");
+  add("Remisión clínica","acc",t.m,yn(rem),"","Corto plazo");
+  add("Urgencia ≤2","adj",t.m,yn(urg),urg==="no"&&sem>t.m[1]&&rem==="si"?"Persistente pese a remisión: evaluar compliance rectal y piso pélvico":"","Corto plazo");
+  add("Caída ≥50 % de CF o PCR","adj",t.m,yn(cfd),"","Inmediato–corto");
+  add("PCR normal","acc",t.b,pcr==="n"?"ok":pcr==="l"?"gray":pcr==="a"?"bad":"nd",pcr==="l"?"&lt;2× LSN: interpretar caso a caso":"","Intermedio");
+  add("Calprotectina &lt;200 µg/g","acc",t.b,cf==="a"?"ok":cf==="g"?"gray":cf==="h"?"bad":"nd",cf==="a"?"&lt;100: control inflamatorio profundo":cf==="g"?"100–200: zona gris; repetir y correlacionar":"","Intermedio");
+  let endoNote="",endoState="nd",limited=false;
+  const bioOk=(pcr==="n"||pcr==="l")&&(cf==="a"||cf==="g");
+  if(dz==="cu"){
+    const e=mv("endo");
+    if(e==="m0")endoState="ok";
+    else if(e==="m1"){if(rem==="si"&&bioOk){endoState="gray";endoNote="Mayo 1 aceptable como meta transitoria: hay remisión clínica y bioquímica";limited=true}else{endoState="bad";endoNote="Mayo 1 sin remisión clínica y bioquímica: no cumple"}}
+    else if(e==="m2")endoState="bad";
+  }else{
+    const e=mv("endoe");
+    if(e==="s0")endoState="ok";
+    else if(e==="sr"){if(sem<LT[0]){endoState="gray";endoNote="Respuesta endoscópica precoz: predice buena evolución a 1 año"}else{endoState="bad";limited=true;endoNote="Mejoría sustancial con actividad residual"}}
+    else if(e==="sn")endoState="bad";
+  }
+  add("Remisión endoscópica","acc",LT,endoState,endoNote,"Largo plazo");
+  if(dz==="ec"){const tm=mv("tm");add("Remisión transmural","adj",LT,tm==="rem"?"ok":tm==="resp"?"gray":tm==="no"?"bad":"nd",tm==="resp"?"Respuesta transmural; seguir con IUS":"","Largo plazo")}
+  else{const h=mv("hist");add("Remisión histológica","adj",LT,h==="rem"?"ok":h==="act"?"bad":"nd",h==="act"&&mv("endo")==="m0"?"Con Mayo 0 y remisión clínica: no cambiar solo por histología":"","Largo plazo")}
+  add("Calidad de vida, discapacidad, fatiga","pc",[16,52],pc==="ok"?"ok":pc==="alt"?"bad":"nd","","Intermedio–largo");
+  /* histología con actividad se informa aunque no haya llegado la ventana */
+  rows.forEach(r=>{if(r.n==="Remisión histológica"&&mv("hist")==="act")r.st={s:"fail",t:"Actividad histológica"}});
+
+  const fail=c=>rows.filter(r=>r.cat===c&&r.st.s==="fail");
+  const inflam=pcr==="a"||cf==="h"||endoState==="bad"||(dz==="ec"&&mv("tm")==="no");
+  const objQuiet=pcr==="n"&&cf==="a"&&endoState!=="bad";
+  const symFail=(rem==="no"&&sem>t.m[1])||(resp==="no"&&sem>t.r[1]);
+  const discord=symFail&&objQuiet;
+  const accF=fail("acc").filter(r=>!(discord&&/clínica/.test(r.n)));
+  const onlyLimitedEndo=accF.length===1&&accF[0].n==="Remisión endoscópica"&&limited&&rem==="si"&&bioOk;
+  const grayAcc=rows.filter(r=>r.cat==="acc"&&r.st.s==="gray"&&sem>r.win[1]&&r.n!=="Remisión endoscópica");
+  const adjF=fail("adj"),pcF=fail("pc"),due=rows.filter(r=>r.st.s==="due");
+  let V;
+  if(accF.length&&opt!=="si")V={c:"gray",k:"Meta accionable no lograda",h:"Optimizar antes de cambiar",p:`No se logró: ${accF.map(r=>r.n.replace(/&lt;/g,"<")).join(", ")}. STRIDE-III pide optimizar el esquema actual antes de cambiar de mecanismo.`};
+  else if(onlyLimitedEndo)V={c:"gray",k:"Actividad endoscópica residual limitada",h:"Cambiar o mantener, en decisión compartida",p:"Con remisión clínica y bioquímica, actividad residual limitada y un fármaco que funciona, mantener con control estrecho es razonable si el paciente lo prefiere. Si la actividad es extensa o progresa, cambiar."};
+  else if(accF.length)V={c:"fail",k:"Meta accionable no lograda tras optimizar",h:"Cambiar o agregar un mecanismo distinto",p:`No se logró: ${accF.map(r=>r.n.replace(/&lt;/g,"<")).join(", ")}, pese a optimizar y tras la ventana del fármaco. Antes de cambiar, considerar la magnitud de la respuesta, la extensión de la inflamación residual y las alternativas disponibles.`};
+  else if(discord)V={c:"gray",k:"Síntomas sin inflamación objetiva",h:"Buscar causas alternativas antes de cambiar",p:"Clínica sin remisión con PCR normal, CF <100 µg/g y sin actividad endoscópica: la correlación entre síntomas e inflamación es modesta, sobre todo en EC."};
+  else if(grayAcc.length)V={c:"gray",k:"Meta accionable en zona gris",h:"Confirmar antes de decidir",p:`${grayAcc.map(r=>r.n.split(" ")[0]).join(" y ")} en rango intermedio tras la ventana del fármaco. Repetir la medición e integrar con síntomas, localización y tendencia; si persiste, IUS o endoscopía.`};
+  else if(adjF.length)V={c:"gray",k:"Meta adyuvante no lograda",h:"Optimizar y estrechar el monitoreo",p:`No se logró: ${adjF.map(r=>r.n.replace(/&lt;/g,"<")).join(", ")}. Por sí sola no justifica cambiar de clase.`};
+  else if(due.length)V={c:"due",k:"Evaluación incompleta",h:"Completar la evaluación de esta etapa",p:`Falta medir: ${due.map(r=>r.n.replace(/&lt;/g,"<")).join(", ")}.`};
+  else V={c:"ok",k:"En meta para este momento",h:"Mantener y seguir según el calendario",p:"Las metas que corresponden a esta etapa están logradas o aún dentro de su ventana."};
+
+  const steps=[];
+  if(accF.length&&opt!=="si"&&!onlyLimitedEndo){
+    steps.push("<b>Adherencia</b>: confirmarla antes de cualquier otra decisión.");
+    steps.push(`<b>Dosis o intervalo</b>: intensificar dentro de la ficha${k==="tnf"?"; <b>TDM</b> reactivo para separar falla farmacocinética de mecanística":k==="vdz"||k==="il"?"; el TDM tiene menos respaldo que con anti-TNF":""}.`);
+    steps.push("<b>Diagnóstico</b>: descartar <i>C. difficile</i>, CMV, AINE, enfermedad celíaca, estenosis y síntomas funcionales.");
+    steps.push("<b>Concomitante</b>: nutrición enteral u otra terapia agregada si corresponde.");
+    steps.push("Reevaluar en un plazo corto con la misma herramienta objetiva.");
+  }
+  if(discord)steps.push("Evaluar sobrecrecimiento bacteriano, malabsorción de sales biliares, estenosis, SII superpuesto e infección; confirmar con IUS o endoscopía si hay duda.");
+  if(rem==="si"&&(pcr==="a"||cf==="h"))steps.push("Remisión clínica con inflamación objetiva: la clínica sola no basta como meta.");
+  if(cf==="g")steps.push("CF en zona gris: repetir con el mismo ensayo; si persiste, IUS o endoscopía según localización.");
+  if(cf==="h"&&sem<=t.b[1])steps.push(`CF >200 µg/g aún dentro de la ventana (${ttR(t.b)} sem): repetir al cerrarla antes de declarar falla.`);
+  if(dz==="ec"&&mv("tm")==="nd"&&sem>=12)steps.push("Ecografía intestinal desde la etapa intermedia: la mejoría transmural orienta la optimización y el momento de la endoscopía.");
+  if(dz==="cu"&&mv("hist")==="act"&&mv("endo")==="m0")steps.push("Histología activa con Mayo 0: optimizar o acortar el control, sin cambiar de clase (VERDICT no mostró beneficio sobre la remisión endoscópica).");
+  if(pc==="alt"){
+    if(inflam)steps.push("Calidad de vida o fatiga alteradas con inflamación activa: tratar primero la inflamación.");
+    else steps.push("Calidad de vida, discapacidad o fatiga alteradas sin inflamación: anemia y ferropenia, déficit de B12 o vitamina D, sueño, ánimo y efectos adversos; manejo multidisciplinario y decisión compartida.");
+  }
+  if(sem>=LT[0])steps.push("Largo plazo: síntomas, CF y PCR cada 3–4 meses; luego cada 6–12 meses según la profundidad de la remisión.");
+  else if(endoState==="nd")steps.push(`Endoscopía de control en la etapa de largo plazo (7–12 meses)${dz==="cu"?"; la rectosigmoidoscopía basta":""}. Puede adelantarse si la clínica y los biomarcadores no concuerdan.`);
+
+  const winTx=r=>r.win===LT?"7–12 meses":r.cat==="pc"?"4–12 meses":`${ttR(r.win)} sem`;
+  return `<div class="verdict ${V.c}"><div class="k">${esc(V.k)}</div><h3>${esc(V.h)}</h3><p>${esc(V.p)}</p></div>
+  <div class="box"><h4>${esc(t.n)} · semana ${nf(sem)}</h4><div class="tw" style="margin:0"><table class="t" style="min-width:560px"><thead><tr><th>Meta</th><th>Categoría</th><th>Ventana</th><th>Estado</th></tr></thead><tbody>
+  ${rows.map(r=>`<tr><td><b>${r.n}</b><span class="sub2">${r.hor}</span></td><td><span class="cat ${r.cat==="pc"?"pac":r.cat}">${CATL[r.cat]}</span></td><td style="white-space:nowrap">${winTx(r)}</td><td><span class="mst ${r.st.s}">${r.st.t}</span>${r.note?`<span class="sub2">${r.note}</span>`:""}</td></tr>`).join("")}
+  ${dz==="ec"?`<tr><td><b>Remisión histológica</b><span class="sub2">Enfermedad de Crohn</span></td><td><span class="cat no">no es meta</span></td><td>—</td><td><span class="sub2" style="margin:0">Evidencia contradictoria; no guía decisiones</span></td></tr>`:`<tr><td><b>Remisión transmural</b><span class="sub2">Colitis ulcerosa</span></td><td><span class="cat no">no es meta</span></td><td>—</td><td><span class="sub2" style="margin:0">La IUS sirve para monitorear, no como meta</span></td></tr>`}
+  </tbody></table></div>${t.nt?`<p class="note" style="margin-top:8px">${esc(t.nt)}.</p>`:""}</div>
+  ${steps.length?`<div class="box"><h4>Qué hacer ahora</h4><ul class="why">${steps.map(x=>`<li class="n">${x}</li>`).join("")}</ul></div>`:""}`;
+}
+function mtRender(){
+  const dz=mv("dz");
+  $("#mt-q-endo-cu").hidden=dz!=="cu";$("#mt-q-hist").hidden=dz!=="cu";
+  $("#mt-q-endo-ec").hidden=dz!=="ec";$("#mt-q-tm").hidden=dz!=="ec";
+  $("#mt-res").innerHTML=mtEval();
+}
+function mtChart(){
+  const W=18,pct=x=>(x/W*100).toFixed(2)+"%";
+  const lab=(cls,a)=>{const end=a[1]/W*100,st=a[0]/W*100;return end>80?`<span class="lb ${cls}" style="right:calc(${(100-st).toFixed(2)}% + 4px)">${ttR(a)}</span>`:`<span class="lb ${cls}" style="left:calc(${end.toFixed(2)}% + 4px)">${ttR(a)}</span>`};
+  const bar=(cls,a)=>`<i class="b ${cls}" style="left:${pct(a[0])};width:${pct(a[1]-a[0])}" title="${ttR(a)} semanas"></i>${lab(cls,a)}`;
+  $("#mt-ttt").innerHTML=`<div class="leg"><span><i style="background:var(--marino-2)"></i>Respuesta clínica</span><span><i style="background:var(--acento)"></i>Remisión clínica</span><span><i style="background:var(--verde)"></i>PCR normal y CF en descenso</span></div>`+
+  Object.values(TT).map(t=>`<div class="row"><div class="nm">${esc(t.n)}${t.dz?`<small>Solo ${t.dz==="cu"?"colitis ulcerosa":"enfermedad de Crohn"}</small>`:""}</div><div class="bars" role="img" aria-label="${esc(t.n)}: respuesta ${ttR(t.r)}, remisión ${ttR(t.m)}, biomarcadores ${ttR(t.b)} semanas">${bar("r",t.r)}${bar("m",t.m)}${bar("c",t.b)}</div></div>`).join("")+
+  `<div class="axis"><div></div><div class="ticks">${[0,2,4,6,8,10,12,14,16,18].map(x=>`<span style="left:${pct(x)}">${x}</span>`).join("")}</div></div><p class="note" style="margin:6px 0 0">Semanas desde el inicio del tratamiento. Estimaciones aproximadas de la revisión sistemática y la encuesta IOIBD.</p>`;
+}
+function mtInit(){
+  $("#mt-pre").insertAdjacentHTML("beforeend",MT_PRE.map((p,i)=>`<button type="button" class="chipbtn" data-mtp="${i}" aria-pressed="${i===0}">${esc(p.l)}</button>`).join(""));
+  $("#mt-pre").addEventListener("click",e=>{const b=e.target.closest("[data-mtp]");if(!b)return;$$("#mt-pre [data-mtp]").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));mtSet(MT_PRE[+b.dataset.mtp].v);mtRender()});
+  const clr=()=>$$("#mt-pre [data-mtp]").forEach(x=>x.setAttribute("aria-pressed","false"));
+  $("#mt-f").addEventListener("change",e=>{if(e.target.name==="mt-dz")mtFillCls(mv("dz"));clr();mtRender()});
+  $("#mt-f").addEventListener("input",e=>{if(e.target.id==="mt-sem"){clr();mtRender()}});
+  $("#mt-f").addEventListener("submit",e=>e.preventDefault());
+  mtSet(MT_PRE[0].v);mtRender();mtChart();
+}
+
 /* ---------- navegación y tema ---------- */
-const VIEWS=["decision","scores","farmacos","cinetica","fragilidad","pipeline","guias","fuentes"];
+const VIEWS=["decision","metas","scores","farmacos","cinetica","fragilidad","pipeline","guias","fuentes"];
 function show(v){if(!VIEWS.includes(v))v="decision";VIEWS.forEach(x=>{$("#v-"+x).classList.toggle("on",x===v)});$$("#tabs a").forEach(a=>a.setAttribute("aria-current",a.getAttribute("href")==="#"+v?"true":"false"))}
 window.addEventListener("hashchange",()=>{closeFicha();show(location.hash.slice(1));window.scrollTo(0,0)});
 $("#tema").addEventListener("click",()=>{const r=document.documentElement;const cur=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");const n=cur==="dark"?"light":"dark";r.setAttribute("data-theme",n);try{localStorage.setItem("eii-tema",n)}catch(e){}});
@@ -259,5 +409,5 @@ $("#dclose").addEventListener("click",closeFicha);$("#scrim").addEventListener("
 $("#fq").addEventListener("input",renderFarmacos);
 
 /* ---------- inicio ---------- */
-render();renderFarmacos();renderKin();renderPipe();renderGuias();
+render();renderFarmacos();renderKin();renderPipe();renderGuias();mtInit();
 show(location.hash.slice(1)||"decision");
