@@ -423,6 +423,19 @@ function cambiarVarios(keys, cambio){
   render(); estadoFuente();
 }
 function cambiar(k, cambio){ cambiarVarios([k], cambio); }
+/* Con clave: las marcas locales de artículos con PMID pasan al Sheet. */
+function migrarLocales(){
+  const mig = Object.keys(LOCAL).filter(esPmid);
+  mig.forEach(p => { PEND[p] = Object.assign({}, PEND[p]||{}, LOCAL[p]); delete LOCAL[p]; });
+  if (mig.length){ ls.set(LS.loc, LOCAL); ls.set(LS.pend, PEND); }
+  return mig.length;
+}
+/* Un fundamental que recibe PMID conserva las marcas que tenía bajo su identificador provisional. */
+function renombrarProvisionales(){
+  let n = 0;
+  FUND.forEach(f => { if (f.id && f.pmid && LOCAL[f.id]){ LOCAL[f.pmid] = Object.assign({}, LOCAL[f.pmid]||{}, LOCAL[f.id]); delete LOCAL[f.id]; n++; } });
+  if (n) ls.set(LS.loc, LOCAL);
+}
 async function enviar(){
   const pm = Object.keys(PEND); if (!pm.length || !editor()) return;
   const lote = pm.map(p => Object.assign({pmid:p}, PEND[p]));
@@ -457,9 +470,7 @@ $("#claveOk").onclick = async () => {
   try{
     const d = await fetchJSON(apiURL() + (apiURL().includes("?")?"&":"?") + "action=check&key=" + encodeURIComponent(k));
     if (d.ok && d.editor){ CLAVE=k; ls.set(LS.key,k);
-      const mig = Object.keys(LOCAL).filter(esPmid);
-      mig.forEach(p => { PEND[p] = Object.assign({}, PEND[p]||{}, LOCAL[p]); delete LOCAL[p]; });
-      ls.set(LS.loc, LOCAL); ls.set(LS.pend, PEND);
+      const mig = { length: migrarLocales() };
       actualizarBtnClave(); $("#dlgClave").close(); render(); estadoFuente();
       toast(mig.length ? `Modo edición activo: ${mig.length} ${mig.length===1?"marca de este dispositivo pasa":"marcas de este dispositivo pasan"} al Sheet.` : "Modo edición activo: tus marcas y notas se guardan en el Sheet."); enviar(); }
     else $("#claveMsg").textContent = "Clave incorrecta.";
@@ -666,7 +677,7 @@ function vExplorar(){
 let FUND = [];
 const FF = {q:"", cats:new Set(), areas:new Set()};
 let FSELMODO = false; const FSEL = new Set();
-const CAT_ORDEN = ["Historia","Scores y clasificaciones","CU aguda grave","Anti-TNF","Anti-integrinas","Anti-IL-12/23","Anti-IL-23","Inhibidores JAK","Moduladores S1P","Head-to-head","Estrategia y treat-to-target","Cirugía y posoperatorio","Embarazo y seguridad","Guías y consensos"];
+const CAT_ORDEN = ["Historia","Scores y clasificaciones","CU aguda grave","Anti-TNF","Anti-integrinas","Anti-IL-12/23","Anti-IL-23","Inhibidores JAK","Moduladores S1P","Head-to-head","Combinación de terapias avanzadas","Estrategia y treat-to-target","Cirugía y posoperatorio","Embarazo y seguridad","Guías y consensos"];
 const KF = f => f.pmid || f.id;
 function fundComoReg(f){ return {pmid:KF(f), doi:f.doi, titulo: norm(f.titulo).startsWith(norm(f.estudio)) ? f.titulo : `${f.estudio}: ${f.titulo}`, revista:f.revista, fecha:f.anio, anio:f.anio, autores:f.autores, area:f.area, tipo:f.categoria, nivel:"", fase:"", ped:"", puntaje:"F", fund:f}; }
 function itemPorPmid(p){ return DATA.registro.find(r=>r.pmid===p) || (FUND.find(f=>KF(f)===p) ? fundComoReg(FUND.find(f=>KF(f)===p)) : null); }
@@ -990,7 +1001,9 @@ document.addEventListener("input", e => {
   if (e.target.id==="fq"){ FF.q=e.target.value; const pos=e.target.selectionStart; render(); const q=$("#fq"); if(q){ q.focus(); q.setSelectionRange(pos,pos); } }
   if (e.target.id==="mlq"){ MLF.q=e.target.value; const pos=e.target.selectionStart; render(); const q=$("#mlq"); if(q){ q.focus(); q.setSelectionRange(pos,pos); } }
 });
-fetch("fundamentales.json").then(r=>r.json()).then(d=>{ FUND=d; if (VISTA==="fundamentales"||VISTA==="lectura") render(); }).catch(()=>{});
+fetch("fundamentales.json").then(r=>r.json()).then(d=>{ FUND=d; renombrarProvisionales();
+  if (DATA && editor() && migrarLocales()) enviar();
+  if (DATA && (VISTA==="fundamentales"||VISTA==="lectura")) render(); }).catch(()=>{});
 addEventListener("hashchange", ruta);
 
 /* ───────── Inicio ───────── */
@@ -998,6 +1011,7 @@ addEventListener("hashchange", ruta);
   actualizarBtnClave();
   try{
     DATA = normalizar(await cargar());
+    if (editor()) migrarLocales();
     estadoFuente(); ruta();
     if (Object.keys(PEND).length) enviar();
   }catch(e){
