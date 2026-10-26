@@ -166,12 +166,18 @@ textarea{width:100%;min-height:120px;resize:vertical;line-height:1.5}
 .ml-tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
 .ml-bar{padding:12px 14px;margin-bottom:14px;display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center}
 .ml-bar input[type=search]{flex:1 1 260px;min-width:0}
+.q-wrap{display:flex;flex-direction:column;flex:1 1 260px;min-width:0}
+.q-wrap input[type=search]{width:100%;min-width:0}
+.q-aviso{font-size:.72rem;color:var(--fg-3);min-height:1.1em;margin-top:3px;line-height:1.3}
+.q-aviso:empty{display:none}
 .ml-bar .sep{width:1px;align-self:stretch;background:var(--line)}
 .card .chips{align-items:center}
 .card .mk{margin-left:auto;display:flex;gap:6px;font-size:.9rem;align-items:center}
 .card.selc{outline:2px solid var(--marino);outline-offset:-2px}
 .fund-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .fund-tools input[type=search]{min-width:240px;flex:1 1 240px}
+.fund-tools .q-wrap{flex:1 1 240px;min-width:0}
+.fund-tools .q-wrap input[type=search]{min-width:0}
 .bulk{position:sticky;bottom:12px;z-index:50;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 12px;margin-top:16px;box-shadow:var(--sh-2);border-color:var(--marino)}
 .bulk .n{font-size:.85rem;color:var(--fg-2)} .bulk .n b{color:var(--fg)}
 .bulk .sp{flex:1}
@@ -539,6 +545,7 @@ function notaDe(pmid){ const n = pmid && marca(pmid).nota; return n ? `<div clas
 let VISTA = "semana", SEMANA = null;
 const F = {q:"", areas:new Set(), tipos:new Set(), niveles:new Set(), ingreso:"", ped:"", pipe:false, min:0, estado:"", orden:"puntaje", n:40};
 const SEL = new Set();
+let FILTROS_ABIERTOS = false;
 let ML = "Todos";
 const MLF = {q:"", origen:"", areas:new Set()};
 
@@ -651,8 +658,8 @@ function vExplorar(){
   return avisoRespaldo() + `<div class="view-h"><div class="grow"><div class="eyebrow">Registro completo</div><h1>Explorar</h1><p>${DATA.registro.length} artículos seleccionados de PubMed. Filtra, abre la ficha y selecciona varios para copiar sus citas en formato Vancouver.</p></div>
     <button class="btn filtro-movil" id="btnFiltros">☰ Filtros</button></div>
   <div class="explorar">
-    <aside class="panel filtros" id="panelFiltros">
-      <h3>Buscar</h3><input type="search" id="q" placeholder="Título, revista, autor, PMID…" value="${esc(F.q)}">
+    <aside class="panel filtros${FILTROS_ABIERTOS?" open":""}" id="panelFiltros">
+      <h3>Buscar</h3><input type="search" id="q" placeholder="Título, revista, autor, PMID…" value="${esc(F.q)}" enterkeyhint="search" autocomplete="off"><div class="q-aviso" id="q-aviso" aria-live="polite"></div>
       <h3>Área</h3><div class="toggles">${AREAS.map(a=>tg("areas",a)).join("")}</div>
       <h3>Tipo de estudio</h3><div class="toggles">${TIPOS.map(t=>tg("tipos",t,t.replace("ECA – análisis secundario","ECA secundario"))).join("")}</div>
       <h3>Nivel de revista</h3><div class="toggles">${["1","2","3"].map(n=>tg("niveles",n,"Nivel "+n)).join("")}</div>
@@ -705,7 +712,7 @@ function vFundamentales(){
   const cats = CAT_ORDEN.filter(c => FUND.some(f=>f.categoria===c));
   let h = `<div class="view-h"><div class="grow"><div class="eyebrow">Consulta obligatoria</div><h1>Artículos fundamentales</h1>
     <p>${FUND.length} artículos que definieron el manejo de la EII: desde Truelove y Witts hasta los pivotales de cada fármaco en uso, los head-to-head, los ensayos de estrategia y las guías vigentes (ECCO, ACG, AGA, PANCCO, ACTECCU, STRIDE-III). Cada cita está verificada en PubMed o, si aún no está indexada, en la publicación original.</p></div>
-    <div class="fund-tools"><input type="search" id="fq" placeholder="Buscar: VARSITY, upadacitinib, Oxford…" value="${esc(FF.q)}">
+    <div class="fund-tools"><span class="q-wrap"><input type="search" id="fq" placeholder="Buscar: VARSITY, upadacitinib, Oxford…" value="${esc(FF.q)}" enterkeyhint="search" autocomplete="off"><span class="q-aviso" id="fq-aviso" aria-live="polite"></span></span>
       <button class="btn ${FSELMODO?"sel":""}" id="fSelModo" aria-pressed="${FSELMODO}">${FSELMODO?"☑ Seleccionando":"☐ Seleccionar"}</button></div></div>
     <div class="panel" style="padding:12px 14px;margin-bottom:16px">
       <div class="toggles" style="margin-bottom:8px">${cats.map(c=>tg("cats",c,c,FUND.filter(f=>f.categoria===c).length)).join("")}</div>
@@ -782,7 +789,7 @@ function vLectura(){
   const filtrando = MLF.q || MLF.origen || MLF.areas.size;
   let h = avisoRespaldo() + `<div class="view-h"><div class="grow"><div class="eyebrow">Seguimiento personal</div><h1>Mi lectura</h1>
     <p>${editor() ? "Tus marcas y notas se guardan en la pestaña «Mi lectura» del Sheet y se ven en todos tus dispositivos." : "Tus marcas y notas se guardan en este dispositivo. Marca artículos desde Semana, Explorar o Fundamentales para tenerlos a mano aquí."}</p></div></div>
-    <div class="panel ml-bar"><input type="search" id="mlq" placeholder="Buscar en Mi lectura: título, fármaco, estudio, revista, nota…" value="${esc(MLF.q)}">
+    <div class="panel ml-bar"><span class="q-wrap"><input type="search" id="mlq" placeholder="Buscar en Mi lectura: título, fármaco, estudio, revista, nota…" value="${esc(MLF.q)}" enterkeyhint="search" autocomplete="off"><span class="q-aviso" id="mlq-aviso" aria-live="polite"></span></span>
       <div class="toggles">${tgo("","Todos")}${tgo("fund","Fundamentales")}${tgo("sem","Semanales")}</div><span class="sep" aria-hidden="true"></span>
       <div class="toggles">${["CU","EC","EII"].map(tga).join("")}</div>${filtrando?`<button class="lim" id="mllim" style="margin:0">Limpiar</button>`:""}</div>
     <div class="ml-tabs">${Object.keys(cats).map(k=>`<button class="tg" data-ml="${k}" aria-pressed="${ML===k}">${k} · ${cats[k].length}</button>`).join("")}</div>`;
@@ -944,7 +951,6 @@ document.addEventListener("click", e => {
   else if (act==="copiarCita"){ copiar(citaPorPmid(pm), "Cita copiada"); }
 });
 document.addEventListener("input", e => {
-  if (e.target.id==="q"){ F.q=e.target.value; F.n=40; const pos=e.target.selectionStart; render(); const q=$("#q"); q.focus(); q.setSelectionRange(pos,pos); }
   if (e.target.id==="fMin"){ F.min=+e.target.value; F.n=40; render(); }
 });
 document.addEventListener("change", e => {
@@ -987,7 +993,7 @@ document.addEventListener("click", e => {
   else if (id==="fSelVis"){ filtrarFund().forEach(f=>FSEL.add(KF(f))); render(); }
   else if (id==="fSelNada"){ FSEL.clear(); render(); }
   else if (id==="mllim"){ MLF.q=""; MLF.origen=""; MLF.areas.clear(); render(); }
-  else if (id==="btnFiltros"){ $("#panelFiltros").classList.toggle("open"); }
+  else if (id==="btnFiltros"){ FILTROS_ABIERTOS=!FILTROS_ABIERTOS; $("#panelFiltros").classList.toggle("open", FILTROS_ABIERTOS); }
   else if (id==="apiOk"){ const v=$("#inApi").value.trim(); if(v){ ls.set(LS.api,v); ls.del(LS.cache); location.reload(); } }
   else if (id==="apiDel"){ ls.del(LS.api); ls.del(LS.cache); location.reload(); }
 });
@@ -997,10 +1003,74 @@ document.addEventListener("click", e => {
   const t = e.target.closest("[data-ftg]"); if (!t) return;
   const s = FF[t.dataset.ftg], v = t.dataset.val; s.has(v) ? s.delete(v) : s.add(v); render();
 });
+/* ───────── Buscadores: esperan 3 letras y una pausa al escribir ─────────
+   Mientras se escribe, la búsqueda se aplica con 3 o más caracteres (o al
+   borrar todo), 300 ms después de la última tecla; Enter la aplica de
+   inmediato con cualquier largo. Al aplicarla se redibujan solo los
+   resultados: el campo no se reemplaza, así no pierde el foco ni cierra el
+   teclado ni el panel de filtros en el teléfono. */
+const BUSCA_MIN = 3, BUSCA_ESPERA = 300;
+const BUSCADORES = {
+  q:   { get:()=>F.q,   set:v=>{ F.q=v; F.n=40; } },
+  fq:  { get:()=>FF.q,  set:v=>{ FF.q=v; } },
+  mlq: { get:()=>MLF.q, set:v=>{ MLF.q=v; } },
+};
+let buscaTimer = null;
+function avisoBusca(id, txt){ const a = document.getElementById(id+"-aviso"); if (a) a.textContent = txt; }
+function aplicarBusca(id, forzar){
+  clearTimeout(buscaTimer);
+  const el = document.getElementById(id), b = BUSCADORES[id]; if (!el || !b) return;
+  const v = el.value.trim();
+  if (!forzar && v && v.length < BUSCA_MIN){ avisoBusca(id, `Escribe al menos ${BUSCA_MIN} letras (o pulsa Enter)`); return; }
+  avisoBusca(id, "");
+  if (v === b.get().trim()) return;
+  b.set(v);
+  renderConservando(id);
+}
 document.addEventListener("input", e => {
-  if (e.target.id==="fq"){ FF.q=e.target.value; const pos=e.target.selectionStart; render(); const q=$("#fq"); if(q){ q.focus(); q.setSelectionRange(pos,pos); } }
-  if (e.target.id==="mlq"){ MLF.q=e.target.value; const pos=e.target.selectionStart; render(); const q=$("#mlq"); if(q){ q.focus(); q.setSelectionRange(pos,pos); } }
+  const id = e.target.id; if (!BUSCADORES[id]) return;
+  const v = e.target.value.trim();
+  clearTimeout(buscaTimer);
+  if (v && v.length < BUSCA_MIN){ avisoBusca(id, `Escribe al menos ${BUSCA_MIN} letras (o pulsa Enter)`); return; }
+  avisoBusca(id, v ? "Buscando…" : "");
+  buscaTimer = setTimeout(()=>aplicarBusca(id, false), v ? BUSCA_ESPERA : 0);
 });
+document.addEventListener("keydown", e => {
+  if (e.key==="Enter" && BUSCADORES[e.target.id]){ e.preventDefault(); aplicarBusca(e.target.id, true); }
+});
+/* «search» lo emite el botón ✕ del campo en Safari/Chrome: limpia al instante. */
+document.addEventListener("search", e => { if (BUSCADORES[e.target.id] && !e.target.value) aplicarBusca(e.target.id, true); }, true);
+
+/* Redibuja la vista actual sin tocar el campo de búsqueda activo: se genera
+   el HTML nuevo y se cambian solo los nodos que no contienen el campo. Si la
+   estructura no coincide, cae al render completo y devuelve el foco. */
+function renderConservando(id){
+  const vivo = document.getElementById(id), app = $("#app");
+  if (!vivo || !app.contains(vivo)){ render(); return; }
+  const tmp = document.createElement("div");
+  tmp.innerHTML = ({semana:vSemana, fundamentales:vFundamentales, explorar:vExplorar, lectura:vLectura, tendencias:vTendencias, acerca:vAcerca}[VISTA]||vSemana)();
+  if (!tmp.querySelector("#"+id) || !parchear(app, tmp, id)){
+    const pos = vivo.selectionStart; render(); const q = document.getElementById(id); if (q){ q.focus(); try{ q.setSelectionRange(pos,pos); }catch(_){} }
+  }
+}
+function parchear(vivo, nuevo, id){
+  const L = [...vivo.childNodes], N = [...nuevo.childNodes];
+  const iL = L.findIndex(n => n.nodeType===1 && (n.id===id || n.querySelector("#"+id)));
+  const iN = N.findIndex(n => n.nodeType===1 && (n.id===id || n.querySelector("#"+id)));
+  if (iL<0 || iN<0) return false;
+  const a = L[iL], b = N[iN];
+  if (a.tagName !== b.tagName) return false;
+  if (a.id !== id){
+    for (const at of [...a.attributes]) if (!b.hasAttribute(at.name)) a.removeAttribute(at.name);
+    for (const at of [...b.attributes]) if (a.getAttribute(at.name) !== at.value) a.setAttribute(at.name, at.value);
+    if (!parchear(a, b, id)) return false;
+  }
+  L.slice(0,iL).forEach(n => n.remove());
+  L.slice(iL+1).forEach(n => n.remove());
+  N.slice(0,iN).forEach(n => vivo.insertBefore(n, a));
+  N.slice(iN+1).forEach(n => vivo.appendChild(n));
+  return true;
+}
 fetch("fundamentales.json").then(r=>r.json()).then(d=>{ FUND=d; renombrarProvisionales();
   if (DATA && editor() && migrarLocales()) enviar();
   if (DATA && (VISTA==="fundamentales"||VISTA==="lectura")) render(); }).catch(()=>{});
