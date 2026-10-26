@@ -581,7 +581,7 @@ function vSemana(){
     <div class="panel kpi"><div class="v num">${cuenta("Metaanálisis/RS")}</div><div class="l">metaanálisis y RS</div></div>
     <div class="panel kpi"><div class="v num">${pipe}</div><div class="l">pipeline (no aprobados)</div></div>
   </div>`;
-  if (!lect.length) h += `<div class="panel vacio">Esta semana no hubo artículos de lectura obligatoria.</div>`;
+  if (!lect.length) h += `<div class="panel vacio">Esta semana no hay lectura imprescindible. Lo que entró al registro está más abajo.</div>`;
   for (const [g, nombre] of grupos){
     const ls_ = lect.filter(l => grupoArea(l.area)===g); if (!ls_.length) continue;
     h += `<div class="grupo"><h2>${nombre}</h2><span class="c">${ls_.length} ${ls_.length===1?"estudio":"estudios"}</span></div><div class="cards">`;
@@ -869,8 +869,8 @@ function vAcerca(){
   <div class="acerca">
     <div class="panel"><h2>Cómo se eligen los artículos</h2>
       <ul><li><b>Tres consultas</b> por fecha de entrada a PubMed: revistas generales de alto impacto (NEJM, Lancet, JAMA, BMJ, Nature, Nat Med, Ann Intern Med, Lancet G&amp;H, Nat Rev G&amp;H), revistas top de GI/EII (Gastroenterology, Gut, AJG, CGH, JCC, AP&amp;T, IBD, UEG J, CC360, GIE, Endoscopy, JPGN, JAMA Netw Open) y ECA, metaanálisis, guías y consensos de cualquier revista.</li>
-      <li><b>Puntaje</b> = nivel de revista (1 → 4, 2 → 3, 3 → 1) + tipo (guía/consenso 5, ECA 4, MA/RS 4, ECA secundario 3, cohorte 2, revisión 1) + ajuste (−3 preclínico; +1 fase 3, multicéntrico o doble ciego; +1 guía de sociedad; +1 cohorte multicéntrica o poblacional). Entra al registro con ≥5.</li>
-      <li><b>Lectura obligatoria</b>: hasta 5 por semana, con el hallazgo tomado del resumen y si cambia la práctica (Sí / No / Aún no / Por evaluar).</li>
+      <li><b>Puntaje</b> = nivel de revista (1 → 4, 2 → 3, 3 → 1) + tipo (guía/consenso 5, ECA 4, MA/RS 4, ECA secundario 3, cohorte 2, revisión 1) + ajuste (−3 preclínico; +1 fase 3, multicéntrico o doble ciego; +1 guía de sociedad de referencia; −1 consenso regional en revista de nivel 3; +1 cohorte multicéntrica o poblacional). Entra al registro con ≥6 (todo lo de nivel 1 sobre EII).</li>
+      <li><b>Lectura obligatoria</b>: máximo 3 por semana y solo lo imprescindible (puntaje ≥7, o un ensayo o metaanálisis de ensayos de nivel 1–2 que cambie una conducta); una semana puede quedar en 0. Con el hallazgo tomado del resumen y si cambia la práctica (Sí / No / Aún no / Por evaluar).</li>
       <li>El <b>pipeline</b> (fármacos no aprobados) se marca aparte y nunca se presenta como estándar de manejo.</li>
       <li><b>Fundamentales</b>: colección curada fija (no la toca la búsqueda semanal) con los artículos históricos, pivotales, head-to-head, de estrategia y las guías vigentes. Citas verificadas en PubMed; vive en <code>vigilancia/fundamentales.json</code>. Se marcan igual que los semanales y con «☐ Seleccionar» se marcan o citan varios a la vez.</li>
       <li><b>Mi lectura</b>: sin clave, las marcas y notas quedan en este dispositivo; con la clave del autor se guardan en el Sheet (los artículos aún sin PMID quedan siempre en el dispositivo).</li></ul></div>
