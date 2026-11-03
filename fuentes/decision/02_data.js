@@ -403,6 +403,13 @@ const GTL=[
 ];
 
 const REFS=[
+ "Adams A, Gupta V, Mohsen W, Chapman TP, Subhaharan D, et al. Early management of acute severe UC in the biologics era: development and international validation of a prognostic clinical index to predict steroid response (ADMIT-ASC). Gut. 2023;72(3):433-42. doi:10.1136/gutjnl-2022-327533",
+ "Grant RK, Jones GR, Plevris N, Lynch RW, Jenkinson PW, et al. The ACE (Albumin, CRP and Endoscopy) Index in Acute Colitis: a simple clinical index on admission that predicts outcome in patients with acute ulcerative colitis. Inflamm Bowel Dis. 2021;27(4):451-7. doi:10.1093/ibd/izaa088",
+ "Travis SP, Farrant JM, Ricketts C, Nolan DJ, Mortensen NM, et al. Predicting outcome in severe ulcerative colitis. Gut. 1996;38(6):905-10. doi:10.1136/gut.38.6.905",
+ "Ho GT, Mowat C, Goddard CJ, Fennell JM, Shah NB, et al. Predicting the outcome of severe ulcerative colitis: development of a novel risk score to aid early selection of patients for second-line medical therapy or surgery. Aliment Pharmacol Ther. 2004;19(10):1079-87. doi:10.1111/j.1365-2036.2004.01945.x",
+ "Lindgren SC, Flood LM, Kilander AF, Löfberg R, Persson TB, Sjödahl RI. Early predictors of glucocorticosteroid treatment failure in severe and moderately severe attacks of ulcerative colitis. Eur J Gastroenterol Hepatol. 1998;10(10):831-5. doi:10.1097/00042737-199810000-00003",
+ "Subhaharan D, Mohsen W, Shahzad A, Patrick D, White L, Kakkadasam Ramaswamy P. Contemporary multicentre validation and comparative performance of Day 1 prognostic scores in acute severe ulcerative colitis. J Crohns Colitis. 2026;20(10):jjag155. doi:10.1093/ecco-jcc/jjag155",
+ "Vuyyuru SK, Alphonsus L, De Silva TA, Solitano V, Guizzetti L, et al. Day 3 Oxford criteria predict steroid non-response for acute severe ulcerative colitis in the post biologic era. J Crohns Colitis. 2025;19(9):jjaf131. doi:10.1093/ecco-jcc/jjaf131",
  "Travis SP, Schnell D, Krzeski P, Abreu MT, Altman DG, et al. Developing an instrument to assess the endoscopic severity of ulcerative colitis: the Ulcerative Colitis Endoscopic Index of Severity (UCEIS). Gut. 2012;61(4):535-42. doi:10.1136/gutjnl-2011-300486",
  "Corte C, Fernandopulle N, Catuneanu AM, Burger D, Cesarini M, et al. Association between the ulcerative colitis endoscopic index of severity (UCEIS) and outcomes in acute severe ulcerative colitis. J Crohns Colitis. 2015;9(5):376-81. doi:10.1093/ecco-jcc/jjv047",
  "Gordon H, Burisch J, Ellul P, Karmiris K, Katsanos K, et al. ECCO Guidelines on Extraintestinal Manifestations in Inflammatory Bowel Disease. J Crohns Colitis. 2024;18(1):1-37. doi:10.1093/ecco-jcc/jjad108",

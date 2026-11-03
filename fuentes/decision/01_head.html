@@ -470,6 +470,7 @@ fieldset.blk{box-shadow:var(--sh)}
 .brand{font-family:var(--ff-b);display:flex;flex-wrap:wrap;gap:4px 6px;margin-top:4px;font-size:.8rem}.brand span{padding:1px 8px;border-radius:999px;border:1px solid var(--line,#ccd)}.brand .bc{font-weight:700;color:var(--fg-1,inherit)}.brand .bn{color:var(--fg-3);font-style:italic}.brl{font-family:var(--ff-b);font-weight:400;font-size:.74rem;color:var(--fg-3);margin-top:2px}
 .evk{font-family:var(--ff-b);font-size:.68rem;font-weight:700;letter-spacing:.02em;padding:2px 8px;border-radius:999px;border:1px solid}.evk.ci{color:#fff;background:var(--rojo);border-color:var(--rojo)}.evk.rb{color:var(--rojo);border-color:var(--rojo)}.evk.sb{color:var(--fg-2);border-color:var(--line-2)}
 .moa{font-family:var(--ff-b);font-size:.82rem;line-height:1.45;color:var(--fg-2);margin:6px 0 0;max-width:62ch}.moa b{color:var(--fg)}
+.asr{border-top:1px solid var(--line,#dde);padding:8px 0}.asr:first-of-type{border-top:0}.asr small{color:var(--fg-3);font-weight:600}.score.sm b{font-size:1.5rem}.score.sm span{font-size:.9rem}.asr .note{margin:2px 0 0}
 </style>
 
 <header class="top">
@@ -894,10 +895,11 @@ fieldset.blk{box-shadow:var(--sh)}
 <section class="vista" id="v-scores">
   <p class="eyebrow">Actividad clínica y endoscópica</p>
   <h2 class="sec">Scores y clasificaciones</h2>
-  <p class="lead">Calcula la actividad antes de decidir y repite el mismo score en el control para medir la respuesta. El resultado de Mayo, Harvey-Bradshaw, CDAI y PDAI se puede llevar directo a la decisión.</p>
+  <p class="lead">Calcula la actividad antes de decidir y repite el mismo score en el control para medir la respuesta. El resultado de Mayo, colitis aguda grave, Harvey-Bradshaw, CDAI y PDAI se puede llevar directo a la decisión.</p>
   <div class="seg" id="stool" style="margin-bottom:14px">
     <input type="radio" name="stool" id="st-mayo" value="mayo" checked><label for="st-mayo">Mayo<small>Colitis ulcerosa</small></label>
     <input type="radio" name="stool" id="st-uceis" value="uceis"><label for="st-uceis">UCEIS<small>CU · endoscópico</small></label>
+    <input type="radio" name="stool" id="st-asuc" value="asuc"><label for="st-asuc">Colitis aguda grave<small>Falla corticoide · colectomía</small></label>
     <input type="radio" name="stool" id="st-hbi" value="hbi"><label for="st-hbi">Harvey-Bradshaw<small>Crohn · clínico, 1 día</small></label>
     <input type="radio" name="stool" id="st-cdai" value="cdai"><label for="st-cdai">CDAI<small>Crohn · clínico, 7 días</small></label>
     <input type="radio" name="stool" id="st-ses" value="ses"><label for="st-ses">SES-CD<small>Crohn · endoscópico</small></label>

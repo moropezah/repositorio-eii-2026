@@ -486,6 +486,7 @@ fieldset.blk{box-shadow:var(--sh)}
 .brand{font-family:var(--ff-b);display:flex;flex-wrap:wrap;gap:4px 6px;margin-top:4px;font-size:.8rem}.brand span{padding:1px 8px;border-radius:999px;border:1px solid var(--line,#ccd)}.brand .bc{font-weight:700;color:var(--fg-1,inherit)}.brand .bn{color:var(--fg-3);font-style:italic}.brl{font-family:var(--ff-b);font-weight:400;font-size:.74rem;color:var(--fg-3);margin-top:2px}
 .evk{font-family:var(--ff-b);font-size:.68rem;font-weight:700;letter-spacing:.02em;padding:2px 8px;border-radius:999px;border:1px solid}.evk.ci{color:#fff;background:var(--rojo);border-color:var(--rojo)}.evk.rb{color:var(--rojo);border-color:var(--rojo)}.evk.sb{color:var(--fg-2);border-color:var(--line-2)}
 .moa{font-family:var(--ff-b);font-size:.82rem;line-height:1.45;color:var(--fg-2);margin:6px 0 0;max-width:62ch}.moa b{color:var(--fg)}
+.asr{border-top:1px solid var(--line,#dde);padding:8px 0}.asr:first-of-type{border-top:0}.asr small{color:var(--fg-3);font-weight:600}.score.sm b{font-size:1.5rem}.score.sm span{font-size:.9rem}.asr .note{margin:2px 0 0}
 </style>
 
 <header class="top">
@@ -910,10 +911,11 @@ fieldset.blk{box-shadow:var(--sh)}
 <section class="vista" id="v-scores">
   <p class="eyebrow">Actividad clínica y endoscópica</p>
   <h2 class="sec">Scores y clasificaciones</h2>
-  <p class="lead">Calcula la actividad antes de decidir y repite el mismo score en el control para medir la respuesta. El resultado de Mayo, Harvey-Bradshaw, CDAI y PDAI se puede llevar directo a la decisión.</p>
+  <p class="lead">Calcula la actividad antes de decidir y repite el mismo score en el control para medir la respuesta. El resultado de Mayo, colitis aguda grave, Harvey-Bradshaw, CDAI y PDAI se puede llevar directo a la decisión.</p>
   <div class="seg" id="stool" style="margin-bottom:14px">
     <input type="radio" name="stool" id="st-mayo" value="mayo" checked><label for="st-mayo">Mayo<small>Colitis ulcerosa</small></label>
     <input type="radio" name="stool" id="st-uceis" value="uceis"><label for="st-uceis">UCEIS<small>CU · endoscópico</small></label>
+    <input type="radio" name="stool" id="st-asuc" value="asuc"><label for="st-asuc">Colitis aguda grave<small>Falla corticoide · colectomía</small></label>
     <input type="radio" name="stool" id="st-hbi" value="hbi"><label for="st-hbi">Harvey-Bradshaw<small>Crohn · clínico, 1 día</small></label>
     <input type="radio" name="stool" id="st-cdai" value="cdai"><label for="st-cdai">CDAI<small>Crohn · clínico, 7 días</small></label>
     <input type="radio" name="stool" id="st-ses" value="ses"><label for="st-ses">SES-CD<small>Crohn · endoscópico</small></label>
@@ -1441,6 +1443,13 @@ const GTL=[
 ];
 
 const REFS=[
+ "Adams A, Gupta V, Mohsen W, Chapman TP, Subhaharan D, et al. Early management of acute severe UC in the biologics era: development and international validation of a prognostic clinical index to predict steroid response (ADMIT-ASC). Gut. 2023;72(3):433-42. doi:10.1136/gutjnl-2022-327533",
+ "Grant RK, Jones GR, Plevris N, Lynch RW, Jenkinson PW, et al. The ACE (Albumin, CRP and Endoscopy) Index in Acute Colitis: a simple clinical index on admission that predicts outcome in patients with acute ulcerative colitis. Inflamm Bowel Dis. 2021;27(4):451-7. doi:10.1093/ibd/izaa088",
+ "Travis SP, Farrant JM, Ricketts C, Nolan DJ, Mortensen NM, et al. Predicting outcome in severe ulcerative colitis. Gut. 1996;38(6):905-10. doi:10.1136/gut.38.6.905",
+ "Ho GT, Mowat C, Goddard CJ, Fennell JM, Shah NB, et al. Predicting the outcome of severe ulcerative colitis: development of a novel risk score to aid early selection of patients for second-line medical therapy or surgery. Aliment Pharmacol Ther. 2004;19(10):1079-87. doi:10.1111/j.1365-2036.2004.01945.x",
+ "Lindgren SC, Flood LM, Kilander AF, Löfberg R, Persson TB, Sjödahl RI. Early predictors of glucocorticosteroid treatment failure in severe and moderately severe attacks of ulcerative colitis. Eur J Gastroenterol Hepatol. 1998;10(10):831-5. doi:10.1097/00042737-199810000-00003",
+ "Subhaharan D, Mohsen W, Shahzad A, Patrick D, White L, Kakkadasam Ramaswamy P. Contemporary multicentre validation and comparative performance of Day 1 prognostic scores in acute severe ulcerative colitis. J Crohns Colitis. 2026;20(10):jjag155. doi:10.1093/ecco-jcc/jjag155",
+ "Vuyyuru SK, Alphonsus L, De Silva TA, Solitano V, Guizzetti L, et al. Day 3 Oxford criteria predict steroid non-response for acute severe ulcerative colitis in the post biologic era. J Crohns Colitis. 2025;19(9):jjaf131. doi:10.1093/ecco-jcc/jjaf131",
  "Travis SP, Schnell D, Krzeski P, Abreu MT, Altman DG, et al. Developing an instrument to assess the endoscopic severity of ulcerative colitis: the Ulcerative Colitis Endoscopic Index of Severity (UCEIS). Gut. 2012;61(4):535-42. doi:10.1136/gutjnl-2011-300486",
  "Corte C, Fernandopulle N, Catuneanu AM, Burger D, Cesarini M, et al. Association between the ulcerative colitis endoscopic index of severity (UCEIS) and outcomes in acute severe ulcerative colitis. J Crohns Colitis. 2015;9(5):376-81. doi:10.1093/ecco-jcc/jjv047",
  "Gordon H, Burisch J, Ellul P, Karmiris K, Katsanos K, et al. ECCO Guidelines on Extraintestinal Manifestations in Inflammatory Bowel Disease. J Crohns Colitis. 2024;18(1):1-37. doi:10.1093/ecco-jcc/jjad108",
@@ -2551,6 +2560,22 @@ $("#sc-form").innerHTML=`
  <p class="hint" style="margin:0 0 4px">Puntuar el segmento más afectado (en la rectosigmoidoscopía).</p>
  ${UCE.map(q=>`<div class="scq"><div class="ql">${q.t}</div>${opts("uc_"+q.k,q.o)}</div>`).join("")}
 </fieldset></div>
+<div id="f-asuc" hidden><fieldset class="blk"><legend>Colitis aguda grave · predictores de falla a corticoide EV</legend>
+ <div class="scq"><div class="ql">Unidades del laboratorio</div><div class="opts">
+  <input type="radio" name="as_u" id="as_u-0" value="cl" checked><label for="as_u-0"><i>CL</i><span>PCR en mg/dL · albúmina en g/dL (habitual en Chile)</span></label>
+  <input type="radio" name="as_u" id="as_u-1" value="si"><label for="as_u-1"><i>SI</i><span>PCR en mg/L · albúmina en g/L (escala de los estudios)</span></label></div></div>
+ <p class="ql" style="margin:10px 0 4px">Día 1 · al ingreso</p>
+ <div style="display:flex;gap:8px;flex-wrap:wrap"><label style="display:block;max-width:190px;font-size:.74rem;font-weight:600;color:var(--fg-2)">PCR ingreso<div class="inp" style="margin-top:2px"><input id="as-pcr1" type="number" step="0.1" min="0" inputmode="decimal" placeholder="PCR ingreso"><span class="asu-p">mg/dL</span></div></label>
+ <label style="display:block;max-width:190px;font-size:.74rem;font-weight:600;color:var(--fg-2)">Albúmina ingreso<div class="inp" style="margin-top:2px"><input id="as-alb" type="number" step="0.1" min="0" inputmode="decimal" placeholder="Albúmina"><span class="asu-a">g/dL</span></div></label>
+ <label style="display:block;max-width:160px;font-size:.74rem;font-weight:600;color:var(--fg-2)">UCEIS ingreso<div class="inp" style="margin-top:2px"><input id="as-uc" type="number" min="0" max="8" inputmode="numeric" placeholder="UCEIS 0–8"><span>UCEIS</span></div></label></div>
+ <div class="scq"><div class="ql">Endoscopía de gravedad severa (valoración global del endoscopista; usada por ACE)</div>${opts("as_es",["No","Sí"])}</div>
+ <p class="ql" style="margin:10px 0 4px">Día 3 de corticoide EV</p>
+ <div style="display:flex;gap:8px;flex-wrap:wrap"><label style="display:block;max-width:190px;font-size:.74rem;font-weight:600;color:var(--fg-2)">Deposiciones día 3<div class="inp" style="margin-top:2px"><input id="as-dep3" type="number" min="0" max="40" inputmode="numeric" placeholder="Deposiciones día 3"><span>/día</span></div></label>
+ <label style="display:block;max-width:190px;font-size:.74rem;font-weight:600;color:var(--fg-2)">PCR día 3<div class="inp" style="margin-top:2px"><input id="as-pcr3" type="number" step="0.1" min="0" inputmode="decimal" placeholder="PCR día 3"><span class="asu-p">mg/dL</span></div></label>
+ <label style="display:block;max-width:230px;font-size:.74rem;font-weight:600;color:var(--fg-2)">Promedio deposiciones días 1–3<div class="inp" style="margin-top:2px"><input id="as-depm" type="number" step="0.1" min="0" max="40" inputmode="decimal" placeholder="Promedio deposiciones días 1–3"><span>/día</span></div></label></div>
+ <div class="scq"><div class="ql">Dilatación colónica en la radiografía (colon transverso ≥5,5 cm)</div>${opts("as_dil",["No","Sí"])}</div>
+ <p class="hint" style="margin:6px 0 0">Cada índice se calcula apenas tiene sus datos; no hace falta llenar todo.</p>
+</fieldset></div>
 <div id="f-hbi" hidden><fieldset class="blk"><legend>Harvey-Bradshaw · enfermedad de Crohn</legend>
  ${HBIQ.slice(0,2).map(q=>`<div class="scq"><div class="ql">${q.t}</div>${opts("hb_"+q.k,q.o)}</div>`).join("")}
  <div class="scq"><label class="ql" for="hb-st">Deposiciones líquidas o blandas (día previo)<span>1 punto c/u</span></label><div class="inp" style="max-width:180px"><input id="hb-st" type="number" min="0" max="40" inputmode="numeric"><span>n.º</span></div></div>
@@ -2608,6 +2633,12 @@ const INFO={
   <li class="n"><b>Remisión endoscópica</b>: UCEIS 0 (≤1 en muchos estudios). Bandas de uso habitual: 0–1 remisión, 2–4 leve, 5–6 moderada, 7–8 grave (no son cortes validados formalmente).</li>
   <li class="n"><b>Colitis aguda grave</b> (Corte 2015, n = 89): con UCEIS ≥5 al ingreso, 50 % requirió rescate vs 27 % con ≤4; con 7–8, 11 de 14 necesitaron infliximab o ciclosporina. Un UCEIS ≥7 puede justificar planificar el rescate precozmente.</li></ul>
   <p class="note" style="margin-top:8px">Travis SP, Schnell D, Krzeski P, et al. Gut. 2012;61(4):535-42. doi:10.1136/gutjnl-2011-300486 · Corte C, et al. J Crohns Colitis. 2015;9(5):376-81. doi:10.1093/ecco-jcc/jjv047</p>`,
+ asuc:`<h4>Cómo se usa</h4><ul class="why">
+  <li class="n"><b>Día 1 (ADMIT-ASC, ACE)</b>: identifican al ingreso a quien probablemente no responderá. Alta especificidad y baja sensibilidad: un puntaje alto justifica <b>preparar el rescate desde el ingreso</b> (tamizaje de TBC y VHB, interconsulta quirúrgica, niveles de albúmina), no saltarse el corticoide; un puntaje bajo no descarta la falla.</li>
+  <li class="n"><b>Día 3 (Oxford, Ho, índice sueco)</b>: deciden el rescate. Los criterios de Oxford siguen siendo el predictor más robusto en la era biológica (Vuyyuru 2025).</li>
+  <li class="n">Validación contemporánea (Subhaharan 2026, n = 238): discriminación moderada, AUROC 0,68 ADMIT-ASC y 0,66 ACE (el puntaje ROR, 0,72, no está incluido aquí).</li>
+  <li class="n">Dilatación ≥5,5 cm o signos de megacolon: evaluación quirúrgica inmediata, independiente del puntaje.</li></ul>
+  <p class="note" style="margin-top:8px">Adams A, et al. Gut. 2023;72:433-42. doi:10.1136/gutjnl-2022-327533 · Grant RK, et al. Inflamm Bowel Dis. 2021;27:451-7. doi:10.1093/ibd/izaa088 · Travis SP, et al. Gut. 1996;38:905-10. doi:10.1136/gut.38.6.905 · Ho GT, et al. Aliment Pharmacol Ther. 2004;19:1079-87. doi:10.1111/j.1365-2036.2004.01945.x · Lindgren SC, et al. Eur J Gastroenterol Hepatol. 1998;10:831-5. doi:10.1097/00042737-199810000-00003 · Subhaharan D, et al. J Crohns Colitis. 2026. doi:10.1093/ecco-jcc/jjag155</p>`,
  hbi:`<h4>Cómo se usa</h4><ul class="why">
   <li class="n">Índice simplificado del CDAI con datos del <b>día previo</b>; se calcula en la consulta, sin diario de 7 días.</li>
   <li class="n"><b>Respuesta</b>: descenso ≥3 puntos. <b>Remisión</b>: &lt;5.</li>
@@ -2645,7 +2676,7 @@ const INFO={
 };
 function scRender(){
   const tool=(document.querySelector('input[name="stool"]:checked')||{}).value||"mayo";
-  ["mayo","uceis","hbi","cdai","ses","rut","top","pdai"].forEach(t=>$("#f-"+t).hidden=t!==tool);
+  ["mayo","uceis","asuc","hbi","cdai","ses","rut","top","pdai"].forEach(t=>$("#f-"+t).hidden=t!==tool);
   $("#sc-info").innerHTML=INFO[tool];
   const btn=$("#sc-apply");btn.hidden=true;scApply=null;let h="";
   if(tool==="mayo"){
@@ -2715,6 +2746,42 @@ function scRender(){
       <li class="n">En el control: respuesta si el mPDAI baja ≥2; remisión si queda ≤4 (y bajó ≥2).</li></ul>`;
       if(pou){scApply="pouch";btn.hidden=false;btn.textContent="Usar en la decisión: reservorio con pouchitis"}
     }
+  }else if(tool==="asuc"){
+    const si=$("#as_u-1").checked;
+    document.querySelectorAll(".asu-p").forEach(e=>e.textContent=si?"mg/L":"mg/dL");document.querySelectorAll(".asu-a").forEach(e=>e.textContent=si?"g/L":"g/dL");
+    const n=id=>{const x=parseFloat(($("#"+id).value||"").replace(",","."));return isNaN(x)?null:x};
+    const crp=v=>v===null?null:(si?v:v*10), alb=v=>v===null?null:(si?v:v*10);   // a mg/L y g/L
+    const p1=crp(n("as-pcr1")),al=alb(n("as-alb")),uc=n("as-uc"),es=val("as_es"),d3=n("as-dep3"),p3=crp(n("as-pcr3")),dm=n("as-depm"),dil=val("as_dil");
+    const out=[];let d3pos=false,d1hi=false;
+    const row=(name,when,score,lab,st,detail)=>out.push(`<div class="asr"><div><b>${name}</b> <small>${when}</small></div><div class="score sm"><b class="st-${st}">${score}</b><span class="st-${st}">${lab}</span></div><p class="note">${detail}</p></div>`);
+    if(p1!==null&&al!==null&&uc!==null){
+      const sc=(p1>=100?1:0)+(al<=25?1:0)+(uc>=7?2:uc>=4?1:0),rr=[100,75,54.9,18.2,0][sc];
+      if(sc>=3)d1hi=true;
+      row("ADMIT-ASC","día 1",sc+"/4",sc>=3?"Alto riesgo de falla":sc===2?"Riesgo intermedio":"Riesgo bajo",sc>=3?"f":sc===2?"p":"r",`PCR ≥100 mg/L ${p1>=100?"✓":"✗"} · albúmina ≤25 g/L ${al<=25?"✓":"✗"} · UCEIS ${uc} (${uc>=7?"+2":uc>=4?"+1":"0"}). Respuesta a corticoide en validación: ${String(rr).replace(".",",")} %. Puntaje ≥3: 84 % no responde.`);
+    }
+    if(p1!==null&&al!==null&&es!==null){
+      const sc=(p1>=50?1:0)+(al<=30?1:0)+(es===1?1:0);
+      if(sc===3)d1hi=true;
+      row("ACE","día 1",sc+"/3",sc===3?"Alto riesgo de falla":sc===2?"Riesgo intermedio":"Riesgo bajo",sc===3?"f":sc===2?"p":"r",`Albúmina ≤30 g/L ${al<=30?"✓":"✗"} · PCR ≥50 mg/L ${p1>=50?"✓":"✗"} · endoscopía grave ${es===1?"✓":"✗"}. Con 3/3, 78 % no respondió (VPP 78 %, VPN 87 %).`);
+    }
+    if(d3!==null&&p3!==null){
+      const pos=d3>8||(d3>=3&&p3>45);if(pos)d3pos=true;
+      row("Criterios de Oxford (Travis)","día 3",pos?"Positivo":"Negativo",pos?"~85 % colectomía en la serie original":"Sin criterio de falla",pos?"f":"r",`>8 deposiciones/día, o 3–8 con PCR >45 mg/L. Deposiciones ${d3} · PCR ${Math.round(p3)} mg/L.`);
+      const sw=d3+0.14*p3,swp=sw>=8;if(swp)d3pos=true;
+      row("Índice sueco (Lindgren)","día 3",String(Math.round(sw*10)/10).replace(".",","),swp?"≥8: alto riesgo de colectomía (~72 %)":"<8",swp?"f":"r",`Deposiciones/día + 0,14 × PCR (mg/L).`);
+    }
+    if(dm!==null&&al!==null&&dil!==null){
+      const fs=dm<4?0:dm<=6?1:dm<=9?2:4,sc=fs+(dil===1?4:0)+(al<30?1:0),r=sc<=1?11:sc<=3?43:85;
+      if(sc>=4)d3pos=true;
+      row("Índice de Ho","día 3",String(sc),sc>=4?"Falla del tratamiento médico ~85 %":sc>=2?"Falla ~43 %":"Falla ~11 %",sc>=4?"f":sc>=2?"p":"r",`Promedio de deposiciones días 1–3 (${fs} pts) + dilatación colónica (${dil===1?4:0}) + albúmina <30 g/L (${al<30?1:0}).`);
+    }
+    if(!out.length)h=`<div class="k">Colitis aguda grave</div><h3>Ingresa los datos del día 1 o del día 3</h3><p class="note">Día 1: PCR, albúmina y UCEIS (o endoscopía grave). Día 3: deposiciones y PCR; para Ho, promedio de deposiciones y dilatación.</p>`;
+    else{
+      h=`<div class="k">Colitis aguda grave</div>${out.join("")}`;
+      if(dil===1)h+=`<ul class="why"><li class="x">Dilatación colónica: descartar megacolon tóxico y pedir evaluación quirúrgica inmediata.</li></ul>`;
+      if(d3pos){scApply="d3noresp";btn.hidden=false;btn.textContent="Usar en la decisión: colitis aguda grave · día 3 no responde"}
+      else if(d1hi){scApply="ingreso";btn.hidden=false;btn.textContent="Usar en la decisión: colitis aguda grave · ingreso de alto riesgo";h+=`<ul class="why"><li class="w">Alto riesgo al ingreso: iniciar corticoide EV y preparar el rescate (tamizaje de TBC y VHB, coloproctología); reevaluar con Oxford al día 3.</li></ul>`}
+    }
   }else if(tool==="cdai"){
     const num=id=>{const x=parseFloat(($("#"+id).value||"").replace(",","."));return isNaN(x)?null:x};
     const st=num("cd-st"),pa=val("cd_pa"),wb=val("cd_wb"),ad=val("cd_ad"),ms=val("cd_ms"),sx=val("cd_sx"),hct=num("cd-hct"),wt=num("cd-wt");
@@ -2748,11 +2815,12 @@ function scRender(){
   $("#sc-resb").innerHTML=h;
 }
 $("#v-scores").addEventListener("change",scRender);
-$("#v-scores").addEventListener("input",e=>{if(e.target.id==="hb-st"||e.target.id.startsWith("cd-"))scRender()});
+$("#v-scores").addEventListener("input",e=>{if(e.target.id==="hb-st"||e.target.id.startsWith("cd-")||e.target.id.startsWith("as-"))scRender()});
 document.querySelectorAll('a[href="#scores"]').forEach(a=>a.addEventListener("click",()=>{try{const c=readForm();if(c.wt&&!$("#cd-wt").value)$("#cd-wt").value=c.wt;const sx=(document.querySelector('input[name="sex"]:checked')||{}).value;if(sx&&val("cd_sx")===null)$("#cd_sx-"+(sx==="M"?1:0)).checked=true}catch(e){}}));
 $("#sc-apply").addEventListener("click",()=>{
   const tool=(document.querySelector('input[name="stool"]:checked')||{}).value;if(!scApply)return;
   if(tool==="pdai"){$("#dz-cu").checked=true;$("#ip-s").checked=true}
+  else if(tool==="asuc"){$("#dz-cu").checked=true;$("#ip-n").checked=true;$("#sev-a").checked=true;$(scApply==="d3noresp"?"#as-n":"#as-0").checked=true}
   else if(tool==="mayo"){$("#dz-cu").checked=true;$("#ip-n").checked=true;$("#sev-"+({leve:"l",moderada:"m",grave:"g"})[scApply]).checked=true}
   else{$("#dz-ec").checked=true;$("#act-"+({leve:"l",moderada:"m",grave:"g"})[scApply]).checked=true}
   render();toast("Actividad llevada al caso");location.hash="decision";
