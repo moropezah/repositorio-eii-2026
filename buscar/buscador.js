@@ -64,14 +64,7 @@
       agregar({ mod: "rapida", title: sm ? sm.textContent : "Consulta rápida", sub: "Módulo 04",
         text: d.textContent.replace(sm ? sm.textContent : "", ""), hash: "rapida", el: d });
     });
-    // Láminas (solo las del atlas, no las repetidas dentro de la clase)
-    Array.prototype.forEach.call(document.querySelectorAll("#v-atlas figure.lam"), function (f) {
-      var g = f.closest(".grupo"), gh = g ? g.querySelector("h4") : null, cap = f.querySelector("figcaption");
-      var t = cap ? cap.cloneNode(true) : null;
-      if (t) Array.prototype.forEach.call(t.querySelectorAll(".cred"), function (c) { c.remove(); });
-      agregar({ mod: "lamina", title: t ? t.textContent : "Lámina", sub: gh ? gh.textContent : "Módulo 03",
-        text: (f.getAttribute("data-q") || ""), hash: "atlas", el: f });
-    });
+    // Láminas: se indexan desde el módulo atlas/ (ver cargarAtlas)
     // Fuentes
     var fu = document.getElementById("v-fuentes");
     if (fu) {
@@ -126,6 +119,27 @@
       });
       guiaEstado = "lista"; cb && cb();
     }).catch(function () { guiaEstado = "error"; cb && cb(); });
+  }
+
+
+  /* ---------- atlas (módulo propio, carga diferida) ---------- */
+  var ATLAS = "atlas/index.html", atlasEstado = "pendiente";
+  function cargarAtlas(cb) {
+    if (atlasEstado !== "pendiente") { cb && cb(); return; }
+    atlasEstado = "cargando";
+    fetch(ATLAS).then(function (r) { if (!r.ok) throw 0; return r.text(); }).then(function (html) {
+      var doc = new DOMParser().parseFromString(html, "text/html");
+      Array.prototype.forEach.call(doc.querySelectorAll("figure.lam-card"), function (f) {
+        var h3 = f.querySelector("figcaption h3"), tit = h3 ? h3.textContent : "Lámina";
+        var gr = f.closest(".grupo"), gh = gr ? gr.querySelector("h2") : null;
+        var cuerpo = [];
+        Array.prototype.forEach.call(f.querySelectorAll("svg text"), function (t) { cuerpo.push(t.textContent); });
+        Array.prototype.forEach.call(f.querySelectorAll(".rec li"), function (li) { cuerpo.push(li.textContent); });
+        agregar({ mod: "lamina", title: tit, sub: (gh ? gh.textContent : "Atlas") + " · lámina",
+          text: cuerpo.join(" "), url: ATLAS + "#" + f.id });
+      });
+      atlasEstado = "lista"; cb && cb();
+    }).catch(function () { atlasEstado = "error"; cb && cb(); });
   }
 
   /* ---------- búsqueda ---------- */
@@ -268,6 +282,7 @@
     bx.hidden = !q;
     if (q.length < 2) { res.hidden = true; return; }
     if (guiaEstado === "pendiente") cargarGuia(pintar);
+    if (atlasEstado === "pendiente") cargarAtlas(pintar);
     var todos = buscar(q, "todo");
     var cuenta = { todo: todos.length };
     todos.forEach(function (r) { cuenta[r.it.mod] = (cuenta[r.it.mod] || 0) + 1; });
@@ -307,7 +322,8 @@
 
   var tmr;
   inp.addEventListener("input", function () { clearTimeout(tmr); tmr = setTimeout(pintar, 110); });
-  inp.addEventListener("focus", function () { if (guiaEstado === "pendiente") cargarGuia(function () { if (inp.value.trim().length > 1) pintar(); }); });
+  inp.addEventListener("focus", function () { if (guiaEstado === "pendiente") cargarGuia(function () { if (inp.value.trim().length > 1) pintar(); });
+    if (atlasEstado === "pendiente") cargarAtlas(function () { if (inp.value.trim().length > 1) pintar(); }); });
   inp.addEventListener("keydown", function (e) {
     if (e.key === "ArrowDown") { e.preventDefault(); mover(1); }
     else if (e.key === "ArrowUp") { e.preventDefault(); mover(-1); }
